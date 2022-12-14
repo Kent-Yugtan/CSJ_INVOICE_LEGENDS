@@ -19,11 +19,12 @@
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js"></script>
 </head>
 
-<body>
+<body class="sb-nav-fixed">
 
     @include('layouts.inc.admin-navbar')
 
     <div id="layoutSidenav">
+
         @include('layouts.inc.admin-sidebar')
 
         <div id="layoutSidenav_content">
@@ -32,10 +33,9 @@
             </main>
             @include('layouts.inc.admin-footer')
         </div>
-
-
     </div>
-    <script src="{{ asset('/assets/js/datatables-simple-demo.js') }}">
+
+    <script src="{{ asset('/assets/js/bootstrap.bundle.min.js') }}">
     </script>
     <script src="{{ asset('/assets/js/scripts.js') }}">
     </script>
