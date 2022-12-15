@@ -85,6 +85,11 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                     Reports
                 </a>
+                <hr>
+                <a class="nav-link" href="tables.html">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-gear"></i></i></div>
+                    Settings
+                </a>
             </div>
         </div>
         <div class="sb-sidenav-footer">
