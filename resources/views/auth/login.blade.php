@@ -9,7 +9,8 @@
                     {{ __('Login') }}
                 </div> -->
                 <div style="text-align: center;height: 100px; padding-top: 20px;padding: 38px 0;font-size:40px">
-                    {{ __('LOGO') }}
+                    <img class="img-team" src="{{ URL('images/Invoices-logo.png')}}" style="width: 65px" />
+                    
                 </div>
                 <div class="input-color" style="text-align: center; font-size:30px;">
                     {{ __('5PP Invoicing App') }}
