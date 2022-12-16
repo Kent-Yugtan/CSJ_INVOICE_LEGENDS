@@ -35,35 +35,35 @@
 
             <form>
                 <div class="mb-3">
-                    <label mb-2>Position</label>
+                    <label mb-2 style="color: #A4A6B3;">Position</label>
                     <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Position">
                 </div>
                 <div class="mb-3">
-                    <label mb-2>Username</label>
+                    <label mb-2 style="color: #A4A6B3;">Username</label>
                     <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Username">
                 </div>
 
                 <div class="mb-3">
-                    <label mb-2>Email</label>
+                    <label mb-2 style="color: #A4A6B3;">Email</label>
                     <input type="email" class="form-control" id="formGroupExampleInput2" placeholder="Email">
                 </div>
 
                 <div class="mb-3">
-                    <label mb-2>Phone Number</label>
+                    <label mb-2 style="color: #A4A6B3;">Phone Number</label>
                     <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Phone Number">
                 </div>
 
                 <div class="mb-3">
-                    <label mb-2>Gcash Number</label>
+                    <label mb-2 style="color: #A4A6B3;">Gcash Number</label>
                     <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Gcash Number">
                 </div>
 
                 <div class="mb-3">
-                    <label mb-2>Address</label>
+                    <label mb-2 style="color: #A4A6B3;">Address</label>
                     <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Address">
                 </div>
                 <div class="mb-3">
-                    <label mb-2>Date Hired</label>
+                    <label mb-2 style="color: #A4A6B3;">Date Hired</label>
                     <input type="date" class="form-control" id="formGroupExampleInput2" placeholder="Date Hired">
                 </div>
                 <button type="submit" style="width:40%; height:50px;color:white; background-color: #CF8029;" class="btn"
