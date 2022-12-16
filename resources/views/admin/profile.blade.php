@@ -8,7 +8,7 @@
 
     <!-- <div class="row">
         <div class="col-md-5 px-4"> -->
-    <div class="card border-secondary mb-3" style="max-width: 50rem;">
+    <div class="card shadow p-2 mb-5 bg-white rounded" style="max-width: 50rem;">
         <div class="card-header">Profile Information</div>
         <div class="row px-4 pb-4">
             <div class="row">
@@ -58,10 +58,6 @@
                     <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Gcash Number">
                 </div>
 
-                <div class="mb-3">
-                    <label mb-2>Another label</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
-                </div>
                 <div class="mb-3">
                     <label mb-2>Address</label>
                     <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Address">
