@@ -16,7 +16,7 @@
                     {{ __('5PP Invoicing App') }}
                 </div>
                 <div style="text-align: center; padding-top:25px;font-size:25px">
-                    {{ __('Login') }}
+                    <strong> {{ __('Login') }} </strong>
                 </div>
 
                 <div class="input-color" style="text-align: center;">
@@ -46,13 +46,12 @@
                         </div>
 
                         <div class="row mb-3">
-
                             <div class="col-md-6">
                                 <label class="input-color" for="password">{{ __('PASSWORD') }}</label>
                             </div>
                             <div class="col-md-6 text-end">
                                 @if (Route::has('password.request'))
-                                <a style="text-decoration: none; " class="btn input-color"
+                                <a style="text-decoration: none; " class="input-color"
                                     href="{{ route('password.request') }}">
                                     {{ __('Forgot Password?') }}
                                 </a>
