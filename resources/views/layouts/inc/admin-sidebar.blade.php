@@ -2,14 +2,14 @@
     <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
         <div class="sb-sidenav-menu">
             <div class="nav">
-                
-                <a class="nav-link" href="index.html">
+
+                <a class="nav-link" href="{{url('admin/dashboard')}}">
                     <div class="sb-nav-link-icon">
                         <i class="fas fa-tachometer-alt"></i>
                     </div>
                     Dashboard
                 </a>
-                
+
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
                     aria-expanded="false" aria-controls="collapseLayouts">
                     <div class="sb-nav-link-icon">
@@ -23,7 +23,7 @@
                 <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
                     data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="layout-static.html">Add Profile</a>
+                        <a class="nav-link" href="{{url('admin/profile')}}">Add Profile</a>
                         <a class="nav-link" href="layout-sidenav-light.html">Current Profiles</a>
                         <a class="nav-link" href="layout-static.html">Inactive Profiles</a>
                     </nav>
@@ -33,7 +33,7 @@
                     <div class="sb-nav-link-icon">
                         <i class="fa-sharp fa-solid fa-file-invoice-dollar"></i>
                     </div>
-                   Invoices
+                    Invoices
                     <div class="sb-sidenav-collapse-arrow">
                         <i class="fas fa-angle-down"></i>
                     </div>
@@ -74,7 +74,7 @@
                         </div>
                     </nav>
                 </div>
-                
+
                 <a class="nav-link" href="charts.html">
                     <div class="sb-nav-link-icon">
                         <i class="fa-solid fa-plus-minus"></i>
