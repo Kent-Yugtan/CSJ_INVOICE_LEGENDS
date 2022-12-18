@@ -24,7 +24,7 @@
                     data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link" href="{{url('admin/profile')}}">Add Profile</a>
-                        <a class="nav-link" href="layout-sidenav-light.html">Current Profiles</a>
+                        <a class="nav-link" href="{{url('admin/current')}}">Current Profiles</a>
                         <a class="nav-link" href="layout-static.html">Inactive Profiles</a>
                     </nav>
                 </div>
