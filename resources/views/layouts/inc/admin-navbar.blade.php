@@ -1,6 +1,7 @@
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <img class="img-team" src="{{ URL('images/Invoices-logo.png')}}" style="width: 60px; padding:10px"/>
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="index.html">Invoicing App</a>
+    <a class="navbar-brand" style=width:165px href="index.html">Invoicing App</a>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
         <i class="fas fa-bars"></i>
