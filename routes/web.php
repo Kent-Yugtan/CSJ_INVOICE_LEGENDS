@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProfileController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,7 +31,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 Route::prefix('admin')->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index']);
-    Route::get('/profile',[App\Http\Controllers\Admin\ProfileController::class, 'index']);
-    Route::get('/current',[App\Http\Controllers\Admin\CurrentController::class, 'index']);
+    Route::resource('dashboard', DashboardController::class);
+    Route::resource('profile', ProfileController::class);
+    Route::get('current',[ProfileController::class, 'current']);
+    Route::get('inactive',[ProfileController::class, 'inactive']);
+    Route::get('viewProfile',[ProfileController::class, 'viewProfile']);
+    Route::get('editProfile',[ProfileController::class, 'editProfile']);
 });

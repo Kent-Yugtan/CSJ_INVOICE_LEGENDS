@@ -2,7 +2,7 @@
 @section('content-dashboard')
 
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Current Profiles</h1>
+    <h1 class="mt-4">Inactive Profiles</h1>
     <ol class="breadcrumb mb-4"></ol>
 
     <div class="row">
@@ -31,10 +31,10 @@
     </div>
 
     <div class="row">
-        <div class="col ">
+        <div class="col">
             <form>
                 <div class="input-group ">
-                    <input type="text" class="form-control form-check-inline" placeholder="Search">
+                    <input type="text" class="form-control" placeholder="Search">
                     <button class="btn" style=" color:white; background-color: #CF8029;width:30%" type="button"
                         id="button-addon2">Search</button>
                 </div>
@@ -80,7 +80,7 @@
                                     <a href="editProfile"> <button type="button"
                                             class="btn btn-outline-primary">Edit</button></a>
 
-                                    <a href="viewProfile"> <button type="button"
+                                    <a href="editProfile"> <button type="button"
                                             class="btn btn-outline-primary">View</button></a>
                                 </td>
 
@@ -99,7 +99,7 @@
                                     <a href="editProfile"> <button type="button"
                                             class="btn btn-outline-primary">Edit</button></a>
 
-                                    <a href="viewProfile"> <button type="button"
+                                    <a href="editProfile"> <button type="button"
                                             class="btn btn-outline-primary">View</button></a>
                                 </td>
 

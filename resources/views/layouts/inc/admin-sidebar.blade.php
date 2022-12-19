@@ -25,7 +25,7 @@
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link" href="{{url('admin/profile')}}">Add Profile</a>
                         <a class="nav-link" href="{{url('admin/current')}}">Current Profiles</a>
-                        <a class="nav-link" href="layout-static.html">Inactive Profiles</a>
+                        <a class="nav-link" href="{{url('admin/inactive')}}">Inactive Profiles</a>
                     </nav>
                 </div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"

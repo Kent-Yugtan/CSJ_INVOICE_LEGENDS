@@ -2003,6 +2003,7 @@ progress {
         --bs-gutter-y: 3rem;
     }
 }
+
 .table,
 .dataTable-table {
     --bs-table-bg: transparent;
@@ -2012,6 +2013,7 @@ progress {
     --bs-table-active-color: #212529;
     --bs-table-active-bg: rgba(0, 0, 0, 0.1);
     --bs-table-hover-color: #212529;
+    --bs-table-hover-border-color: rgba(207, 128, 41, 1);
     --bs-table-hover-bg: rgba(0, 0, 0, 0.075);
     width: 100%;
     margin-bottom: 1rem;
@@ -4333,7 +4335,8 @@ fieldset:disabled .btn {
 .nav-link {
     display: block;
     padding: 0.5rem 1rem;
-    color: #0d6efd;
+    /* color: #0d6efd; */
+    color: #a4a6b3;
     text-decoration: none;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
         border-color 0.15s ease-in-out;
@@ -4392,8 +4395,9 @@ fieldset:disabled .btn {
 }
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-    color: #fff;
-    background-color: #0d6efd;
+    color: #0d6efd;
+    border-bottom: 4px solid#0d6efd;
+    /* background-color: #0d6efd; */
 }
 
 .nav-fill > .nav-link,
@@ -4929,6 +4933,7 @@ fieldset:disabled .btn {
     border-top-left-radius: calc(0.25rem - 1px);
     border-top-right-radius: calc(0.25rem - 1px);
 }
+
 .card > .list-group:last-child {
     border-bottom-width: 0;
     border-bottom-right-radius: calc(0.25rem - 1px);
@@ -12316,4 +12321,41 @@ body {
     transform: scale(1.05);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
     border-color: rgba(207, 128, 41, 1);
+}
+
+/* CARD HOVER */
+
+.view-hover {
+    /* border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08), 0 0 6px rgba(0, 0, 0, 0.05);
+    transition: 0.3s transform cubic-bezier(0.155, 1.105, 0.295, 1.12),
+        0.3s box-shadow,
+        0.3s -webkit-transform cubic-bezier(0.155, 1.105, 0.295, 1.12);
+    padding: 14px 80px 18px 36px; */
+    text-decoration: none;
+    cursor: pointer;
+}
+.view-hover:hover {
+    color: rgba(207, 128, 41, 1);
+}
+
+/* SEARCH ICON IN SEARCH INPUT */
+
+.has-search .form-control {
+    padding-left: 1.675rem;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 1.075rem;
+    height: 1.075rem;
+    line-height: 1.075rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+    padding-top: 10px;
+    padding-left: 4px;
 }

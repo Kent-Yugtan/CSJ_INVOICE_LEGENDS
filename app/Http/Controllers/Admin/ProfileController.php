@@ -81,4 +81,19 @@ class ProfileController extends Controller
     {
         //
     }
+
+    public function current(){
+        return view('admin.current');
+    }
+
+    public function inactive(){
+        return view('admin.inactive');
+    }
+
+    public function viewProfile(){
+        return view('admin.viewProfile');
+    }
+    public function editProfile(){
+        return view('admin.editProfile');
+    }
 }
