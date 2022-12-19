@@ -34,7 +34,8 @@ Route::prefix('admin')->group(function () {
     Route::resource('dashboard', DashboardController::class);
     Route::resource('profile', ProfileController::class);
     Route::get('current',[ProfileController::class, 'current']);
-    Route::get('inactive',[ProfileController::class, 'inactive']);
+    Route::get('inactive',[ProfileController::class, 'inactive']);    Route::get('viewProfile',[ProfileController::class, 'viewProfile']);
+    Route::get('editProfile',[ProfileController::class, 'editProfile']);
     Route::get('viewProfile',[ProfileController::class, 'viewProfile']);
     Route::get('editProfile',[ProfileController::class, 'editProfile']);
 });
