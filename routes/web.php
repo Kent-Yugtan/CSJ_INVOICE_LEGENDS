@@ -48,3 +48,5 @@ Route::prefix('invoice')->group(function () {
     Route::get('current_invoice', [InvoiceController::class, 'current_invoice']);
     Route::get('inactive_invoice', [InvoiceController::class, 'inactive_invoice']);
 });
+
+// gfgh
