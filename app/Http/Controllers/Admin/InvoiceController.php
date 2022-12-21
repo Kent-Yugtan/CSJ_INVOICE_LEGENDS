@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 
@@ -81,5 +82,20 @@ class InvoiceController extends Controller
     public function destroy(Invoice $invoice)
     {
         //
+    }
+
+    public function add_invoice()
+    {
+        return view('invoice.add');
+    }
+
+    public function current_invoice()
+    {
+        return view('invoice.current');
+    }
+
+    public function inactive_invoice()
+    {
+        return view('invoice.inactive');
     }
 }

@@ -28,44 +28,24 @@
                         <a class="nav-link" href="{{url('admin/inactive')}}">Inactive Profiles</a>
                     </nav>
                 </div>
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
-                    aria-expanded="false" aria-controls="collapsePages">
-                    <div class="sb-nav-link-icon">
-                        <i class="fa-sharp fa-solid fa-file-invoice-dollar"></i>
-                    </div>
-                    Invoices
-                    <div class="sb-sidenav-collapse-arrow">
-                        <i class="fas fa-angle-down"></i>
-                    </div>
-                </a>
-                <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
-                    data-bs-parent="#sidenavAccordion">
-                    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                            data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                            Add Invoice
-                            <div class="sb-sidenav-collapse-arrow">
-                            </div>
-                        </a>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                            data-bs-target="#pagesCollapseError" aria-expanded="false"
-                            aria-controls="pagesCollapseError">
-                            Current Invoices
-                            <div class="sb-sidenav-collapse-arrow">
-                            </div>
-                        </a>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                            data-bs-target="#pagesCollapseError" aria-expanded="false"
-                            aria-controls="pagesCollapseError">
-                            Inactive Invoices
-                            <div class="sb-sidenav-collapse-arrow">
-                            </div>
-                        </a>
-                        <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne"
-                            data-bs-parent="#sidenavAccordionPages">
-                        </div>
-                    </nav>
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts2"
+                aria-expanded="false" aria-controls="collapseLayouts2">
+                <div class="sb-nav-link-icon">
+                    <i class="fas fa-users"></i>
                 </div>
+                Invoices
+                <div class="sb-sidenav-collapse-arrow">
+                    <i class="fas fa-angle-down"></i>
+                </div>
+            </a>
+            <div class="collapse" id="collapseLayouts2" aria-labelledby="headingOne"
+                data-bs-parent="#sidenavAccordion">
+                <nav class="sb-sidenav-menu-nested nav">
+                    <a class="nav-link" href="{{url('invoice/add_invoice')}}">Add Invoice</a>
+                    <a class="nav-link" href="{{url('invoice/current_invoice')}}">Current Invoices</a>
+                    <a class="nav-link" href="{{url('invoice/inactive_invoice')}}">Inactive Invoices</a>
+                </nav>
+            </div>
 
                 <a class="nav-link" href="charts.html">
                     <div class="sb-nav-link-icon">
