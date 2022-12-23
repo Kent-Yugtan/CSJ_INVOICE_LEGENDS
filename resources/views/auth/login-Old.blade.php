@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-5">
-            <div class="card" style="min-height: 580px; width:450px">
+            <div class="card" style="height: 580px; width:450px">
                 <!-- <div class="card-header">
                     {{ __('Login') }}
                 </div> -->
@@ -25,14 +25,7 @@
 
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('auth.check_login') }}">
-                        @if(Session::get('fail'))
-                        <div class="alert alert-danger text-center">
-                            {{Session::get('fail')}}
-                        </div>
-                        @endif
-
-
+                    <form method="POST" action="{{ route('login') }}">
                         @csrf
 
                         <div class="row mb-3">
@@ -42,7 +35,7 @@
                             <div class="col-md-12" style="padding-top:10px">
                                 <input id="email" placeholder="Email Address" type="email"
                                     class="form-control @error('email') is-invalid @enderror" name="email"
-                                    value="{{ old('email') }}">
+                                    value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -57,17 +50,18 @@
                                 <label class="input-color" for="password">{{ __('PASSWORD') }}</label>
                             </div>
                             <div class="col-md-6 text-end">
-                                <!-- @if (Route::has('password.request')) -->
+                                @if (Route::has('password.request'))
                                 <a style="text-decoration: none; " class="input-color"
                                     href="{{ route('password.request') }}">
                                     {{ __('Forgot Password?') }}
                                 </a>
-                                <!-- @endif -->
+                                @endif
                             </div>
 
                             <div class="col-md-12" style="padding-top:10px">
                                 <input id="password" placeholder="Password" type="password"
-                                    class="form-control @error('password') is-invalid @enderror" name="password">
+                                    class="form-control @error('password') is-invalid @enderror" name="password"
+                                    required autocomplete="current-password">
 
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">
@@ -109,9 +103,9 @@
                         <div class="row">
                             <div class="col-md-12" style="text-align: center">
                                 <label class="input-color">{{ __('Don\'t have an account?') }} </label>
-                                <!-- @if (Route::has('register')) -->
-                                <a class="nav-link" href="{{ route('auth.register') }}">{{ __('Sign up') }}</a>
-                                <!-- @endif -->
+                                @if (Route::has('register'))
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Sign up') }}</a>
+                                @endif
                             </div>
                         </div>
                     </form>
