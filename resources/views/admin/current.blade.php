@@ -69,7 +69,7 @@
                             <tr>
                                 <td> <a class="navbar-brand" href="#">
                                         <img style="width:40px;" class="rounded-pill"
-                                            src="{{ asset('/storage/images/storage/'.$profile->file_name) }}" title="">
+                                            src="{{ asset($profile->file_path) }}" title="">
 
                                     </a> {{$profile->full_name}}</td>
                                 <td> {{$profile->profile_status}}</td>

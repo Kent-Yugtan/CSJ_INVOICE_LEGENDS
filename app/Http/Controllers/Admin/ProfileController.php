@@ -103,7 +103,10 @@ class ProfileController extends Controller
             }
 
             $profile_store = Profile::updateOrCreate(
-                ['id' => $request->id],
+                [
+                'id' => $request->id,
+                'user_id' => $user_id,
+                ],
                 $incoming_data
             );
 
