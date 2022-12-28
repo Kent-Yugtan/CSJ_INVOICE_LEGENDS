@@ -1,19 +1,27 @@
 @extends('layouts.master')
 
+
+<script>
+function edValueKeyPress() {
+    var edValue = document.getElementById("full_name");
+    var s = edValue.value;
+
+    var lblValue = document.getElementById("full_name_output");
+    lblValue.innerText = " " + s;
+
+}
+</script>
+
 @section('content-dashboard')
-
-
 <div class="container-fluid pt-0">
     <h1 class="mt-0">Add Profile</h1>
     <ol class="breadcrumb mb-3"></ol>
-
-
     <div class="row">
         <div class="col-md-6 px-2">
             <div class="card shadow p-2 mb-5 bg-white rounded" style="width: 100%; height:100%">
                 <div class="card-header">Profile Information</div>
                 <div class="row px-4 pb-4">
-                    <div class="px-4 pb-4 pt-2">
+                    <div class="px-2 pb-2 pt-2">
                         @if(Session::get('success'))
                         <div class="alert alert-success text-center">
                             {{ Session::get('success') }}
@@ -45,7 +53,7 @@
                             <div class="row pt-2">
                                 <label class="mb-5">
                                     <h5>
-                                        <span id="first_name_output"></span>
+                                        <span id="full_name_output"></span>
                                         <!-- @if($LoggedUserInfo)
                                         {{ $LoggedUserInfo->first_name }} {{__(' ')}} {{ $LoggedUserInfo->last_name }}
                                         @endif -->
@@ -56,23 +64,12 @@
                         @csrf
 
                         <div class="mb-3">
-                            <label mb-2 style="color: #A4A6B3;">First Name</label>
-                            <input id="first_name" name="first_name" type="text"
-                                class="form-control @error('first_name') is-invalid @enderror"
-                                id="formGroupExampleInput2" placeholder="First Name">
-                            @error('first_name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label mb-2 style="color: #A4A6B3;">Last Name</label>
-                            <input name="last_name" type="text"
-                                class="form-control @error('last_name') is-invalid @enderror"
-                                id="formGroupExampleInput2" placeholder="Last Name">
-                            @error('last_name')
+                            <label mb-2 style="color: #A4A6B3;">Full Name</label>
+                            <input id="full_name" onKeyPress="edValueKeyPress()" onKeyUp="edValueKeyPress()"
+                                name="full_name" type="text"
+                                class="form-control @error('full_name') is-invalid @enderror"
+                                id="formGroupExampleInput2" placeholder="Full Name">
+                            @error('full_name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -113,7 +110,7 @@
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Address</label>
-                            <input name="address" type="email"
+                            <input name="address" type="text"
                                 class="form-control @error('address') is-invalid @enderror" id="formGroupExampleInput2"
                                 placeholder="Address">
                             @error('address')
@@ -244,7 +241,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label mb-2 style="color: #A4A6B3;">Bank Address</label>
+                            <label mb-2 style="color: #A4A6B3;">Bank Location</label>
                             <input name="bank_location" type="text"
                                 class="form-control @error('bank_location') is-invalid @enderror"
                                 id="formGroupExampleInput2" placeholder="Bank Address">

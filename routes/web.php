@@ -34,26 +34,18 @@ Route::get('/', function () {
     Route::get('/auth/logout',[MainController::class,'logout'])->name('auth.logout');
    
 Route::group(['middleware'=>['AuthCheck']], function(){
+    
     Route::get('/auth/login',[MainController::class, 'login'])->name('auth.login');
     Route::get('/auth/register',[MainController::class,'register'])->name('auth.register');
     
     Route::resource('admin/dashboard', DashboardController::class);
-    Route::resource('admin/profile', ProfileController::class );
-    Route::post('/admin/SaveProfile', [ProfileController::class, 'store'])->name('profile.save');
+    Route::resource('admin/profile', ProfileController::class);
+    Route::post('admin/SaveProfile', [ProfileController::class, 'store'])->name('profile.save');
+    Route::get('admin/EditProfile/{id}', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('admin/UpdateProfile/{id}', [ProfileController::class, 'update'])->name('profile.update');
     
-    Route::get('/admin/EditProfile/{id}', [ProfileController::class, 'edit'])->name('profile.edit');
 
-    Route::get('admin/current',[ProfileController::class, 'current']);
-    Route::get('admin/inactive',[ProfileController::class, 'inactive']);
-    Route::get('admin/viewProfile',[ProfileController::class, 'viewProfile']);
-    Route::get('admin/editProfile',[ProfileController::class, 'editProfile']);
-    Route::get('admin/viewProfile',[ProfileController::class, 'viewProfile']);
-    Route::get('admin/editProfile',[ProfileController::class, 'editProfile']);
-
-    Route::get('admin/current', [ProfileController::class, 'current']);
-    Route::get('admin/inactive', [ProfileController::class, 'inactive']);
-    Route::get('admin/viewProfile', [ProfileController::class, 'viewProfile']);
-    Route::get('admin/editProfile', [ProfileController::class, 'editProfile']);
+    Route::get('admin/current', [ProfileController::class, 'current'])->name('current.search');
 
     Route::resource('admin/invoice', InvoiceController::class);
     Route::get('admin/add_invoice', [InvoiceController::class, 'add_invoice']);
