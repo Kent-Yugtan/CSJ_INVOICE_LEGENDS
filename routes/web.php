@@ -43,16 +43,13 @@ Route::group(['middleware'=>['AuthCheck']], function(){
     Route::post('admin/SaveProfile', [ProfileController::class, 'store'])->name('profile.save');
     Route::get('admin/EditProfile/{id}', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('admin/UpdateProfile', [ProfileController::class, 'store'])->name('profile.update');
-    
-
     Route::get('admin/current', [ProfileController::class, 'current'])->name('current.search');
-
+    
     Route::resource('admin/invoice', InvoiceController::class);
     Route::get('admin/add_invoice', [InvoiceController::class, 'add_invoice']);
     Route::get('admin/current_invoice', [InvoiceController::class, 'current_invoice']);
     Route::get('admin/inactive_invoice', [InvoiceController::class, 'inactive_invoice']);
 });
-
 // 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home'); Auth::routes();
