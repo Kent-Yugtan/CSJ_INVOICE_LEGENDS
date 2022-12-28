@@ -44,10 +44,17 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //return $request->input();
         $user_id = session('LoggedUser');
-        
-        if($user_id){
+        $id = $request->id;
+
+        $error = false;
+
+        if(!$user_id) {
+            $error = true;
+            return back()->with('fail', 'Something went wrong(USER), try again later');
+        }
+
+        if($error == false) {
             $incoming_data = $request->validate([
                 'full_name' => 'required',
                 'position' => 'required',
@@ -57,11 +64,8 @@ class ProfileController extends Controller
                 'city' => 'required',
                 'zip_code' => 'required',
                 'profile_status' => 'required',
-                'acct_no' => 'required|unique:profiles',
-                'acct_name' => 'required|unique:profiles',
                 'bank_name' => 'required',
                 'bank_location' => 'required',
-                'gcash_no' => 'required|unique:profiles',
                 'date_hired' => 'required',
             ]);
 
@@ -70,44 +74,50 @@ class ProfileController extends Controller
                 $userImageFileName = $userImageFile->getClientOriginalName();
                 $userImageFilePath = time() . '' . $userImageFile->getClientOriginalName();
                 $filename =  $userImageFilePath;
-                $userImageFilePath = $userImageFile->storeAs('/images/storage', $userImageFilePath,'public');
+                $userImageFilePath = $userImageFile->storeAs('/images', $userImageFilePath, 'public');
     
                 $userImageFileSize = $this->formatSizeUnits($userImageFile->getSize());
                 // $path = $userImageFilePath;
-                $path = '/public/storage/' . $userImageFilePath;
-                $profile_store = Profile::Create(
-                    [
-                    'user_id' => $user_id,
-                    'full_name' => $request->full_name,
-                    'position' => $request->position,
-                    'phone_number' => $request->phone_number,
-                    'address' => $request->address,
-                    'province' => $request->province,
-                    'city' => $request->city,
-                    'zip_code' => $request->zip_code,
-                    'profile_status' => $request->profile_status,
-                    'acct_no' => $request->acct_no,
-                    'acct_name' => $request->acct_name,
-                    'bank_name' => $request->bank_name,
-                    'bank_location' => $request->bank_location,
-                    'gcash_no' => $request->gcash_no,
-                    'file_original_name'=>$userImageFile->getClientOriginalName(),
-                            'file_name'=> $filename,
-                            'file_path'=>$path,
-                            'file_size'=>$userImageFileSize,
-                    'date_hired' => $request->date_hired,
-                    ]
-                );
+                $path = '/storage/' . $userImageFilePath;
                 
-                if($profile_store){
-                    return back()->with('success','Your Profile has been successfuly added to the database');
-                }else{
-                    return back()->with('fail', 'Something went wrong, try again later');
-                }    
+                $incoming_data += [
+                    'file_original_name' => $userImageFileName,
+                    'file_name' => $userImageFilePath,
+                    'file_path' => $path,
+                    'file_size' => $userImageFileSize,
+                ];
             }
-        }else{
-            return back()->with('fail', 'Something went wrong(USER), try again later');
+
+            if(!$id) {
+                $incoming_data += [
+                    'acct_no' => 'required|unique:profiles',
+                    'acct_name' => 'required|unique:profiles',
+                    'gcash_no' => 'required|unique:profiles',
+                ];
+            } else {
+                $incoming_data += [
+                    'acct_no' => 'required',
+                    'acct_name' => 'required',
+                    'gcash_no' => 'required',
+                ];
+            }
+
+            $profile_store = Profile::updateOrCreate(
+                ['id' => $request->id],
+                $incoming_data
+            );
+
+            if($profile_store){
+                if(!$request->id) {
+                    return back()->with('success','Your Profile has been successfuly added to the database');
+                } else {
+                    return back()->with('success','Your Profile has been successfuly updated to the database');
+                }
+            }else{
+                return back()->with('fail', 'Something went wrong, try again later');
+            }   
         }
+       
     }
 
     /**
@@ -152,54 +162,54 @@ class ProfileController extends Controller
         $data = ['LoggedUserInfo'=>User::select('id','first_name','last_name')->where('id' , '=' ,  $user_id)->first()];
         $profiles = Profile::findorFail($id);
         
-        if ($request->hasfile('profile_picture')) {
-            $destination = $profiles->file_path;
-            if(File::exists($destination)){
-                File::delete($destination);
-            }
+        // if ($request->hasfile('profile_picture')) {
+        //     $destination = $profiles->file_path;
+        //     if(File::exists($destination)){
+        //         File::delete($destination);
+        //     }
             
-            $userImageFile = $request->file('profile_picture');
-            $userImageFileName = $userImageFile->getClientOriginalName();
-            $userImageFilePath = time() . '' . $userImageFile->getClientOriginalName();
-            $filename =  $userImageFilePath;
-            $userImageFilePath = $userImageFile->storeAs('/images/storage', $userImageFilePath,'public');
+        //     $userImageFile = $request->file('profile_picture');
+        //     $userImageFileName = $userImageFile->getClientOriginalName();
+        //     $userImageFilePath = time() . '' . $userImageFile->getClientOriginalName();
+        //     $filename =  $userImageFilePath;
+        //     $userImageFilePath = $userImageFile->storeAs('/images/storage', $userImageFilePath,'public');
 
-            $userImageFileSize = $this->formatSizeUnits($userImageFile->getSize());
-            // $path = $userImageFilePath;
-            $path = '/public/storage/' . $userImageFilePath;
+        //     $userImageFileSize = $this->formatSizeUnits($userImageFile->getSize());
+        //     // $path = $userImageFilePath;
+        //     $path = '/public/storage/' . $userImageFilePath;
 
     
-            $profiles = Profile::update(
-                [
-                    'id' => $request->id,
-                ],
-                [
-                'user_id' => $user_id,
-                'full_name' => $request->full_name,
-                'position' => $request->position,
-                'phone_number' => $request->phone_number,
-                'address' => $request->address,
-                'province' => $request->province,
-                'city' => $request->city,
-                'zip_code' => $request->zip_code,
-                'profile_status' => $request->profile_status,
-                'acct_no' => $request->acct_no,
-                'acct_name' => $request->acct_name,
-                'bank_name' => $request->bank_name,
-                'bank_location' => $request->bank_location,
-                'gcash_no' => $request->gcash_no,
-                'file_original_name'=>$userImageFile->getClientOriginalName(),
-                        'file_name'=>$filename,
-                        'file_path'=>$path,
-                        'file_size'=>$userImageFileSize,
-                'date_hired' => $request->date_hired,
-            ]);
+        //     $profiles = Profile::update(
+        //         [
+        //             'id' => $request->id,
+        //         ],
+        //         [
+        //         'user_id' => $user_id,
+        //         'full_name' => $request->full_name,
+        //         'position' => $request->position,
+        //         'phone_number' => $request->phone_number,
+        //         'address' => $request->address,
+        //         'province' => $request->province,
+        //         'city' => $request->city,
+        //         'zip_code' => $request->zip_code,
+        //         'profile_status' => $request->profile_status,
+        //         'acct_no' => $request->acct_no,
+        //         'acct_name' => $request->acct_name,
+        //         'bank_name' => $request->bank_name,
+        //         'bank_location' => $request->bank_location,
+        //         'gcash_no' => $request->gcash_no,
+        //         'file_original_name'=>$userImageFile->getClientOriginalName(),
+        //                 'file_name'=>$filename,
+        //                 'file_path'=>$path,
+        //                 'file_size'=>$userImageFileSize,
+        //         'date_hired' => $request->date_hired,
+        //     ]);
      
-            return "SUCCESS";
-        }else{
-            return "ERROR";
-        }
-        
+        //     return "SUCCESS";
+        // }else{
+        //     return "ERROR";
+        // }
+        return $profiles;
     }
 
     /**

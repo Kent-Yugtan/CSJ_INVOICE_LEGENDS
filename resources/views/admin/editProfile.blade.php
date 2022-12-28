@@ -35,26 +35,24 @@ function edValueKeyPress() {
                         @endif
                     </div>
 
-                    <form action="{{ route('profile.update', ['id' => $profile->id]) }}" method="POST"
-                        class="row g-3sneeds-validation" novalidate enctype="multipart/form-data">
+                    <form action="{{ route('profile.update') }}" method="POST" class="row g-3sneeds-validation"
+                        novalidate enctype="multipart/form-data">
                         @csrf
-                        @method('put')
+
+                        @if($profile->id)
+                        <input name="id" type="hidden" value="{{$profile->id}}">
+                        @endif
+
                         <div class="row">
                             <div class="col mb-3">
-                                @if($profile->file_name)
+
                                 <div class="profile-pic-div" style="position: relative; height:200px">
-                                    <img style="width:100%;" class="rounded-pill"
-                                        src="{{ asset('/storage/images/storage/'.$profile->file_name) }}" title="">
+                                    <img style="width:100%;" class="rounded-pill" src="{{ asset($profile->file_path) }}"
+                                        title="" id="photo">
                                     <input name="profile_picture" type="file" id="file">
                                     <label for="file" id="uploadBtn">Choose Photo</label>
                                 </div>
-                                @else
-                                <div class="profile-pic-div" style="position: relative; height:200px">
-                                    <img src="" id="photo">
-                                    <input name="profile_picture" type="file" id="file">
-                                    <label for="file" id="uploadBtn">Choose Photo</label>
-                                </div>
-                                @endif
+
                             </div>
                             <div class="col pt-5">
                                 <div class="row">
