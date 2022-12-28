@@ -14,7 +14,7 @@ class DashboardController extends Controller
     public function index()
     {
         //
-
+    
         $data = ['LoggedUserInfo'=>User::where('id', "=" , session('LoggedUser'))->first()];
         return view('/admin/dashboard',$data);
         // return "ADMIN DASHBOARD";

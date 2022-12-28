@@ -19,6 +19,7 @@
     <link href="{{ asset('/assets/css/styles.css') }}" rel="stylesheet">
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js"></script>
 
+
 </head>
 
 <body class="sb-nav-fixed">
@@ -31,7 +32,10 @@
 
         <div id="layoutSidenav_content">
             <main>
+
+
                 @yield('content-dashboard')
+
             </main>
             @include('layouts.inc.admin-footer')
         </div>

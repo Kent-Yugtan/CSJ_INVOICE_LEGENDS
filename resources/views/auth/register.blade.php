@@ -13,7 +13,7 @@
                 <div class="card-body ">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('auth.login') }}">{{ __(' Back to Login') }}</a>
+                            <a class="nav-link" href="{{ url('/auth/login') }}">{{ __(' Back to Login') }}</a>
                         </li>
                     </ul>
                     <form method="POST" action="{{ route('auth.save_user') }}">

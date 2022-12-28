@@ -50,23 +50,27 @@ class MainController extends Controller
 
     public function check_login(Request $request){
         // return $request->input();
-        $request->validate([
+        $incoming_request = $request->validate([
             'email' => 'required|email',
             'password' => 'required|min:5|max:12',
         ]);
 
-        $userInfo = User::where('email', '=' ,$request->email)->first();
+        if($incoming_request){
+            $userInfo = User::where('email', '=' ,$request->email)->first();
 
-        if(!$userInfo){
-            return back()->with('fail','We do not recognize you email address');
-        }else{
-            // CHECK PASSWORD
-            if(Hash::check($request->password,$userInfo->password)){
-                $request->session()->put('LoggedUser',$userInfo->id);
-                return redirect('admin/dashboard');
+            if(!$userInfo){
+                return back()->with('fail','We do not recognize you email address');
             }else{
-                return back()->with('fail','Incorrect Password');
+                // CHECK PASSWORD
+                if(Hash::check($request->password,$userInfo->password)){
+                    $request->session()->put('LoggedUser',$userInfo->id);
+                    return redirect('admin/dashboard');
+                }else{
+                    return back()->with('fail','Incorrect Password');
+                }
             }
+        }else{
+            return view('/auth/login');
         }
     }
 

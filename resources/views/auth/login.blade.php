@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -32,7 +31,6 @@
                         </div>
                         @endif
 
-
                         @csrf
 
                         <div class="row mb-3">
@@ -56,14 +54,14 @@
                             <div class="col-md-6">
                                 <label class="input-color" for="password">{{ __('PASSWORD') }}</label>
                             </div>
-                            <div class="col-md-6 text-end">
-                                <!-- @if (Route::has('password.request')) -->
+                            <!-- <div class="col-md-6 text-end">
+                                @if (Route::has('password.request'))
                                 <a style="text-decoration: none; " class="input-color"
                                     href="{{ route('password.request') }}">
                                     {{ __('Forgot Password?') }}
                                 </a>
-                                <!-- @endif -->
-                            </div>
+                                @endif
+                            </div> -->
 
                             <div class="col-md-12" style="padding-top:10px">
                                 <input id="password" placeholder="Password" type="password"

@@ -16,6 +16,9 @@ class CreateProfilesTable extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id')->unassigned();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('position')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('address')->nullable();
             $table->string('province')->nullable();
@@ -28,6 +31,10 @@ class CreateProfilesTable extends Migration
             $table->string('bank_location')->nullable();
             $table->string('gcash_no')->nullable();
             $table->date('date_hired')->nullable();
+            $table->string('file_name')->nullable();
+            $table->string('file_original_name')->nullable();
+            $table->longText('file_path')->nullable();
+            $table->string('file_size')->nullable();
             $table->timestamps();
         });
     }

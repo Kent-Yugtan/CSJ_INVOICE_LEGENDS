@@ -4,8 +4,8 @@
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\InvoiceController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -24,31 +24,25 @@ Auth::routes();
 
 Route::get('/', function () {
     // return view('welcome');
-    return view('/auth/login');
+   
 });
-
-
-
 
     // user save route    
     Route::post('/auth/save',[MainController::class, 'save_user'])->name('auth.save_user');
     Route::post('/auth/check_login',[MainController::class,'check_login'])->name('auth.check_login');
+
     Route::get('/auth/logout',[MainController::class,'logout'])->name('auth.logout');
-
-
-
-
-  
-
-
-    Route::group(['middleware'=>['AuthCheck']], function(){
+   
+Route::group(['middleware'=>['AuthCheck']], function(){
     Route::get('/auth/login',[MainController::class, 'login'])->name('auth.login');
     Route::get('/auth/register',[MainController::class,'register'])->name('auth.register');
-
-
-
+    
     Route::resource('admin/dashboard', DashboardController::class);
-    Route::resource('admin/profile', ProfileController::class);
+    Route::resource('admin/profile', ProfileController::class );
+    Route::post('/admin/SaveProfile', [ProfileController::class, 'store'])->name('profile.save');
+    
+    Route::get('/admin/EditProfile/{id}', [ProfileController::class, 'edit'])->name('profile.edit');
+
     Route::get('admin/current',[ProfileController::class, 'current']);
     Route::get('admin/inactive',[ProfileController::class, 'inactive']);
     Route::get('admin/viewProfile',[ProfileController::class, 'viewProfile']);
