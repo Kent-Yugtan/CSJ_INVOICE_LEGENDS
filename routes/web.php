@@ -42,7 +42,7 @@ Route::group(['middleware'=>['AuthCheck']], function(){
     Route::resource('admin/profile', ProfileController::class);
     Route::post('admin/SaveProfile', [ProfileController::class, 'store'])->name('profile.save');
     Route::get('admin/EditProfile/{id}', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::post('admin/UpdateProfile/{id}', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('admin/UpdateProfile/{id}', [ProfileController::class, 'update'])->name('profile.update');
     
 
     Route::get('admin/current', [ProfileController::class, 'current'])->name('current.search');

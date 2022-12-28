@@ -38,7 +38,7 @@ function edValueKeyPress() {
                     <form action="{{ route('profile.update', ['id' => $profile->id]) }}" method="POST"
                         class="row g-3sneeds-validation" novalidate enctype="multipart/form-data">
                         @csrf
-
+                        @method('put')
                         <div class="row">
                             <div class="col mb-3">
                                 @if($profile->file_name)

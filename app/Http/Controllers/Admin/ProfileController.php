@@ -1,9 +1,10 @@
 <?php
 namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Controller;
-use App\Models\Profile;
 use App\Models\User;
+use App\Models\Profile;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -150,45 +151,55 @@ class ProfileController extends Controller
         $user_id = session('LoggedUser');
         $data = ['LoggedUserInfo'=>User::select('id','first_name','last_name')->where('id' , '=' ,  $user_id)->first()];
         $profiles = Profile::findorFail($id);
-        // return $profile;
-        if ($request->file('profile_picture')) {
-                $userImageFile = $request->file('profile_picture');
-                $userImageFileName = $userImageFile->getClientOriginalName();
-                $userImageFilePath = time() . '' . $userImageFile->getClientOriginalName();
-                $filename =  $userImageFilePath;
-                $userImageFilePath = $userImageFile->storeAs('/images/storage', $userImageFilePath,'public');
-
-                $userImageFileSize = $this->formatSizeUnits($userImageFile->getSize());
-                // $path = $userImageFilePath;
-                $path = '/public/storage/' . $userImageFilePath;
         
-                $profiles_update = $profiles->fill(
-                    ['user_id' => $user_id,
-                    'full_name' => $request->full_name,
-                    'position' => $request->position,
-                    'phone_number' => $request->phone_number,
-                    'address' => $request->address,
-                    'province' => $request->province,
-                    'city' => $request->city,
-                    'zip_code' => $request->zip_code,
-                    'profile_status' => $request->profile_status,
-                    'acct_no' => $request->acct_no,
-                    'acct_name' => $request->acct_name,
-                    'bank_name' => $request->bank_name,
-                    'bank_location' => $request->bank_location,
-                    'gcash_no' => $request->gcash_no,
-                    'file_original_name'=>$userImageFile->getClientOriginalName(),
-                            'file_name'=>$filename,
-                            'file_path'=>$path,
-                            'file_size'=>$userImageFileSize,
-                    'date_hired' => $request->date_hired,]
-                )->save();
-       
-            if($profiles_update){
-                // dd($request->input());
-                return redirect()->back()->with('success', 'Profile successfully updated.');
+        if ($request->hasfile('profile_picture')) {
+            $destination = $profiles->file_path;
+            if(File::exists($destination)){
+                File::delete($destination);
             }
+            
+            $userImageFile = $request->file('profile_picture');
+            $userImageFileName = $userImageFile->getClientOriginalName();
+            $userImageFilePath = time() . '' . $userImageFile->getClientOriginalName();
+            $filename =  $userImageFilePath;
+            $userImageFilePath = $userImageFile->storeAs('/images/storage', $userImageFilePath,'public');
+
+            $userImageFileSize = $this->formatSizeUnits($userImageFile->getSize());
+            // $path = $userImageFilePath;
+            $path = '/public/storage/' . $userImageFilePath;
+
+    
+            $profiles = Profile::update(
+                [
+                    'id' => $request->id,
+                ],
+                [
+                'user_id' => $user_id,
+                'full_name' => $request->full_name,
+                'position' => $request->position,
+                'phone_number' => $request->phone_number,
+                'address' => $request->address,
+                'province' => $request->province,
+                'city' => $request->city,
+                'zip_code' => $request->zip_code,
+                'profile_status' => $request->profile_status,
+                'acct_no' => $request->acct_no,
+                'acct_name' => $request->acct_name,
+                'bank_name' => $request->bank_name,
+                'bank_location' => $request->bank_location,
+                'gcash_no' => $request->gcash_no,
+                'file_original_name'=>$userImageFile->getClientOriginalName(),
+                        'file_name'=>$filename,
+                        'file_path'=>$path,
+                        'file_size'=>$userImageFileSize,
+                'date_hired' => $request->date_hired,
+            ]);
+     
+            return "SUCCESS";
+        }else{
+            return "ERROR";
         }
+        
     }
 
     /**
