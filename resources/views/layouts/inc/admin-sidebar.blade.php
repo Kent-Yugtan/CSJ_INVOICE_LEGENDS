@@ -58,10 +58,25 @@
                     Reports
                 </a>
                 <hr>
-                <a class="nav-link" href="tables.html">
-                    <div class="sb-nav-link-icon"><i class="fa-solid fa-gear"></i></i></div>
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts3"
+                    aria-expanded="false" aria-controls="collapseLayouts3">
+                    <div class="sb-nav-link-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
                     Settings
+                    <div class="sb-sidenav-collapse-arrow">
+                        <i class="fas fa-angle-down"></i>
+                    </div>
                 </a>
+                <div class="collapse" id="collapseLayouts3" aria-labelledby="headingOne"
+                    data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="{{url('settings/deductiontype')}}">Deduction Types</a>
+                        <a class="nav-link" href="{{url('')}}">Email Config</a>
+                        <a class="nav-link" href="{{url('')}}">Invoice Config</a>
+                        <a class="nav-link" href="{{url('')}}">Users</a>
+                    </nav>
+                </div>
             </div>
         </div>
         <div class="sb-sidenav-footer">
