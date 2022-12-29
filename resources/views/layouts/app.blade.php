@@ -18,6 +18,15 @@
 
     <!-- Styles -->
     <link href="{{ asset('/assets/css/styles.css') }}" rel="stylesheet">
+
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="{{ asset('/assets/js/bootstrap.bundle.min.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- Scripts -->
+    <script src="{{ asset('/assets/js/scripts.js') }}" defer></script>
+
 </head>
 
 <body style="  background-color: #363740;">
@@ -84,9 +93,7 @@
         </main>
     </div>
 
-    <!-- Scripts -->
-    <script src="{{ asset('/public/assets/js/bootstrap.bundle.min.js') }}" defer></script>
-    <script src="{{ asset('/public/assets/js/scripts.js') }}" defer></script>
+
 </body>
 
 </html>

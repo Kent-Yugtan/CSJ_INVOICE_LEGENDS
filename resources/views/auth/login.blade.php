@@ -24,12 +24,10 @@
 
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('auth.check_login') }}">
-                        @if(Session::get('fail'))
-                        <div class="alert alert-danger text-center">
-                            {{Session::get('fail')}}
+                    <form id="form_login">
+                        <div id="error_msg" class="alert alert-danger text-center">
+
                         </div>
-                        @endif
 
                         @csrf
 
@@ -118,4 +116,48 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#error_msg").hide();
+
+    $('#form_login').submit(function(e) {
+        e.preventDefault();
+
+        $("#error_msg").hide();
+
+        let email = $("#email").val();
+        let password = $("#password").val();
+        let data = {
+            email,
+            password
+        };
+
+        axios.post(apiUrl + '/api/login', data)
+            .then(function(response) {
+                console.log('then', response);
+                let data = response.data;
+
+                if (!data.succcess) {
+                    $("#error_msg").html(data.message).show();
+                } else {
+                    localStorage.token = data.token;
+                    // localStorage.userdata = JSON.parse(data.user);
+                    window.location.replace(apiUrl + '/admin/dashboard');
+                }
+            })
+            .catch(function(error) {
+                console.log('catch', error);
+            });
+    })
+});
+// axios({
+//     method: 'post',
+//     url: '/user/12345',
+//     data: {
+//         firstName: 'Fred',
+//         lastName: 'Flintstone'
+//     }
+// });
+</script>
 @endsection

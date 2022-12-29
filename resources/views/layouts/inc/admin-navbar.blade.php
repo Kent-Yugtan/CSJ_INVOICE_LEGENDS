@@ -35,10 +35,33 @@
                 <li>
                     <hr class="dropdown-divider" />
                 </li>
-                <li><a class="dropdown-item" href="{{ route('auth.logout') }}">
+                <li><a class="dropdown-item" id="logout">
                         {{ __('Logout') }}
-                    </a></li>
+                    </a>
+                </li>
+
             </ul>
         </li>
     </ul>
 </nav>
+
+<script>
+$("#logout").on("click", function() {
+    console.log('logout');
+    axios.post(apiUrl + '/api/logout', {})
+        .then(function(response) {
+            console.log('then', response);
+            let data = response.data;
+            console.log('then data', data);
+
+            if (data.success) {
+                localStorage.removeItem('token');
+                // localStorage.userdata = JSON.parse(data.user);
+                window.location.replace(apiUrl + '/auth/login');
+            }
+        })
+        .catch(function(error) {
+            console.log('catch', error);
+        });
+})
+</script>
