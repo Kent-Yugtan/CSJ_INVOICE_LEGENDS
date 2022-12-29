@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
+
 use App\Models\User;
 use App\Models\Profile;
 use Illuminate\Http\Request;
@@ -10,21 +12,20 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProfileController extends Controller
 {
- 
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-        
+
     public function index()
     {
         //
         $id = session('LoggedUser');
-        $data = ['LoggedUserInfo'=>User::select('id','first_name','last_name')->where('id' , '=' ,  $id)->first()];
-            return view('admin.profile',$data);
-            
-        }
+        $data = ['LoggedUserInfo' => User::select('id', 'first_name', 'last_name')->where('id', '=',  $id)->first()];
+        return view('admin.profile', $data);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -49,12 +50,12 @@ class ProfileController extends Controller
 
         $error = false;
 
-        if(!$user_id) {
+        if (!$user_id) {
             $error = true;
             return back()->with('fail', 'Something went wrong(USER), try again later');
         }
 
-        if($error == false) {
+        if ($error == false) {
             $incoming_data = $request->validate([
                 'full_name' => 'required',
                 'position' => 'required',
@@ -75,11 +76,11 @@ class ProfileController extends Controller
                 $userImageFilePath = time() . '' . $userImageFile->getClientOriginalName();
                 $filename =  $userImageFilePath;
                 $userImageFilePath = $userImageFile->storeAs('/images', $userImageFilePath, 'public');
-    
+
                 $userImageFileSize = $this->formatSizeUnits($userImageFile->getSize());
                 // $path = $userImageFilePath;
                 $path = '/storage/' . $userImageFilePath;
-                
+
                 $incoming_data += [
                     'file_original_name' => $userImageFileName,
                     'file_name' => $userImageFilePath,
@@ -88,7 +89,7 @@ class ProfileController extends Controller
                 ];
             }
 
-            if(!$id) {
+            if (!$id) {
                 $incoming_data += [
                     'acct_no' => 'required|unique:profiles',
                     'acct_name' => 'required|unique:profiles',
@@ -104,23 +105,21 @@ class ProfileController extends Controller
 
             $profile_store = Profile::updateOrCreate(
                 [
-                'id' => $request->id,
-                'user_id' => $user_id,
+                    'id' => $request->id,
                 ],
                 $incoming_data
             );
 
-            if($profile_store){
-                if(!$request->id) {
-                    return back()->with('success','Your Profile has been successfuly added to the database');
+            if ($profile_store) {
+                if (!$request->id) {
+                    return back()->with('success', 'Your Profile has been successfuly added to the database');
                 } else {
-                    return back()->with('success','Your Profile has been successfuly updated to the database');
+                    return back()->with('success', 'Your Profile has been successfuly updated to the database');
                 }
-            }else{
+            } else {
                 return back()->with('fail', 'Something went wrong, try again later');
-            }   
+            }
         }
-       
     }
 
     /**
@@ -144,11 +143,11 @@ class ProfileController extends Controller
     {
         //
         $user_id = session('LoggedUser');
-        $data = ['LoggedUserInfo'=>User::select('id','first_name','last_name')->where('id' , '=' ,  $user_id)->first()];
+        $data = ['LoggedUserInfo' => User::select('id', 'first_name', 'last_name')->where('id', '=',  $user_id)->first()];
         $profile = Profile::findOrFail($id);
-        
+
         // return $profile;
-        return view('admin.editProfile', $data,compact('profile',$profile));
+        return view('admin.editProfile', $data, compact('profile', $profile));
     }
 
     /**
@@ -162,15 +161,15 @@ class ProfileController extends Controller
     {
         //
         $user_id = session('LoggedUser');
-        $data = ['LoggedUserInfo'=>User::select('id','first_name','last_name')->where('id' , '=' ,  $user_id)->first()];
+        $data = ['LoggedUserInfo' => User::select('id', 'first_name', 'last_name')->where('id', '=',  $user_id)->first()];
         $profiles = Profile::findorFail($id);
-        
+
         // if ($request->hasfile('profile_picture')) {
         //     $destination = $profiles->file_path;
         //     if(File::exists($destination)){
         //         File::delete($destination);
         //     }
-            
+
         //     $userImageFile = $request->file('profile_picture');
         //     $userImageFileName = $userImageFile->getClientOriginalName();
         //     $userImageFilePath = time() . '' . $userImageFile->getClientOriginalName();
@@ -181,7 +180,7 @@ class ProfileController extends Controller
         //     // $path = $userImageFilePath;
         //     $path = '/public/storage/' . $userImageFilePath;
 
-    
+
         //     $profiles = Profile::update(
         //         [
         //             'id' => $request->id,
@@ -207,7 +206,7 @@ class ProfileController extends Controller
         //                 'file_size'=>$userImageFileSize,
         //         'date_hired' => $request->date_hired,
         //     ]);
-     
+
         //     return "SUCCESS";
         // }else{
         //     return "ERROR";
@@ -226,34 +225,38 @@ class ProfileController extends Controller
         //
     }
 
-    public function current(Request $request){
+    public function current(Request $request)
+    {
         $user_id = session('LoggedUser');
-        $data = ['LoggedUserInfo'=>User::select('id','first_name','last_name')->where('id' , '=' ,  $user_id)->first()];
+        $data = ['LoggedUserInfo' => User::select('id', 'first_name', 'last_name')->where('id', '=',  $user_id)->first()];
 
         $profiles = Profile::where([
             ['full_name', '!=', Null],
             ['user_id', $user_id],
-            [function ($query) use ($request){
-                if(($search = $request->search)){
-                    $query->orWhere('full_name','LIKE','%' . $search . '%')
-                        ->orWhere('position','LIKE','%' . $search . '%')
+            [function ($query) use ($request) {
+                if (($search = $request->search)) {
+                    $query->orWhere('full_name', 'LIKE', '%' . $search . '%')
+                        ->orWhere('position', 'LIKE', '%' . $search . '%')
                         ->get();
                 }
             }]
         ])->Paginate(5);
 
-        
-        return view('admin.current',$data, compact('profiles'));
+
+        return view('admin.current', $data, compact('profiles'));
     }
 
-    public function inactive(){
+    public function inactive()
+    {
         return view('admin.inactive');
     }
 
-    public function viewProfile(){
+    public function viewProfile()
+    {
         return view('admin.viewProfile');
     }
-    public function editProfile(){
+    public function editProfile()
+    {
         return view('admin.editProfile');
     }
 }
