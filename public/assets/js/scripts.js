@@ -27,3 +27,121 @@ window.addEventListener("DOMContentLoaded", (event) => {
 });
 
 let apiUrl = window.location.origin;
+let token = localStorage.token;
+
+// post normal
+// let datanormal = { data1: "value1", data2: "value2", data3: "value3" };
+// axios
+//     .post(apiUrl + "/api/login", datanormal, {
+//         headers: {
+//             Authorization: token,
+//         },
+//     })
+//     .then(function (response) {
+//         console.log("then", response);
+//         let data = response.data;
+//         if (data.succcess) {
+//             console.alert('success');
+//         } else {
+//             console.alert('error');
+//         }
+//     })
+//     .catch(function (error) {
+//         console.log("catch", error);
+//     });
+
+// post with picture
+
+// let datawithpicture = new FormData();
+
+// let picture = document.getElementById("picture").files[0];
+
+// datawithpicture.append("data1", "value1");
+// datawithpicture.append("data2", "value2");
+// datawithpicture.append("picture", picture, "picture.png");
+// datawithpicture.append("data3", "value3");
+
+// axios
+//     .post(apiUrl + "/api/login", datawithpicture, {
+//         headers: {
+//             Authorization: token,
+//             "Content-Type": "multipart/form-data",
+//         },
+//     })
+//     .then(function (response) {
+//         console.log("then", response);
+
+//         let data = response.data;
+//         if (data.succcess) {
+//             console.alert('success');
+//         } else {
+//             console.alert('error');
+//         }
+//     })
+//     .catch(function (error) {
+//         console.log("catch", error);
+//     });
+
+// update
+// let dataupdate = {};
+// axios
+//     .put(`${apiUrl}${url}/id`, dataupdate, {
+//         headers: {
+//             Authorization: token,
+//         },
+//     })
+//     .then(function (response) {
+//         console.log("then", response);
+
+//         let data = response.data;
+//         if (data.succcess) {
+//             console.alert("success");
+//         } else {
+//             console.alert("error");
+//         }
+//     })
+//     .catch(function (error) {
+//         console.log("catch", error);
+//     });
+
+// delete
+// axios
+//     .delete(`${apiUrl}${url}/id`, {
+//         headers: {
+//             Authorization: token,
+//         },
+//     })
+//     .then(function (response) {
+//         console.log("then", response);
+
+//         let data = response.data;
+//         if (data.succcess) {
+//             console.alert("success");
+//         } else {
+//             console.alert("error");
+//         }
+//     })
+//     .catch(function (error) {
+//         console.log("catch", error);
+//     });
+
+// get
+// axios
+//     .get(`${apiUrl}${url}/id`, {
+//         headers: {
+//             Authorization: token,
+//         },
+//     })
+//     .then(function (response) {
+//         console.log("then", response);
+
+//         let data = response.data;
+//         if (data.succcess) {
+//             console.alert("success");
+//         } else {
+//             console.alert("error");
+//         }
+//     })
+//     .catch(function (error) {
+//         console.log("catch", error);
+//     });
