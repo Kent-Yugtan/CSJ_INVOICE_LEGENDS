@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\DeductionType;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DeductionTypeController extends Controller
@@ -15,6 +17,9 @@ class DeductionTypeController extends Controller
     public function index()
     {
         //
+        // $user_id = session("LoggedUser");
+        // $data = ['LoggedUserInfo' => User::select('id', 'first_name', 'last_name')->where('id', '=', $user_id)->first()];
+        return view('settings.deductiontype');
     }
 
     /**
@@ -81,5 +86,6 @@ class DeductionTypeController extends Controller
     public function destroy(DeductionType $deductionType)
     {
         //
+
     }
 }

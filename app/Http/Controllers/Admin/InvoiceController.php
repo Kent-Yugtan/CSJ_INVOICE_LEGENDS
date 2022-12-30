@@ -17,9 +17,9 @@ class InvoiceController extends Controller
     public function index()
     {
         //
-        $user_id= session("LoggedUser");
-        $data = ['LoggedUserInfo'=>User::select('id','first_name','last_name')->where('id', '=', $user_id)->first()];
-        return view('admin.AddInvoice',$data);
+        $user_id = session("LoggedUser");
+        $data = ['LoggedUserInfo' => User::select('id', 'first_name', 'last_name')->where('id', '=', $user_id)->first()];
+        return view('invoice.add', $data);
     }
 
     /**
@@ -89,17 +89,17 @@ class InvoiceController extends Controller
         //
     }
 
-    public function add_invoice()
-    {
-        return view('invoice.add');
-    }
+    // public function add_invoice()
+    // {
+    //     return view('invoice.add');
+    // }
 
-    public function current_invoice()
+    public function current()
     {
         return view('invoice.current');
     }
 
-    public function inactive_invoice()
+    public function inactive()
     {
         return view('invoice.inactive');
     }
