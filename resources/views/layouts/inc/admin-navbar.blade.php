@@ -24,9 +24,6 @@
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <li>
                     <a class="dropdown-item">
-                        @if($LoggedUserInfo)
-                        {{ $LoggedUserInfo->first_name }} {{__(' ')}} {{ $LoggedUserInfo->last_name }}
-                        @endif
                     </a>
                 </li>
                 <li><a class=" dropdown-item" href="#!">Settings </a>

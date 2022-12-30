@@ -22,15 +22,10 @@
                     {{ __('Enter your email and password below') }}
                 </div>
 
-
                 <div class="card-body">
                     <form id="form_login">
-                        <div id="error_msg" class="alert alert-danger text-center">
-
-                        </div>
-
+                        <div id="error_msg" class="alert alert-danger text-center"></div>
                         @csrf
-
                         <div class="row mb-3">
                             <label class="input-color" for="email">{{ __('EMAIL ADDRESS') }}
                             </label>
@@ -151,13 +146,5 @@ $(document).ready(function() {
             });
     })
 });
-// axios({
-//     method: 'post',
-//     url: '/user/12345',
-//     data: {
-//         firstName: 'Fred',
-//         lastName: 'Flintstone'
-//     }
-// });
 </script>
 @endsection

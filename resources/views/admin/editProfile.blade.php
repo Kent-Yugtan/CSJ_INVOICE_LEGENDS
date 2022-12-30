@@ -299,94 +299,9 @@
 
                         <div class="col-md-4 w-100">
                             <div class="input-group">
-                                <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" style="color:white; background-color: #CF8029;" class="btn form-check-inline pe-3 "><i class="fa fa-plus pe-1"></i>Create
-                                    Invoice </button>
-                                <!-- Modal -->
-                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Create Invoice</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form>
-                                                    <!-- 2 column grid layout with text inputs for the first and last names -->
-
-                                                    <!-- Text input -->
-                                                    <div class="form-outline mb-4">
-                                                        <label class="form-label" for="form6Example3">Invoice #</label>
-                                                        <input type="text" id="form6Example3" class="form-control" />
-
-                                                    </div>
-
-                                                    <!-- Text input -->
-                                                    <div class="form-outline mb-4">
-                                                        <label class="form-label" for="form6Example4">Description</label>
-                                                        <input type="text" id="form6Example4" class="form-control" />
-
-                                                    </div>
-
-                                                    <!-- Email input -->
-                                                    <div class="form-outline mb-4">
-                                                        <label class="form-label" for="form6Example5">Item Description</label>
-                                                        <input type="email" id="form6Example5" class="form-control" />
-
-                                                    </div>
-                                                    <div class="row mb-4">
-                                                        <div class="col">
-                                                            <div class="form-outline">
-                                                                <label class="form-label" for="form6Example1">Quantity</label>
-                                                                <input type="number" id="form6Example1" class="form-control" />
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="col">
-                                                            <div class="form-outline">
-                                                                <label class="form-label" for="form6Example2"> Rate </label>
-                                                                <input type="number" id="form6Example2" class="form-control" />
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Number input -->
-                                                    <div class="form-outline mb-4">
-                                                        <label class="form-label" for="form6Example5">Peso Rate</label>
-                                                        <input type="number" id="form6Example6" class="form-control" />
-
-                                                    </div>
-
-                                                    <div class="row mb-4">
-                                                        <div class="col">
-                                                            <div class="form-outline">
-                                                                <label class="form-label" for="form6Example1">Total Amount ($)</label>
-                                                                <input type="number" id="form6Example1" class="form-control" />
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="col">
-                                                            <div class="form-outline">
-                                                                <label class="form-label" for="form6Example2"> Total Amount (PHP) </label>
-                                                                <input type="number" id="form6Example2" class="form-control" />
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row mb-4">
-                                                        <div class="col-6">
-                                                            <button type="button" class="btn btn-secondary w-100 " style="color:white; background-color: #CF8029;" data-bs-dismiss="modal">Save</button>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <button type="button" class="btn btn-primary w-100" style="color:#CF8029; background-color:white;">Cancel</button>
-                                                        </div>
-                                                    </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                                <button type="button" style="color:white; background-color: #CF8029;"
+                                    class="btn form-check-inline pe-3 "><i class="fa fa-plus pe-1"></i>Create
+                                    Invoice</button>
 
                                 <input type="text" aria-label="First name" class="form-control form-check-inline">
                                 <div class="form-group has-search">

@@ -13,11 +13,11 @@
                 <div class="row px-4 pb-4">
                     <div class="row">
                         <div class="col mb-3">
-                            <div class="profile-pic-div" style="position: relative; height:200px">
-                                <img src="image.jpg" id="photo">
-                                <input type="file" id="file">
-                                <label for="file" id="uploadBtn">Choose Photo</label>
-                            </div>
+                            <!-- <div class="profile-pic-div" id="profile-pic-div" style="position: relative; height:200px"> -->
+                            <img src="image.jpg" id="photo">
+                            <input type="file" id="file">
+                            <label for="file" id="uploadBtn">Choose Photo</label>
+                            <!-- </div> -->
                         </div>
                         <div class="col pt-5">
                             <div class="row">
