@@ -1,5 +1,5 @@
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-    <img class="img-team" src="{{ URL('images/Invoices-logo.png')}}" style="width: 60px; padding:10px"/>
+    <img class="img-team" src="{{ URL('images/Invoices-logo.png')}}" style="width: 60px; padding:10px" />
     <!-- Navbar Brand-->
     <a class="navbar-brand" style=width:165px href="index.html">Invoicing App</a>
     <!-- Sidebar Toggle-->
@@ -22,13 +22,46 @@
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#!">Settings</a></li>
+                <li>
+                    <a class="dropdown-item">
+                        @if($LoggedUserInfo)
+                        {{ $LoggedUserInfo->first_name }} {{__(' ')}} {{ $LoggedUserInfo->last_name }}
+                        @endif
+                    </a>
+                </li>
+                <li><a class=" dropdown-item" href="#!">Settings </a>
+                </li>
                 <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                 <li>
                     <hr class="dropdown-divider" />
                 </li>
-                <li><a class="dropdown-item" href="#!">Logout</a></li>
+                <li><a class="dropdown-item" id="logout">
+                        {{ __('Logout') }}
+                    </a>
+                </li>
+
             </ul>
         </li>
     </ul>
 </nav>
+
+<script>
+$("#logout").on("click", function() {
+    console.log('logout');
+    axios.post(apiUrl + '/api/logout', {})
+        .then(function(response) {
+            console.log('then', response);
+            let data = response.data;
+            console.log('then data', data);
+
+            if (data.success) {
+                localStorage.removeItem('token');
+                // localStorage.userdata = JSON.parse(data.user);
+                window.location.replace(apiUrl + '/auth/login');
+            }
+        })
+        .catch(function(error) {
+            console.log('catch', error);
+        });
+})
+</script>

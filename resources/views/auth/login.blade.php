@@ -1,16 +1,15 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-5">
-            <div class="card" style="height: 580px; width:450px">
+            <div class="card" style="min-height: 580px; width:450px">
                 <!-- <div class="card-header">
                     {{ __('Login') }}
                 </div> -->
                 <div style="text-align: center;height: 100px; padding-top: 20px;padding: 38px 0;font-size:40px">
                     <img class="img-team" src="{{ URL('images/Invoices-logo.png')}}" style="width: 65px" />
-                    
+
                 </div>
                 <div class="input-color" style="text-align: center; font-size:30px;">
                     {{ __('5PP Invoicing App') }}
@@ -25,7 +24,11 @@
 
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form id="form_login">
+                        <div id="error_msg" class="alert alert-danger text-center">
+
+                        </div>
+
                         @csrf
 
                         <div class="row mb-3">
@@ -35,7 +38,7 @@
                             <div class="col-md-12" style="padding-top:10px">
                                 <input id="email" placeholder="Email Address" type="email"
                                     class="form-control @error('email') is-invalid @enderror" name="email"
-                                    value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                    value="{{ old('email') }}">
 
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -49,19 +52,18 @@
                             <div class="col-md-6">
                                 <label class="input-color" for="password">{{ __('PASSWORD') }}</label>
                             </div>
-                            <div class="col-md-6 text-end">
+                            <!-- <div class="col-md-6 text-end">
                                 @if (Route::has('password.request'))
                                 <a style="text-decoration: none; " class="input-color"
                                     href="{{ route('password.request') }}">
                                     {{ __('Forgot Password?') }}
                                 </a>
                                 @endif
-                            </div>
+                            </div> -->
 
                             <div class="col-md-12" style="padding-top:10px">
                                 <input id="password" placeholder="Password" type="password"
-                                    class="form-control @error('password') is-invalid @enderror" name="password"
-                                    required autocomplete="current-password">
+                                    class="form-control @error('password') is-invalid @enderror" name="password">
 
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">
@@ -103,9 +105,9 @@
                         <div class="row">
                             <div class="col-md-12" style="text-align: center">
                                 <label class="input-color">{{ __('Don\'t have an account?') }} </label>
-                                @if (Route::has('register'))
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Sign up') }}</a>
-                                @endif
+                                <!-- @if (Route::has('register')) -->
+                                <a class="nav-link" href="{{ route('auth.register') }}">{{ __('Sign up') }}</a>
+                                <!-- @endif -->
                             </div>
                         </div>
                     </form>
@@ -114,4 +116,48 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#error_msg").hide();
+
+    $('#form_login').submit(function(e) {
+        e.preventDefault();
+
+        $("#error_msg").hide();
+
+        let email = $("#email").val();
+        let password = $("#password").val();
+        let data = {
+            email,
+            password
+        };
+
+        axios.post(apiUrl + '/api/login', data)
+            .then(function(response) {
+                console.log('then', response);
+                let data = response.data;
+
+                if (!data.succcess) {
+                    $("#error_msg").html(data.message).show();
+                } else {
+                    localStorage.token = data.token;
+                    // localStorage.userdata = JSON.parse(data.user);
+                    window.location.replace(apiUrl + '/admin/dashboard');
+                }
+            })
+            .catch(function(error) {
+                console.log('catch', error);
+            });
+    })
+});
+// axios({
+//     method: 'post',
+//     url: '/user/12345',
+//     data: {
+//         firstName: 'Fred',
+//         lastName: 'Flintstone'
+//     }
+// });
+</script>
 @endsection
