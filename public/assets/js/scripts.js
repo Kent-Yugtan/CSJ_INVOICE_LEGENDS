@@ -27,4 +27,3 @@ window.addEventListener("DOMContentLoaded", (event) => {
 });
 
 let apiUrl = window.location.origin;
-console.log("apiUrl", apiUrl);

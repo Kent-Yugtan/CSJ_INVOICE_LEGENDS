@@ -27,10 +27,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('logout', [AuthController::class, 'logout']);
 
-
     Route::resource('admin/dashboard', DashboardController::class);
     Route::resource('admin/profile', ProfileController::class);
-    Route::post('admin/SaveProfile', [ProfileController::class, 'store'])->name('profile.save');
+    Route::post('saveprofile', [ProfileController::class, 'store']);
     Route::get('admin/EditProfile/{id}', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('admin/UpdateProfile', [ProfileController::class, 'store'])->name('profile.update');
     Route::get('admin/current', [ProfileController::class, 'current'])->name('current.search');
