@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Models\User;
 class DashboardController extends Controller
 {
     /**
@@ -14,7 +14,9 @@ class DashboardController extends Controller
     public function index()
     {
         //
-        return view('admin.dashboard');
+    
+        $data = ['LoggedUserInfo'=>User::where('id', "=" , session('LoggedUser'))->first()];
+        return view('/admin/dashboard',$data);
         // return "ADMIN DASHBOARD";
     }
 

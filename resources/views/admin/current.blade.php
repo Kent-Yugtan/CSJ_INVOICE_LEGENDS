@@ -32,10 +32,11 @@
 
     <div class="row">
         <div class="col ">
-            <form>
+            <form action="{{ route('current.search')}}" method="GET">
+                @csrf
                 <div class="input-group ">
-                    <input type="text" class="form-control form-check-inline" placeholder="Search">
-                    <button class="btn" style=" color:white; background-color: #CF8029;width:30%" type="button"
+                    <input name="search" type="text" class="form-control form-check-inline" placeholder="Search">
+                    <button class="btn" style=" color:white; background-color: #CF8029;width:30%" type="submit"
                         id="button-addon2">Search</button>
                 </div>
             </form>
@@ -49,6 +50,7 @@
                     <i class="fas fa-table me-1"></i>
                     Current Profile
                 </div>
+                @if(isset($profiles))
                 <div class="card-body table-responsive">
                     <table style=" color: #A4A6B3; " class="table table-hover" id="datatablesSimple">
                         <thead>
@@ -57,58 +59,43 @@
                                 <th>Status</th>
                                 <th>Phone Number</th>
                                 <th>Position</th>
-                                <th>Department</th>
                                 <th>latest Invoice</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
 
                         <tbody>
+                            @foreach ($profiles as $profile)
                             <tr>
                                 <td> <a class="navbar-brand" href="#">
                                         <img style="width:40px;" class="rounded-pill"
-                                            src="{{ asset('/images/profile.jpg') }}" alt="" title="">
-                                        <!-- <img src="Invoices-logo.png" alt="Logo" style="width:40px;"
-                                            class="rounded-pill">  -->
-                                    </a>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>2011/04/25</td>
+                                            src="{{ asset($profile->file_path) }}" title="">
+
+                                    </a> {{$profile->full_name}}</td>
+                                <td> {{$profile->profile_status}}</td>
+                                <td>{{$profile->phone_number}}</td>
+                                <td>{{$profile->position}}</td>
+                                <td>Not Yet</td>
                                 <td class="text-center">
-                                    <a href="editProfile"> <button type="button"
+                                    <a href="{{ route('profile.edit', ['id' => $profile->id]) }}"> <button type="button"
                                             class="btn btn-outline-primary">Edit</button></a>
 
                                     <a href="viewProfile"> <button type="button"
                                             class="btn btn-outline-primary">View</button></a>
                                 </td>
-
                             </tr>
-                            <tr>
-                                <td> <a class="navbar-brand" href="#">
-                                        <img style="width:40px;" class="rounded-pill"
-                                            src="{{ asset('/images/images.png') }}" alt="" title="">
-                                    </a>Garrett Winters</td>
-                                <td>Accountant</td>
-                                <td>Tokyo</td>
-                                <td>63</td>
-                                <td>2011/07/25</td>
-                                <td>2011/04/25</td>
-                                <td class="text-center">
-                                    <a href="editProfile"> <button type="button"
-                                            class="btn btn-outline-primary">Edit</button></a>
 
-                                    <a href="viewProfile"> <button type="button"
-                                            class="btn btn-outline-primary">View</button></a>
-                                </td>
-
-                            </tr>
+                            @endforeach
 
                         </tbody>
                     </table>
+                    <div class="d-flex">
+                        {!! $profiles->links() !!}
+                    </div>
                 </div>
+                @endif
             </div>
+
         </div>
     </div>
 </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -16,6 +17,9 @@ class InvoiceController extends Controller
     public function index()
     {
         //
+        $user_id= session("LoggedUser");
+        $data = ['LoggedUserInfo'=>User::select('id','first_name','last_name')->where('id', '=', $user_id)->first()];
+        return view('admin.AddInvoice',$data);
     }
 
     /**
@@ -26,6 +30,7 @@ class InvoiceController extends Controller
     public function create()
     {
         //
+
     }
 
     /**
