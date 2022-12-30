@@ -1,3 +1,3 @@
-<h1>
-    asvkcahv
-</h1>
+@extends('layouts.master')
+@section('content-dashboard')
+@endsection

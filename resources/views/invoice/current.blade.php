@@ -1,1 +1,3 @@
-<h1> weuhwes</h1>
+@extends('layouts.master')
+@section('content-dashboard')
+@endsection
