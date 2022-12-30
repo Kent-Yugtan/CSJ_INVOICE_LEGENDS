@@ -25,8 +25,11 @@ Auth::routes();
 
 Route::get('/', function () {
     // return view('welcome');
-
+    echo auth()->user();
+    echo 'ss';
 });
+
+
 
 Route::get('/auth/login', [MainController::class, 'login'])->name('auth.login');
 Route::get('/auth/register', [MainController::class, 'register'])->name('auth.register');
@@ -70,3 +73,6 @@ Route::middleware(['AuthCheck'])->group(function () {
     
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home'); Auth::routes();
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
