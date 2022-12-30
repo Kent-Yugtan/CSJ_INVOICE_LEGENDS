@@ -22,9 +22,9 @@ class ProfileController extends Controller
     public function index()
     {
         //
-        $id = session('LoggedUser');
-        $data = ['LoggedUserInfo' => User::select('id', 'first_name', 'last_name')->where('id', '=',  $id)->first()];
-        return view('admin.profile', $data);
+        // $id = session('LoggedUser');
+        // $data = ['LoggedUserInfo' => User::select('id', 'first_name', 'last_name')->where('id', '=',  $id)->first()];
+        return view('admin.profile');
     }
 
     /**
@@ -109,15 +109,19 @@ class ProfileController extends Controller
                 ],
                 $incoming_data
             );
-
+            $profile_store->save();
             if ($profile_store) {
-                if (!$request->id) {
-                    return back()->with('success', 'Your Profile has been successfuly added to the database');
-                } else {
-                    return back()->with('success', 'Your Profile has been successfuly updated to the database');
-                }
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Your Profile has been successfuly added to the database.',
+                    'data' => $incoming_data,
+                ], 200);
             } else {
-                return back()->with('fail', 'Something went wrong, try again later');
+                return response()->json([
+                    'success' => false,
+                    'message' => 'ERROR',
+                    'data' => $incoming_data,
+                ], 400);
             }
         }
     }
@@ -227,12 +231,11 @@ class ProfileController extends Controller
 
     public function current(Request $request)
     {
-        $user_id = session('LoggedUser');
-        $data = ['LoggedUserInfo' => User::select('id', 'first_name', 'last_name')->where('id', '=',  $user_id)->first()];
+        // $user_id = session('LoggedUser');
+        // $data = ['LoggedUserInfo' => User::select('id', 'first_name', 'last_name')->where('id', '=',  $user_id)->first()];
 
         $profiles = Profile::where([
             ['full_name', '!=', Null],
-            ['user_id', $user_id],
             [function ($query) use ($request) {
                 if (($search = $request->search)) {
                     $query->orWhere('full_name', 'LIKE', '%' . $search . '%')
@@ -243,7 +246,7 @@ class ProfileController extends Controller
         ])->Paginate(5);
 
 
-        return view('admin.current', $data, compact('profiles'));
+        return view('admin.current', $profiles);
     }
 
     public function inactive()

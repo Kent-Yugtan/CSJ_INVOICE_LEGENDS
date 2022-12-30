@@ -32,7 +32,13 @@ Route::get('/auth/login', [MainController::class, 'login'])->name('auth.login');
 Route::get('/auth/register', [MainController::class, 'register'])->name('auth.register');
 // Route::post('/auth/check_login', [MainController::class, 'check_login'])->name('auth.check_login');
 Route::middleware(['AuthCheck'])->group(function () {
+
     Route::resource('admin/dashboard', DashboardController::class);
+    Route::resource('admin/profile', ProfileController::class);
+    Route::get('admin/current', [ProfileController::class, 'current'])->name('current.search');
+    Route::post('admin/SaveProfile', [ProfileController::class, 'store'])->name('profile.save');
+    Route::get('admin/EditProfile/{id}', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('admin/UpdateProfile', [ProfileController::class, 'store'])->name('profile.update');
 });
 // Route::group(['middleware' => ['AuthCheck']], function () {
 //     Route::resource('admin/dashboard', DashboardController::class);
@@ -52,12 +58,9 @@ Route::middleware(['AuthCheck'])->group(function () {
     //     Route::get('/auth/login',[MainController::class, 'login'])->name('auth.login');
     //     Route::get('/auth/register',[MainController::class,'register'])->name('auth.register');
         
-    //     Route::resource('admin/dashboard', DashboardController::class);
-    //     Route::resource('admin/profile', ProfileController::class);
-    //     Route::post('admin/SaveProfile', [ProfileController::class, 'store'])->name('profile.save');
-    //     Route::get('admin/EditProfile/{id}', [ProfileController::class, 'edit'])->name('profile.edit');
-    //     Route::post('admin/UpdateProfile', [ProfileController::class, 'store'])->name('profile.update');
-    //     Route::get('admin/current', [ProfileController::class, 'current'])->name('current.search');
+    //     
+    
+    //    
         
     //     Route::resource('admin/invoice', InvoiceController::class);
     //     Route::get('admin/add_invoice', [InvoiceController::class, 'add_invoice']);
