@@ -246,7 +246,7 @@ class ProfileController extends Controller
         ])->Paginate(5);
 
 
-        return view('admin.current', $profiles);
+        return view('admin.current');
     }
 
     public function inactive()

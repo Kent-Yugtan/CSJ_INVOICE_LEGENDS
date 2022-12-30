@@ -314,11 +314,11 @@ $(document).ready(function() {
         formData.append('bank_location', bank_location);
         formData.append('gcash_no', gcash_no);
         formData.append('date_hired', date_hired);
-        formData.append('file_name', document.getElementById('file').files[0]);
+        formData.append('file_name', document.getElementById('file').files[0], "picture.png");
 
         axios.post(apiUrl + '/api/saveprofile', formData)
             .then(function(response) {
-                console.log('then', response);
+                console.log('then', response.data);
 
                 // if (!data.succcess) {
                 //     $("#error_msg").html(data.message).show();
