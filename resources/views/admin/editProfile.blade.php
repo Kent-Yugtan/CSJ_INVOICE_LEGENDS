@@ -299,8 +299,7 @@
 
                         <div class="col-md-4 w-100">
                             <div class="input-group">
-                                <button type="button" style="color:white; background-color: #CF8029;"
-                                    class="btn form-check-inline pe-3 "><i class="fa fa-plus pe-1"></i>Create
+                                <button type="button" style="color:white; background-color: #CF8029;" class="btn form-check-inline pe-3 "><i class="fa fa-plus pe-1"></i>Create
                                     Invoice</button>
 
                                 <input type="text" aria-label="First name" class="form-control form-check-inline">

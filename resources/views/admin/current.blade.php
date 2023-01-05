@@ -50,7 +50,6 @@
                     <i class="fas fa-table me-1"></i>
                     Current Profile
                 </div>
-                @if(isset($profiles))
                 <div class="card-body table-responsive">
                     <table style=" color: #A4A6B3; " class="table table-hover" id="datatablesSimple">
                         <thead>
@@ -65,39 +64,56 @@
                         </thead>
 
                         <tbody>
-                            @foreach ($profiles as $profile)
-                            <tr>
-                                <td> <a class="navbar-brand" href="#">
-                                        <img style="width:40px;" class="rounded-pill"
-                                            src="{{ asset($profile->file_path) }}" title="">
-
-                                    </a> {{$profile->full_name}}</td>
-                                <td> {{$profile->profile_status}}</td>
-                                <td>{{$profile->phone_number}}</td>
-                                <td>{{$profile->position}}</td>
-                                <td>Not Yet</td>
-                                <td class="text-center">
-                                    <a href="{{ route('profile.edit', ['id' => $profile->id]) }}"> <button type="button"
-                                            class="btn btn-outline-primary">Edit</button></a>
-
-                                    <a href="viewProfile"> <button type="button"
-                                            class="btn btn-outline-primary">View</button></a>
-                                </td>
-                            </tr>
-
-                            @endforeach
 
                         </tbody>
                     </table>
-                    <div class="d-flex">
-                        {!! $profiles->links() !!}
-                    </div>
+
                 </div>
-                @endif
             </div>
 
         </div>
     </div>
 </div>
 
+<script type="text/javascript">
+$(document).ready(function() {
+    axios
+        .get(apiUrl + '/api/admin/current_show_data', {
+            headers: {
+                Authorization: token,
+            },
+        })
+        .then(function(response) {
+
+            let data = response.data;
+            console.log('data', data.success);
+            if (data.success) {
+                console.log("success");
+                console.log('data.data', data.data);
+                data.data.data.map((item, index) => {
+                    console.log('item', item);
+                    let tr = '<tr>';
+
+                    tr += '<td>  <img style=' + 'width:40px; ' + ' class=' +
+                        'rounded-pill' + ' src = ' + item.file_path + ' > ' + item.full_name +
+                        ' </td>';
+                    tr += '<td>' + item.profile_status + '</td>';
+                    tr += '<td>' + item.phone_number + '</td>';
+                    tr += '<td>' + item.position + '</td>';
+                    tr += '<td> NOT YET </td>';
+                    tr +=
+                        '<td  class="text-center"> <a href="' + apiUrl + '/admin/editprofile/' +
+                        item.id + '" class="btn btn-outline-primary">Edit</a> </td>';
+                    tr += '</tr>';
+                    $("#datatablesSimple tbody").append(tr);
+                })
+            } else {
+                console.log("error");
+            }
+        })
+        .catch(function(error) {
+            console.log("catch", error);
+        });
+});
+</script>
 @endsection

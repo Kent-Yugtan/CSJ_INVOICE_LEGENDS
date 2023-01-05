@@ -27,7 +27,6 @@ Auth::routes();
 Route::get('/', function () {
     // return view('welcome');
     echo auth()->user();
-    echo 'ss';
 });
 
 
@@ -39,7 +38,7 @@ Route::middleware(['AuthCheck'])->group(function () {
 
     Route::resource('admin/dashboard', DashboardController::class);
     Route::resource('admin/profile', ProfileController::class);
-    Route::get('admin/current', [ProfileController::class, 'current'])->name('current.search');
+    Route::get('admin/current', [ProfileController::class, 'current_show'])->name('current.search');
     Route::post('admin/SaveProfile', [ProfileController::class, 'store'])->name('profile.save');
     Route::get('admin/EditProfile/{id}', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('admin/UpdateProfile', [ProfileController::class, 'store'])->name('profile.update');
