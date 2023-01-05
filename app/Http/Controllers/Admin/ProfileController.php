@@ -22,9 +22,6 @@ class ProfileController extends Controller
 
     public function index()
     {
-        //
-        // $id = session('LoggedUser');
-        // $data = ['LoggedUserInfo' => User::select('id', 'first_name', 'last_name')->where('id', '=',  $id)->first()];
         return view('admin.profile');
     }
 
@@ -60,6 +57,7 @@ class ProfileController extends Controller
         if ($error === false) {
             $incoming_data = $request->validate(
                 [
+                    'profile_status' => 'required',
                     'full_name' => 'required',
                     'position' => 'required',
                     'phone_number' => 'required',
@@ -67,13 +65,12 @@ class ProfileController extends Controller
                     'province' => 'required',
                     'city' => 'required',
                     'zip_code' => 'required',
-                    'profile_status' => 'required',
-                    'bank_name' => 'required',
-                    'bank_location' => 'required',
-                    'date_hired' => 'required',
                     'acct_no' => 'required|unique:profiles',
                     'acct_name' => 'required|unique:profiles',
+                    'bank_name' => 'required',
+                    'bank_location' => 'required',
                     'gcash_no' => 'required|unique:profiles',
+                    'date_hired' => 'required',
                 ]
             );
 
@@ -122,7 +119,6 @@ class ProfileController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Your Profile has been successfully added to the database.',
-                'data' => $error,
             ], 200);
         }
     }
@@ -172,6 +168,11 @@ class ProfileController extends Controller
 
     public function current_show(Request $request)
     {
+        return view('admin.current');
+    }
+
+    public function current_show_data(Request $request)
+    {
         // $profiles = Profile::all();
         // return view('admin.current', ['profiles' => $profiles]);
         $profiles = Profile::where([
@@ -184,7 +185,11 @@ class ProfileController extends Controller
                 }
             }]
         ])->Paginate(5);
-        return view('admin.current', compact($profiles))->render();
+
+        return response()->json([
+            'success' => true,
+            'data' => $profiles,
+        ], 200);
     }
 
     public function ajax_data_current_show(Request $request)
