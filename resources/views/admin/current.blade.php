@@ -100,4 +100,25 @@
     </div>
 </div>
 
+<script>
+axios
+    .get(apiUrl + '/api/admin/current', {
+        headers: {
+            Authorization: token,
+        },
+    })
+    .then(function(response) {
+        console.log("then", response);
+
+        let data = response.data;
+        if (data.succcess) {
+            console.alert("success");
+        } else {
+            console.alert("error");
+        }
+    })
+    .catch(function(error) {
+        console.log("catch", error);
+    });
+</script>
 @endsection

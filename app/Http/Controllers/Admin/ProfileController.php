@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
 {
@@ -45,7 +46,8 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        $user_id = session('LoggedUser');
+
+        $user_id = auth()->user()->id;
         $id = $request->id;
 
         $error = false;
@@ -55,20 +57,25 @@ class ProfileController extends Controller
             return back()->with('fail', 'Something went wrong(USER), try again later');
         }
 
-        if ($error == false) {
-            $incoming_data = $request->validate([
-                'full_name' => 'required',
-                'position' => 'required',
-                'phone_number' => 'required',
-                'address' => 'required',
-                'province' => 'required',
-                'city' => 'required',
-                'zip_code' => 'required',
-                'profile_status' => 'required',
-                'bank_name' => 'required',
-                'bank_location' => 'required',
-                'date_hired' => 'required',
-            ]);
+        if ($error === false) {
+            $incoming_data = $request->validate(
+                [
+                    'full_name' => 'required',
+                    'position' => 'required',
+                    'phone_number' => 'required',
+                    'address' => 'required',
+                    'province' => 'required',
+                    'city' => 'required',
+                    'zip_code' => 'required',
+                    'profile_status' => 'required',
+                    'bank_name' => 'required',
+                    'bank_location' => 'required',
+                    'date_hired' => 'required',
+                    'acct_no' => 'required|unique:profiles',
+                    'acct_name' => 'required|unique:profiles',
+                    'gcash_no' => 'required|unique:profiles',
+                ]
+            );
 
             if ($request->file('profile_picture')) {
                 $userImageFile = $request->file('profile_picture');
@@ -91,38 +98,32 @@ class ProfileController extends Controller
 
             if (!$id) {
                 $incoming_data += [
-                    'acct_no' => 'required|unique:profiles',
-                    'acct_name' => 'required|unique:profiles',
-                    'gcash_no' => 'required|unique:profiles',
+                    'acct_no' => $request->acct_no,
+                    'acct_name' => $request->acct_name,
+                    'gcash_no' => $request->gcash_no,
                 ];
             } else {
                 $incoming_data += [
-                    'acct_no' => 'required',
-                    'acct_name' => 'required',
-                    'gcash_no' => 'required',
+                    'acct_no' => $request->acct_no,
+                    'acct_name' => $request->acct_name,
+                    'gcash_no' => $request->gcash_no,
                 ];
             }
 
             $profile_store = Profile::updateOrCreate(
                 [
                     'id' => $request->id,
+                    'user_id' => $user_id,
                 ],
-                $incoming_data
+                $incoming_data,
             );
             $profile_store->save();
-            if ($profile_store) {
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Your Profile has been successfuly added to the database.',
-                    'data' => $incoming_data,
-                ], 200);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'ERROR',
-                    'data' => $incoming_data,
-                ], 400);
-            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Your Profile has been successfully added to the database.',
+                'data' => $error,
+            ], 200);
         }
     }
 
@@ -145,13 +146,6 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        //
-        $user_id = session('LoggedUser');
-        $data = ['LoggedUserInfo' => User::select('id', 'first_name', 'last_name')->where('id', '=',  $user_id)->first()];
-        $profile = Profile::findOrFail($id);
-
-        // return $profile;
-        return view('admin.editProfile', $data, compact('profile', $profile));
     }
 
     /**
@@ -163,59 +157,6 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $user_id = session('LoggedUser');
-        $data = ['LoggedUserInfo' => User::select('id', 'first_name', 'last_name')->where('id', '=',  $user_id)->first()];
-        $profiles = Profile::findorFail($id);
-
-        // if ($request->hasfile('profile_picture')) {
-        //     $destination = $profiles->file_path;
-        //     if(File::exists($destination)){
-        //         File::delete($destination);
-        //     }
-
-        //     $userImageFile = $request->file('profile_picture');
-        //     $userImageFileName = $userImageFile->getClientOriginalName();
-        //     $userImageFilePath = time() . '' . $userImageFile->getClientOriginalName();
-        //     $filename =  $userImageFilePath;
-        //     $userImageFilePath = $userImageFile->storeAs('/images/storage', $userImageFilePath,'public');
-
-        //     $userImageFileSize = $this->formatSizeUnits($userImageFile->getSize());
-        //     // $path = $userImageFilePath;
-        //     $path = '/public/storage/' . $userImageFilePath;
-
-
-        //     $profiles = Profile::update(
-        //         [
-        //             'id' => $request->id,
-        //         ],
-        //         [
-        //         'user_id' => $user_id,
-        //         'full_name' => $request->full_name,
-        //         'position' => $request->position,
-        //         'phone_number' => $request->phone_number,
-        //         'address' => $request->address,
-        //         'province' => $request->province,
-        //         'city' => $request->city,
-        //         'zip_code' => $request->zip_code,
-        //         'profile_status' => $request->profile_status,
-        //         'acct_no' => $request->acct_no,
-        //         'acct_name' => $request->acct_name,
-        //         'bank_name' => $request->bank_name,
-        //         'bank_location' => $request->bank_location,
-        //         'gcash_no' => $request->gcash_no,
-        //         'file_original_name'=>$userImageFile->getClientOriginalName(),
-        //                 'file_name'=>$filename,
-        //                 'file_path'=>$path,
-        //                 'file_size'=>$userImageFileSize,
-        //         'date_hired' => $request->date_hired,
-        //     ]);
-
-        //     return "SUCCESS";
-        // }else{
-        //     return "ERROR";
-        // }
-        return $profiles;
     }
 
     /**
@@ -229,11 +170,10 @@ class ProfileController extends Controller
         //
     }
 
-    public function current(Request $request)
+    public function current_show(Request $request)
     {
-        // $user_id = session('LoggedUser');
-        // $data = ['LoggedUserInfo' => User::select('id', 'first_name', 'last_name')->where('id', '=',  $user_id)->first()];
-
+        // $profiles = Profile::all();
+        // return view('admin.current', ['profiles' => $profiles]);
         $profiles = Profile::where([
             ['full_name', '!=', Null],
             [function ($query) use ($request) {
@@ -244,9 +184,15 @@ class ProfileController extends Controller
                 }
             }]
         ])->Paginate(5);
+        return view('admin.current', compact($profiles))->render();
+    }
 
-
-        return view('admin.current');
+    public function ajax_data_current_show(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Profile::paginate(5);
+            return view('admin.current', compact('data'))->render();
+        }
     }
 
     public function inactive()
