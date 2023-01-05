@@ -27,7 +27,6 @@ Auth::routes();
 Route::get('/', function () {
     // return view('welcome');
     echo auth()->user();
-    echo 'ss';
 });
 
 
