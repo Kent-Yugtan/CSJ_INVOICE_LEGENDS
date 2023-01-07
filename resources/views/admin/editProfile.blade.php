@@ -187,8 +187,6 @@
 
                         <div class="col-md-4 w-100">
                             <div class="input-group">
-                                <button type="button" style="color:white; background-color: #CF8029;" class="btn form-check-inline pe-3 " data-bs-toggle="modal" data-bs-target="#exampleModal" type="submit" id="button-addon2"><i class="fa fa-plus pe-1"></i>Create
-                                    Invoice</button>
                                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -292,72 +290,190 @@
                             </div>
                         </div>
 
-                        <input type="text" aria-label="First name" class="form-control form-check-inline">
+
                         <div class="form-group has-search">
-                            <span class="fa fa-search form-control-feedback"></span>
-                            <input type="text" class="form-control" placeholder="Search">
+
+                            <div class=" tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                    <div class="card-body table-responsive">
+                                        <table style=" color: #A4A6B3;font-size: 14px;" class="table table-hover" id="datatablesSimple">
+                                            <div class="col-md-4 w-100">
+                                                <div class="input-group">
+                                                    <button style="color:white; background-color: #CF8029;" data-bs-toggle="modal" data-bs-target="#exampleModal" type="submit" id="button-addon2" class="btn form-check-inline pe-3 "><i class="fa fa-plus pe-1"></i>Create
+                                                        Invoice</button>
+                                                    <input type="text" aria-label="First name" class="form-control form-check-inline">
+                                                    <div class="form-group has-search">
+                                                        <span class="fa fa-search form-control-feedback"></span>
+                                                        <input type="text" class="form-control" placeholder="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <thead>
+                                                <tr>
+                                                    <th>Invoice #</th>
+                                                    <th>Status</th>
+                                                    <th>Due Date</th>
+                                                    <th>Total Amount</th>
+                                                    <th class="text-center">Action</th>
+
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td><button style="width:100%; height:20px; font-size:10px; padding: 0px;" type="button" class="btn btn-danger btn-xs">Pending</button>
+                                                    </td>
+                                                    <td>12/31/2022</td>
+                                                    <td>Edinburgh</td>
+                                                    <td class="text-center" style="font-size:14px">
+                                                        <button style="width:90px" type="button" class="fa-sharp fa-solid fa-eye view-hover"></button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td><button style="width:100%; height:20px; font-size:10px; padding: 0px;" type="button" class="btn btn-info">Cancelled</button></td>
+                                                    <td>12/31/2022</td>
+                                                    <td>Edinburgh</td>
+                                                    <td class="text-center" style="font-size:14px">
+                                                        <button type="button" class="fa-sharp fa-solid fa-eye view-hover"></button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td><button style="width:100%; height:20px; font-size:10px; padding: 0px;" type="button" class="btn btn-success">Paid</button>
+                                                    </td>
+                                                    <td>12/31/2022</td>
+                                                    <td>Edinburgh</td>
+                                                    <td class="text-center" style="font-size:14px">
+                                                        <button type="button" class="fa-sharp fa-solid fa-eye view-hover"></button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                    <div class="card-body table-responsive">
+                                        <table style=" color: #A4A6B3;font-size: 14px;" class="table table-hover" id="datatablesSimple">
+                                            <div class="col-md-4 w-100">
+                                                <div class="input-group">
+                                                    <button type="button" style="color:white; background-color: #CF8029;" class="btn form-check-inline pe-3 "><i class="fa fa-plus pe-1"></i>Create
+                                                        Deduction</button>
+                                                    <input type="text" aria-label="First name" class="form-control form-check-inline">
+                                                    <div class="form-group has-search">
+                                                        <span class="fa fa-search form-control-feedback"></span>
+                                                        <input type="text" class="form-control" placeholder="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <thead>
+                                                <tr>
+                                                    <th>Deduction</th>
+                                                    <th>Status</th>
+                                                    <th>Date Created</th>
+                                                    <th>Amount</th>
+                                                    <th class="text-center">Action</th>
+
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td><button style="width:100%; height:20px; font-size:10px; padding: 0px;" type="button" class="btn btn-danger btn-xs">Pending</button>
+                                                    </td>
+                                                    <td>12/31/2022</td>
+                                                    <td>Edinburgh</td>
+                                                    <td class="text-center" style="font-size:14px">
+                                                        <button style="width:90px" type="button" class="fa-sharp fa-solid fa-eye view-hover"></button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td><button style="width:100%; height:20px; font-size:10px; padding: 0px;" type="button" class="btn btn-info">Cancelled</button></td>
+                                                    <td>12/31/2022</td>
+                                                    <td>Edinburgh</td>
+                                                    <td class="text-center" style="font-size:14px">
+                                                        <button type="button" class="fa-sharp fa-solid fa-eye view-hover"></button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td><button style="width:100%; height:20px; font-size:10px; padding: 0px;" type="button" class="btn btn-success">Paid</button>
+                                                    </td>
+                                                    <td>12/31/2022</td>
+                                                    <td>Edinburgh</td>
+                                                    <td class="text-center" style="font-size:14px">
+                                                        <button type="button" class="fa-sharp fa-solid fa-eye view-hover"></button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-
                     </div>
-                </div>
 
-                <div class=" tab-content" id="pills-tabContent">
-                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                        <div class="card-body table-responsive">
-                            <table style=" color: #A4A6B3;font-size: 14px;" class="table table-hover" id="datatablesSimple">
-                                <thead>
-                                    <tr>
-                                        <th>Invoice #</th>
-                                        <th>Status</th>
-                                        <th>Due Date</th>
-                                        <th>Total Amount</th>
-                                        <th class="text-center">Action</th>
+                    <div class=" tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                            <div class="card-body table-responsive">
+                                <table style=" color: #A4A6B3;font-size: 14px;" class="table table-hover" id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th>Invoice #</th>
+                                            <th>Status</th>
+                                            <th>Due Date</th>
+                                            <th>Total Amount</th>
+                                            <th class="text-center">Action</th>
 
-                                    </tr>
-                                </thead>
+                                        </tr>
+                                    </thead>
 
-                                <tbody>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td><button style="width:100%; height:20px; font-size:10px; padding: 0px;" type="button" class="btn btn-danger btn-xs">Pending</button>
-                                        </td>
-                                        <td>12/31/2022</td>
-                                        <td>Edinburgh</td>
-                                        <td class="text-center" style="font-size:14px">
-                                            <button style="width:90px" type="button" class="fa-sharp fa-solid fa-eye view-hover"></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td><button style="width:100%; height:20px; font-size:10px; padding: 0px;" type="button" class="btn btn-info">Cancelled</button></td>
-                                        <td>12/31/2022</td>
-                                        <td>Edinburgh</td>
-                                        <td class="text-center" style="font-size:14px">
-                                            <button type="button" class="fa-sharp fa-solid fa-eye view-hover"></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td><button style="width:100%; height:20px; font-size:10px; padding: 0px;" type="button" class="btn btn-success">Paid</button>
-                                        </td>
-                                        <td>12/31/2022</td>
-                                        <td>Edinburgh</td>
-                                        <td class="text-center" style="font-size:14px">
-                                            <button type="button" class="fa-sharp fa-solid fa-eye view-hover"></button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                    <tbody>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td><button style="width:100%; height:20px; font-size:10px; padding: 0px;" type="button" class="btn btn-danger btn-xs">Pending</button>
+                                            </td>
+                                            <td>12/31/2022</td>
+                                            <td>Edinburgh</td>
+                                            <td class="text-center" style="font-size:14px">
+                                                <button style="width:90px" type="button" class="fa-sharp fa-solid fa-eye view-hover"></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td><button style="width:100%; height:20px; font-size:10px; padding: 0px;" type="button" class="btn btn-info">Cancelled</button></td>
+                                            <td>12/31/2022</td>
+                                            <td>Edinburgh</td>
+                                            <td class="text-center" style="font-size:14px">
+                                                <button type="button" class="fa-sharp fa-solid fa-eye view-hover"></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td><button style="width:100%; height:20px; font-size:10px; padding: 0px;" type="button" class="btn btn-success">Paid</button>
+                                            </td>
+                                            <td>12/31/2022</td>
+                                            <td>Edinburgh</td>
+                                            <td class="text-center" style="font-size:14px">
+                                                <button type="button" class="fa-sharp fa-solid fa-eye view-hover"></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                        ...
+                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                            ...
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 </div>
 
