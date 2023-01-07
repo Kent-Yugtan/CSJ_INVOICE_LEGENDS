@@ -64,6 +64,7 @@
 
     <div class="row">
         <div class="col-xl-6">
+            <div class="card shadow p-2 mb-4 bg-white rounded" style="max-width: 40rem;">
             <div class="card mb-4">
                 <div class="card-header">
                     <h5>

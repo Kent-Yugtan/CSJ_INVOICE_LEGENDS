@@ -27,10 +27,15 @@
                                         <input type="number" class="form-control" id="formGroupExampleInput2" placeholder="">
                                     </div>
                                 </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" style=" color:#CF8029; background-color:white " data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" style=" color:white; background-color: #CF8029">Save changes</button>
+                                <div class="row mb-4" style="padding-top:10px;margin-left:44px;">
+
+                                    <div class="col">
+                                        <button type="button" class="btn btn-primary" style=" color:white; background-color: #CF8029">Save changes</button>
+                                    </div>
+                                    <div class="col">
+                                        <button type="button" class="btn btn-secondary" style=" color:#CF8029; background-color:white " data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -40,15 +45,8 @@
 
 
 
-
-
-
-
-
-
-
-            <div class="input-group pt-4">
-                <input name="search" style="width:30%;margin-right:10px" type="text" class="form " placeholder=" Search">
+            <div class="input-group pt-4" style="width:30%;margin-right:50px">
+                <input name="search" type="text" class="form-control" style="margin-right:10px" placeholder=" Search">
                 <button class="btn" style=" color:white; background-color: #CF8029;width:30%" type="submit" id="button-addon">Search</button>
                 </form>
             </div>
