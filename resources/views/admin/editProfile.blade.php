@@ -27,8 +27,7 @@
 
                         <div class="col pt-5">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="profile_status"
-                                    name="profile_status" checked>
+                                <input class="form-check-input" type="checkbox" id="profile_status" name="profile_status" checked>
                                 <label class="form-check-label" for="status">
                                     Active
                                 </label>
@@ -36,9 +35,7 @@
                             </div>
                             <div class="mb-3">
                                 <label mb-2 style="color: #A4A6B3;">Full Name</label>
-                                <input id="full_name" name="full_name" type="text"
-                                    class="form-control @error('full_name') is-invalid @enderror "
-                                    placeholder="Full Name" value="{{ old('full_name') }}" required>
+                                <input id="full_name" name="full_name" type="text" class="form-control @error('full_name') is-invalid @enderror " placeholder="Full Name" value="{{ old('full_name') }}" required>
 
                             </div>
                         </div>
@@ -46,8 +43,7 @@
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Position</label>
-                            <select class="form-select @error('position') is-invalid @enderror" id="position"
-                                name="position" aria-label="Default select example" defaultValue="select">
+                            <select class="form-select @error('position') is-invalid @enderror" id="position" name="position" aria-label="Default select example" defaultValue="select">
                                 <option selected disabled value="">Please Select Position</option>
                                 <option value="Lead Developer">Lead Developer</option>
                                 <option value="Senior Developer">Senior Developer</option>
@@ -59,66 +55,51 @@
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Phone Number</label>
-                            <input name="phone_number" value="" type="text"
-                                class="form-control @error('phone_number') is-invalid @enderror"
-                                id="formGroupExampleInput2" placeholder="Phone Number">
+                            <input name="phone_number" value="" type="text" class="form-control @error('phone_number') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Phone Number">
 
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Address</label>
-                            <input name="address" value="" type="text"
-                                class="form-control @error('address') is-invalid @enderror" id="formGroupExampleInput2"
-                                placeholder="Address">
+                            <input name="address" value="" type="text" class="form-control @error('address') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Address">
 
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Province</label>
-                            <input name="province" value="" type="text"
-                                class="form-control @error('province') is-invalid @enderror" id="formGroupExampleInput2"
-                                placeholder="Province">
+                            <input name="province" value="" type="text" class="form-control @error('province') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Province">
 
                         </div>
 
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">City</label>
-                            <input name="city" value="" type="text"
-                                class="form-control @error('city') is-invalid @enderror" id="formGroupExampleInput2"
-                                placeholder="City">
+                            <input name="city" value="" type="text" class="form-control @error('city') is-invalid @enderror" id="formGroupExampleInput2" placeholder="City">
 
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Zip Code</label>
-                            <input name="zip_code" value="" type="text"
-                                class="form-control @error('zip_code') is-invalid @enderror" id="formGroupExampleInput2"
-                                placeholder="Zip Code">
+                            <input name="zip_code" value="" type="text" class="form-control @error('zip_code') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Zip Code">
 
                         </div>
 
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Account Number</label>
-                            <input name="acct_no" value="" type="text"
-                                class="form-control @error('acct_no') is-invalid @enderror" id="formGroupExampleInput2"
-                                placeholder="Account Number">
+                            <input name="acct_no" value="" type="text" class="form-control @error('acct_no') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Account Number">
 
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Account Name</label>
-                            <input name="acct_name" value="" type="text"
-                                class="form-control @error('acct_name') is-invalid @enderror"
-                                id="formGroupExampleInput2" placeholder="Account Name">
+                            <input name="acct_name" value="" type="text" class="form-control @error('acct_name') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Account Name">
 
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Bank Name</label>
-                            <select class="form-select @error('bank_name') is-invalid @enderror" id="bank_name"
-                                name="bank_name" aria-label="Default select example">
+                            <select class="form-select @error('bank_name') is-invalid @enderror" id="bank_name" name="bank_name" aria-label="Default select example">
                                 <option selected disabled>Please Select Bank Name</option>
                                 <option value="BDO Unibank Inc.">BDO Unibank Inc. (BDO)</option>
                                 <option value="Land Bank of the Philippines">Land Bank of the Philippines (LANDBANK)
@@ -154,26 +135,20 @@
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Bank Location</label>
-                            <input name="bank_location" value="" type="text"
-                                class="form-control @error('bank_location') is-invalid @enderror"
-                                id="formGroupExampleInput2" placeholder="Bank Address">
+                            <input name="bank_location" value="" type="text" class="form-control @error('bank_location') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Bank Address">
 
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Gcash Number</label>
-                            <input name="gcash_no" value="" type="text"
-                                class="form-control @error('gcash_no') is-invalid @enderror" id="formGroupExampleInput2"
-                                placeholder="Gcash Number">
+                            <input name="gcash_no" value="" type="text" class="form-control @error('gcash_no') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Gcash Number">
 
                         </div>
 
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Date Hired</label>
-                            <input name="date_hired" value="" type="date"
-                                class="form-control @error('date_hired') is-invalid @enderror"
-                                id="formGroupExampleInput2" placeholder="Date Hired">
+                            <input name="date_hired" value="" type="date" class="form-control @error('date_hired') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Date Hired">
 
                         </div>
 
@@ -181,15 +156,11 @@
 
                         <div class="row">
                             <div class="col mb-3">
-                                <button type="submit"
-                                    style="width:100%; height:50px;color:white; background-color: #CF8029;"
-                                    class="btn ">Edit
+                                <button type="submit" style="width:100%; height:50px;color:white; background-color: #CF8029;" class="btn ">Edit
                                     Profile</button>
                             </div>
                             <div class="col mb-3">
-                                <button type="submit"
-                                    style="width:100%; height:50px;color:white; background-color: #A4A6B3;"
-                                    class="btn">Change Password</button>
+                                <button type="submit" style="width:100%; height:50px;color:white; background-color: #A4A6B3;" class="btn">Change Password</button>
                             </div>
                         </div>
 
@@ -207,101 +178,187 @@
                         <!-- <div class="card-header">Profile Information</div> -->
                         <ul class="nav nav-pills mb-3 " id="pills-tab" role="tablist">
                             <li class="nav-item" role="presentation" style="width:50%">
-                                <button style="width:100%" class="nav-link active" id="pills-home-tab"
-                                    data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab"
-                                    aria-selected="true">Invoices</button>
+                                <button style="width:100%" class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-selected="true">Invoices</button>
                             </li>
                             <li class="nav-item" role="presentation" style="width:50%">
-                                <button style="width:100%" class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-profile" type="button" role="tab"
-                                    aria-controls="pills-profile" aria-selected="false">Deductions</button>
+                                <button style="width:100%" class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Deductions</button>
                             </li>
                         </ul>
 
                         <div class="col-md-4 w-100">
                             <div class="input-group">
-                                <button type="button" style="color:white; background-color: #CF8029;" class="btn form-check-inline pe-3 "><i class="fa fa-plus pe-1"></i>Create
+                                <button type="button" style="color:white; background-color: #CF8029;" class="btn form-check-inline pe-3 " data-bs-toggle="modal" data-bs-target="#exampleModal" type="submit" id="button-addon2"><i class="fa fa-plus pe-1"></i>Create
                                     Invoice</button>
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Create Invoice</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <form>
+                                                        <div class="col pt-3">
+                                                            <div class="form-group">
 
-                                <input type="text" aria-label="First name" class="form-control form-check-inline">
-                                <div class="form-group has-search">
-                                    <span class="fa fa-search form-control-feedback"></span>
-                                    <input type="text" class="form-control" placeholder="Search">
+                                                                <label for="formGroupExampleInput">Invoice #</label>
+                                                                <input type="number" class="form-control" id="invoice_no" placeholder="">
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col pt-3">
+                                                            <div class="form-group">
+
+                                                                <label for="formGroupExampleInput">Description</label>
+                                                                <input type="number" class="form-control" id="description" placeholder="">
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="col pt-3">
+                                                            <div class="form-group">
+
+                                                                <label for="formGroupExampleInput">Item Description</label>
+                                                                <input type="number" class="form-control" id="item_description" placeholder="">
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label class="formGroupExampleInput2" for="form3Example1">Quantity</label>
+                                                                    <input type="text" id="quantity" class="form-control" />
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label class="formGroupExampleInput2" for="form3Example2">Rate</label>
+                                                                    <input type="text" id="rate" class="form-control" />
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col pt-3">
+                                                            <div class="form-group">
+
+                                                                <label for="formGroupExampleInput">Peso Rate</label>
+                                                                <input type="number" class="form-control" id="pesorate" placeholder="">
+                                                            </div>
+                                                            <div class=" row mb-4">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label class="formGroupExampleInput2" for="form3Example1">Total Amount($)</label>
+                                                                        <input type="text" id="total_amountdollar" class="form-control" />
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label class="formGroupExampleInput2" for="form3Example2">Total Amount (PHP)</label>
+                                                                        <input type="text" id="total_amountphp" class="form-control" />
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <!-- <button type="button" class="btn btn-primary" style=" color:white; background-color: #CF8029">Save changes</button> -->
+                                                            </div>
+                                                            <div class="row mb-4">
+                                                                <div class="col">
+                                                                    <button type="button" class="btn btn-secondary w-100" style=" color:#CF8029; background-color:white; " data-bs-dismiss="modal">Close</button>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <button type="button" class="btn btn-secondary w-100" style=" color:#CF8029; background-color:white; " data-bs-dismiss="modal">Close</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                </div>
+
+
+
+
+                                            </div>
+                                        </div>
+                                        </form>
+                                    </div>
+
+
                                 </div>
-
                             </div>
                         </div>
 
-                        <div class=" tab-content" id="pills-tabContent">
-                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
-                                aria-labelledby="pills-home-tab">
-                                <div class="card-body table-responsive">
-                                    <table style=" color: #A4A6B3;font-size: 14px;" class="table table-hover"
-                                        id="datatablesSimple">
-                                        <thead>
-                                            <tr>
-                                                <th>Invoice #</th>
-                                                <th>Status</th>
-                                                <th>Due Date</th>
-                                                <th>Total Amount</th>
-                                                <th class="text-center">Action</th>
-
-                                            </tr>
-                                        </thead>
-
-                                        <tbody>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td><button
-                                                        style="width:100%; height:20px; font-size:10px; padding: 0px;"
-                                                        type="button" class="btn btn-danger btn-xs">Pending</button>
-                                                </td>
-                                                <td>12/31/2022</td>
-                                                <td>Edinburgh</td>
-                                                <td class="text-center" style="font-size:14px">
-                                                    <button style="width:90px" type="button"
-                                                        class="fa-sharp fa-solid fa-eye view-hover"></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td><button
-                                                        style="width:100%; height:20px; font-size:10px; padding: 0px;"
-                                                        type="button" class="btn btn-info">Cancelled</button></td>
-                                                <td>12/31/2022</td>
-                                                <td>Edinburgh</td>
-                                                <td class="text-center" style="font-size:14px">
-                                                    <button type="button"
-                                                        class="fa-sharp fa-solid fa-eye view-hover"></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td><button
-                                                        style="width:100%; height:20px; font-size:10px; padding: 0px;"
-                                                        type="button" class="btn btn-success">Paid</button>
-                                                </td>
-                                                <td>12/31/2022</td>
-                                                <td>Edinburgh</td>
-                                                <td class="text-center" style="font-size:14px">
-                                                    <button type="button"
-                                                        class="fa-sharp fa-solid fa-eye view-hover"></button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="pills-profile" role="tabpanel"
-                                aria-labelledby="pills-profile-tab">
-                                ...
-                            </div>
+                        <input type="text" aria-label="First name" class="form-control form-check-inline">
+                        <div class="form-group has-search">
+                            <span class="fa fa-search form-control-feedback"></span>
+                            <input type="text" class="form-control" placeholder="Search">
                         </div>
+
+                    </div>
+                </div>
+
+                <div class=" tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                        <div class="card-body table-responsive">
+                            <table style=" color: #A4A6B3;font-size: 14px;" class="table table-hover" id="datatablesSimple">
+                                <thead>
+                                    <tr>
+                                        <th>Invoice #</th>
+                                        <th>Status</th>
+                                        <th>Due Date</th>
+                                        <th>Total Amount</th>
+                                        <th class="text-center">Action</th>
+
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td>Tiger Nixon</td>
+                                        <td><button style="width:100%; height:20px; font-size:10px; padding: 0px;" type="button" class="btn btn-danger btn-xs">Pending</button>
+                                        </td>
+                                        <td>12/31/2022</td>
+                                        <td>Edinburgh</td>
+                                        <td class="text-center" style="font-size:14px">
+                                            <button style="width:90px" type="button" class="fa-sharp fa-solid fa-eye view-hover"></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tiger Nixon</td>
+                                        <td><button style="width:100%; height:20px; font-size:10px; padding: 0px;" type="button" class="btn btn-info">Cancelled</button></td>
+                                        <td>12/31/2022</td>
+                                        <td>Edinburgh</td>
+                                        <td class="text-center" style="font-size:14px">
+                                            <button type="button" class="fa-sharp fa-solid fa-eye view-hover"></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tiger Nixon</td>
+                                        <td><button style="width:100%; height:20px; font-size:10px; padding: 0px;" type="button" class="btn btn-success">Paid</button>
+                                        </td>
+                                        <td>12/31/2022</td>
+                                        <td>Edinburgh</td>
+                                        <td class="text-center" style="font-size:14px">
+                                            <button type="button" class="fa-sharp fa-solid fa-eye view-hover"></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        ...
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 
 @endsection
