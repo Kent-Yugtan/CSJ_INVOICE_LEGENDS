@@ -32,7 +32,7 @@
 
     <div class="row">
         <div class="col ">
-            <form action="{{ route('current.search')}}" method="GET">
+            <form action="{{ url('api/admin/current_show_data')}}" method="GET">
                 @csrf
                 <div class="input-group ">
                     <input name="search" type="text" class="form-control form-check-inline" placeholder="Search">
@@ -58,7 +58,7 @@
                                 <th>Status</th>
                                 <th>Phone Number</th>
                                 <th>Position</th>
-                                <th>latest Invoice</th>
+                                <th>Latest Invoice</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -102,8 +102,8 @@ $(document).ready(function() {
                     tr += '<td>' + item.position + '</td>';
                     tr += '<td> NOT YET </td>';
                     tr +=
-                        '<td  class="text-center"> <a href="' + apiUrl + '/admin/editprofile/' +
-                        item.id + '" class="btn btn-outline-primary">Edit</a> </td>';
+                        '<td  class="text-center"> <a href="' + apiUrl + '/admin/editProfile/' +
+                        item.id + ' " class="btn btn-outline-primary">Edit</a> </td>';
                     tr += '</tr>';
                     $("#datatablesSimple tbody").append(tr);
                 })
