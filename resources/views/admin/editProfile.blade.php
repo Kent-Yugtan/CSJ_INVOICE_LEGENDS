@@ -221,90 +221,287 @@
 
                         <div class="col-md-4 w-100">
                             <div class="input-group">
-                                <button type="button" style="color:white; background-color: #CF8029;"
-                                    class="btn form-check-inline pe-3 "><i class="fa fa-plus pe-1"></i>Create
-                                    Invoice</button>
+                                <div class="modal fade" id="exampleModal" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Create Invoice</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <form>
+                                                        <div class="col pt-3">
+                                                            <div class="form-group">
 
-                                <input type="text" aria-label="First name" class="form-control form-check-inline">
-                                <div class="form-group has-search">
-                                    <span class="fa fa-search form-control-feedback"></span>
-                                    <input type="text" class="form-control" placeholder="Search">
+                                                                <label for="formGroupExampleInput">Invoice #</label>
+                                                                <input type="number" class="form-control"
+                                                                    id="invoice_no" placeholder="">
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col pt-3">
+                                                            <div class="form-group">
+
+                                                                <label for="formGroupExampleInput">Description</label>
+                                                                <input type="number" class="form-control"
+                                                                    id="description" placeholder="">
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="col pt-3">
+                                                            <div class="form-group">
+
+                                                                <label for="formGroupExampleInput">Item
+                                                                    Description</label>
+                                                                <input type="number" class="form-control"
+                                                                    id="item_description" placeholder="">
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label class="formGroupExampleInput2"
+                                                                        for="form3Example1">Quantity</label>
+                                                                    <input type="text" id="quantity"
+                                                                        class="form-control" />
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label class="formGroupExampleInput2"
+                                                                        for="form3Example2">Rate</label>
+                                                                    <input type="text" id="rate" class="form-control" />
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col pt-3">
+                                                            <div class="form-group">
+
+                                                                <label for="formGroupExampleInput">Peso Rate</label>
+                                                                <input type="number" class="form-control" id="pesorate"
+                                                                    placeholder="">
+                                                            </div>
+                                                            <div class=" row mb-4">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label class="formGroupExampleInput2"
+                                                                            for="form3Example1">Total Amount($)</label>
+                                                                        <input type="text" id="total_amountdollar"
+                                                                            class="form-control" />
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label class="formGroupExampleInput2"
+                                                                            for="form3Example2">Total Amount
+                                                                            (PHP)</label>
+                                                                        <input type="text" id="total_amountphp"
+                                                                            class="form-control" />
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <!-- <button type="button" class="btn btn-primary" style=" color:white; background-color: #CF8029">Save changes</button> -->
+                                                            </div>
+                                                            <div class="row mb-4">
+                                                                <div class="col">
+                                                                    <button type="button"
+                                                                        class="btn btn-secondary w-100"
+                                                                        style=" color:#CF8029; background-color:white; "
+                                                                        data-bs-dismiss="modal">Close</button>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <button type="button"
+                                                                        class="btn btn-secondary w-100"
+                                                                        style=" color:#CF8029; background-color:white; "
+                                                                        data-bs-dismiss="modal">Close</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </form>
+                                    </div>
                                 </div>
-
                             </div>
                         </div>
 
-                        <div class=" tab-content" id="pills-tabContent">
-                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
-                                aria-labelledby="pills-home-tab">
-                                <div class="card-body table-responsive">
-                                    <table style=" color: #A4A6B3;font-size: 14px;" class="table table-hover"
-                                        id="datatablesSimple">
-                                        <thead>
-                                            <tr>
-                                                <th>Invoice #</th>
-                                                <th>Status</th>
-                                                <th>Due Date</th>
-                                                <th>Total Amount</th>
-                                                <th class="text-center">Action</th>
 
-                                            </tr>
-                                        </thead>
+                        <div class="form-group has-search">
 
-                                        <tbody>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td><button
-                                                        style="width:100%; height:20px; font-size:10px; padding: 0px;"
-                                                        type="button" class="btn btn-danger btn-xs">Pending</button>
-                                                </td>
-                                                <td>12/31/2022</td>
-                                                <td>Edinburgh</td>
-                                                <td class="text-center" style="font-size:14px">
-                                                    <button style="width:90px" type="button"
-                                                        class="fa-sharp fa-solid fa-eye view-hover"></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td><button
-                                                        style="width:100%; height:20px; font-size:10px; padding: 0px;"
-                                                        type="button" class="btn btn-info">Cancelled</button></td>
-                                                <td>12/31/2022</td>
-                                                <td>Edinburgh</td>
-                                                <td class="text-center" style="font-size:14px">
+                            <div class=" tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                                    aria-labelledby="pills-home-tab">
+                                    <div class="card-body table-responsive">
+                                        <table style=" color: #A4A6B3;font-size: 14px;" class="table table-hover"
+                                            id="datatablesSimple">
+                                            <div class="col-md-4 w-100">
+                                                <div class="input-group">
+                                                    <button style="color:white; background-color: #CF8029;"
+                                                        data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                        type="submit" id="button-addon2"
+                                                        class="btn form-check-inline pe-3 "><i
+                                                            class="fa fa-plus pe-1"></i>Create
+                                                        Invoice</button>
+                                                    <input type="text" aria-label="First name"
+                                                        class="form-control form-check-inline">
+                                                    <div class="form-group has-search">
+                                                        <span class="fa fa-search form-control-feedback"></span>
+                                                        <input type="text" class="form-control" placeholder="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <thead>
+                                                <tr>
+                                                    <th>Invoice #</th>
+                                                    <th>Status</th>
+                                                    <th>Due Date</th>
+                                                    <th>Total Amount</th>
+                                                    <th class="text-center">Action</th>
+
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td><button
+                                                            style="width:100%; height:20px; font-size:10px; padding: 0px;"
+                                                            type="button" class="btn btn-danger btn-xs">Pending</button>
+                                                    </td>
+                                                    <td>12/31/2022</td>
+                                                    <td>Edinburgh</td>
+                                                    <td class="text-center" style="font-size:14px">
+                                                        <button style="width:90px" type="button"
+                                                            class="fa-sharp fa-solid fa-eye view-hover"></button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td><button
+                                                            style="width:100%; height:20px; font-size:10px; padding: 0px;"
+                                                            type="button" class="btn btn-info">Cancelled</button></td>
+                                                    <td>12/31/2022</td>
+                                                    <td>Edinburgh</td>
+                                                    <td class="text-center" style="font-size:14px">
+                                                        <button type="button"
+                                                            class="fa-sharp fa-solid fa-eye view-hover"></button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td><button
+                                                            style="width:100%; height:20px; font-size:10px; padding: 0px;"
+                                                            type="button" class="btn btn-success">Paid</button>
+                                                    </td>
+                                                    <td>12/31/2022</td>
+                                                    <td>Edinburgh</td>
+                                                    <td class="text-center" style="font-size:14px">
+                                                        <button type="button"
+                                                            class="fa-sharp fa-solid fa-eye view-hover"></button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                                    aria-labelledby="pills-profile-tab">
+                                    <div class="card-body table-responsive">
+                                        <table style=" color: #A4A6B3;font-size: 14px;" class="table table-hover"
+                                            id="datatablesSimple">
+                                            <div class="col-md-4 w-100">
+                                                <div class="input-group">
                                                     <button type="button"
-                                                        class="fa-sharp fa-solid fa-eye view-hover"></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td><button
-                                                        style="width:100%; height:20px; font-size:10px; padding: 0px;"
-                                                        type="button" class="btn btn-success">Paid</button>
-                                                </td>
-                                                <td>12/31/2022</td>
-                                                <td>Edinburgh</td>
-                                                <td class="text-center" style="font-size:14px">
-                                                    <button type="button"
-                                                        class="fa-sharp fa-solid fa-eye view-hover"></button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                                        style="color:white; background-color: #CF8029;"
+                                                        class="btn form-check-inline pe-3 "><i
+                                                            class="fa fa-plus pe-1"></i>Create
+                                                        Deduction</button>
+                                                    <input type="text" aria-label="First name"
+                                                        class="form-control form-check-inline">
+                                                    <div class="form-group has-search">
+                                                        <span class="fa fa-search form-control-feedback"></span>
+                                                        <input type="text" class="form-control" placeholder="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <thead>
+                                                <tr>
+                                                    <th>Deduction</th>
+                                                    <th>Status</th>
+                                                    <th>Date Created</th>
+                                                    <th>Amount</th>
+                                                    <th class="text-center">Action</th>
+
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td><button
+                                                            style="width:100%; height:20px; font-size:10px; padding: 0px;"
+                                                            type="button" class="btn btn-danger btn-xs">Pending</button>
+                                                    </td>
+                                                    <td>12/31/2022</td>
+                                                    <td>Edinburgh</td>
+                                                    <td class="text-center" style="font-size:14px">
+                                                        <button style="width:90px" type="button"
+                                                            class="fa-sharp fa-solid fa-eye view-hover"></button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td><button
+                                                            style="width:100%; height:20px; font-size:10px; padding: 0px;"
+                                                            type="button" class="btn btn-info">Cancelled</button></td>
+                                                    <td>12/31/2022</td>
+                                                    <td>Edinburgh</td>
+                                                    <td class="text-center" style="font-size:14px">
+                                                        <button type="button"
+                                                            class="fa-sharp fa-solid fa-eye view-hover"></button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tiger Nixon</td>
+                                                    <td><button
+                                                            style="width:100%; height:20px; font-size:10px; padding: 0px;"
+                                                            type="button" class="btn btn-success">Paid</button>
+                                                    </td>
+                                                    <td>12/31/2022</td>
+                                                    <td>Edinburgh</td>
+                                                    <td class="text-center" style="font-size:14px">
+                                                        <button type="button"
+                                                            class="fa-sharp fa-solid fa-eye view-hover"></button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="pills-profile" role="tabpanel"
-                                aria-labelledby="pills-profile-tab">
-                                ...
-                            </div>
+
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 
 <div style="position: absolute; top: 20px; right: 20px;">
