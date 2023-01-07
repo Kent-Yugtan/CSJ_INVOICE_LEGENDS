@@ -12,10 +12,11 @@
                 <div class="card-header">Edit Information</div>
                 <div class="row px-4 pb-4">
 
-                    <form method="post" action="javascript:void(0)" class="row g-3 needs-validation" novalidate>
+                    <form id="ProfileUpdate" method="POST" action="javascript:void(0)" class="row g-3 needs-validation"
+                        novalidate>
                         @csrf
 
-                        <input type="text" id="profile_id" value="{{$profile_id}}">
+                        <input type="text" id="profile_id" hidden value="{{$profile_id}}">
 
                         <div class="col mb-3">
                             <div class="profile-pic-div" style="position: relative; height:200px">
@@ -36,9 +37,9 @@
                             </div>
                             <div class="mb-3">
                                 <label mb-2 style="color: #A4A6B3;">Full Name</label>
-                                <input id="full_name" name="full_name" value="" type="text"
+                                <input id="full_name" name="full_name" type="text"
                                     class="form-control @error('full_name') is-invalid @enderror "
-                                    placeholder="Full Name" value="{{ old('full_name') }}" required>
+                                    placeholder="Full Name" required>
 
                             </div>
                         </div>
@@ -48,7 +49,7 @@
                             <label mb-2 style="color: #A4A6B3;">Position</label>
                             <select class="form-select @error('position') is-invalid @enderror" id="position"
                                 name="position" aria-label="Default select example" defaultValue="select">
-                                <option selected disabled value="">Please Select Position</option>
+                                <option selected disabled>Please Select Position</option>
                                 <option value="Lead Developer">Lead Developer</option>
                                 <option value="Senior Developer">Senior Developer</option>
                                 <option value="Junior Developer">Junior Developer</option>
@@ -59,7 +60,7 @@
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Phone Number</label>
-                            <input name="phone_number" value="" type="text"
+                            <input id="phone_number" name="phone_number" type="text"
                                 class="form-control @error('phone_number') is-invalid @enderror"
                                 id="formGroupExampleInput2" placeholder="Phone Number">
 
@@ -67,7 +68,7 @@
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Address</label>
-                            <input name="address" value="" type="text"
+                            <input id="address" name="address" type="text"
                                 class="form-control @error('address') is-invalid @enderror" id="formGroupExampleInput2"
                                 placeholder="Address">
 
@@ -75,7 +76,7 @@
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Province</label>
-                            <input name="province" value="" type="text"
+                            <input id="province" name="province" type="text"
                                 class="form-control @error('province') is-invalid @enderror" id="formGroupExampleInput2"
                                 placeholder="Province">
 
@@ -84,7 +85,7 @@
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">City</label>
-                            <input name="city" value="" type="text"
+                            <input id="city" name="city" type="text"
                                 class="form-control @error('city') is-invalid @enderror" id="formGroupExampleInput2"
                                 placeholder="City">
 
@@ -92,7 +93,7 @@
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Zip Code</label>
-                            <input name="zip_code" value="" type="text"
+                            <input id="zip_code" name="zip_code" type="text"
                                 class="form-control @error('zip_code') is-invalid @enderror" id="formGroupExampleInput2"
                                 placeholder="Zip Code">
 
@@ -101,7 +102,7 @@
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Account Number</label>
-                            <input name="acct_no" value="" type="text"
+                            <input id="acct_no" name="acct_no" type="text"
                                 class="form-control @error('acct_no') is-invalid @enderror" id="formGroupExampleInput2"
                                 placeholder="Account Number">
 
@@ -109,7 +110,7 @@
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Account Name</label>
-                            <input name="acct_name" value="" type="text"
+                            <input id="acct_name" name="acct_name" type="text"
                                 class="form-control @error('acct_name') is-invalid @enderror"
                                 id="formGroupExampleInput2" placeholder="Account Name">
 
@@ -154,7 +155,7 @@
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Bank Location</label>
-                            <input name="bank_location" value="" type="text"
+                            <input id="bank_location" name="bank_location" type="text"
                                 class="form-control @error('bank_location') is-invalid @enderror"
                                 id="formGroupExampleInput2" placeholder="Bank Address">
 
@@ -162,7 +163,7 @@
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Gcash Number</label>
-                            <input name="gcash_no" value="" type="text"
+                            <input id="gcash_no" name="gcash_no" type="text"
                                 class="form-control @error('gcash_no') is-invalid @enderror" id="formGroupExampleInput2"
                                 placeholder="Gcash Number">
 
@@ -171,7 +172,7 @@
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Date Hired</label>
-                            <input name="date_hired" value="" type="date"
+                            <input id="date_hired" name="date_hired" type="date"
                                 class="form-control @error('date_hired') is-invalid @enderror"
                                 id="formGroupExampleInput2" placeholder="Date Hired">
 
@@ -220,7 +221,8 @@
 
                         <div class="col-md-4 w-100">
                             <div class="input-group">
-                                <button type="button" style="color:white; background-color: #CF8029;" class="btn form-check-inline pe-3 "><i class="fa fa-plus pe-1"></i>Create
+                                <button type="button" style="color:white; background-color: #CF8029;"
+                                    class="btn form-check-inline pe-3 "><i class="fa fa-plus pe-1"></i>Create
                                     Invoice</button>
 
                                 <input type="text" aria-label="First name" class="form-control form-check-inline">
@@ -304,6 +306,26 @@
     </div>
 </div>
 
+
+<div style="position: absolute; top: 20px; right: 20px;">
+
+    <div class="toast toast1 toast-bootstrap" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <div><i class="fa fa-newspaper-o"> </i></div>
+            <div><strong class="mr-auto m-l-sm toast-title">Notification</strong></div>
+            <div>
+                <button type="button" class="ml-2 mb-1 close float-end" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        <div class="toast-body">
+            Hello, you can push notifications to your visitors with this toast feature.
+        </div>
+    </div>
+
+</div>
+
 <script type="text/javascript">
 $(document).ready(function() {
     let profile_id = $('#profile_id').val();
@@ -313,14 +335,157 @@ $(document).ready(function() {
         },
     }).then(function(response) {
         let data = response.data;
-        console.log("THEN RESPONSE", data.data.full_name);
+        console.log("THEN RESPONSE", data.data);
         if (data.success) {
             console.log("SUCCESS");
+            $('#full_name').val(data.data.full_name);
+            $('#position').val(data.data.position);
+            $('#phone_number').val(data.data.phone_number);
+            $('#address').val(data.data.address);
+            $('#province').val(data.data.province);
+            $('#city').val(data.data.city);
+            $('#zip_code').val(data.data.zip_code);
+            $('#acct_no').val(data.data.acct_no);
+            $('#acct_name').val(data.data.acct_name);
+            $('#bank_name').val(data.data.bank_name);
+            $('#bank_location').val(data.data.bank_location);
+            $('#gcash_no').val(data.data.gcash_no);
+            $('#date_hired').val(data.data.date_hired);
+            $("#photo").attr("src", data.data.file_path);
+
         } else {
             console.log("ERROR");
         }
     });
 });
+$(document).ready(function() {
+    let toast1 = $('.toast1');
+    toast1.toast({
+        delay: 5000,
+        animation: true
+    });
+
+    // $('#showtoast').on('click', function(e) {
+    //     e.preventDefault();
+
+    // })
+    $('.close').on('click', function(e) {
+        e.preventDefault();
+        toast1.toast('hide');
+    })
+
+    $("#error_msg").hide();
+    $("#success_msg").hide();
+
+    $('#ProfileUpdate').submit(function(e) {
+        e.preventDefault();
+
+
+        let full_name = $("#full_name").val();
+        let position = $("#position").val();
+        let phone_number = $("#phone_number").val();
+        let address = $("#address").val();
+        let province = $("#province").val();
+        let city = $("#city").val();
+        let zip_code = $("#zip_code").val();
+        let profile_status = $("#profile_status").val();
+        let acct_no = $("#acct_no").val();
+        let acct_name = $("#acct_name").val();
+        let bank_name = $("#bank_name").val();
+        let bank_location = $("#bank_location").val();
+        let gcash_no = $("#gcash_no").val();
+        let date_hired = $("#date_hired").val();
+
+        let formData = new FormData();
+        formData.append('full_name', full_name);
+        formData.append('position', position ?? "");
+        formData.append('phone_number', phone_number);
+        formData.append('address', address);
+        formData.append('province', province);
+        formData.append('city', city);
+        formData.append('zip_code', zip_code);
+        if (document.getElementById('profile_status').checked == true) {
+            formData.append('profile_status', 'Active');
+        } else {
+            formData.append('profile_status', 'Inactive');
+        }
+        formData.append('acct_no', acct_no);
+        formData.append('acct_name', acct_name);
+        formData.append('bank_name', bank_name ?? "");
+        formData.append('bank_location', bank_location);
+        formData.append('gcash_no', gcash_no);
+        formData.append('date_hired', date_hired);
+
+        if (document.getElementById('file').files.length > 0) {
+            formData.append('profile_picture', document.getElementById('file').files[0],
+                "picture.png");
+        }
+
+        axios.post(apiUrl + '/api/saveprofile', formData, {
+                headers: {
+                    Authorization: token,
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+            .then(function(response) {
+                let data = response.data;
+                console.log("SUCCESS", data);
+
+                if (data.success == true) {
+                    $("#full_name").val("");
+                    $("#position").val("");
+                    $("#phone_number").val("");
+                    $("#address").val("");
+                    $("#province").val("");
+                    $("#city").val("");
+                    $("#zip_code").val("");
+                    $("#profile_status").val("");
+                    $("#acct_no").val("");
+                    $("#acct_name").val("");
+                    $("#bank_name").val("");
+                    $("#bank_location").val("");
+                    $("#gcash_no").val("");
+                    $("#date_hired").val("");
+                    $("#photo").attr("src", "/images/default.png");
+
+                    $('.toast1 .toast-title').html('Profile');
+                    $('.toast1 .toast-body').html(data.message);
+                    toast1.toast('show');
+
+                }
+            }).catch(function(error) {
+                // console.log('CATCH ERROR', error);
+                // if (error.response.data.message) {
+                //     $('#error_full_name').text(error.response.data.errors.full_name[0]);
+                // }
+                if (error.response.data.errors) {
+                    let errors = error.response.data.errors;
+                    let fieldnames = Object.keys(errors);
+
+                    Object.values(errors).map((item, index) => {
+                        fieldname = fieldnames[0].split('_');
+                        fieldname.map((item2, index2) => {
+                            fieldname['key'] = capitalize(item2);
+                            return ""
+                        });
+                        fieldname = fieldname.join(" ");
+                        $('.toast1 .toast-title').html(fieldname);
+                        $('.toast1 .toast-body').html(Object.values(errors)[0].join(
+                            "\n\r"));
+                    })
+
+                    toast1.toast('show');
+                }
+
+            });
+    })
+
+});
+
+function capitalize(s) {
+    if (typeof s !== 'string') return "";
+    return s.charAt(0).toUpperCase() + s.slice(1);
+}
 </script>
 
 @endsection

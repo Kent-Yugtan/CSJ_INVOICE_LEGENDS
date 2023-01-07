@@ -150,6 +150,14 @@ class ProfileController extends Controller
     public function show_edit(Request $request, $id)
     {
         $profile = Profile::find($request->id);
+
+        if (!$profile) {
+            return response()->json([
+                'success' => false,
+                'message' => 'ID ' . $id . ' not found'
+            ], 400);
+        }
+
         return response()->json([
             'success' => true,
             'data' => $profile,

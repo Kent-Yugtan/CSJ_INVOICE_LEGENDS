@@ -10,7 +10,6 @@
                 <div class="card-header">Profile Information</div>
                 <div class="row px-4 pb-4" id="header">
 
-
                     <form name="ProfileStore" id="ProfileStore" method="post" action="javascript:void(0)"
                         class="row g-3 needs-validation" novalidate>
                         @csrf
