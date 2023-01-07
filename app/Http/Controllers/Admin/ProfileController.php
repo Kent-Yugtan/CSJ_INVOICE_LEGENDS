@@ -143,13 +143,13 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        return view("admin.editProfile");
+        $profile_id = $id;
+        return view("admin.editProfile", compact('profile_id'));
     }
 
     public function show_edit(Request $request, $id)
     {
         $profile = Profile::find($request->id);
-
         return response()->json([
             'success' => true,
             'data' => $profile,
@@ -190,11 +190,11 @@ class ProfileController extends Controller
         // return view('admin.current', ['profiles' => $profiles]);
         $profiles = Profile::where([
             ['full_name', '!=', Null],
+            ['profile_status', '=', 'Active'],
             [function ($query) use ($request) {
                 if (($search = $request->search)) {
                     $query->orWhere('full_name', 'LIKE', '%' . $search . '%')
                         ->orWhere('position', 'LIKE', '%' . $search . '%')
-                        ->orWhere('profile_status', 'Active')
                         ->get();
                 }
             }]

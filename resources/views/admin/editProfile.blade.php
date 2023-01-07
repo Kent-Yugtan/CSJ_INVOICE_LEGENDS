@@ -15,7 +15,7 @@
                     <form method="post" action="javascript:void(0)" class="row g-3 needs-validation" novalidate>
                         @csrf
 
-
+                        <input type="text" id="profile_id" value="{{$profile_id}}">
 
                         <div class="col mb-3">
                             <div class="profile-pic-div" style="position: relative; height:200px">
@@ -36,7 +36,7 @@
                             </div>
                             <div class="mb-3">
                                 <label mb-2 style="color: #A4A6B3;">Full Name</label>
-                                <input id="full_name" name="full_name" type="text"
+                                <input id="full_name" name="full_name" value="" type="text"
                                     class="form-control @error('full_name') is-invalid @enderror "
                                     placeholder="Full Name" value="{{ old('full_name') }}" required>
 
@@ -304,5 +304,24 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    let profile_id = $('#profile_id').val();
+    axios.get(apiUrl + '/api/admin/show_edit/' + profile_id, {
+        headers: {
+            Authorization: token,
+        },
+    }).then(function(response) {
+        let data = response.data;
+        console.log("THEN RESPONSE", data.data.full_name);
+        if (data.success) {
+            console.log("SUCCESS");
+        } else {
+            console.log("ERROR");
+        }
+    });
+});
+</script>
 
 @endsection

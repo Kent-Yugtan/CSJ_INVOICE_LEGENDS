@@ -219,10 +219,6 @@ $(document).ready(function() {
         animation: true
     });
 
-    // $('#showtoast').on('click', function(e) {
-    //     e.preventDefault();
-
-    // })
     $('.close').on('click', function(e) {
         e.preventDefault();
         toast1.toast('hide');

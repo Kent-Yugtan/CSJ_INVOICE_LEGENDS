@@ -33,6 +33,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('admin/UpdateProfile', [ProfileController::class, 'store'])->name('profile.update');
     Route::get('admin/current_show_data', [ProfileController::class, 'current_show_data']);
     Route::get('admin/editProfile/{id}', [ProfileController::class, 'store']);
+    Route::get('admin/show_edit/{id}', [ProfileController::class, 'show_edit']);
+
 
 
     Route::resource('admin/invoice', InvoiceController::class);
