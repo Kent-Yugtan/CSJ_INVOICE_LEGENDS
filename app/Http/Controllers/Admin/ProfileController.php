@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Faker\Extension\CompanyExtension;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -142,7 +143,19 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
+        return view("admin.editProfile");
     }
+
+    public function show_edit(Request $request, $id)
+    {
+        $profile = Profile::find($request->id);
+
+        return response()->json([
+            'success' => true,
+            'data' => $profile,
+        ]);
+    }
+
 
     /**
      * Update the specified resource in storage.
@@ -181,6 +194,7 @@ class ProfileController extends Controller
                 if (($search = $request->search)) {
                     $query->orWhere('full_name', 'LIKE', '%' . $search . '%')
                         ->orWhere('position', 'LIKE', '%' . $search . '%')
+                        ->orWhere('profile_status', 'Active')
                         ->get();
                 }
             }]
@@ -192,13 +206,6 @@ class ProfileController extends Controller
         ], 200);
     }
 
-    public function ajax_data_current_show(Request $request)
-    {
-        if ($request->ajax()) {
-            $data = Profile::paginate(5);
-            return view('admin.current', compact('data'))->render();
-        }
-    }
 
     public function inactive()
     {

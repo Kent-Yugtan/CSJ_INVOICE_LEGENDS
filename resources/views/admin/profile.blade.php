@@ -35,7 +35,6 @@
 
                             </div>
                         </div>
-                        @csrf
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Position</label>
@@ -47,39 +46,38 @@
                                 <option value="Web Designer">Web Designer</option>
                                 <option value="Tester">Tester</option>
                             </select>
-                            <!-- <input name="position" type="text" class="form-control" id="formGroupExampleInput"
-                                placeholder="Position"> -->
-                            <span id="error_position" class="text-danger"></span>
+
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Phone Number</label>
-                            <input id="phone_number" name="phone_number" type="text" class="form-control @error('phone_number') is-invalid @enderror" placeholder="Phone Number" required>
-                            <span id="error_phone_number" class="text-danger"></span>
+                            <input id="phone_number" name="phone_number" type="text"
+                                class="form-control @error('phone_number') is-invalid @enderror"
+                                placeholder="Phone Number" required>
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Address</label>
-                            <input name="address" id="address" type="text" class="form-control @error('address') is-invalid @enderror" placeholder="Address">
-                            <span id="error_address" class="text-danger"></span>
+                            <input name="address" id="address" type="text"
+                                class="form-control @error('address') is-invalid @enderror" placeholder="Address">
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Province</label>
-                            <input name="province" id="province" type="text" class="form-control @error('province') is-invalid @enderror" placeholder="Province">
-                            <span id="error_province" class="text-danger"></span>
+                            <input name="province" id="province" type="text"
+                                class="form-control @error('province') is-invalid @enderror" placeholder="Province">
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">City</label>
-                            <input id="city" name="city" type="text" class="form-control @error('city') is-invalid @enderror" placeholder="City">
-                            <span id="error_city" class="text-danger"></span>
+                            <input id="city" name="city" type="text"
+                                class="form-control @error('city') is-invalid @enderror" placeholder="City">
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Zip Code</label>
-                            <input id="zip_code" name="zip_code" type="text" class="form-control @error('zip_code') is-invalid @enderror" placeholder="Zip Code">
-                            <span id="error_zip_code" class="text-danger"></span>
+                            <input id="zip_code" name="zip_code" type="text"
+                                class="form-control @error('zip_code') is-invalid @enderror" placeholder="Zip Code">
                         </div>
 
                         <!-- <div class="mb-3">
@@ -100,14 +98,16 @@
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Account Number</label>
-                            <input name="acct_no" id="acct_no" type="text" class="form-control @error('acct_no') is-invalid @enderror" placeholder="Account Number">
-                            <span id="error_acct_no" class="text-danger"></span>
+                            <input name="acct_no" id="acct_no" type="text"
+                                class="form-control @error('acct_no') is-invalid @enderror"
+                                placeholder="Account Number">
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Account Name</label>
-                            <input name="acct_name" id="acct_name" type="text" class="form-control @error('acct_name') is-invalid @enderror" placeholder="Account Name">
-                            <span id="error_acct_name" class="text-danger"></span>
+                            <input name="acct_name" id="acct_name" type="text"
+                                class="form-control @error('acct_name') is-invalid @enderror"
+                                placeholder="Account Name">
                         </div>
 
                         <div class="mb-3">
@@ -144,27 +144,27 @@
                                     (PBCOM)</option>
                                 <option value="Maybank Philippines Inc.">Maybank Philippines Inc.</option>
                             </select>
-                            <!-- <input name="bank_name" type="text" class="form-control" id="formGroupExampleInput2"
-                                placeholder="Bank Name"> -->
-                            <span id="error_bank_name" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Bank Location</label>
-                            <input id="bank_location" name="bank_location" type="text" class="form-control @error('bank_location') is-invalid @enderror" placeholder="Bank Address">
-                            <span id="error_bank_location" class="text-danger"></span>
+                            <input id="bank_location" name="bank_location" type="text"
+                                class="form-control @error('bank_location') is-invalid @enderror"
+                                placeholder="Bank Address">
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Gcash Number</label>
-                            <input name="gcash_no" type="text" class="form-control @error('gcash_no') is-invalid @enderror" id="gcash_no" placeholder="Gcash Number">
-                            <span id="error_gcash_no" class="text-danger"></span>
+                            <input name="gcash_no" type="text"
+                                class="form-control @error('gcash_no') is-invalid @enderror" id="gcash_no"
+                                placeholder="Gcash Number">
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Date Hired</label>
-                            <input name="date_hired" type="date" class="form-control @error('date_hired') is-invalid @enderror" id="date_hired" placeholder="Date Hired">
-                            <span id="error_date_hired" class="text-danger"></span>
+                            <input name="date_hired" type="date"
+                                class="form-control @error('date_hired') is-invalid @enderror" id="date_hired"
+                                placeholder="Date Hired">
                         </div>
 
                         <div class="col mb-3">
