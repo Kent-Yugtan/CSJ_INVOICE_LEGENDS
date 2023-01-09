@@ -49,7 +49,7 @@
                             <label mb-2 style="color: #A4A6B3;">Position</label>
                             <select class="form-select @error('position') is-invalid @enderror" id="position"
                                 name="position" aria-label="Default select example" defaultValue="select">
-                                <option selected disabled>Please Select Position</option>
+                                <option selected disabled value="">Please Select Position</option>
                                 <option value="Lead Developer">Lead Developer</option>
                                 <option value="Senior Developer">Senior Developer</option>
                                 <option value="Junior Developer">Junior Developer</option>
@@ -120,7 +120,7 @@
                             <label mb-2 style="color: #A4A6B3;">Bank Name</label>
                             <select class="form-select @error('bank_name') is-invalid @enderror" id="bank_name"
                                 name="bank_name" aria-label="Default select example">
-                                <option selected disabled>Please Select Bank Name</option>
+                                <option selected disabled value="">Please Select Bank Name</option>
                                 <option value="BDO Unibank Inc.">BDO Unibank Inc. (BDO)</option>
                                 <option value="Land Bank of the Philippines">Land Bank of the Philippines (LANDBANK)
                                 </option>
@@ -577,7 +577,7 @@ $(document).ready(function() {
     $('#ProfileUpdate').submit(function(e) {
         e.preventDefault();
 
-
+        let profile_id = $("#profile_id").val();
         let full_name = $("#full_name").val();
         let position = $("#position").val();
         let phone_number = $("#phone_number").val();
@@ -594,6 +594,7 @@ $(document).ready(function() {
         let date_hired = $("#date_hired").val();
 
         let formData = new FormData();
+        formData.append('id', profile_id);
         formData.append('full_name', full_name);
         formData.append('position', position ?? "");
         formData.append('phone_number', phone_number);

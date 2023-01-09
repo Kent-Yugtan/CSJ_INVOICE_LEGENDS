@@ -94,9 +94,17 @@ $(document).ready(function() {
                     console.log('item', item);
                     let tr = '<tr>';
 
-                    tr += '<td>  <img style=' + 'width:40px; ' + ' class=' +
-                        'rounded-pill' + ' src = ' + item.file_path + ' > ' + item.full_name +
-                        ' </td>';
+
+                    if (item.file_path) {
+                        tr += '<td>  <img style="width:40px;" class="rounded-pill" src ="' +
+                            item
+                            .file_path + '"> ' + item.full_name + ' </td>';
+                    } else {
+                        tr +=
+                            '<td>  <img style="width:40px;" class="rounded-pill" src ="/images/default.png"> ' +
+                            item.full_name + ' </td>';
+                    }
+
                     tr += '<td>' + item.profile_status + '</td>';
                     tr += '<td>' + item.phone_number + '</td>';
                     tr += '<td>' + item.position + '</td>';
@@ -106,7 +114,9 @@ $(document).ready(function() {
                         item.id + ' " class="btn btn-outline-primary">Edit</a> </td>';
                     tr += '</tr>';
                     $("#datatablesSimple tbody").append(tr);
+                    console.log("item.file_path", item.file_path);
                 })
+
             } else {
                 console.log("error");
             }
