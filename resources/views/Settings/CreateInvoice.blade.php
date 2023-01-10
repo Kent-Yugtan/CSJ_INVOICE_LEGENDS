@@ -1,7 +1,5 @@
 @extends('layouts.master')
 @section('content-dashboard')
-
-
 <div class="container-fluid px-4">
     <ol class="breadcrumb mb-4"></ol>
     <div class="row">
@@ -82,6 +80,5 @@
             </div>
         </div>
     </div>
-
 
     @endsection

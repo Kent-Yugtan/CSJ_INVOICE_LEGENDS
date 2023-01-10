@@ -36,6 +36,7 @@ Route::get('/auth/register', [MainController::class, 'register'])->name('auth.re
 Route::middleware(['AuthCheck'])->group(function () {
 
     Route::resource('/admin/dashboard', DashboardController::class);
+    Route::resource('/settings/CreateInvoice', InvoiceController::class);
     Route::resource('/admin/profile', ProfileController::class);
     Route::get('/admin/current', [ProfileController::class, 'current_show']);
     Route::get('/admin/editProfile/{id}', [ProfileController::class, 'edit']);
