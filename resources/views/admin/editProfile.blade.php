@@ -263,7 +263,7 @@
 
                                                         </div>
 
-                                                        <div class="row">
+                                                        <div class="row mt-4">
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label class="formGroupExampleInput2"
@@ -286,7 +286,7 @@
                                                                 <input type="number" class="form-control" id="pesorate"
                                                                     placeholder="">
                                                             </div>
-                                                            <div class=" row mb-4">
+                                                            <div class=" row mt-4">
                                                                 <div class="col">
                                                                     <div class="form-group">
                                                                         <label class="formGroupExampleInput2"
@@ -309,8 +309,8 @@
 
                                                                 <!-- <button type="button" class="btn btn-primary" style=" color:white; background-color: #CF8029">Save changes</button> -->
                                                             </div>
-                                                            <div class="row mb-4">
-                                                                <div class="col">
+                                                            <div class="row mt-5">
+                                                                <div class="col mb-5">
                                                                     <button type="button"
                                                                         class="btn btn-secondary w-100"
                                                                         style=" color:#CF8029; background-color:white; "
@@ -319,8 +319,8 @@
                                                                 <div class="col">
                                                                     <button type="button"
                                                                         class="btn btn-secondary w-100"
-                                                                        style=" color:#CF8029; background-color:white; "
-                                                                        data-bs-dismiss="modal">Close</button>
+                                                                        style=" color:White; background-color:#CF8029; "
+                                                                        data-bs-dismiss="modal">Save</button>
                                                                 </div>
                                                             </div>
                                                         </div>
