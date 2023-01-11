@@ -21,7 +21,7 @@
                             </div>
                         </div>
 
-                        <div class="col pt-5">
+                        <div class="col pt-3">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="profile_status"
                                     name="profile_status" checked>
@@ -31,12 +31,37 @@
 
                             </div>
                             <div class="mb-3">
-                                <label mb-2 style="color: #A4A6B3;">Full Name</label>
-                                <input id="full_name" name="full_name" type="text"
-                                    class="form-control @error('full_name') is-invalid @enderror "
-                                    placeholder="Full Name" value="{{ old('full_name') }}" required>
+                                <label mb-2 style="color: #A4A6B3;">First Name</label>
+                                <input id="first_name" name="first_name" type="text"
+                                    class="form-control @error('first_name') is-invalid @enderror "
+                                    placeholder="First Name" value="{{ old('first_name') }}" required>
 
                             </div>
+                            <div class="mb-3">
+                                <label mb-2 style="color: #A4A6B3;">Last Name</label>
+                                <input id="last_name" name="last_name" type="text"
+                                    class="form-control @error('last_name') is-invalid @enderror "
+                                    placeholder="Last Name" value="{{ old('last_name') }}" required>
+
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label mb-2 style="color: #A4A6B3;">Email</label>
+                            <input id="email" name="email" type="email"
+                                class="form-control @error('email') is-invalid @enderror" placeholder="Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label mb-2 style="color: #A4A6B3;">Username</label>
+                            <input id="username" name="username" type="text"
+                                class="form-control @error('username') is-invalid @enderror" placeholder="Username"
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <label mb-2 style="color: #A4A6B3;">Password</label>
+                            <input id="password" name="password" type="text"
+                                class="form-control @error('password') is-invalid @enderror" placeholder="Password"
+                                required>
                         </div>
 
                         <div class="mb-3">
@@ -88,22 +113,6 @@
                                 class="form-control @error('zip_code') is-invalid @enderror" placeholder="Zip Code">
                             <span id="error_zip_code" class="text-danger"></span>
                         </div>
-
-                        <!-- <div class="mb-3">
-                            <label mb-2 style="color: #A4A6B3;">Profile Status</label>
-                            <select class="form-select @error('profile_status') is-invalid @enderror"
-                                name="profile_status" id="profile_status" aria-label="Default select example">
-                                <option selected disabled value="">Please Select Profile Status</option>
-                                <option value="Active">Active</option>
-                                <option value="Inactive">Inactive</option>
-                            </select>
-                         
-                            @error('profile_status')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div> -->
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Account Number</label>
@@ -200,7 +209,7 @@
     </div>
 </div>
 
-<div style="position: absolute; top: 20px; right: 20px;">
+<div style="position: fixed; top: 60px; right: 20px;">
 
     <div class="toast toast1 toast-bootstrap" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
@@ -243,7 +252,11 @@ $(document).ready(function() {
     $('#ProfileStore').submit(function(e) {
         e.preventDefault();
 
-        let full_name = $("#full_name").val();
+        let first_name = $("#first_name").val();
+        let last_name = $("#last_name").val();
+        let email = $("#email").val();
+        let username = $("#username").val();
+        let password = $("#password").val();
         let position = $("#position").val();
         let phone_number = $("#phone_number").val();
         let address = $("#address").val();
@@ -259,7 +272,11 @@ $(document).ready(function() {
         let date_hired = $("#date_hired").val();
 
         let formData = new FormData();
-        formData.append('full_name', full_name);
+        formData.append('first_name', first_name);
+        formData.append('last_name', last_name);
+        formData.append('email', email);
+        formData.append('username', username);
+        formData.append('password', password);
         formData.append('position', position ?? "");
         formData.append('phone_number', phone_number);
         formData.append('address', address);
@@ -294,7 +311,11 @@ $(document).ready(function() {
                 console.log("SUCCESS", data);
 
                 if (data.success == true) {
-                    $("#full_name").val("");
+                    $("#first_name").val("");
+                    $("#last_name").val("");
+                    $("#email").val("");
+                    $("#username").val("");
+                    $("#password").val("");
                     $("#position").val("");
                     $("#phone_number").val("");
                     $("#address").val("");
@@ -316,10 +337,7 @@ $(document).ready(function() {
 
                 }
             }).catch(function(error) {
-                // console.log('CATCH ERROR', error);
-                // if (error.response.data.message) {
-                //     $('#error_full_name').text(error.response.data.errors.full_name[0]);
-                // }
+
                 if (error.response.data.errors) {
                     let errors = error.response.data.errors;
                     let fieldnames = Object.keys(errors);

@@ -32,10 +32,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('saveprofile', [ProfileController::class, 'store']);
     Route::post('admin/UpdateProfile', [ProfileController::class, 'store'])->name('profile.update');
     Route::get('admin/current_show_data', [ProfileController::class, 'current_show_data']);
+    Route::get('admin/search_ajax', [ProfileController::class, 'search_ajax']);
     Route::get('admin/editProfile/{id}', [ProfileController::class, 'store']);
     Route::get('admin/show_edit/{id}', [ProfileController::class, 'show_edit']);
-
-
 
     Route::resource('admin/invoice', InvoiceController::class);
     Route::get('admin/add_invoice', [InvoiceController::class, 'add_invoice']);

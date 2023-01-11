@@ -270,7 +270,6 @@
                                                                         for="form3Example1">Quantity</label>
                                                                     <input type="text" id="quantity"
                                                                         class="form-control" />
-
                                                                 </div>
                                                             </div>
                                                             <div class="col">
@@ -278,13 +277,11 @@
                                                                     <label class="formGroupExampleInput2"
                                                                         for="form3Example2">Rate</label>
                                                                     <input type="text" id="rate" class="form-control" />
-
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="col pt-3">
                                                             <div class="form-group">
-
                                                                 <label for="formGroupExampleInput">Peso Rate</label>
                                                                 <input type="number" class="form-control" id="pesorate"
                                                                     placeholder="">
@@ -309,7 +306,6 @@
 
                                                                     </div>
                                                                 </div>
-
 
                                                                 <!-- <button type="button" class="btn btn-primary" style=" color:white; background-color: #CF8029">Save changes</button> -->
                                                             </div>
@@ -337,9 +333,7 @@
                             </div>
                         </div>
 
-
                         <div class="form-group has-search">
-
                             <div class=" tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
                                     aria-labelledby="pills-home-tab">
@@ -369,10 +363,8 @@
                                                     <th>Due Date</th>
                                                     <th>Total Amount</th>
                                                     <th class="text-center">Action</th>
-
                                                 </tr>
                                             </thead>
-
                                             <tbody>
                                                 <tr>
                                                     <td>Tiger Nixon</td>
@@ -491,11 +483,8 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
