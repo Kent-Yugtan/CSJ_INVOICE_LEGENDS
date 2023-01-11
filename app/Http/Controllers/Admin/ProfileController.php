@@ -6,13 +6,8 @@ use App\Models\User;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Faker\Extension\CompanyExtension;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
 {
@@ -49,8 +44,9 @@ class ProfileController extends Controller
 
         $error = false;
         $user_id = $request->id;
-        $findUser = User::with('profile')->find($user_id);
+        $profile_id = $request->profile_id;
 
+        $findUser = User::with('profile')->find($user_id);
         if (!$user_id) {
             $request->validate([
                 'acct_no' => 'required|unique:profiles',
@@ -58,10 +54,12 @@ class ProfileController extends Controller
                 'gcash_no' => 'required|unique:profiles',
                 'email' => 'required|unique:users',
             ]);
+            // return "NO USER ID";
         } else {
             if ($findUser) {
-                if ($$findUser->profile) {
-                    if ($findUser->profile->acct_no != $request->acct_no) {
+                if ($findUser->profile) {
+
+                    if ($findUser->profile->acct_no !== $request->acct_no) {
                         $request->validate([
                             'acct_no' => 'required|unique:profiles',
                         ]);
@@ -129,7 +127,6 @@ class ProfileController extends Controller
                     'gcash_no' => 'required|unique:profiles',
                 ]);
             } else {
-
                 $incoming_data += [
                     'acct_no' => $request->acct_no,
                     'acct_name' => $request->acct_name,
@@ -142,7 +139,7 @@ class ProfileController extends Controller
                 'last_name' => $request->last_name,
                 'email' => $request->email,
                 'username' => $request->username,
-                'role' => 'Staff'
+                'role' => 'Staff',
             ];
 
             if ($request->password) {
@@ -151,7 +148,12 @@ class ProfileController extends Controller
                 ];
             }
 
-            $userCreate = User::updateOrCreate($userCreateData);
+            $userCreate = User::updateOrCreate(
+                [
+                    'id' => $user_id,
+                ],
+                $userCreateData
+            );
 
             if ($userCreate) {
                 if ($user_id) {
@@ -202,27 +204,37 @@ class ProfileController extends Controller
      * @param  \App\Models\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        $profile_id = $id;
-        return view("admin.editProfile", compact('profile_id'));
+        $findid = User::with('Profile')->find($request->id);
+        // return $findid;
+        return view("admin.editProfile", compact('findid'));
     }
 
     public function show_edit(Request $request, $id)
     {
-        $profile = Profile::find($request->id);
 
-        if (!$profile) {
+        $finduser_profile = User::with('Profile')->find($id);
+
+        if (!$finduser_profile) {
             return response()->json([
                 'success' => false,
-                'message' => 'ID ' . $id . ' not found'
+                'message' => 'ID ' . $request->id . ' not found'
             ], 400);
         }
 
-        return response()->json([
-            'success' => true,
-            'data' => $profile,
-        ]);
+        if ($finduser_profile->profile) {
+            return response()->json([
+                'success' => true,
+                'data' => $finduser_profile,
+            ]);
+        } else {
+            $find_userid = User::find($id);
+            return response()->json([
+                'success' => true,
+                'data' => $find_userid,
+            ]);
+        }
     }
 
     /**
@@ -254,34 +266,37 @@ class ProfileController extends Controller
 
     public function current_show_data(Request $request)
     {
-        $data = User::select([
-            'users.*',
-            'position',
-            'phone_number',
-            'address',
-            'province',
-            'city',
-            'zip_code',
-            'profile_status',
-            'acct_no',
-            'acct_name',
-            'bank_name',
-            'bank_location',
-            'gcash_no',
-            'date_hired',
-            'file_name',
-            'file_original_name',
-            'file_path',
-            'file_size',
-            DB::raw("CONCAT(first_name, ' ', last_name) full_name")
-        ])
-            ->profile();
+        $data = User::select(
+            [
+                'users.*',
+                'position',
+                'phone_number',
+                'address',
+                'province',
+                'city',
+                'zip_code',
+                'profile_status',
+                'acct_no',
+                'acct_name',
+                'bank_name',
+                'bank_location',
+                'gcash_no',
+                'date_hired',
+                'file_name',
+                'file_original_name',
+                'file_path',
+                'file_size',
+                DB::raw("CONCAT(first_name, ' ', last_name) full_name")
+            ],
+        )->profile()->where('profile_status', 'Active');
 
         if ($request->search) {
-            $data = $data->where(function ($q) use ($request) {
-                $q->orWhere(DB::raw("CONCAT(first_name, ' ', last_name)"), 'LIKE', '%' . $request->search . '%');
-                $q->orWhere('position', 'LIKE', '%' . $request->search . '%');
-            });
+            $data = $data->where(
+                function ($q) use ($request) {
+                    $q->orWhere(DB::raw("CONCAT(first_name, ' ', last_name)"), 'LIKE', '%' . $request->search . '%');
+                    $q->orWhere('position', 'LIKE', '%' . $request->search . '%');
+                }
+            );
         }
 
         if ($request->page_size) {

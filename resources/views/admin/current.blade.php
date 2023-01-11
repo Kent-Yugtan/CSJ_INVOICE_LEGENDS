@@ -79,6 +79,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
+    show_data();
 
     $('#button-submit').on('click', function() {
         let search = $('#search').val();
@@ -87,7 +88,7 @@ $(document).ready(function() {
         });
     })
 
-    show_data();
+
 
     function show_data(filters) {
         let filter = {
@@ -169,8 +170,6 @@ $(document).ready(function() {
                         $("#tbl_user tbody").append(
                             '<tr><td colspan="6" class="text-center">No data</td></tr>');
                     }
-                } else {
-                    // console.log("error");
                 }
             })
             .catch(function(error) {
