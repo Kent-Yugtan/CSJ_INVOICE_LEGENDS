@@ -69,8 +69,7 @@
                         <a class="nav-link" href="{{url('')}}">email config</a>
                         <a class="nav-link" href="{{url('')}}">Invoice Config</a>
                         <a class="nav-link" href="{{url('')}}">Users</a>
-                        <a class="nav-link" href="{{url('settings/CreateInvoice')}}">Create Invoice</a>
-
+                        <a class="nav-link" href="{{url('settings/invoice')}}"> Invoices </a>
                     </nav>
                 </div>
             </div>

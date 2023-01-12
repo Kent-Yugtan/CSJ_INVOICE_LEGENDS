@@ -43,14 +43,8 @@
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Position</label>
-<<<<<<< HEAD
                             <select class="form-select @error('position') is-invalid @enderror" id="position" name="position" aria-label="Default select example" defaultValue="select">
-                                <option selected disabled>Please Select Position</option>
-=======
-                            <select class="form-select @error('position') is-invalid @enderror" id="position"
-                                name="position" aria-label="Default select example" defaultValue="select">
                                 <option selected disabled value="">Please Select Position</option>
->>>>>>> 55acf0e1549af2da4bff01995dc50dea0d51a6bb
                                 <option value="Lead Developer">Lead Developer</option>
                                 <option value="Senior Developer">Senior Developer</option>
                                 <option value="Junior Developer">Junior Developer</option>
@@ -105,14 +99,8 @@
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Bank Name</label>
-<<<<<<< HEAD
                             <select class="form-select @error('bank_name') is-invalid @enderror" id="bank_name" name="bank_name" aria-label="Default select example">
-                                <option selected disabled>Please Select Bank Name</option>
-=======
-                            <select class="form-select @error('bank_name') is-invalid @enderror" id="bank_name"
-                                name="bank_name" aria-label="Default select example">
                                 <option selected disabled value="">Please Select Bank Name</option>
->>>>>>> 55acf0e1549af2da4bff01995dc50dea0d51a6bb
                                 <option value="BDO Unibank Inc.">BDO Unibank Inc. (BDO)</option>
                                 <option value="Land Bank of the Philippines">Land Bank of the Philippines (LANDBANK)
                                 </option>
@@ -236,29 +224,26 @@
 
                                                         </div>
 
-                                                        <div class="row">
+                                                        <div class="row mt-4">
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label class="formGroupExampleInput2" for="form3Example1">Quantity</label>
                                                                     <input type="text" id="quantity" class="form-control" />
-
                                                                 </div>
                                                             </div>
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label class="formGroupExampleInput2" for="form3Example2">Rate</label>
                                                                     <input type="text" id="rate" class="form-control" />
-
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="col pt-3">
                                                             <div class="form-group">
-
                                                                 <label for="formGroupExampleInput">Peso Rate</label>
                                                                 <input type="number" class="form-control" id="pesorate" placeholder="">
                                                             </div>
-                                                            <div class=" row mb-4">
+                                                            <div class=" row mt-4">
                                                                 <div class="col">
                                                                     <div class="form-group">
                                                                         <label class="formGroupExampleInput2" for="form3Example1">Total Amount($)</label>
@@ -275,11 +260,10 @@
                                                                     </div>
                                                                 </div>
 
-
                                                                 <!-- <button type="button" class="btn btn-primary" style=" color:white; background-color: #CF8029">Save changes</button> -->
                                                             </div>
-                                                            <div class="row mb-4">
-                                                                <div class="col">
+                                                            <div class="row mt-5">
+                                                                <div class="col mb-5">
                                                                     <button type="button" class="btn btn-secondary w-100" style=" color:#CF8029; background-color:white; " data-bs-dismiss="modal">Close</button>
                                                                 </div>
                                                                 <div class="col">
@@ -296,9 +280,7 @@
                             </div>
                         </div>
 
-
                         <div class="form-group has-search">
-
                             <div class=" tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                                     <div class="card-body table-responsive">
@@ -321,10 +303,8 @@
                                                     <th>Due Date</th>
                                                     <th>Total Amount</th>
                                                     <th class="text-center">Action</th>
-
                                                 </tr>
                                             </thead>
-
                                             <tbody>
                                                 <tr>
                                                     <td>Tiger Nixon</td>
@@ -419,11 +399,8 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -607,12 +584,6 @@
 
     });
 
-<<<<<<< HEAD
-    function capitalize(s) {
-        if (typeof s !== 'string') return "";
-        return s.charAt(0).toUpperCase() + s.slice(1);
-    }
-=======
     // $('#showtoast').on('click', function(e) {
     //     e.preventDefault();
 
@@ -626,116 +597,115 @@
     $("#success_msg").hide();
 
     $('#ProfileUpdate').submit(function(e) {
-        e.preventDefault();
+    e.preventDefault();
 
-        let profile_id = $("#profile_id").val();
-        let full_name = $("#full_name").val();
-        let position = $("#position").val();
-        let phone_number = $("#phone_number").val();
-        let address = $("#address").val();
-        let province = $("#province").val();
-        let city = $("#city").val();
-        let zip_code = $("#zip_code").val();
-        let profile_status = $("#profile_status").val();
-        let acct_no = $("#acct_no").val();
-        let acct_name = $("#acct_name").val();
-        let bank_name = $("#bank_name").val();
-        let bank_location = $("#bank_location").val();
-        let gcash_no = $("#gcash_no").val();
-        let date_hired = $("#date_hired").val();
+    let profile_id = $("#profile_id").val();
+    let full_name = $("#full_name").val();
+    let position = $("#position").val();
+    let phone_number = $("#phone_number").val();
+    let address = $("#address").val();
+    let province = $("#province").val();
+    let city = $("#city").val();
+    let zip_code = $("#zip_code").val();
+    let profile_status = $("#profile_status").val();
+    let acct_no = $("#acct_no").val();
+    let acct_name = $("#acct_name").val();
+    let bank_name = $("#bank_name").val();
+    let bank_location = $("#bank_location").val();
+    let gcash_no = $("#gcash_no").val();
+    let date_hired = $("#date_hired").val();
 
-        let formData = new FormData();
-        formData.append('id', profile_id);
-        formData.append('full_name', full_name);
-        formData.append('position', position ?? "");
-        formData.append('phone_number', phone_number);
-        formData.append('address', address);
-        formData.append('province', province);
-        formData.append('city', city);
-        formData.append('zip_code', zip_code);
-        if (document.getElementById('profile_status').checked == true) {
-            formData.append('profile_status', 'Active');
-        } else {
-            formData.append('profile_status', 'Inactive');
-        }
-        formData.append('acct_no', acct_no);
-        formData.append('acct_name', acct_name);
-        formData.append('bank_name', bank_name ?? "");
-        formData.append('bank_location', bank_location);
-        formData.append('gcash_no', gcash_no);
-        formData.append('date_hired', date_hired);
+    let formData = new FormData();
+    formData.append('id', profile_id);
+    formData.append('full_name', full_name);
+    formData.append('position', position ?? "");
+    formData.append('phone_number', phone_number);
+    formData.append('address', address);
+    formData.append('province', province);
+    formData.append('city', city);
+    formData.append('zip_code', zip_code);
+    if (document.getElementById('profile_status').checked == true) {
+        formData.append('profile_status', 'Active');
+    } else {
+        formData.append('profile_status', 'Inactive');
+    }
+    formData.append('acct_no', acct_no);
+    formData.append('acct_name', acct_name);
+    formData.append('bank_name', bank_name ?? "");
+    formData.append('bank_location', bank_location);
+    formData.append('gcash_no', gcash_no);
+    formData.append('date_hired', date_hired);
 
-        if (document.getElementById('file').files.length > 0) {
-            formData.append('profile_picture', document.getElementById('file').files[0],
-                "picture.png");
-        }
+    if (document.getElementById('file').files.length > 0) {
+        formData.append('profile_picture', document.getElementById('file').files[0],
+            "picture.png");
+    }
 
-        axios.post(apiUrl + '/api/saveprofile', formData, {
-                headers: {
-                    Authorization: token,
-                    "Content-Type": "multipart/form-data",
-                },
-            })
-            .then(function(response) {
-                let data = response.data;
-                console.log("SUCCESS", data);
+    axios.post(apiUrl + '/api/saveprofile', formData, {
+            headers: {
+                Authorization: token,
+                "Content-Type": "multipart/form-data",
+            },
+        })
+        .then(function(response) {
+            let data = response.data;
+            console.log("SUCCESS", data);
 
-                if (data.success == true) {
-                    $("#full_name").val("");
-                    $("#position").val("");
-                    $("#phone_number").val("");
-                    $("#address").val("");
-                    $("#province").val("");
-                    $("#city").val("");
-                    $("#zip_code").val("");
-                    $("#profile_status").val("");
-                    $("#acct_no").val("");
-                    $("#acct_name").val("");
-                    $("#bank_name").val("");
-                    $("#bank_location").val("");
-                    $("#gcash_no").val("");
-                    $("#date_hired").val("");
-                    $("#photo").attr("src", "/images/default.png");
+            if (data.success == true) {
+                $("#full_name").val("");
+                $("#position").val("");
+                $("#phone_number").val("");
+                $("#address").val("");
+                $("#province").val("");
+                $("#city").val("");
+                $("#zip_code").val("");
+                $("#profile_status").val("");
+                $("#acct_no").val("");
+                $("#acct_name").val("");
+                $("#bank_name").val("");
+                $("#bank_location").val("");
+                $("#gcash_no").val("");
+                $("#date_hired").val("");
+                $("#photo").attr("src", "/images/default.png");
 
-                    $('.toast1 .toast-title').html('Profile');
-                    $('.toast1 .toast-body').html(data.message);
-                    toast1.toast('show');
+                $('.toast1 .toast-title').html('Profile');
+                $('.toast1 .toast-body').html(data.message);
+                toast1.toast('show');
 
-                }
-            }).catch(function(error) {
-                // console.log('CATCH ERROR', error);
-                // if (error.response.data.message) {
-                //     $('#error_full_name').text(error.response.data.errors.full_name[0]);
-                // }
-                if (error.response.data.errors) {
-                    let errors = error.response.data.errors;
-                    let fieldnames = Object.keys(errors);
+            }
+        }).catch(function(error) {
+            // console.log('CATCH ERROR', error);
+            // if (error.response.data.message) {
+            //     $('#error_full_name').text(error.response.data.errors.full_name[0]);
+            // }
+            if (error.response.data.errors) {
+                let errors = error.response.data.errors;
+                let fieldnames = Object.keys(errors);
 
-                    Object.values(errors).map((item, index) => {
-                        fieldname = fieldnames[0].split('_');
-                        fieldname.map((item2, index2) => {
-                            fieldname['key'] = capitalize(item2);
-                            return ""
-                        });
-                        fieldname = fieldname.join(" ");
-                        $('.toast1 .toast-title').html(fieldname);
-                        $('.toast1 .toast-body').html(Object.values(errors)[0].join(
-                            "\n\r"));
-                    })
+                Object.values(errors).map((item, index) => {
+                    fieldname = fieldnames[0].split('_');
+                    fieldname.map((item2, index2) => {
+                        fieldname['key'] = capitalize(item2);
+                        return ""
+                    });
+                    fieldname = fieldname.join(" ");
+                    $('.toast1 .toast-title').html(fieldname);
+                    $('.toast1 .toast-body').html(Object.values(errors)[0].join(
+                        "\n\r"));
+                })
 
-                    toast1.toast('show');
-                }
+                toast1.toast('show');
+            }
 
-            });
+        });
     })
 
-});
+    });
 
-function capitalize(s) {
-    if (typeof s !== 'string') return "";
-    return s.charAt(0).toUpperCase() + s.slice(1);
-}
->>>>>>> 55acf0e1549af2da4bff01995dc50dea0d51a6bb
+    function capitalize(s) {
+        if (typeof s !== 'string') return "";
+        return s.charAt(0).toUpperCase() + s.slice(1);
+    }
 </script>
 
 @endsection
