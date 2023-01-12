@@ -44,7 +44,6 @@ class ProfileController extends Controller
 
         $error = false;
         $user_id = $request->id;
-        $profile_id = $request->profile_id;
 
         $findUser = User::with('profile')->find($user_id);
         if (!$user_id) {
@@ -140,8 +139,8 @@ class ProfileController extends Controller
                 'email' => $request->email,
                 'username' => $request->username,
                 'role' => 'Staff',
-            ];
 
+            ];
             if ($request->password) {
                 $userCreateData += [
                     'password' => Hash::make($request->password)
@@ -177,11 +176,13 @@ class ProfileController extends Controller
                 return response()->json([
                     'success' => true,
                     'message' => 'Your Profile has been successfully added to the database.',
+                    'data' => $userCreate,
                 ], 200);
             } else {
                 return response()->json([
                     'success' => true,
                     'message' => 'Your Profile has been successfully updated to the database.',
+                    'data' => $userCreate,
                 ], 200);
             }
         }
