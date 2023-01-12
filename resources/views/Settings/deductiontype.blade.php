@@ -4,13 +4,29 @@
 
 <div class="container-fluid px-4 pb-4">
     
-    <div class="row">
-        <div class="col mt-5">
-
+    <div class="col mt-5">
             <div>
-                <button class="btn" style=" color:white; background-color: #CF8029;width:30% margin-top:5px" data-bs-toggle="modal" data-bs-target="#exampleModal" type="submit" id="button-addon2"> <i
+                <button class="btn w-25" style="color:white; background-color: #CF8029; margin-top:5px " data-bs-toggle="modal" data-bs-target="#exampleModal" type="submit" id="button-addon2"> <i
                     class="fa fa-plus pe-1"></i> Add Deduction Type </></button>
-            </div>
+                
+           
+                    <div class="row mt-4">
+                        <div class="col">
+                            <div class="w-25">
+                                <input id="search" name="search" type="text" class="form-control form-check-inline"
+                                    placeholder="Search">
+                                <button class="btn" style=" color:white; background-color: #CF8029;width:30%"
+                                    id="button-submit">Search</button>
+                            </div>
+                            
+                        </div>
+                    </div>
+            
+
+           
+          
+      
+           
             
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document"> 
@@ -59,14 +75,13 @@
                         </div>
                 </div>
             </div>
+
+        </div>
+
         
 
 
-        <div class="input-group pt-4" style="width:30%;margin-right:50px">
-            <input name="search" type="text" class="form-control" style="margin-right:10px" placeholder=" Search">
-            <button class="btn" style=" color:white; background-color: #CF8029;width:30%" type="submit" id="button-addon">Search</button>
-            </form>
-        </div>
+        
             <br>
             <div class="card mt-1" style="width:61%">
 
@@ -88,6 +103,7 @@
             </div>
         </div>
     </div>
-    
+</div>
+</div>
 
     @endsection

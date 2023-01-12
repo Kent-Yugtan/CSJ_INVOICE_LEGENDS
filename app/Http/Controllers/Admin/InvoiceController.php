@@ -17,9 +17,9 @@ class InvoiceController extends Controller
     public function index()
     {
         //
-        $user_id = session("LoggedUser");
-        $data = ['LoggedUserInfo' => User::select('id', 'first_name', 'last_name')->where('id', '=', $user_id)->first()];
-        return view('invoice.add', $data);
+        // $user_id = session("LoggedUser");
+        // $data = ['LoggedUserInfo' => User::select('id', 'first_name', 'last_name')->where('id', '=', $user_id)->first()];
+        return view('settings.invoice');
     }
 
     /**
