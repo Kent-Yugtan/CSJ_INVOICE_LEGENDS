@@ -16,7 +16,7 @@
                         novalidate>
                         @csrf
 
-                        <input type="text" id="profile_id" hidden value="{{$profile_id}}">
+                        <input type="text" id="user_id" hidden value="{{$findid->id}}">
 
                         <div class="col mb-3">
                             <div class="profile-pic-div" style="position: relative; height:200px">
@@ -26,7 +26,7 @@
                             </div>
                         </div>
 
-                        <div class="col pt-5">
+                        <div class="col pt-3">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="profile_status"
                                     name="profile_status" checked>
@@ -35,15 +35,47 @@
                                 </label>
 
                             </div>
+
                             <div class="mb-3">
+                                <<<<<<< HEAD <label mb-2 style="color: #A4A6B3;">First Name</label>
+                                    <input id="first_name" name="first_name" type="text"
+                                        class="form-control @error('first_name') is-invalid @enderror "
+                                        placeholder="First Name" value="{{ old('first_name') }}" required>
+
+                            </div>
+                            <div class="mb-3">
+                                <label mb-2 style="color: #A4A6B3;">Last Name</label>
+                                <input id="last_name" name="last_name" type="text"
+                                    class="form-control @error('last_name') is-invalid @enderror "
+                                    placeholder="Last Name" value="{{ old('last_name') }}" required>
+                                =======
                                 <label mb-2 style="color: #A4A6B3;">Full Name</label>
                                 <input id="full_name" name="full_name" type="text"
                                     class="form-control @error('full_name') is-invalid @enderror "
                                     placeholder="Full Name" required>
+                                >>>>>>> 643bd2c498de09e0954debb6a73987aeca9105ba
 
                             </div>
                         </div>
 
+                        <div class="mb-3">
+                            <label mb-2 style="color: #A4A6B3;">Email</label>
+                            <input id="email" name="email" type="email"
+                                class="form-control @error('email') is-invalid @enderror" placeholder="Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label mb-2 style="color: #A4A6B3;">Username</label>
+                            <input id="username" name="username" type="text"
+                                class="form-control @error('username') is-invalid @enderror" placeholder="Username"
+                                required>
+                        </div>
+                        <!--                         
+                        <div class="mb-3">
+                            <label mb-2 style="color: #A4A6B3;">Password</label>
+                            <input id="password" name="password" type="text"
+                                class="form-control @error('password') is-invalid @enderror" placeholder="Password"
+                                required>
+                        </div> -->
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Position</label>
@@ -263,14 +295,13 @@
 
                                                         </div>
 
-                                                        <div class="row">
+                                                        <div class="row mt-4">
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label class="formGroupExampleInput2"
                                                                         for="form3Example1">Quantity</label>
                                                                     <input type="text" id="quantity"
                                                                         class="form-control" />
-
                                                                 </div>
                                                             </div>
                                                             <div class="col">
@@ -278,18 +309,16 @@
                                                                     <label class="formGroupExampleInput2"
                                                                         for="form3Example2">Rate</label>
                                                                     <input type="text" id="rate" class="form-control" />
-
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="col pt-3">
                                                             <div class="form-group">
-
                                                                 <label for="formGroupExampleInput">Peso Rate</label>
                                                                 <input type="number" class="form-control" id="pesorate"
                                                                     placeholder="">
                                                             </div>
-                                                            <div class=" row mb-4">
+                                                            <div class=" row mt-4">
                                                                 <div class="col">
                                                                     <div class="form-group">
                                                                         <label class="formGroupExampleInput2"
@@ -310,11 +339,10 @@
                                                                     </div>
                                                                 </div>
 
-
                                                                 <!-- <button type="button" class="btn btn-primary" style=" color:white; background-color: #CF8029">Save changes</button> -->
                                                             </div>
-                                                            <div class="row mb-4">
-                                                                <div class="col">
+                                                            <div class="row mt-5">
+                                                                <div class="col mb-5">
                                                                     <button type="button"
                                                                         class="btn btn-secondary w-100"
                                                                         style=" color:#CF8029; background-color:white; "
@@ -323,8 +351,8 @@
                                                                 <div class="col">
                                                                     <button type="button"
                                                                         class="btn btn-secondary w-100"
-                                                                        style=" color:#CF8029; background-color:white; "
-                                                                        data-bs-dismiss="modal">Close</button>
+                                                                        style=" color:White; background-color:#CF8029; "
+                                                                        data-bs-dismiss="modal">Save</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -337,9 +365,7 @@
                             </div>
                         </div>
 
-
                         <div class="form-group has-search">
-
                             <div class=" tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
                                     aria-labelledby="pills-home-tab">
@@ -369,10 +395,8 @@
                                                     <th>Due Date</th>
                                                     <th>Total Amount</th>
                                                     <th class="text-center">Action</th>
-
                                                 </tr>
                                             </thead>
-
                                             <tbody>
                                                 <tr>
                                                     <td>Tiger Nixon</td>
@@ -442,7 +466,7 @@
                                                     <th>Status</th>
                                                     <th>Date Created</th>
                                                     <th>Amount</th>
-                                                    <th class="text-center">Action</th>
+                                                    <th clas2s="text-center">Action</th>
 
                                                 </tr>
                                             </thead>
@@ -491,11 +515,8 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -504,7 +525,7 @@
 
 
 
-<div style="position: absolute; top: 20px; right: 20px;">
+<div style="position: fixed; top: 20px; right: 20px;">
 
     <div class="toast toast1 toast-bootstrap" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
@@ -516,6 +537,7 @@
                 </button>
             </div>
         </div>
+
         <div class="toast-body">
             Hello, you can push notifications to your visitors with this toast feature.
         </div>
@@ -525,37 +547,52 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-    let profile_id = $('#profile_id').val();
-    axios.get(apiUrl + '/api/admin/show_edit/' + profile_id, {
-        headers: {
-            Authorization: token,
-        },
-    }).then(function(response) {
-        let data = response.data;
-        console.log("THEN RESPONSE", data.data);
-        if (data.success) {
-            console.log("SUCCESS");
-            $('#full_name').val(data.data.full_name);
-            $('#position').val(data.data.position);
-            $('#phone_number').val(data.data.phone_number);
-            $('#address').val(data.data.address);
-            $('#province').val(data.data.province);
-            $('#city').val(data.data.city);
-            $('#zip_code').val(data.data.zip_code);
-            $('#acct_no').val(data.data.acct_no);
-            $('#acct_name').val(data.data.acct_name);
-            $('#bank_name').val(data.data.bank_name);
-            $('#bank_location').val(data.data.bank_location);
-            $('#gcash_no').val(data.data.gcash_no);
-            $('#date_hired').val(data.data.date_hired);
-            $("#photo").attr("src", data.data.file_path);
 
-        } else {
-            console.log("ERROR");
-        }
-    });
-});
-$(document).ready(function() {
+    let user_id = $('#user_id').val();
+
+    axios.get(apiUrl + '/api/admin/show_edit/' + user_id, {
+            headers: {
+                Authorization: token,
+            },
+        })
+        .then(function(response) {
+            let data = response.data;
+
+            if (data.success) {
+                console.log("SUCCESS");
+                console.log("GENERAL", data.data.first_name);
+                console.log("PROFILE", data.data.profile);
+
+
+                $('#first_name').val(data.data.first_name);
+                $('#last_name').val(data.data.last_name);
+                $('#email').val(data.data.email);
+                $('#username').val(data.data.username);
+                // $('#password').val(data.data.password);
+                $('#position').val(data.data.profile.position);
+                $('#phone_number').val(data.data.profile.phone_number);
+                $('#address').val(data.data.profile.address);
+                $('#province').val(data.data.profile.province);
+                $('#city').val(data.data.profile.city);
+                $('#zip_code').val(data.data.profile.zip_code);
+                $('#acct_no').val(data.data.profile.acct_no);
+                $('#acct_name').val(data.data.profile.acct_name);
+                $('#bank_name').val(data.data.profile.bank_name);
+                $('#bank_location').val(data.data.profile.bank_location);
+                $('#gcash_no').val(data.data.profile.gcash_no);
+                $('#date_hired').val(data.data.profile.date_hired);
+                // $("#photo").attr("src", data.data.profile.file_path);
+                if (data.data.profile.file_path) {
+                    $('#photo').val(data.data.profile.file_path);
+                    console.log("OK");
+                } else {
+                    $("#photo").attr("src", "/images/default.png");
+                }
+            } else {
+                console.log("ERROR");
+            }
+        });
+
     let toast1 = $('.toast1');
     toast1.toast({
         delay: 5000,
@@ -577,7 +614,7 @@ $(document).ready(function() {
     $('#ProfileUpdate').submit(function(e) {
         e.preventDefault();
 
-        let profile_id = $("#profile_id").val();
+
         let full_name = $("#full_name").val();
         let position = $("#position").val();
         let phone_number = $("#phone_number").val();
@@ -594,7 +631,6 @@ $(document).ready(function() {
         let date_hired = $("#date_hired").val();
 
         let formData = new FormData();
-        formData.append('id', profile_id);
         formData.append('full_name', full_name);
         formData.append('position', position ?? "");
         formData.append('phone_number', phone_number);
@@ -651,7 +687,8 @@ $(document).ready(function() {
                     toast1.toast('show');
 
                 }
-            }).catch(function(error) {
+            })
+            .catch(function(error) {
                 // console.log('CATCH ERROR', error);
                 // if (error.response.data.message) {
                 //     $('#error_full_name').text(error.response.data.errors.full_name[0]);
@@ -668,10 +705,132 @@ $(document).ready(function() {
                         });
                         fieldname = fieldname.join(" ");
                         $('.toast1 .toast-title').html(fieldname);
+                        $('.toast1 .toast-body').html(Object.values(errors)[0]
+                            .join(
+                                "\n\r"));
+                    })
+
+                    toast1.toast('show');
+                }
+
+            });
+    })
+
+
+    $('.close').on('click', function(e) {
+        e.preventDefault();
+        toast1.toast('hide');
+    })
+
+    $("#error_msg").hide();
+    $("#success_msg").hide();
+
+    $('#ProfileUpdate').submit(function(e) {
+        e.preventDefault();
+
+        let user_id = $("#user_id").val();
+        let profile_id = $("#profile_id").val();
+        let first_name = $("#first_name").val();
+        let last_name = $("#last_name").val();
+        let email = $("#email").val();
+        let position = $("#position").val();
+        // let password = $("#password").val();
+        let username = $("#username").val();
+        let phone_number = $("#phone_number").val();
+        let address = $("#address").val();
+        let province = $("#province").val();
+        let city = $("#city").val();
+        let zip_code = $("#zip_code").val();
+        let profile_status = $("#profile_status").val();
+        let acct_no = $("#acct_no").val();
+        let acct_name = $("#acct_name").val();
+        let bank_name = $("#bank_name").val();
+        let bank_location = $("#bank_location").val();
+        let gcash_no = $("#gcash_no").val();
+        let date_hired = $("#date_hired").val();
+
+        let formData = new FormData();
+        formData.append('id', user_id);
+        formData.append('profile_id', profile_id);
+        formData.append('first_name', first_name);
+        formData.append('last_name', last_name);
+        formData.append('email', email);
+        formData.append('username', username);
+        // formData.append('password', "");
+        formData.append('position', position ?? "");
+        formData.append('phone_number', phone_number);
+        formData.append('address', address);
+        formData.append('province', province);
+        formData.append('city', city);
+        formData.append('zip_code', zip_code);
+        if (document.getElementById('profile_status').checked == true) {
+            formData.append('profile_status', 'Active');
+        } else {
+            formData.append('profile_status', 'Inactive');
+        }
+        formData.append('acct_no', acct_no);
+        formData.append('acct_name', acct_name);
+        formData.append('bank_name', bank_name ?? "");
+        formData.append('bank_location', bank_location);
+        formData.append('gcash_no', gcash_no);
+        formData.append('date_hired', date_hired);
+        if (document.getElementById('file').files.length > 0) {
+            formData.append('profile_picture', document.getElementById('file').files[0],
+                "picture.png");
+        }
+
+        axios.post(apiUrl + '/api/saveprofile', formData, {
+                headers: {
+                    Authorization: token,
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+            .then(function(response) {
+                let data = response.data;
+                console.log("SUCCESS", data);
+
+                if (data.success == true) {
+                    $("#first_name").val("");
+                    $("#last_name").val("");
+                    $("#email").val("");
+                    $("#username").val("");
+                    $("#position").val("");
+                    $("#phone_number").val("");
+                    $("#address").val("");
+                    $("#province").val("");
+                    $("#city").val("");
+                    $("#zip_code").val("");
+                    $("#profile_status").val("");
+                    $("#acct_no").val("");
+                    $("#acct_name").val("");
+                    $("#bank_name").val("");
+                    $("#bank_location").val("");
+                    $("#gcash_no").val("");
+                    $("#date_hired").val("");
+                    $("#photo").attr("src", "/images/default.png");
+
+                    $('.toast1 .toast-title').html('Profile');
+                    $('.toast1 .toast-body').html(data.message);
+                    toast1.toast('show');
+
+                }
+            }).catch(function(error) {
+                console.log('CATCH ERROR', error);
+                if (error.response.data.errors) {
+                    let errors = error.response.data.errors;
+                    let fieldnames = Object.keys(errors);
+
+                    Object.values(errors).map((item, index) => {
+                        fieldname = fieldnames[0].split('_');
+                        fieldname.map((item2, index2) => {
+                            fieldname['key'] = capitalize(item2);
+                            return ""
+                        });
+                        fieldname = fieldname.join(" ");
+                        $('.toast1 .toast-title').html(fieldname);
                         $('.toast1 .toast-body').html(Object.values(errors)[0].join(
                             "\n\r"));
                     })
-
                     toast1.toast('show');
                 }
 

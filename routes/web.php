@@ -32,23 +32,25 @@ Route::get('/', function () {
 
 Route::get('/auth/login', [MainController::class, 'login'])->name('auth.login');
 Route::get('/auth/register', [MainController::class, 'register'])->name('auth.register');
-// Route::post('/auth/check_login', [MainController::class, 'check_login'])->name('auth.check_login');
 Route::middleware(['AuthCheck'])->group(function () {
 
-    Route::resource('/admin/dashboard', DashboardController::class);
-    Route::resource('/admin/profile', ProfileController::class);
+    // Route::resource('/settings/invoice',  InvoiceController::class);
+    Route::get('/admin/dashboard', [DashboardController::class, 'index']);
+
+    Route::get('/admin/profile', [ProfileController::class, 'index']);
+    // Route::post('admin/SaveProfile', [ProfileController::class, 'store']);
+
     Route::get('/admin/current', [ProfileController::class, 'current_show']);
     Route::get('/admin/editProfile/{id}', [ProfileController::class, 'edit']);
-    Route::post('admin/SaveProfile', [ProfileController::class, 'store'])->name('profile.save');
 
-    Route::post('/admin/UpdateProfile', [ProfileController::class, 'store'])->name('profile.update');
 
-    Route::resource('/invoice/add', InvoiceController::class);
+    // Route::get('/invoice/add', InvoiceController::class);
     // Route::get('invoice/add_invoice', [InvoiceController::class, 'add_invoice']);
     Route::get('/invoice/current', [InvoiceController::class, 'current']);
     Route::get('/invoice/inactive', [InvoiceController::class, 'inactive']);
 
-    Route::resource('/settings/deductiontype',  DeductionTypeController::class);
+    // POST DEDUCTION TYPES TABLE
+    Route::get('/settings/deductiontype', [DeductionTypeController::class, 'view_deductiontype']);
 });
 
 Auth::routes();

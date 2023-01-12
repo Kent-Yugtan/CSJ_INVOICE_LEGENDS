@@ -23,6 +23,7 @@ class User extends Authenticatable
         'email',
         'username',
         'password',
+        'role',
     ];
 
     /**
@@ -44,7 +45,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function profile(){
-        return $this->hasOne('App\Profile', 'user_id');
+    public function profile()
+    {
+        return $this->hasOne('App\Models\Profile', 'user_id');
+    }
+
+    public function scopeProfile($q)
+    {
+        return $q->leftJoin('profiles', 'users.id', '=', 'profiles.user_id');
     }
 }

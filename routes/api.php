@@ -1,9 +1,11 @@
 <?php
 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\DeductionTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,13 +30,18 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
 
     Route::resource('admin/dashboard', DashboardController::class);
+
     Route::resource('admin/profile', ProfileController::class);
     Route::post('saveprofile', [ProfileController::class, 'store']);
-    Route::post('admin/UpdateProfile', [ProfileController::class, 'store'])->name('profile.update');
+
+    // Route::post('admin/UpdateProfile', [ProfileController::class, 'store'])->name('profile.update');
     Route::get('admin/current_show_data', [ProfileController::class, 'current_show_data']);
     Route::get('admin/editProfile/{id}', [ProfileController::class, 'store']);
     Route::get('admin/show_edit/{id}', [ProfileController::class, 'show_edit']);
 
+    // POST DEDUCTION TYPES TABLE
+    Route::post('savedeductiontype', [DeductionTypeController::class, 'store']);
+    Route::get('settings/show_data', [DeductionTypeController::class, 'show_data']);
 
 
     Route::resource('admin/invoice', InvoiceController::class);

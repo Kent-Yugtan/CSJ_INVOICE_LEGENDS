@@ -12661,3 +12661,7 @@ button.toast-close-button {
 .toast .toast-header div:last-child {
     width: 5% !important;
 }
+
+.cursor-pointer{
+    cursor: pointer;
+}

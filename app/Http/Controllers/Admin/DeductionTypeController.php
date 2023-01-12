@@ -17,9 +17,7 @@ class DeductionTypeController extends Controller
     public function index()
     {
         //
-        // $user_id = session("LoggedUser");
-        // $data = ['LoggedUserInfo' => User::select('id', 'first_name', 'last_name')->where('id', '=', $user_id)->first()];
-        return view('settings.deductiontype');
+
     }
 
     /**
@@ -31,7 +29,6 @@ class DeductionTypeController extends Controller
     {
         //
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -41,6 +38,28 @@ class DeductionTypeController extends Controller
     public function store(Request $request)
     {
         //
+        $error = false;
+        $deductionType_id = $request->id;
+
+        if ($error === false) {
+            $incoming_data = $request->validate([
+                'deduction_name' => 'required|unique:deduction_types',
+                'deduction_amount' => 'required',
+            ]);
+
+            $store_data = DeductionType::updateOrCreate(
+                [
+                    'id' => $deductionType_id,
+                ],
+                $incoming_data
+            );
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Deduction Types has been successfully added to the database.',
+                'data' => $store_data,
+            ], 200);
+        }
     }
 
     /**
@@ -87,5 +106,36 @@ class DeductionTypeController extends Controller
     {
         //
 
+    }
+
+    public function view_deductiontype()
+    {
+        return view('settings.deductiontype');
+    }
+
+    public function show_data(Request $request)
+    {
+        $deductionType = new DeductionType();
+
+        if ($request->search) {
+            $deductionType = $deductionType->where(
+                function ($q) use ($request) {
+                    $q->orWhere('deduction_name', 'LIKE', '%' . $request->search . '%');
+                }
+            );
+        }
+
+        if ($request->page_size) {
+            $deductionType = $deductionType->limit($request->page_size)
+                ->paginate($request->page_size, ['*'], 'page', $request->page)
+                ->toArray();
+        } else {
+            $deductionType = $deductionType->get();
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $deductionType,
+        ], 200);
     }
 }
