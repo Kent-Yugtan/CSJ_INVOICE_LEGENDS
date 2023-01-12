@@ -17,7 +17,7 @@ class InvoiceController extends Controller
     public function index()
     {
 
-        return view('settings.createinvoice');
+        return view('settings.invoice');
     }
 
     /**

@@ -29,12 +29,8 @@
 
                             </div>
                             <div class="mb-3">
-                                <<<<<<< HEAD <label mb-2 style="color: #A4A6B3;">Full Name</label>
-                                    <input id="full_name" name="full_name" type="text" class="form-control @error('full_name') is-invalid @enderror " placeholder="Full Name" value="{{ old('full_name') }}" required>
-                                    =======
-                                    <label mb-2 style="color: #A4A6B3;">First Name</label>
-                                    <input id="first_name" name="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror " placeholder="First Name" value="{{ old('first_name') }}" required>
-                                    >>>>>>> e01adc896cd2edcdb7254cf595857219a4c4fde4
+                                <label mb-2 style="color: #A4A6B3;">First Name</label>
+                                <input id="first_name" name="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror " placeholder="First Name" value="{{ old('first_name') }}" required>
 
                             </div>
                             <div class="mb-3">
