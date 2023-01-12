@@ -88,8 +88,6 @@ $(document).ready(function() {
         });
     })
 
-
-
     function show_data(filters) {
         let filter = {
             page_size: 50,
@@ -175,7 +173,6 @@ $(document).ready(function() {
             .catch(function(error) {
                 // console.log("catch error");
             });
-
     }
 
 });

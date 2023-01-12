@@ -12,9 +12,7 @@
             <div class="row mt-3">
                 <div class="col">
                     <div class="w-100">
-                        <input id="search" name="search" type="text" class="form-control form-check-inline"
-                            placeholder="Search">
-
+                        <input id="search" type="text" class="form-control form-check-inline" placeholder="Search">
                     </div>
                 </div>
                 <div class="col">
@@ -23,16 +21,22 @@
                 </div>
             </div>
 
-            <div class="card shadow mt-3 bg-white rounded " style="width: 100%; height:100%">
+            <div class="card shadow mt-3 bg-white rounded " style="width: 100%; ">
                 <div class="card-body table-responsive ">
-                    <table style="color: #A4A6B3;" class="table" id="datatablesSimple">
+                    <table style="color: #A4A6B3;" class="table" id="table_deduction">
                         <thead>
                             <th>Deduction Name</th>
                             <th>Amount</th>
                             <th>Action</th>
 
                         </thead>
+                        <tbody></tbody>
                     </table>
+                    <div style="display: flex; justify-content: space-between;">
+                        <div class="page_showing" id="tbl_showing"></div>
+                        <ul class="pagination" id="tbl_pagination"></ul>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -47,25 +51,27 @@
                 <div class="modal-body ">
                     <div class="row">
                         <h5> Create Deduction Type </h5>
-                        <form name="deductiontype_store" id="deductiontype_store" method="POST">
+                        <form id="deductiontype_store">
+                            @csrf
                             <div class="form-group mt-3">
                                 <label for="formGroupExampleInput">Deduction Name</label>
-                                <input id="deduction_name" type="text" class="form-control" placeholder="">
+                                <input id="deduction_name" type="text" class="form-control"
+                                    placeholder="Deduction Name">
                             </div>
 
                             <div class="form-group">
                                 <label for="formGroupExampleInput">Amount</label>
-                                <input id="deduction_amount" type="text" class="form-control" placeholder="">
+                                <input id="deduction_amount" type="text" class="form-control" placeholder="Amount">
 
                                 <div class="row mt-3">
                                     <div class="col">
-                                        <button type="button" class="btn btn-secondary w-100"
+                                        <button type="submit" class="btn btn-secondary w-100"
                                             style=" color:#CF8029; background-color:white; "
                                             data-bs-dismiss="modal">Close</button>
                                     </div>
                                     <div class="col">
-                                        <button type="button" type="submit" class="btn btn-secondary w-100"
-                                            style=" color:White; background-color:#CF8029; "
+                                        <button type="submit" class="btn btn-secondary w-100"
+                                            style="color:White; background-color:#CF8029; "
                                             data-bs-dismiss="modal">Save</button>
                                     </div>
                                 </div>
@@ -78,41 +84,170 @@
     </div>
 </div>
 
+<div style="position: fixed; top: 60px; right: 20px;">
+    <div class="toast toast1 toast-bootstrap" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <div><i class="fa fa-newspaper-o"> </i></div>
+            <div><strong class="mr-auto m-l-sm toast-title">Notification</strong></div>
+            <div>
+                <button type="button" class="ml-2 mb-1 close float-end" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        <div class="toast-body">
+            Hello, you can push notifications to your visitors with this toast feature.
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
 $(document).ready(function() {
+    let toast1 = $('.toast1');
+    toast1.toast({
+        delay: 5000,
+        animation: true
+    });
 
+    $('.close').on('click', function(e) {
+        e.preventDefault();
+        toast1.toast('hide');
+    })
 
-    $('deductiontype_store').submit(function(e) {
+    $("#error_msg").hide();
+    $("#success_msg").hide();
+
+    $('#deductiontype_store').submit(function(e) {
         e.preventDefault();
 
-        let deduction_name = $("deduction_name").val();
-        let deduction_amount = $("deduction_amount").val();
+        let deduction_name = $("#deduction_name").val();
+        let deduction_amount = $("#deduction_amount").val();
 
         let data = {
             deduction_name: deduction_name,
-            deduction_amount: deduction_name,
+            deduction_amount: deduction_amount,
         };
+        console.log("data");
 
         axios
-            .post(apiUrl + "/api/settings/deductiontype", data, {
+            .post(apiUrl + "/api/savedeductiontype", data, {
                 headers: {
                     Authorization: token,
                 },
             })
             .then(function(response) {
-                console.log("then", response);
+                // console.log("then", response.data.success);
                 let data = response.data;
-                if (data.succcess) {
-                    console.alert('success');
-                } else {
-                    console.alert('error');
+                if (data.success) {
+                    // console.log('success', data.data.message);
+                    $('#deduction_name').val('');
+                    $('#deduction_amount').val('');
+
+                    $('.toast1 .toast-title').html('Deduction Types');
+                    $('.toast1 .toast-body').html(response.data.message);
+                    toast1.toast('show');
+
                 }
             })
             .catch(function(error) {
-                console.log("catch", error);
+                if (error.response.data.errors) {
+                    let errors = error.response.data.errors;
+                    let fieldnames = Object.keys(errors);
+                    Object.values(errors).map((item, index) => {
+                        fieldname = fieldnames[0].split('_');
+                        fieldname.map((item2, index2) => {
+                            fieldname['key'] = capitalize(item2);
+                            return ""
+                        });
+                        fieldname = fieldname.join(" ");
+                        $('.toast1 .toast-title').html(fieldname);
+                        $('.toast1 .toast-body').html(Object.values(errors)[0].join(
+                            "\n\r"));
+                    })
+                    toast1.toast('show');
+                }
+            });
+        show_data();
+    })
+
+    show_data();
+
+    function show_data(filters) {
+        let filter = {
+            page_size: 10,
+            page: 1,
+            ...filters,
+        }
+        $('#table_deduction tbody').empty();
+        axios.get(`${apiUrl}/api/settings/show_data?${new URLSearchParams(filter)}`, {
+                headers: {
+                    Authorization: token,
+                },
+            })
+            .then(function(res) {
+                res = res.data;
+                console.log('res', res);
+                if (res.success) {
+                    if (res.data.data.length > 0) {
+                        res.data.data.map((item) => {
+                            let tr = '<tr>';
+                            tr += '<td>' + item.deduction_name + '</td>';
+                            tr += '<td>' + item.deduction_amount + '</td>';
+                            tr +=
+                                '<td  class="text-center"> <a href="' + apiUrl +
+                                '/admin/editProfile/' +
+                                item.id + ' " class="btn btn-outline-primary">Edit</a> </td>';
+                            tr += '</tr>';
+                            $("#table_deduction tbody").append(tr);
+
+                            return ''
+                        })
+
+                        $('#tbl_pagination').empty();
+                        res.data.links.map(item => {
+                            let li =
+                                `<li class="page-item cursor-pointer ${item.active ? 'active':''}"><a class="page-link" data-url="${item.url}">${item.label}</a></li>`
+                            $('#tbl_pagination').append(li)
+                            return ""
+                        })
+
+                        $("#tbl_pagination .page-item .page-link").on('click', function() {
+                            let url = $(this).data('url')
+                            $.urlParam = function(name) {
+                                var results = new RegExp("[?&]" + name + "=([^&#]*)").exec(
+                                    url
+                                );
+
+                                return results !== null ? results[1] || 0 : false;
+                            };
+
+                            let search = $('#search').val();
+                            show_data({
+                                search,
+                                page: $.urlParam('page')
+                            });
+                        })
+
+                        let tbl_user_showing =
+                            `Showing ${res.data.from} to ${res.data.to} of ${res.data.total} entries`;
+                        $('#tbl_showing').html(tbl_user_showing);
+                    } else {
+                        $("#tbl_user tbody").append(
+                            '<tr><td colspan="6" class="text-center">No data</td></tr>');
+                    }
+                }
+            })
+            .catch(function(error) {
+                console.log("catch error", error);
             });
 
-    })
+    }
 });
+
+function capitalize(s) {
+    if (typeof s !== 'string') return "";
+    return s.charAt(0).toUpperCase() + s.slice(1);
+}
+</script>
 </script>
 @endsection

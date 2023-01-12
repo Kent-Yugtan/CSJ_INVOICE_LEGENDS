@@ -333,7 +333,6 @@ $(document).ready(function() {
 
                 }
             }).catch(function(error) {
-
                 if (error.response.data.errors) {
                     let errors = error.response.data.errors;
                     let fieldnames = Object.keys(errors);
