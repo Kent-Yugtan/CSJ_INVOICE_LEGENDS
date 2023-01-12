@@ -37,10 +37,10 @@
                             </div>
 
                             <div class="mb-3">
-                                <<<<<<< HEAD <label mb-2 style="color: #A4A6B3;">First Name</label>
-                                    <input id="first_name" name="first_name" type="text"
-                                        class="form-control @error('first_name') is-invalid @enderror "
-                                        placeholder="First Name" value="{{ old('first_name') }}" required>
+                                <label mb-2 style="color: #A4A6B3;">First Name</label>
+                                <input id="first_name" name="first_name" type="text"
+                                    class="form-control @error('first_name') is-invalid @enderror "
+                                    placeholder="First Name" value="{{ old('first_name') }}" required>
 
                             </div>
                             <div class="mb-3">
@@ -48,13 +48,6 @@
                                 <input id="last_name" name="last_name" type="text"
                                     class="form-control @error('last_name') is-invalid @enderror "
                                     placeholder="Last Name" value="{{ old('last_name') }}" required>
-                                =======
-                                <label mb-2 style="color: #A4A6B3;">Full Name</label>
-                                <input id="full_name" name="full_name" type="text"
-                                    class="form-control @error('full_name') is-invalid @enderror "
-                                    placeholder="Full Name" required>
-                                >>>>>>> 643bd2c498de09e0954debb6a73987aeca9105ba
-
                             </div>
                         </div>
 
