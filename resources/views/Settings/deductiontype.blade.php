@@ -146,7 +146,7 @@ $(document).ready(function() {
                     $('.toast1 .toast-title').html('Deduction Types');
                     $('.toast1 .toast-body').html(response.data.message);
                     toast1.toast('show');
-
+                    show_data();
                 }
             })
             .catch(function(error) {
@@ -167,7 +167,7 @@ $(document).ready(function() {
                     toast1.toast('show');
                 }
             });
-        show_data();
+
     })
 
     show_data();
