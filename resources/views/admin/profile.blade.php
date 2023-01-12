@@ -109,7 +109,7 @@
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Bank Name</label>
                             <select class="form-select @error('bank_name') is-invalid @enderror" id="bank_name" name="bank_name" aria-label="Default select example">
-                                <option selected disabled>Please Select Bank Name</option>
+                                <option selected disabled value="">Please Select Bank Name</option>
                                 <option value="BDO Unibank Inc.">BDO Unibank Inc. (BDO)</option>
                                 <option value="Land Bank of the Philippines">Land Bank of the Philippines (LANDBANK)
                                 </option>

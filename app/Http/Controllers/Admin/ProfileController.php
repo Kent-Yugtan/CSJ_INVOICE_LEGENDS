@@ -46,7 +46,7 @@ class ProfileController extends Controller
     {
 
         $user_id = auth()->user()->id;
-        $id = $request->id;
+        $profile_id = $request->id;
 
         $error = false;
 
@@ -66,11 +66,8 @@ class ProfileController extends Controller
                     'province' => 'required',
                     'city' => 'required',
                     'zip_code' => 'required',
-                    'acct_no' => 'required|unique:profiles',
-                    'acct_name' => 'required|unique:profiles',
                     'bank_name' => 'required',
                     'bank_location' => 'required',
-                    'gcash_no' => 'required|unique:profiles',
                     'date_hired' => 'required',
                 ]
             );
@@ -94,12 +91,12 @@ class ProfileController extends Controller
                 ];
             }
 
-            if (!$id) {
-                $incoming_data += [
-                    'acct_no' => $request->acct_no,
-                    'acct_name' => $request->acct_name,
-                    'gcash_no' => $request->gcash_no,
-                ];
+            if (!$profile_id) {
+                $incoming_data += $request->validate([
+                    'acct_no' => 'required|unique:profiles',
+                    'acct_name' => 'required|unique:profiles',
+                    'gcash_no' => 'required|unique:profiles',
+                ]);
             } else {
                 $incoming_data += [
                     'acct_no' => $request->acct_no,
@@ -117,10 +114,17 @@ class ProfileController extends Controller
             );
             $profile_store->save();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Your Profile has been successfully added to the database.',
-            ], 200);
+            if (!$profile_id) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Your Profile has been successfully added to the database.',
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Your Profile has been successfully updated to the database.',
+                ], 200);
+            }
         }
     }
 
