@@ -58,7 +58,7 @@ class ProfileController extends Controller
             if ($findUser) {
                 if ($findUser->profile) {
 
-                    if ($findUser->profile->acct_no !== $request->acct_no) {
+                    if ($findUser->profile->acct_no != $request->acct_no) {
                         $request->validate([
                             'acct_no' => 'required|unique:profiles',
                         ]);
@@ -207,9 +207,9 @@ class ProfileController extends Controller
      */
     public function edit(Request $request)
     {
-        $findid = User::with('Profile')->find($request->id);
-        // return $findid;
-        return view("admin.editProfile", compact('findid'));
+        // $findid = User::with('Profile')->find($request->id);
+        // // return $findid;
+        // return view("admin.editProfile", compact('findid'));
     }
 
     public function show_edit(Request $request, $id)

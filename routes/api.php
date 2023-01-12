@@ -42,6 +42,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // POST DEDUCTION TYPES TABLE
     Route::post('savedeductiontype', [DeductionTypeController::class, 'store']);
     Route::get('settings/show_data', [DeductionTypeController::class, 'show_data']);
+    Route::get('settings/show_edit/{id}', [DeductionTypeController::class, 'show_edit']);
 
 
     Route::resource('admin/invoice', InvoiceController::class);
