@@ -35,7 +35,8 @@ Route::get('/auth/login', [MainController::class, 'login'])->name('auth.login');
 Route::get('/auth/register', [MainController::class, 'register'])->name('auth.register');
 // Route::post('/auth/check_login', [MainController::class, 'check_login'])->name('auth.check_login');
 Route::middleware(['AuthCheck'])->group(function () {
-    Route::resource('/settings/Invoice',  InvoiceController::class);
+
+    Route::resource('/settings/invoice',  InvoiceController::class);
     Route::resource('/admin/dashboard', DashboardController::class);
     Route::resource('/admin/profile', ProfileController::class);
     Route::get('/admin/current', [ProfileController::class, 'current_show']);
