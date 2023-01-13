@@ -107,4 +107,8 @@ class InvoiceController extends Controller
     {
         return view('admin.inactive');
     }
+    public function add_invoice()
+    {
+        return view('invoice.add');
+    }
 }

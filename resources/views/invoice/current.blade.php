@@ -63,6 +63,18 @@
 
                         <tbody>
 
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                '<td class="text-center"> <a href="http://127.0.0.1:8000/settings/invoice" type="button" class="btn btn-info">View</bu>
+
+
+                                </td>
+                            </tr>
+
                         </tbody>
                     </table>
 
