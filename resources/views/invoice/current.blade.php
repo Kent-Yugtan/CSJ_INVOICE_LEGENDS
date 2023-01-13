@@ -35,8 +35,7 @@
                 @csrf
                 <div class="input-group ">
                     <input name="search" type="text" class="form-control form-check-inline" placeholder="Search">
-                    <button class="btn" style=" color:white; background-color: #CF8029;width:30%" type="submit"
-                        id="button-addon2">Search</button>
+                    <button class="btn" style=" color:white; background-color: #CF8029;width:30%" type="submit" id="button-addon2">Search</button>
                 </div>
             </form>
         </div>
