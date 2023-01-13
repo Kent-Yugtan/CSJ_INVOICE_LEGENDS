@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\DeductionType;
+use App\Models\ProfileDeductionTypes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -41,11 +43,9 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-
         $error = false;
         $user_id = $request->id;
-
-        $findUser = User::with('profile')->find($user_id);
+        $findUser = User::with('profile', 'profile.profile_deduction_types')->find($user_id);
         if (!$user_id) {
             $request->validate([
                 'acct_no' => 'required|unique:profiles',
@@ -97,6 +97,7 @@ class ProfileController extends Controller
                     'bank_name' => 'required',
                     'bank_location' => 'required',
                     'date_hired' => 'required',
+
                 ]
             );
 
@@ -147,28 +148,70 @@ class ProfileController extends Controller
                 ];
             }
 
-            $userCreate = User::updateOrCreate(
-                [
-                    'id' => $user_id,
-                ],
-                $userCreateData
-            );
-
-            if ($userCreate) {
-                if ($user_id) {
+            if ($user_id) {
+                $userCreate = $findUser->fill($userCreateData)->save();
+                if ($userCreate) {
                     if ($findUser->profile) {
-                        $userCreate->profile()->where('id', $findUser->profile->id)->update(
+                        $findUser->profile()->where('id', $findUser->profile->id)->update(
                             $incoming_data,
                         );
                     } else {
-                        $userCreate->profile()->create(
+                        $findUser->profile()->create(
                             $incoming_data,
                         );
                     }
-                } else {
+                    $deduction_type_id = $request->deduction_type_id;
+
+                    foreach (json_decode($deduction_type_id) as $q) {
+                        $findProfile = Profile::where('user_id', $findUser->id)->first();
+
+                        $findProfileDeductionTypes = ProfileDeductionTypes::where('profile_id', $findProfile->id)->where('deduction_type_id', $q)->first();
+
+                        $dataDeductionType = \App\Models\DeductionType::find($q);
+
+                        if ($findProfileDeductionTypes) {
+                            $findProfileDeductionTypes->fill([
+                                'deduction_type_id' => $q,
+                                'amount' => $dataDeductionType->deduction_amount
+                            ])->save();
+                        } else {
+                            ProfileDeductionTypes::create([
+                                'profile_id' => $findProfile->id,
+                                'deduction_type_id' => $q,
+                                'amount' => $dataDeductionType->deduction_amount
+                            ]);
+                        }
+                    }
+                }
+            } else {
+                $userCreate = User::create($userCreateData);
+                if ($userCreate) {
                     $userCreate->profile()->create(
                         $incoming_data,
                     );
+
+                    $deduction_type_id = $request->deduction_type_id;
+
+                    foreach (json_decode($deduction_type_id) as $q) {
+                        $findProfile = Profile::where('user_id', $userCreate->id)->first();
+
+                        $findProfileDeductionTypes = ProfileDeductionTypes::where('profile_id', $findProfile->id)->where('deduction_type_id', $q)->first();
+
+                        $dataDeductionType = \App\Models\DeductionType::find($q);
+
+                        if ($findProfileDeductionTypes) {
+                            $findProfileDeductionTypes->fill([
+                                'deduction_type_id' => $q,
+                                'amount' => $dataDeductionType->deduction_amount
+                            ])->save();
+                        } else {
+                            ProfileDeductionTypes::create([
+                                'profile_id' => $findProfile->id,
+                                'deduction_type_id' => $q,
+                                'amount' => $dataDeductionType->deduction_amount
+                            ]);
+                        }
+                    }
                 }
             }
 
@@ -177,12 +220,14 @@ class ProfileController extends Controller
                     'success' => true,
                     'message' => 'Your Profile has been successfully added to the database.',
                     'data' => $userCreate,
+                    'jj' => json_decode($deduction_type_id),
                 ], 200);
             } else {
                 return response()->json([
                     'success' => true,
                     'message' => 'Your Profile has been successfully updated to the database.',
                     'data' => $userCreate,
+                    'jj' => json_decode($deduction_type_id),
                 ], 200);
             }
         }
@@ -207,21 +252,23 @@ class ProfileController extends Controller
      */
     public function edit(Request $request)
     {
-        // $findid = User::with('Profile')->find($request->id);
-        // // return $findid;
-        // return view("admin.editProfile", compact('findid'));
+        $findid = User::with('profile', 'profile.profile_deduction_types')->find($request->id);
+        // return $findid;
+        return view("admin.editProfile", compact('findid'));
     }
 
     public function show_edit(Request $request, $id)
     {
 
-        $finduser_profile = User::with('Profile')->find($id);
+        $finduser_profile = User::with('profile', 'profile.profile_deduction_types')->find($id);
 
         if (!$finduser_profile) {
             return response()->json([
                 'success' => false,
                 'message' => 'ID ' . $request->id . ' not found'
             ], 400);
+        } else {
+            return "error";
         }
 
         if ($finduser_profile->profile) {
@@ -311,6 +358,15 @@ class ProfileController extends Controller
         return response()->json([
             'success' => true,
             'data' => $data,
+        ], 200);
+    }
+    public function show_deduction_types(Request $request)
+    {
+        $deduction_type = DeductionType::orderby("id", "ASC")->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $deduction_type,
         ], 200);
     }
 

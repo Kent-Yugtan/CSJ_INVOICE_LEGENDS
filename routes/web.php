@@ -34,7 +34,7 @@ Route::get('/auth/login', [MainController::class, 'login'])->name('auth.login');
 Route::get('/auth/register', [MainController::class, 'register'])->name('auth.register');
 Route::middleware(['AuthCheck'])->group(function () {
 
-    // Route::resource('/settings/invoice',  InvoiceController::class);
+    Route::get('/settings/invoice',  [InvoiceController::class, 'setting_invoice']);
     Route::get('/admin/dashboard', [DashboardController::class, 'index']);
 
     Route::get('/admin/profile', [ProfileController::class, 'index']);
