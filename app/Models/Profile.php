@@ -9,12 +9,18 @@ use Illuminate\Notifications\Notifiable;
 
 class Profile extends Model
 {
-    use HasFactory,Notifiable;
+    use HasFactory, Notifiable;
 
-   
+
     protected $guarded = [];
 
-    public function user() {
-        return $this->belongsTo('App\User','user_id');
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User', 'user_id');
+    }
+
+    public function profile_deduction_types()
+    {
+        return $this->hasMany('App\Models\ProfileDeductionTypes', 'profile_id');
     }
 }

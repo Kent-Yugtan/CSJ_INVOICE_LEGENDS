@@ -3,7 +3,7 @@
 @section('content-dashboard')
 
 <div class="container-fluid pt-0">
-    <h1 class="mt-0">View Profile</h1>
+    <h1 class="mt-0">Edit Profile</h1>
     <ol class="breadcrumb mb-3"></ol>
 
     <div class="row">
@@ -194,7 +194,6 @@
 
                         </div>
 
-
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Date Hired</label>
                             <input id="date_hired" name="date_hired" type="date"
@@ -203,7 +202,12 @@
 
                         </div>
 
-
+                        <div class="mb-3">
+                            <label mb-2 style="color: #A4A6B3;">Deduction Types</label>
+                            <select class="select2-multiple form-control form-select" name="deduction_types[]"
+                                multiple="multiple" id="select2Multiple">
+                            </select>
+                        </div>
 
                         <div class="row">
                             <div class="col mb-3">
@@ -540,73 +544,78 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+    show_edit();
 
-    let user_id = $('#user_id').val();
+    function show_edit() {
+        let user_id = $('#user_id').val();
+        axios.get(apiUrl + '/api/admin/show_edit/' + user_id, {
+                headers: {
+                    Authorization: token,
+                },
+            })
+            .then(function(response) {
+                let data = response.data;
+                console.log("response", data);
+                if (data.success) {
+                    console.log("SUCCESS");
+                    console.log("GENERAL", data.data.first_name);
+                    console.log("PROFILE", data.data.profile);
 
-    axios.get(apiUrl + '/api/admin/show_edit/' + user_id, {
-            headers: {
-                Authorization: token,
-            },
-        })
-        .then(function(response) {
-            let data = response.data;
+                    $('#first_name').val(data.data.first_name);
+                    $('#last_name').val(data.data.last_name);
+                    $('#email').val(data.data.email);
+                    $('#username').val(data.data.username);
+                    // $('#password').val(data.data.password);
+                    $('#position').val(data.data.profile.position);
+                    $('#phone_number').val(data.data.profile.phone_number);
+                    $('#address').val(data.data.profile.address);
+                    $('#province').val(data.data.profile.province);
+                    $('#city').val(data.data.profile.city);
+                    $('#zip_code').val(data.data.profile.zip_code);
+                    $('#acct_no').val(data.data.profile.acct_no);
+                    $('#acct_name').val(data.data.profile.acct_name);
+                    $('#bank_name').val(data.data.profile.bank_name);
+                    $('#bank_location').val(data.data.profile.bank_location);
+                    $('#gcash_no').val(data.data.profile.gcash_no);
+                    $('#date_hired').val(data.data.profile.date_hired);
+                    // $("#photo").attr("src", data.data.profile.file_path);
+                    if (data.data.profile.file_path) {
+                        $('#photo').val(data.data.profile.file_path);
+                        console.log("OK");
+                    } else {
+                        $("#photo").attr("src", "/images/default.png");
+                    }
 
-            if (data.success) {
-                console.log("SUCCESS");
-                console.log("GENERAL", data.data.first_name);
-                console.log("PROFILE", data.data.profile);
+                    console.log('profile_deduction_types', data.data.profile.profile_deduction_types);
+                    let profile_deduction_types_reduce = data.data.profile.profile_deduction_types.reduce((
+                        a, b) => {
+                        a.push(b.id)
+                        return a
+                    }, [])
 
-
-                $('#first_name').val(data.data.first_name);
-                $('#last_name').val(data.data.last_name);
-                $('#email').val(data.data.email);
-                $('#username').val(data.data.username);
-                // $('#password').val(data.data.password);
-                $('#position').val(data.data.profile.position);
-                $('#phone_number').val(data.data.profile.phone_number);
-                $('#address').val(data.data.profile.address);
-                $('#province').val(data.data.profile.province);
-                $('#city').val(data.data.profile.city);
-                $('#zip_code').val(data.data.profile.zip_code);
-                $('#acct_no').val(data.data.profile.acct_no);
-                $('#acct_name').val(data.data.profile.acct_name);
-                $('#bank_name').val(data.data.profile.bank_name);
-                $('#bank_location').val(data.data.profile.bank_location);
-                $('#gcash_no').val(data.data.profile.gcash_no);
-                $('#date_hired').val(data.data.profile.date_hired);
-                // $("#photo").attr("src", data.data.profile.file_path);
-                if (data.data.profile.file_path) {
-                    $('#photo').val(data.data.profile.file_path);
-                    console.log("OK");
-                } else {
-                    $("#photo").attr("src", "/images/default.png");
+                    // console.log('profile_deduction_types_reduce', profile_deduction_types_reduce);
+                    setTimeout(() => {
+                        $('#select2Multiple').val(profile_deduction_types_reduce).change();
+                    }, 1000)
                 }
-            } else {
-                console.log("ERROR");
-            }
-        });
-
+            })
+            .catch(function(error) {
+                console.log("ERROR", error);
+            });
+    }
     let toast1 = $('.toast1');
     toast1.toast({
         delay: 5000,
         animation: true
     });
 
-    // $('#showtoast').on('click', function(e) {
-    //     e.preventDefault();
-
-    // })
     $('.close').on('click', function(e) {
         e.preventDefault();
         toast1.toast('hide');
     })
 
-    $("#error_msg").hide();
-    $("#success_msg").hide();
-
     $('#ProfileUpdate').submit(function(e) {
         e.preventDefault();
-
 
         let full_name = $("#full_name").val();
         let position = $("#position").val();
@@ -675,6 +684,8 @@ $(document).ready(function() {
                     $("#date_hired").val("");
                     $("#photo").attr("src", "/images/default.png");
 
+                    // select2Multiple
+
                     $('.toast1 .toast-title').html('Profile');
                     $('.toast1 .toast-body').html(data.message);
                     toast1.toast('show');
@@ -718,117 +729,41 @@ $(document).ready(function() {
     $("#error_msg").hide();
     $("#success_msg").hide();
 
-    $('#ProfileUpdate').submit(function(e) {
-        e.preventDefault();
-
-        let user_id = $("#user_id").val();
-        let profile_id = $("#profile_id").val();
-        let first_name = $("#first_name").val();
-        let last_name = $("#last_name").val();
-        let email = $("#email").val();
-        let position = $("#position").val();
-        // let password = $("#password").val();
-        let username = $("#username").val();
-        let phone_number = $("#phone_number").val();
-        let address = $("#address").val();
-        let province = $("#province").val();
-        let city = $("#city").val();
-        let zip_code = $("#zip_code").val();
-        let profile_status = $("#profile_status").val();
-        let acct_no = $("#acct_no").val();
-        let acct_name = $("#acct_name").val();
-        let bank_name = $("#bank_name").val();
-        let bank_location = $("#bank_location").val();
-        let gcash_no = $("#gcash_no").val();
-        let date_hired = $("#date_hired").val();
-
-        let formData = new FormData();
-        formData.append('id', user_id);
-        formData.append('profile_id', profile_id);
-        formData.append('first_name', first_name);
-        formData.append('last_name', last_name);
-        formData.append('email', email);
-        formData.append('username', username);
-        // formData.append('password', "");
-        formData.append('position', position ?? "");
-        formData.append('phone_number', phone_number);
-        formData.append('address', address);
-        formData.append('province', province);
-        formData.append('city', city);
-        formData.append('zip_code', zip_code);
-        if (document.getElementById('profile_status').checked == true) {
-            formData.append('profile_status', 'Active');
-        } else {
-            formData.append('profile_status', 'Inactive');
-        }
-        formData.append('acct_no', acct_no);
-        formData.append('acct_name', acct_name);
-        formData.append('bank_name', bank_name ?? "");
-        formData.append('bank_location', bank_location);
-        formData.append('gcash_no', gcash_no);
-        formData.append('date_hired', date_hired);
-        if (document.getElementById('file').files.length > 0) {
-            formData.append('profile_picture', document.getElementById('file').files[0],
-                "picture.png");
-        }
-
-        axios.post(apiUrl + '/api/saveprofile', formData, {
+    function show_deduction() {
+        axios
+            .get(apiUrl + '/api/show_deduction_type', {
                 headers: {
                     Authorization: token,
-                    "Content-Type": "multipart/form-data",
-                },
-            })
-            .then(function(response) {
-                let data = response.data;
-                console.log("SUCCESS", data);
+                }
+            }).then(function(response) {
+                response = response.data
+                // console.log('RESPONSE SELECT', response);
+                if (response.success) {
+                    // console.log('SUCCESS');
+                    if (response.data.length > 0) {
+                        $('#select2Multiple').empty();
+                        response.data.map((item) => {
+                            let option = '<option>';
+                            option += "<option value=" + item.id + ">" + item.deduction_name +
+                                " - " + item.deduction_amount +
+                                "</option>"
+                            $("#select2Multiple").append(option);
+                            return ''
+                        })
 
-                if (data.success == true) {
-                    $("#first_name").val("");
-                    $("#last_name").val("");
-                    $("#email").val("");
-                    $("#username").val("");
-                    $("#position").val("");
-                    $("#phone_number").val("");
-                    $("#address").val("");
-                    $("#province").val("");
-                    $("#city").val("");
-                    $("#zip_code").val("");
-                    $("#profile_status").val("");
-                    $("#acct_no").val("");
-                    $("#acct_name").val("");
-                    $("#bank_name").val("");
-                    $("#bank_location").val("");
-                    $("#gcash_no").val("");
-                    $("#date_hired").val("");
-                    $("#photo").attr("src", "/images/default.png");
-
-                    $('.toast1 .toast-title').html('Profile');
-                    $('.toast1 .toast-body').html(data.message);
-                    toast1.toast('show');
+                    }
 
                 }
             }).catch(function(error) {
-                console.log('CATCH ERROR', error);
-                if (error.response.data.errors) {
-                    let errors = error.response.data.errors;
-                    let fieldnames = Object.keys(errors);
-
-                    Object.values(errors).map((item, index) => {
-                        fieldname = fieldnames[0].split('_');
-                        fieldname.map((item2, index2) => {
-                            fieldname['key'] = capitalize(item2);
-                            return ""
-                        });
-                        fieldname = fieldname.join(" ");
-                        $('.toast1 .toast-title').html(fieldname);
-                        $('.toast1 .toast-body').html(Object.values(errors)[0].join(
-                            "\n\r"));
-                    })
-                    toast1.toast('show');
-                }
-
+                console.log('ERROR', error);
             });
-    })
+    }
+    show_deduction();
+
+    $('.select2-multiple').select2({
+        placeholder: "Select",
+        allowClear: true
+    });
 
 });
 

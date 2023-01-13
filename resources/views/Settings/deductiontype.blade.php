@@ -7,7 +7,7 @@
     <div class="row mt-5">
         <div class="col-md-6 px-2">
             <button class="btn w-50" style="color:white; background-color: #CF8029; margin-top:5px "
-                data-bs-toggle="modal" data-bs-target="#exampleModal" type="submit" id="button-addon2"> <i
+                data-bs-toggle="modal" data-bs-target="#addModal" type="submit" id="button-addon2"> <i
                     class="fa fa-plus pe-1"></i> Add Deduction Type </></button>
             <div class="row mt-3">
                 <div class="col">
@@ -16,18 +16,18 @@
                     </div>
                 </div>
                 <div class="col">
-                    <button class="btn w-100" style=" color:white; background-color: #CF8029;width:30%"
+                    <button type="submit" class="btn w-100" style=" color:white; background-color: #CF8029;width:30%"
                         id="button-submit">Search</button>
                 </div>
             </div>
 
             <div class="card shadow mt-3 bg-white rounded " style="width: 100%; ">
                 <div class="card-body table-responsive ">
-                    <table style="color: #A4A6B3;" class="table" id="table_deduction">
+                    <table style="color: #A4A6B3;" class="table " id="table_deduction">
                         <thead>
                             <th>Deduction Name</th>
                             <th>Amount</th>
-                            <th>Action</th>
+                            <th class=" text-center">Action</th>
 
                         </thead>
                         <tbody></tbody>
@@ -42,8 +42,8 @@
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<!-- START MODAL ADD -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-dialog">
@@ -65,7 +65,7 @@
 
                                 <div class="row mt-3">
                                     <div class="col">
-                                        <button type="submit" class="btn btn-secondary w-100"
+                                        <button type="button" class="btn btn-secondary w-100"
                                             style=" color:#CF8029; background-color:white; "
                                             data-bs-dismiss="modal">Close</button>
                                     </div>
@@ -83,6 +83,52 @@
         </div>
     </div>
 </div>
+<!-- END MODAL ADD -->
+
+<!-- START MODAL EDIT -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-dialog">
+            <div class="modal-content ">
+                <div class="modal-body ">
+                    <div class="row">
+                        <h5> Update Deduction Type </h5>
+                        <form id="deductiontype_update">
+                            @csrf
+                            <input type="text" id="deduction_id" hidden>
+
+                            <div class="form-group mt-3">
+                                <label for="formGroupExampleInput">Deduction Name</label>
+                                <input id="edit_deduction_name" type="text" class="form-control"
+                                    placeholder="Deduction Name">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="formGroupExampleInput">Amount</label>
+                                <input id="edit_deduction_amount" type="text" class="form-control" placeholder="Amount">
+
+                                <div class="row mt-3">
+                                    <div class="col">
+                                        <button type="button" class="btn btn-secondary w-100"
+                                            style=" color:#CF8029; background-color:white; "
+                                            data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                    <div class="col">
+                                        <button type="submit" class="btn btn-secondary w-100"
+                                            style="color:White; background-color:#CF8029; "
+                                            data-bs-dismiss="modal">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MODAL EDIT -->
 
 <div style="position: fixed; top: 60px; right: 20px;">
     <div class="toast toast1 toast-bootstrap" role="alert" aria-live="assertive" aria-atomic="true">
@@ -103,6 +149,15 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+    show_data();
+
+    $('#button-submit').on('click', function() {
+        let search = $('#search').val();
+        show_data({
+            search
+        });
+    })
+
     let toast1 = $('.toast1');
     toast1.toast({
         delay: 5000,
@@ -116,61 +171,6 @@ $(document).ready(function() {
 
     $("#error_msg").hide();
     $("#success_msg").hide();
-
-    $('#deductiontype_store').submit(function(e) {
-        e.preventDefault();
-
-        let deduction_name = $("#deduction_name").val();
-        let deduction_amount = $("#deduction_amount").val();
-
-        let data = {
-            deduction_name: deduction_name,
-            deduction_amount: deduction_amount,
-        };
-        console.log("data");
-
-        axios
-            .post(apiUrl + "/api/savedeductiontype", data, {
-                headers: {
-                    Authorization: token,
-                },
-            })
-            .then(function(response) {
-                // console.log("then", response.data.success);
-                let data = response.data;
-                if (data.success) {
-                    // console.log('success', data.data.message);
-                    $('#deduction_name').val('');
-                    $('#deduction_amount').val('');
-
-                    $('.toast1 .toast-title').html('Deduction Types');
-                    $('.toast1 .toast-body').html(response.data.message);
-                    toast1.toast('show');
-                    show_data();
-                }
-            })
-            .catch(function(error) {
-                if (error.response.data.errors) {
-                    let errors = error.response.data.errors;
-                    let fieldnames = Object.keys(errors);
-                    Object.values(errors).map((item, index) => {
-                        fieldname = fieldnames[0].split('_');
-                        fieldname.map((item2, index2) => {
-                            fieldname['key'] = capitalize(item2);
-                            return ""
-                        });
-                        fieldname = fieldname.join(" ");
-                        $('.toast1 .toast-title').html(fieldname);
-                        $('.toast1 .toast-body').html(Object.values(errors)[0].join(
-                            "\n\r"));
-                    })
-                    toast1.toast('show');
-                }
-            });
-
-    })
-
-    show_data();
 
     function show_data(filters) {
         let filter = {
@@ -186,17 +186,18 @@ $(document).ready(function() {
             })
             .then(function(res) {
                 res = res.data;
-                console.log('res', res);
                 if (res.success) {
                     if (res.data.data.length > 0) {
                         res.data.data.map((item) => {
                             let tr = '<tr>';
-                            tr += '<td>' + item.deduction_name + '</td>';
-                            tr += '<td>' + item.deduction_amount + '</td>';
+                            tr += '<td style="width:40%;">' + item.deduction_name + '</td>';
+                            tr += '<td style="width:5%;" class="text-end">' + item.deduction_amount
+                                .toFixed(2) +
+                                '</td>';
                             tr +=
-                                '<td  class="text-center"> <a href="' + apiUrl +
-                                '/admin/editProfile/' +
-                                item.id + ' " class="btn btn-outline-primary">Edit</a> </td>';
+                                '<td style="width:45%;" class="text-center"> <button value=' + item
+                                .id +
+                                ' class="editButton btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" >Edit</button> </td>';
                             tr += '</tr>';
                             $("#table_deduction tbody").append(tr);
 
@@ -242,6 +243,140 @@ $(document).ready(function() {
             });
 
     }
+
+    $('#deductiontype_store').submit(function(e) {
+        e.preventDefault();
+
+        let deduction_name = $("#deduction_name").val();
+        let deduction_amount = $("#deduction_amount").val();
+
+        let data = {
+            deduction_name: deduction_name,
+            deduction_amount: deduction_amount,
+        };
+
+        axios
+            .post(apiUrl + "/api/savedeductiontype", data, {
+                headers: {
+                    Authorization: token,
+                },
+            })
+            .then(function(response) {
+                // console.log("then", response.data.success);
+                let data = response.data;
+                if (data.success) {
+                    // console.log('success', data.data.message);
+                    $('#deduction_name').val('');
+                    $('#deduction_amount').val('');
+
+                    $('.toast1 .toast-title').html('Deduction Types');
+                    $('.toast1 .toast-body').html(response.data.message);
+                    toast1.toast('show');
+                    show_data();
+                }
+            })
+            .catch(function(error) {
+                if (error.response.data.errors) {
+                    let errors = error.response.data.errors;
+                    let fieldnames = Object.keys(errors);
+                    Object.values(errors).map((item, index) => {
+                        fieldname = fieldnames[0].split('_');
+                        fieldname.map((item2, index2) => {
+                            fieldname['key'] = capitalize(item2);
+                            return ""
+                        });
+                        fieldname = fieldname.join(" ");
+                        $('.toast1 .toast-title').html(fieldname);
+                        $('.toast1 .toast-body').html(Object.values(errors)[0].join(
+                            "\n\r"));
+                    })
+                    toast1.toast('show');
+                }
+            });
+    })
+
+    $(document).on('click', '.editButton', function(e) {
+        e.preventDefault();
+        let id = $(this).val();
+        $('#deduction_id').val(id);
+
+        axios
+            .get(apiUrl + '/api/settings/show_edit/' + id, {
+                headers: {
+                    Authorization: token,
+                },
+            })
+            .then(function(response) {
+                let data = response.data;
+                console.log("SUCCESS", data.data);
+                if (data.success) {
+
+                    $('#edit_deduction_name').val(data.data.deduction_name);
+                    $('#edit_deduction_amount').val(data.data.deduction_amount);
+
+                } else {
+                    console.log("ERROR");
+                }
+
+            }).catch(function(error) {
+                console.log("ERROR", error);
+            });
+    })
+
+    $('#deductiontype_update').submit(function(e) {
+        e.preventDefault();
+
+        let deduction_id = $('#deduction_id').val();
+        let deduction_name = $("#edit_deduction_name").val();
+        let deduction_amount = $("#edit_deduction_amount").val();
+
+        let data = {
+            id: deduction_id,
+            deduction_name: deduction_name,
+            deduction_amount: deduction_amount,
+        };
+
+        axios
+            .post(apiUrl + "/api/savedeductiontype", data, {
+                headers: {
+                    Authorization: token,
+                },
+            })
+            .then(function(response) {
+                // console.log("then", response.data.success);
+                let data = response.data;
+                if (data.success) {
+
+                    $('#edit_deduction_name').val('');
+                    $('#edit_deduction_amount').val('');
+
+                    $('.toast1 .toast-title').html('Deduction Types');
+                    $('.toast1 .toast-body').html(response.data.message);
+                    toast1.toast('show');
+                    show_data();
+                    console.log('success', data.data);
+                }
+            })
+            .catch(function(error) {
+                if (error.response.data.errors) {
+                    let errors = error.response.data.errors;
+                    console.log("error", errors);
+                    let fieldnames = Object.keys(errors);
+                    Object.values(errors).map((item, index) => {
+                        fieldname = fieldnames[0].split('_');
+                        fieldname.map((item2, index2) => {
+                            fieldname['key'] = capitalize(item2);
+                            return ""
+                        });
+                        fieldname = fieldname.join(" ");
+                        $('.toast1 .toast-title').html(fieldname);
+                        $('.toast1 .toast-body').html(Object.values(errors)[0].join(
+                            "\n\r"));
+                    })
+                    toast1.toast('show');
+                }
+            });
+    })
 });
 
 function capitalize(s) {

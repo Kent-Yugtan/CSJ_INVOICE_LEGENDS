@@ -31,8 +31,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::resource('admin/dashboard', DashboardController::class);
 
+    // FOR PROFILE TABLE
     Route::resource('admin/profile', ProfileController::class);
     Route::post('saveprofile', [ProfileController::class, 'store']);
+
+    // SHOW DEDUCTION TYPE IN PROFILE
+    Route::get('show_deduction_type', [ProfileController::class, 'show_deduction_types']);
 
     // Route::post('admin/UpdateProfile', [ProfileController::class, 'store'])->name('profile.update');
     Route::get('admin/current_show_data', [ProfileController::class, 'current_show_data']);
@@ -42,6 +46,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // POST DEDUCTION TYPES TABLE
     Route::post('savedeductiontype', [DeductionTypeController::class, 'store']);
     Route::get('settings/show_data', [DeductionTypeController::class, 'show_data']);
+    Route::get('settings/show_edit/{id}', [DeductionTypeController::class, 'show_edit']);
 
 
     Route::resource('admin/invoice', InvoiceController::class);
