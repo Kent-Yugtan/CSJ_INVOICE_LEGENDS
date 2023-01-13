@@ -261,28 +261,30 @@ class ProfileController extends Controller
     {
 
         $finduser_profile = User::with('profile', 'profile.profile_deduction_types')->find($id);
-
         if (!$finduser_profile) {
             return response()->json([
                 'success' => false,
                 'message' => 'ID ' . $request->id . ' not found'
             ], 400);
         } else {
-            return "error";
-        }
-
-        if ($finduser_profile->profile) {
             return response()->json([
                 'success' => true,
                 'data' => $finduser_profile,
-            ]);
-        } else {
-            $find_userid = User::find($id);
-            return response()->json([
-                'success' => true,
-                'data' => $find_userid,
-            ]);
+            ], 200);
         }
+
+        // if ($finduser_profile->profile) {
+        //     return response()->json([
+        //         'success' => true,
+        //         'data' => $finduser_profile,
+        //     ]);
+        // } else {
+        //     $find_userid = User::find($id);
+        //     return response()->json([
+        //         'success' => true,
+        //         'data' => $find_userid,
+        //     ]);
+        // }
     }
 
     /**
