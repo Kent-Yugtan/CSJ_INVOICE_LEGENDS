@@ -36,13 +36,13 @@ Route::middleware(['AuthCheck'])->group(function () {
 
     Route::get('/settings/invoice',  [InvoiceController::class, 'setting_invoice']);
     Route::get('/admin/dashboard', [DashboardController::class, 'index']);
-
+    Route::get('/settings/invoice', [InvoiceController::class, 'current_createinvoice']);
     Route::get('/admin/profile', [ProfileController::class, 'index']);
     // Route::post('admin/SaveProfile', [ProfileController::class, 'store']);
 
     Route::get('/admin/current', [ProfileController::class, 'current_show']);
     Route::get('/admin/editProfile/{id}', [ProfileController::class, 'edit']);
-
+    Route::get('/admin/inactive', [ProfileController::class, 'inactive']);
 
     // Route::get('/invoice/add', InvoiceController::class);
     // Route::get('invoice/add_invoice', [InvoiceController::class, 'add_invoice']);

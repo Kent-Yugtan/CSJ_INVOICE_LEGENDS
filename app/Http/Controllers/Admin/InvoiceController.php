@@ -99,8 +99,12 @@ class InvoiceController extends Controller
     {
         return view('invoice.inactive');
     }
-    public function setting_invoice()
+    public function current_createinvoice()
     {
-        return view('settings.invoice');
+        return view('settings.CreateInvoice');
+    }
+    public function inactive_profile()
+    {
+        return view('admin.inactive');
     }
 }
