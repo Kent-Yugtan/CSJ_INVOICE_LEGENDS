@@ -1,5 +1,4 @@
 @extends('layouts.master')
-
 @section('content-dashboard')
 <div class="container-fluid pt-0">
     <h1 class="mt-0">Add Profile</h1>
@@ -234,6 +233,7 @@
 
 </div>
 <!-- <button type="button" class="btn btn-primary" id="showtoast">Show Toast</button> -->
+<script src="{{ asset('/assets/js/fileupload.js') }}"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -407,7 +407,7 @@ $(document).ready(function() {
 
     $('.select2-multiple').select2({
         placeholder: "Select",
-        allowClear: true
+        // allowClear: true
     });
 
 });
