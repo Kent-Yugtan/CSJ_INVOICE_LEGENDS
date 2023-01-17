@@ -544,6 +544,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+
     show_edit();
 
     function show_edit() {
@@ -557,8 +558,8 @@ $(document).ready(function() {
                 let data = response.data;
                 console.log("response", data);
                 if (data.success) {
-                    console.log("SUCCESS");
-                    console.log("GENERAL", data.data.first_name);
+                    // console.log("SUCCESS");
+                    // console.log("GENERAL", data.data.email);
                     console.log("PROFILE", data.data.profile);
 
                     $('#first_name').val(data.data.first_name);
@@ -581,12 +582,11 @@ $(document).ready(function() {
                     // $("#photo").attr("src", data.data.profile.file_path);
                     if (data.data.profile.file_path) {
                         $('#photo').val(data.data.profile.file_path);
-                        console.log("OK");
                     } else {
                         $("#photo").attr("src", "/images/default.png");
                     }
 
-                    console.log('profile_deduction_types', data.data.profile.profile_deduction_types);
+                    // console.log('profile_deduction_types', data.data.profile.profile_deduction_types);
                     let profile_deduction_types_reduce = data.data.profile.profile_deduction_types.reduce((
                         a, b) => {
                         a.push(b.id)
@@ -616,9 +616,14 @@ $(document).ready(function() {
 
     $('#ProfileUpdate').submit(function(e) {
         e.preventDefault();
-
-        let full_name = $("#full_name").val();
+        let user_id = $("#user_id").val();
+        let profile_id = $("#profile_id").val();
+        let first_name = $("#first_name").val();
+        let last_name = $("#last_name").val();
+        let email = $("#email").val();
         let position = $("#position").val();
+        // let password = $("#password").val();
+        let username = $("#username").val();
         let phone_number = $("#phone_number").val();
         let address = $("#address").val();
         let province = $("#province").val();
@@ -631,9 +636,16 @@ $(document).ready(function() {
         let bank_location = $("#bank_location").val();
         let gcash_no = $("#gcash_no").val();
         let date_hired = $("#date_hired").val();
+        let deduction_type_id = $('#select2Multiple').val();
 
         let formData = new FormData();
-        formData.append('full_name', full_name);
+        formData.append('id', user_id);
+        formData.append('profile_id', profile_id);
+        formData.append('first_name', first_name);
+        formData.append('last_name', last_name);
+        formData.append('email', email);
+        formData.append('username', username);
+        // formData.append('password', "");
         formData.append('position', position ?? "");
         formData.append('phone_number', phone_number);
         formData.append('address', address);
@@ -651,7 +663,7 @@ $(document).ready(function() {
         formData.append('bank_location', bank_location);
         formData.append('gcash_no', gcash_no);
         formData.append('date_hired', date_hired);
-
+        formData.append('deduction_type_id', JSON.stringify(deduction_type_id));
         if (document.getElementById('file').files.length > 0) {
             formData.append('profile_picture', document.getElementById('file').files[0],
                 "picture.png");
@@ -668,7 +680,10 @@ $(document).ready(function() {
                 console.log("SUCCESS", data);
 
                 if (data.success == true) {
-                    $("#full_name").val("");
+                    $("#first_name").val("");
+                    $("#last_name").val("");
+                    $("#email").val("");
+                    $("#username").val("");
                     $("#position").val("");
                     $("#phone_number").val("");
                     $("#address").val("");
@@ -683,6 +698,7 @@ $(document).ready(function() {
                     $("#gcash_no").val("");
                     $("#date_hired").val("");
                     $("#photo").attr("src", "/images/default.png");
+                    show_deduction();
 
                     // select2Multiple
 
@@ -762,7 +778,8 @@ $(document).ready(function() {
 
     $('.select2-multiple').select2({
         placeholder: "Select",
-        allowClear: true
+        // allowClear: true
+
     });
 
 });
