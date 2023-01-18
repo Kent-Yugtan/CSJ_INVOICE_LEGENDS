@@ -150,4 +150,8 @@ class InvoiceController extends Controller
     {
         return view('invoice.add');
     }
+
+
+    // Create Invoice Modal
+
 }

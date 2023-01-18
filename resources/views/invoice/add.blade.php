@@ -298,6 +298,8 @@
             toast1.toast('hide');
         })
 
+
+
         $('input[type=radio][id=discount_type]').change(function() {
             if (this.value == 'fixed') {
                 //write your logic here
@@ -363,6 +365,7 @@
             $(row_item).remove();
             x--;
             GrandTotal();
+            getResults_Converted();
 
             if ($('#show_items > .row').length === 1) {
                 $('#show_items > .row').find('.col-remove-item').removeClass('d-none')
