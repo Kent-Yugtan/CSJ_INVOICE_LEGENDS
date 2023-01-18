@@ -53,6 +53,8 @@ Route::middleware(['AuthCheck'])->group(function () {
     Route::get('/settings/deductiontype', [DeductionTypeController::class, 'view_deductiontype']);
 });
 
+
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
