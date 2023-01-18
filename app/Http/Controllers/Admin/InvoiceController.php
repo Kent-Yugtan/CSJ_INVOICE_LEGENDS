@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
+use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -89,6 +90,44 @@ class InvoiceController extends Controller
     // {
     //     return view('invoice.add');
     // }
+
+    // CHECK PROFILE
+    public function check_profile()
+    {
+        $user_id = auth()->user()->id;
+        $check_profile = Profile::with('profile_deduction_types')->where('user_id', $user_id)->first();
+
+        if (!$check_profile) {
+            return response()->json([
+                'success' => false,
+                'message' => "Please create profile before making transactions.",
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => true,
+                'message' => "Success",
+                'data' => $check_profile,
+                'invoice_no' => $this->generate_invoice($check_profile->id),
+            ], 200);
+        }
+    }
+
+    public function generate_invoice($profile_id)
+    {
+        $last_invoice = Invoice::where('profile_id', $profile_id)->orderBy('invoice_no', 'desc')->first();
+        $last_num = 0;
+        if ($last_invoice) {
+            // $last_num = $last_invoice->invoice_no != null ? $last_invoice->invoice_no + 1 : 00001;
+            $last_num = (int) str_replace('5PP-', "", $last_invoice->invoice_no);
+            $_last_num = str_pad($last_num + 1, 5, '0', STR_PAD_LEFT);
+            $last_num = '5PP-' . $_last_num;
+        } else {
+            // $last_num = 00001;
+            $last_num = '5PP-00001';
+        }
+        // $invoice_num = sprintf("%05d", $last_num);
+        return $last_num;
+    }
 
     public function current()
     {

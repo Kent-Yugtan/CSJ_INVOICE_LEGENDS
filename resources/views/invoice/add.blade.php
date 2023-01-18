@@ -4,7 +4,7 @@
 <div class="container-fluid pt-0">
     <h1 class="mt-0"></h1>
     <ol class="breadcrumb mb-3"></ol>
-    <div class="row">
+    <div class="row whole_row">
         <!-- <form id="invoice_items"> -->
         @csrf
         <div class="row px-4 pb-4" id="header">
@@ -15,9 +15,11 @@
                     </div>
                     <div class="row px-4 pb-4" id="header">
                         <div class="col-12 mb-3">
+                            <input id="profile_id" name="profile_id" type="text" hidden>
                             <div class="form-group w-50">
                                 <label class="formGroupExampleInput2">Invoice #</label>
-                                <input id="invoice_no" name="invoice_no" type="text" class="form-control">
+                                <input id="invoice_no" style="font-weight: bold;border:none;background-color:white"
+                                    disabled name="invoice_no" type="text" class="form-control">
                             </div>
                         </div>
 
@@ -35,47 +37,13 @@
                         <div id="show_items">
                             <div class="col-12 mb-3">
                                 <div class="row">
-                                    <!-- <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="formGroupExampleInput2">Item Desctiption</label>
-                                                <input type="text" id="item_description" name="item_description" class="form-control item_description" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label class="formGroupExampleInput2">Quantity</label>
-                                                <input type="Number" id="quantity" name="quantity" class="form-control multi quantity" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label class="formGroupExampleInput2" for="form3Example2">Rate</label>
-                                                <input type="number" name="rate" id="rate" class="form-control multi rate" />
-
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <label class="formGroupExampleInput2" for="form3Example2">Amount</label>
-                                                <input type="text" name="amount" id="amount" class="form-control amount" disabled />
-                                            </div>
-                                        </div> -->
+                                    <!-- FOR TABLE INVOICE DESCRIPTION DISPLAY -->
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-8 mb-3">
-                            <!-- <div class="row">
-                                    <div class="col-4 md-2 w-100" style="display: flex;justify-content: end;">
-                                        <div class="form-group">
-                                            </br>
-                                            <button class="btn btn-secondary w-100"
-                                                style="color:white; background-color: #CF8029;" id="add_item">Add
-                                                Item</button>
-                                        </div>
-                                    </div>
-                                </div> -->
+
                         </div>
                         <div class="col-4 mb-3">
                             <div class="row">
@@ -85,6 +53,46 @@
                                         <button class="btn btn-secondary"
                                             style="width:100%;color:white; background-color: #CF8029;" id="add_item">Add
                                             Item</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="formGroupExampleInput2">Discount Type</label>
+                                        <br>
+                                        <input class="form-check-input" type="radio" name="discount_type"
+                                            id="discount_type">
+                                        <label class="formGroupExampleInput2">
+                                            Fxd &nbsp; &nbsp;
+                                        </label>
+                                        <input class="form-check-input" type="radio" name="discount_type"
+                                            id="discount_type">
+                                        <label class="formGroupExampleInput2">
+                                            %
+                                        </label>
+                                        <!-- <input type="text" id="discount_type" class="form-control" /> -->
+
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="formGroupExampleInput2">Discount Amount</label>
+                                        <input type="text" style="text-align:right"
+                                            onkeypress="return onlyNumberKey(event)" id="discount_amount"
+                                            class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="formGroupExampleInput2" for="form3Example2">Discount Total</label>
+                                        <input type="text" style="text-align:right"
+                                            onkeypress="return onlyNumberKey(event)" id="discount_total"
+                                            class="form-control" />
                                     </div>
                                 </div>
                             </div>
@@ -231,7 +239,7 @@
                     <div class="row mt-3">
                         <div class="col g-5">
                             <div class="pb-3">
-                                <button type="button" class="convert btn btn-secondary w-100"
+                                <button type="button" class="btn btn-secondary w-100"
                                     style="color:White; background-color:#CF8029;">Save</button>
                             </div>
                             <div>
@@ -246,52 +254,53 @@
             <!-- </form> -->
         </div>
     </div>
-    <!--<script>
-$(document).ready(function() {
 
-    $('#calculation').on("keyup", ".multi", function() {
-        var parent = $(this).closest('tr');
-        var quant = $(parent).find('#quantity').val();
-        var price = $(parent).find('#price').val();
+    <div style="position: fixed; top: 60px; right: 20px;">
+        <div class="toast toast1 toast-bootstrap" role=" alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <div><i class="fa fa-newspaper-o"> </i></div>
+                <div><strong class="mr-auto m-l-sm toast-title">Notification</strong></div>
+                <div>
+                    <button type="button" class="ml-2 mb-1 close float-end" data-dismiss="toast" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            <div class="toast-body">
+                Hello, you can push notifications to your visitors with this toast feature.
+            </div>
+        </div>
+    </div>
 
-        $(parent).find('#amount').val(quant * price);
-        GrandTotal();
-    });
-
-    function GrandTotal() {
-        var sum = 0;
-
-        $('.amount').each(function() {
-            sum += Number($(this).val());
-        });
-
-        $('#total').val(sum);
-    }
-
-});
-
-$("#add_item").click(function(e) {
-    e.preventDefault();
-    var template = '';
-    template += '<tr>';
-    template += '<td><input class="underline-input" type="number" name="item" />';
-    template += '<td><input class="underline-input multi" type="number" id="quantity" name="quantity" />';
-    template += '<td><input class="underline-input multi" type="number" id="price" name="price" />';
-    template += '<td><input class="underline-input amount" type="number" id="amount" name="amount" /></td>';
-    template += '</tr>';
-
-    $("#calculation").append(template);
-
-});
-</script> -->
     <script type="text/javascript">
     $(document).ready(function() {
         const api = "https://api.exchangerate-api.com/v4/latest/USD";
         let x = 1;
+        let toast1 = $('.toast1');
+
         display_rows();
 
+        toast1.toast({
+            delay: 5000,
+            animation: true
+        });
 
-        // function getresults
+        $('.close').on('click', function(e) {
+            e.preventDefault();
+            toast1.toast('hide');
+        })
+
+        $("#error_msg").hide();
+        $("#success_msg").hide();
+
+        $('.close').on('click', function(e) {
+            e.preventDefault();
+            toast1.toast('hide');
+        })
+
+
+
+        // FUNCTION FOR DISPLAY RESULTS AND CONVERTED AMOUNT
         function getResults_Converted() {
             fetch(`${api}`)
                 .then(currency => {
@@ -299,6 +308,7 @@ $("#add_item").click(function(e) {
                 }).then(displayResults);
         }
 
+        // FUNCTION FOR DISPLAY RESULTS AND CONVERTED AMOUNT
         function displayResults(currency) {
             let dollar_amount = $("#dollar_amount").val();
             let peso_rate = 0;
@@ -311,11 +321,7 @@ $("#add_item").click(function(e) {
             $('#converted_amount').val(converted_amount);
         }
 
-        $('#convert').on('click', function(e) {
-            e.preventDefault();
-            console.log("CLICK");
-
-        })
+        // FUNCTION FOR KEYUP CLASS MULTI INPUTS
         $('#show_items').on("keyup", ".multi", function() {
             let sub_total = 0;
             let parent = $(this).closest('.row');
@@ -327,6 +333,7 @@ $("#add_item").click(function(e) {
             getResults_Converted();
         });
 
+        // FUNCTION FOR DISPLAYING SUBTOTAL AMOUNT AND DOLLAR AMOUNT
         function GrandTotal() {
             var sum = 0;
             $('#show_items .amount').each(function() {
@@ -336,9 +343,7 @@ $("#add_item").click(function(e) {
             $('#dollar_amount').val(sum.toFixed(2));
         }
 
-
-
-
+        // FUNCTION CLICK FOR REMOVING INVOICE ITEMS ROWS
         $(document).on('click', '.remove_items', function(e) {
             e.preventDefault();
             let parent = $(this).closest('.row');
@@ -355,13 +360,14 @@ $("#add_item").click(function(e) {
             }
         });
 
+        // FUNCTION CLICK FOR DISPLAY INVOICE ITEM ROWS
         $("#add_item").click(function(e) {
             e.preventDefault();
             display_rows()
         });
 
-        let counter_row = 0;
 
+        // INITIALIZE DISPLAY ROWS
         function display_rows() {
             let max_fields = 10;
             let wrapper = $('#show_items');
@@ -422,19 +428,9 @@ $("#add_item").click(function(e) {
             }
         }
 
-        // Get value on keyup funtion
-        // $("#quantity, #rate").keyup(function() {
-        //     var total = 0;
-        //     var y = Number($("#quantity").val());
-        //     var x = Number($("#rate").val());
-        //     var total = x * y;
-        //     $('#subtotal').val(total);
-
-        // });
-
-
     });
 
+    // ONLY NUMBERS FOR NUMBER INPUTS
     function onlyNumberKey(evt) {
         // Only ASCII character in that range allowed
         var ASCIICode = (evt.which) ? evt.which : evt.keyCode
@@ -442,7 +438,40 @@ $("#add_item").click(function(e) {
             return false;
         return true;
     }
-    </script>
 
+    // GET INVOICE NUMBER
+
+    // CHECK IF THE USER HAVE THE PROFILE
+    function check_profile() {
+        let toast1 = $('.toast1');
+        axios
+            .get(apiUrl + '/api/invoice/createinvoice', {
+                headers: {
+                    Authorization: token,
+                }
+            }).then(function(response) {
+                let data = response.data;
+                console.log("response", data);
+
+                if (!data.success) {
+                    console.log("TRUE", data.success);
+
+                    $('.whole_row').addClass('d-none');
+                    $('.toast1 .toast-title').html('Invoices');
+                    $('.toast1 .toast-body').html(data.message);
+                    toast1.toast('show');
+
+                } else {
+                    $('.whole_row').removeClass('d-none');
+                    $('#profile_id').val(data.data.id);
+                    $('#invoice_no').val(data.invoice_no);
+                }
+
+            }).catch(function(error) {
+                console.log("error", error);
+            });
+    }
+    check_profile();
+    </script>
 
     @endsection

@@ -46,20 +46,18 @@
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Email</label>
-                            <input id="email" name="email" type="email"
-                                class="form-control @error('email') is-invalid @enderror" placeholder="Email" required>
+                            <input id="email" name="email" type="email" class="form-control" placeholder="Email"
+                                required>
                         </div>
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Username</label>
-                            <input id="username" name="username" type="text"
-                                class="form-control @error('username') is-invalid @enderror" placeholder="Username"
+                            <input id="username" name="username" type="text" class="form-control" placeholder="Username"
                                 required>
                         </div>
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Password</label>
-                            <input id="password" name="password" type="password"
-                                class="form-control @error('password') is-invalid @enderror" placeholder="Password"
-                                required>
+                            <input id="password" name="password" type="password" class="form-control"
+                                placeholder="Password" required>
                         </div>
 
                         <div class="mb-3">
@@ -215,7 +213,6 @@
 </div>
 
 <div style="position: fixed; top: 60px; right: 20px;">
-
     <div class="toast toast1 toast-bootstrap" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
             <div><i class="fa fa-newspaper-o"> </i></div>
@@ -230,7 +227,6 @@
             Hello, you can push notifications to your visitors with this toast feature.
         </div>
     </div>
-
 </div>
 <!-- <button type="button" class="btn btn-primary" id="showtoast">Show Toast</button> -->
 <script src="{{ asset('/assets/js/fileupload.js') }}"></script>
