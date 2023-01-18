@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DeductionTypeController;
-
+use App\Http\Controllers\Admin\InvoiceController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -48,11 +48,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('settings/show_data', [DeductionTypeController::class, 'show_data']);
     Route::get('settings/show_edit/{id}', [DeductionTypeController::class, 'show_edit']);
 
-
+    //  GET INVOICES FUNCTION
     Route::resource('admin/invoice', InvoiceController::class);
     Route::get('admin/add_invoice', [InvoiceController::class, 'add_invoice']);
     Route::get('admin/current_invoice', [InvoiceController::class, 'current_invoice']);
     Route::get('admin/inactive_invoice', [InvoiceController::class, 'inactive_invoice']);
+    Route::get('invoice/createinvoice', [InvoiceController::class, 'check_profile']);
 });
 
 

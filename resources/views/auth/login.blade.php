@@ -101,7 +101,7 @@
                             <div class="col-md-12" style="text-align: center">
                                 <label class="input-color">{{ __('Don\'t have an account?') }} </label>
                                 <!-- @if (Route::has('register')) -->
-                                <a class="nav-link" href="{{ route('auth.register') }}">{{ __('Sign up') }}</a>
+                                <!-- <a class="nav-link" href="{{ route('auth.register') }}">{{ __('Sign up') }}</a> -->
                                 <!-- @endif -->
                             </div>
                         </div>

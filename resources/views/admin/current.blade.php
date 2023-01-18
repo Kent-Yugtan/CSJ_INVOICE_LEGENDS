@@ -108,8 +108,9 @@ $(document).ready(function() {
                 console.log('res', res);
                 if (res.success) {
                     if (res.data.data.length > 0) {
+                        ;
                         res.data.data.map((item) => {
-                            let tr = '<tr>';
+                            let tr = '<tr style="vertical-align:sub;">';
 
                             if (item.file_path) {
                                 tr +=

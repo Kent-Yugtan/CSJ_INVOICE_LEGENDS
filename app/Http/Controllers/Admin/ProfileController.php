@@ -46,6 +46,7 @@ class ProfileController extends Controller
         $error = false;
         $user_id = $request->id;
         $findUser = User::with('profile', 'profile.profile_deduction_types')->find($user_id);
+        // return $findUser;
         if (!$user_id) {
             $request->validate([
                 'acct_no' => 'required|unique:profiles',
@@ -80,6 +81,7 @@ class ProfileController extends Controller
                     $request->validate([
                         'email' => 'required|unique:users',
                     ]);
+                    return $findUser->email;
                 }
             }
         }
@@ -164,8 +166,9 @@ class ProfileController extends Controller
 
                     foreach (json_decode($deduction_type_id) as $q) {
                         $findProfile = Profile::where('user_id', $findUser->id)->first();
-
-                        $findProfileDeductionTypes = ProfileDeductionTypes::where('profile_id', $findProfile->id)->where('deduction_type_id', $q)->first();
+                        $findProfileDeductionTypes = ProfileDeductionTypes::where('profile_id', $findProfile->id)
+                            ->where('deduction_type_id', $q)
+                            ->first();
 
                         $dataDeductionType = \App\Models\DeductionType::find($q);
 
@@ -194,8 +197,9 @@ class ProfileController extends Controller
 
                     foreach (json_decode($deduction_type_id) as $q) {
                         $findProfile = Profile::where('user_id', $userCreate->id)->first();
-
-                        $findProfileDeductionTypes = ProfileDeductionTypes::where('profile_id', $findProfile->id)->where('deduction_type_id', $q)->first();
+                        $findProfileDeductionTypes = ProfileDeductionTypes::where('profile_id', $findProfile->id)
+                            ->where('deduction_type_id', $q)
+                            ->first();
 
                         $dataDeductionType = \App\Models\DeductionType::find($q);
 
@@ -220,14 +224,16 @@ class ProfileController extends Controller
                     'success' => true,
                     'message' => 'Your Profile has been successfully added to the database.',
                     'data' => $userCreate,
-                    'jj' => json_decode($deduction_type_id),
+                    'remain' => json_decode($deduction_type_id),
+                    'remove' => $q,
                 ], 200);
             } else {
                 return response()->json([
                     'success' => true,
                     'message' => 'Your Profile has been successfully updated to the database.',
                     'data' => $userCreate,
-                    'jj' => json_decode($deduction_type_id),
+                    'remain' => json_decode($deduction_type_id),
+                    'remove' => $q,
                 ], 200);
             }
         }

@@ -32,6 +32,7 @@ Route::get('/', function () {
 
 Route::get('/auth/login', [MainController::class, 'login'])->name('auth.login');
 Route::get('/auth/register', [MainController::class, 'register'])->name('auth.register');
+Route::post('/auth/save', [MainController::class, 'save_user'])->name('auth.save_user');
 Route::middleware(['AuthCheck'])->group(function () {
 
     Route::get('/admin/dashboard', [DashboardController::class, 'index']);
@@ -52,6 +53,8 @@ Route::middleware(['AuthCheck'])->group(function () {
     // POST DEDUCTION TYPES TABLE
     Route::get('/settings/deductiontype', [DeductionTypeController::class, 'view_deductiontype']);
 });
+
+
 
 Auth::routes();
 

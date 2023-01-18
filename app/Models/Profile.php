@@ -19,6 +19,11 @@ class Profile extends Model
         return $this->belongsTo('App\Models\User', 'user_id');
     }
 
+    public function invoice()
+    {
+        return $this->hasMany('App\Models\Invoice', 'profile_id');
+    }
+
     public function profile_deduction_types()
     {
         return $this->hasMany('App\Models\ProfileDeductionTypes', 'profile_id');
