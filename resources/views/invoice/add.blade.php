@@ -61,16 +61,16 @@
                         <div class="col-12 mb-3">
                             <div class="row">
                                 <div class="col">
-                                    <div class="form-group">
+                                    <div class="form-group text-center">
                                         <label class="formGroupExampleInput2">Discount Type</label>
                                         <br>
                                         <input class="form-check-input" type="radio" name="discount_type"
-                                            id="discount_type">
-                                        <label class="formGroupExampleInput2">
+                                            id="discount_type" value="fixed">
+                                        <label class="discount_type formGroupExampleInput2">
                                             Fxd &nbsp; &nbsp;
                                         </label>
-                                        <input class="form-check-input" type="radio" name="discount_type"
-                                            id="discount_type">
+                                        <input class="discount_type form-check-input" type="radio" name="discount_type"
+                                            id="discount_type" value="percentage">
                                         <label class="formGroupExampleInput2">
                                             %
                                         </label>
@@ -298,7 +298,16 @@
             toast1.toast('hide');
         })
 
+        $('input[type=radio][id=discount_type]').change(function() {
+            if (this.value == 'fixed') {
+                //write your logic here
+                console.log("fixed");
 
+            } else if (this.value == 'percentage') {
+                //write your logic here
+                console.log("percentage");
+            }
+        })
 
         // FUNCTION FOR DISPLAY RESULTS AND CONVERTED AMOUNT
         function getResults_Converted() {
@@ -325,7 +334,8 @@
         $('#show_items').on("keyup", ".multi", function() {
             let sub_total = 0;
             let parent = $(this).closest('.row');
-            let quantity = parent.find('.quantity').val() ? parent.find('.quantity').val() : 0;
+            let quantity = parent.find('.quantity').val() ? parent.find('.quantity').val() :
+                0;
             let rate = parent.find('.rate').val() ? parent.find('.rate').val() : 0;
             sub_total = parseFloat(quantity) * parseFloat(rate);
             parent.find('.amount').val(sub_total.toFixed(2));
@@ -355,8 +365,9 @@
             GrandTotal();
 
             if ($('#show_items > .row').length === 1) {
-                $('#show_items > .row').find('.col-remove-item').removeClass('d-none').addClass(
-                    'd-none');
+                $('#show_items > .row').find('.col-remove-item').removeClass('d-none')
+                    .addClass(
+                        'd-none');
             }
         });
 
@@ -424,7 +435,8 @@
                     $(this).find('.col-remove-item').removeClass('d-none');
                 })
             } else {
-                $('#show_items > .row').find('.col-remove-item').removeClass('d-none').addClass('d-none');
+                $('#show_items > .row').find('.col-remove-item').removeClass('d-none').addClass(
+                    'd-none');
             }
         }
 
