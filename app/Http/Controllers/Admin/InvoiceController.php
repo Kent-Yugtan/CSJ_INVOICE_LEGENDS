@@ -7,6 +7,7 @@ use App\Models\Invoice;
 use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class InvoiceController extends Controller
 {
@@ -95,7 +96,14 @@ class InvoiceController extends Controller
     public function check_profile()
     {
         $user_id = auth()->user()->id;
-        $check_profile = Profile::with('profile_deduction_types')->where('user_id', $user_id)->first();
+        $check_profile = Profile::select([
+            'profiles.*',
+            DB::raw('(SELECT
+                     SUM(amount)
+                 FROM profile_deduction_types WHERE
+                 profile_deduction_types.profile_id = profiles.id) as `total_deduction`')
+        ])->with(['profile_deduction_types', 'profile_deduction_types.deduction_type'])
+            ->where('user_id', $user_id)->first();
 
         if (!$check_profile) {
             return response()->json([
