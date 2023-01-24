@@ -416,8 +416,8 @@ $(document).ready(function() {
         let toRate = currency.rates['PHP'];
         peso_rate = (toRate / fromRate).toFixed(2);
         converted_amount = ((toRate / fromRate) * dollar_amount).toFixed(2);
-        $('#peso_rate').val(peso_rate);
-        $('#converted_amount').val(converted_amount);
+        $('#peso_rate').val(parseFloat(peso_rate));
+        $('#converted_amount').val(parseFloat(converted_amount));
         // $('#grand_total').val((converted_amount - total_deduction_amount).toFixed(
         //     2));
     }
@@ -443,7 +443,7 @@ $(document).ready(function() {
         let quantity = parent.find('.quantity').val() ? parent.find('.quantity').val() : 0;
         let rate = parent.find('.rate').val() ? parent.find('.rate').val() : 0;
         sub_total = parseFloat(quantity) * parseFloat(rate);
-        parent.find('.amount').val(sub_total.toFixed(2));
+        parent.find('.amount').val(parseFloat(sub_total).toFixed(2));
         subtotal();
         getResults_Converted();
         Additems_total();
@@ -457,8 +457,8 @@ $(document).ready(function() {
         $('#show_items .amount').each(function() {
             sum += Number($(this).val());
         });
-        $('#subtotal').val(sum.toFixed(2));
-        $('#dollar_amount').val(sum.toFixed(2));
+        $('#subtotal').val(parseFloat(sum).toFixed(2));
+        $('#dollar_amount').val(parseFloat(sum).toFixed(2));
 
     }
 
@@ -479,8 +479,8 @@ $(document).ready(function() {
 
         dollar_amount = $('#dollar_amount').val();
         peso_rate = $('#peso_rate').val();
-        converted_amount_input = (dollar_amount * peso_rate).toFixed(2);
-        $('#grand_total').val((converted_amount_input - sum).toFixed(2));
+        converted_amount_input = (parseFloat(dollar_amount) * parseFloat(peso_rate)).toFixed(2);
+        $('#grand_total').val((parseFloat(converted_amount_input) - parseFloat(sum)).toFixed(2));
     }
 
     // FUNCTION CLICK FOR REMOVING INVOICE ITEMS ROWS
