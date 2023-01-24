@@ -246,16 +246,15 @@
                         <form id="CreateInvoice" method="POST" action="javascript:void(0)"
                             class="row g-3 needs-validation" novalidate>
                             @csrf
-                            <div class="col-md-4 w-100">
+                            <div class="col-md-4">
                                 <div class="input-group">
                                     <!-- START MODAL -->
                                     <div class="modal fade" id="exampleModal" tabindex="-1"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
+                                        <div class="modal-dialog modal-lg" style="width:200%;height:900%">
+                                            <div class=" modal-content">
                                                 <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Create Invoice
-                                                    </h1>
+                                                    <h1 class="modal-title fs-5" id="createnvoice1">Create Invoice</h1>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
@@ -284,20 +283,23 @@
                                                         </div>
 
                                                         <div class="col-12">
-                                                            <div class="col pt-3">
+                                                            <<<<<<< HEAD <div class="col pt-3">
                                                                 <div class="form-group">
                                                                     <label for="formGroupExampleInput">Item
                                                                         Description</label>
                                                                     <input type="text" class="form-control"
                                                                         id="item_description"
                                                                         placeholder="Item Description">
+                                                                    =======
+                                                                    <!-- <div class="row mt-4">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label for="formGroupExampleInput">Item
+                                                                            Description</label>
+                                                                        <input type="text" class="form-control" id="item_description" placeholder="Item Description">
+                                                                    </div>
+>>>>>>> d0cb3e933e96400649f772b9dd9e883662f29679
                                                                 </div>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="col-12">
-                                                            <div class="row mt-4">
                                                                 <div class="col">
                                                                     <div class="form-group">
                                                                         <label
@@ -307,6 +309,7 @@
                                                                             class="form-control">
                                                                     </div>
                                                                 </div>
+
                                                                 <div class="col">
                                                                     <div class="form-group">
                                                                         <label
@@ -315,72 +318,91 @@
                                                                             class="form-control">
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
 
-                                                        <div class="col-12">
-                                                            <div class="col pt-3">
-                                                                <div class="form-group">
-                                                                    <label class="formGroupExampleInput">Peso
-                                                                        Rate</label>
-                                                                    <input type="text" id="peso_rate"
-                                                                        placeholder="Peso Rate" class="form-control">
+                                                            </div> -->
+                                                                    <div id="show_items">
+                                                                        <div class="col-12 mb-3">
+                                                                            <div class="row">
+                                                                                <!-- FOR TABLE INVOICE DESCRIPTION DISPLAY -->
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
                                                                 </div>
-                                                            </div>
-                                                        </div>
+                                                                <div class="form-group" style="text-align:end">
+                                                                    </br>
+                                                                    <button class="btn" style="width:5%;color:red"
+                                                                        id="add_item1"> <i
+                                                                            class="fa fa-plus pe-1"></i></button>
+                                                                </div>
 
-                                                        <div class="col-12">
-                                                            <div class="row mt-4">
-                                                                <div class="col">
-                                                                    <div class="form-group">
-                                                                        <label class="formGroupExampleInput">Total
-                                                                            Amount($)</label>
-                                                                        <input type="text" id="total_amountdollar"
-                                                                            placeholder="Total Amount"
-                                                                            class="form-control">
-
+                                                                <div class="col-12">
+                                                                    <div class="col pt-3">
+                                                                        <div class="form-group">
+                                                                            <label class="formGroupExampleInput">Peso
+                                                                                Rate</label>
+                                                                            <input type="text" id="peso_rate"
+                                                                                placeholder="Peso Rate"
+                                                                                class="form-control">
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col">
-                                                                    <div class="form-group">
-                                                                        <label class="formGroupExampleInput">Total
-                                                                            Amount
-                                                                            (PHP)</label>
-                                                                        <input type="text" id="total_amountphp"
-                                                                            placeholder="Total Amount"
-                                                                            class="form-control">
 
+                                                                <div class="col-12">
+                                                                    <div class="row mt-4">
+                                                                        <div class="col">
+                                                                            <div class="form-group">
+                                                                                <label
+                                                                                    class="formGroupExampleInput">Total
+                                                                                    Amount($)</label>
+                                                                                <input type="text"
+                                                                                    id="total_amountdollar"
+                                                                                    placeholder="Total Amount"
+                                                                                    class="form-control">
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <div class="form-group">
+                                                                                <label
+                                                                                    class="formGroupExampleInput">Total
+                                                                                    Amount
+                                                                                    (PHP)</label>
+                                                                                <input type="text" id="total_amountphp"
+                                                                                    placeholder="Total Amount"
+                                                                                    class="form-control">
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- <button type="button" class="btn btn-primary" style=" color:white; background-color: #CF8029">Save changes</button> -->
+                                                                </div>
+
+                                                                <div class="col-12">
+                                                                    <div class="row mt-5">
+                                                                        <div class="col mb-5">
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary w-100"
+                                                                                style=" color:#CF8029; background-color:white; "
+                                                                                data-bs-dismiss="modal">Close</button>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <button type="submit"
+                                                                                class="btn btn-secondary w-100"
+                                                                                style=" color:White; background-color:#CF8029; "
+                                                                                data-bs-dismiss="modal">Save</button>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-
-                                                            <!-- <button type="button" class="btn btn-primary" style=" color:white; background-color: #CF8029">Save changes</button> -->
-                                                        </div>
-
-                                                        <div class="col-12">
-                                                            <div class="row mt-5">
-                                                                <div class="col mb-5">
-                                                                    <button type="button"
-                                                                        class="btn btn-secondary w-100"
-                                                                        style=" color:#CF8029; background-color:white; "
-                                                                        data-bs-dismiss="modal">Close</button>
-                                                                </div>
-                                                                <div class="col">
-                                                                    <button type="submit"
-                                                                        class="btn btn-secondary w-100"
-                                                                        style=" color:White; background-color:#CF8029; "
-                                                                        data-bs-dismiss="modal">Save</button>
-                                                                </div>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-                            </div>
+                                </div>
                         </form>
 
                         <div class="form-group has-search">
@@ -484,7 +506,7 @@
                                                     <th>Status</th>
                                                     <th>Date Created</th>
                                                     <th>Amount</th>
-                                                    <th clas2s="text-center">Action</th>
+                                                    <th class="text-center" id="action1">Action</th>
 
                                                 </tr>
                                             </thead>
@@ -563,7 +585,8 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-
+    display_rows();
+    show_edit();
 
     function show_edit() {
         let user_id = $('#user_id').val();
@@ -790,30 +813,142 @@ $(document).ready(function() {
         if (typeof s !== 'string') return "";
         return s.charAt(0).toUpperCase() + s.slice(1);
     }
+    // FUNCTION CLICK FOR REMOVING INVOICE ITEMS ROWS
+    $(document).on('click', '.remove_items', function(e) {
+        e.preventDefault();
+        let parent = $(this).closest('.row');
+        let sub_total = parent.find('.subtotal').val();
+        let row_item = $(this).parent().parent().parent();
+        console.log("subTOTAL", sub_total);
+        $(row_item).remove();
+        x--;
+        GrandTotal();
+        getResults_Converted();
+
+        if ($('#show_items > .row').length === 1) {
+            $('#show_items > .row').find('.col-remove-item').removeClass('d-none')
+                .addClass(
+                    'd-none');
+        }
+    });
+
+    $("#add_item1").click(function(e) {
+        e.preventDefault();
+        display_rows()
+    });
+
+    $('#show_items').on("keyup", ".multi", function() {
+        let sub_total = 0;
+        let parent = $(this).closest('.row');
+        let quantity = parent.find('.quantity').val() ? parent.find('.quantity').val() :
+            0;
+        let rate = parent.find('.rate').val() ? parent.find('.rate').val() : 0;
+        sub_total = parseFloat(quantity) * parseFloat(rate);
+        parent.find('.amount').val(sub_total.toFixed(2));
+        GrandTotal();
+        getResults_Converted();
+    });
+
+
+
+
+
+    function display_rows() {
+        let max_fields = 10;
+        let wrapper = $('#show_items');
+        add_rows = '';
+        add_rows += '<div class="row">';
+
+        add_rows += '<div class="col-md-4 mb-3">';
+        add_rows += '<div class="form-group">';
+        add_rows += '<label class="formGroupExampleInput2">Item Desctiption</label>';
+        add_rows +=
+            '<input type="text" name="item_description" id="item_description" class="form-control item_description" />';
+        add_rows += '</div>';
+        add_rows += '</div>';
+
+        add_rows += '<div class="col-md-2 mb-3">';
+        add_rows += '<div class="form-group">';
+        add_rows += '<label class="formGroupExampleInput2">Quantity</label>';
+        add_rows +=
+            '<input type="number" name="quantity" id="quantity" style="text-align:right;" class="form-control multi quantity" />';
+        add_rows += '</div>';
+        add_rows += ' </div>';
+
+        add_rows += '<div class="col-md-2 mb-3">';
+        add_rows += '<div class="form-group">';
+        add_rows += '<label class="formGroupExampleInput2" for="form3Example2">Rate</label>';
+        add_rows +=
+            '<input type="text" name="rate" id="rate" style="text-align:right;" class="form-control multi rate" />';
+        add_rows += '</div>';
+        add_rows += '</div>';
+
+        add_rows += '<div class="col-md-3 mb-3">';
+        add_rows += '<div class="form-group">';
+        add_rows += '<label class="formGroupExampleInput2" for="form3Example2">Amount</label>';
+        add_rows +=
+            '<input type="text" style="text-align:right;border:none;background-color:white" disabled name="amount" id="amount" class="form-control amount" />';
+        add_rows += '</div>';
+        add_rows += '</div>';
+
+        add_rows += '<div class="col-md-1 col-remove-item d-none">';
+        add_rows += '<div class="form-group">';
+        add_rows += '</br>';
+        add_rows +=
+            '<button class="btn remove_items" style="display: flex;justify-content: center;"><i class="fa fa-trash pe-1" style="color:red"></i></button>';
+        add_rows += '</div>';
+        add_rows += '</div>';
+
+        add_rows += '</div>';
+
+
+
+        $(wrapper).append(add_rows);
+
+        if ($('#show_items > .row').length > 1) {
+            $('#show_items > .row').each(function() {
+                $(this).find('.col-remove-item').removeClass('d-none');
+            })
+        } else {
+            $('#show_items > .row').find('.col-remove-item').removeClass('d-none').addClass(
+                'd-none');
+        }
+    }
+    // CHECK IF THE USER HAVE THE PROFILE
+    function check_profile() {
+        let toast1 = $('.toast1');
+        axios
+            .get(apiUrl + '/api/invoice/createinvoice', {
+                headers: {
+                    Authorization: token,
+                }
+            }).then(function(response) {
+                let data = response.data;
+                console.log("response", data);
+
+                if (!data.success) {
+                    console.log("TRUE", data.success);
+
+                    $('.whole_row').addClass('d-none');
+                    $('.toast1 .toast-title').html('Invoices');
+                    $('.toast1 .toast-body').html(data.message);
+                    toast1.toast('show');
+
+                } else {
+                    $('.whole_row').removeClass('d-none');
+                    $('#profile_id').val(data.data.id);
+                    $('#invoice_no').val(data.invoice_no);
+                }
+
+            }).catch(function(error) {
+                console.log("error", error);
+            });
+    }
+    check_profile();
 });
 </script>
-<!-- <script type="text/javascript">
-$(document).ready(function() {
-    $('#CreateInvoice').submit(function(e) {
-        e.preventDefault();
-        let invoice_no = $("#invoice_no").val();
-        let description = $("#description").val();
-        let item_description = $("#item_description").val();
-        let quantity = $("#quantity").val();
-        let rate = $("#rate").val();
-        let peso_rate = $("#peso_rate").val();
-        let total_amountdollar = $("#total_amountdollar").val();
-        let total_amountphp = $("#total_amountphp").val();
-        console.log("invoice_no", invoice_no);
-        console.log("description", description);
-        console.log("item_description", description);
-        console.log("quantity", quantity);
-        console.log("rate", rate);
-        console.log("peso_rate", peso_rate);
-        console.log("total_amountdollar", total_amountdollar);
-        console.log("total_amountphp", total_amountphp);
-    });
-});
-</script> -->
-<script src="{{ asset('/assets/js/fileupload.js') }}"></script>
+
+
+
+
 @endsection
