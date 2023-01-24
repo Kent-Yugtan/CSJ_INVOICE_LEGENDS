@@ -34,7 +34,7 @@ Route::get('/auth/login', [MainController::class, 'login'])->name('auth.login');
 Route::get('/auth/register', [MainController::class, 'register'])->name('auth.register');
 Route::post('/auth/save', [MainController::class, 'save_user'])->name('auth.save_user');
 Route::middleware(['AuthCheck'])->group(function () {
-
+Route::post('invoice',[InvoiceController::class, 'store']);
     Route::get('/admin/dashboard', [DashboardController::class, 'index']);
     Route::get('/settings/invoice', [InvoiceController::class, 'current_createinvoice']);
     Route::get('/admin/profile', [ProfileController::class, 'index']);

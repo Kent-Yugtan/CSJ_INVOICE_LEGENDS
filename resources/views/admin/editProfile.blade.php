@@ -729,6 +729,24 @@
             let total_amountdollar = $("#total_amountdollar").val();
             let total_amountphp = $("#total_amountphp").val();
 
+$.ajaxSetup ({
+    headers: {
+        'X-CSRF-TOKEN':$ ('meta[name="csrf-token"]').attr ('content'
+        )
+    }
+})
+            $.ajax ({
+                type:"POST",
+                url: "/invoice",
+                data:"data",
+                dataType:"json",
+                success: function (response) {
+                    console.log (response);
+                }
+            })
+
+
+
             console.log("invoice_no", invoice_no);
             console.log("description", description);
             console.log("item_description", description);

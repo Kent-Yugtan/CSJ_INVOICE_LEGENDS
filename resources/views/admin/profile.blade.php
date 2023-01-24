@@ -39,20 +39,6 @@
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Email</label>
-<<<<<<< HEAD
-                            <input id="email" name="email" type="email" class="form-control" placeholder="Email"
-                                required>
-                        </div>
-                        <div class="mb-3">
-                            <label mb-2 style="color: #A4A6B3;">Username</label>
-                            <input id="username" name="username" type="text" class="form-control" placeholder="Username"
-                                required>
-                        </div>
-                        <div class="mb-3">
-                            <label mb-2 style="color: #A4A6B3;">Password</label>
-                            <input id="password" name="password" type="password" class="form-control"
-                                placeholder="Password" required>
-=======
                             <input id="email" name="email" type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" required>
                         </div>
                         <div class="mb-3">
@@ -62,7 +48,6 @@
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Password</label>
                             <input id="password" name="password" type="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password" required>
->>>>>>> ca6c292cafda0956d2e3bf5b044889320cf60ef5
                         </div>
 
                         <div class="mb-3">
