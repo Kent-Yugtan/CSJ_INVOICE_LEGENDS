@@ -283,14 +283,14 @@
                                                         </div>
 
                                                         <div class="col-12">
-                                                            <<<<<<< HEAD <div class="col pt-3">
+                                                            <div class="col pt-3">
                                                                 <div class="form-group">
                                                                     <label for="formGroupExampleInput">Item
                                                                         Description</label>
                                                                     <input type="text" class="form-control"
                                                                         id="item_description"
                                                                         placeholder="Item Description">
-                                                                    =======
+
                                                                     <!-- <div class="row mt-4">
                                                                 <div class="col">
                                                                     <div class="form-group">
@@ -395,14 +395,14 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                </div>
+                                    </div>
                         </form>
 
                         <div class="form-group has-search">
