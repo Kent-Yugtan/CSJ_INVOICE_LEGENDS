@@ -158,16 +158,4 @@ class InvoiceController extends Controller
     {
         return view('invoice.add');
     }
-
-
-    public function index ()
-     {
-        return view ('invoice.index');
-     }
-     public function store (request $request)
-     (
-        $validator =validator::make ($request->all())
-     )
-    // Create Invoice Modal
-
 }

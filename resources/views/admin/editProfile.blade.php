@@ -281,45 +281,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
-                                                        <div class="col-12">
-                                                            <div class="col pt-3">
-                                                                <div class="form-group">
-                                                                    <label for="formGroupExampleInput">Item
-                                                                        Description</label>
-                                                                    <input type="text" class="form-control"
-                                                                        id="item_description"
-                                                                        placeholder="Item Description">
-
-                                                                    <!-- <div class="row mt-4">
-                                                                <div class="col">
-                                                                    <div class="form-group">
-                                                                        <label for="formGroupExampleInput">Item
-                                                                            Description</label>
-                                                                        <input type="text" class="form-control" id="item_description" placeholder="Item Description">
-                                                                    </div>
->>>>>>> d0cb3e933e96400649f772b9dd9e883662f29679
-                                                                </div>
-                                                                <div class="col">
-                                                                    <div class="form-group">
-                                                                        <label
-                                                                            class="formGroupExampleInput">Quantity</label>
-                                                                        <input type="text" class="form-control"
-                                                                            id="quantity" placeholder="Quantity"
-                                                                            class="form-control">
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col">
-                                                                    <div class="form-group">
-                                                                        <label
-                                                                            class="formGroupExampleInput">Rate</label>
-                                                                        <input type="text" id="rate" placeholder="Rate"
-                                                                            class="form-control">
-                                                                    </div>
-                                                                </div>
-
-                                                            </div> -->
                                                                     <div id="show_items">
                                                                         <div class="col-12 mb-3">
                                                                             <div class="row">
@@ -335,49 +296,100 @@
                                                                         id="add_item1"> <i
                                                                             class="fa fa-plus pe-1"></i></button>
                                                                 </div>
-
-                                                                <div class="col-12">
-                                                                    <div class="col pt-3">
-                                                                        <div class="form-group">
-                                                                            <label class="formGroupExampleInput">Peso
-                                                                                Rate</label>
-                                                                            <input type="text" id="peso_rate"
-                                                                                placeholder="Peso Rate"
-                                                                                class="form-control">
+                                                                <div class="col-12 mb-3">
+                                                                    <div class="row">
+                                                                        <div class="col"
+                                                                            style="display: flex;flex-direction: column-reverse;align-items: center;">
+                                                                            <div class="form-group">
+                                                                                <label class="formGroupExampleInput2">Discount Type</label>
+                                                                                <br>
+                                                                                <input class="form-check-input" type="radio" name="discount_type"
+                                                                                    id="discount_type" value="fixed">
+                                                                                <label class="formGroupExampleInput2">
+                                                                                    Fxd &nbsp; &nbsp;
+                                                                                </label>
+                                                                                <input class="discount_type form-check-input" type="radio"
+                                                                                    name="discount_type" id="discount_type" value="percentage">
+                                                                                <label class="formGroupExampleInput2">
+                                                                                    %
+                                                                                </label>
+                                                                                <!-- <input type="text" id="discount_type" class="form-control" /> -->
+                                    
+                                                                            </div>
+                                                                        </div>
+                                    
+                                                                        <div class="col">
+                                                                            <div class="form-group">
+                                                                                <label class="formGroupExampleInput2 label_discount_amount">Discount
+                                                                                    Amount ($)</label>
+                                                                                <input type="text" style="text-align:right" ;
+                                                                                    onkeypress="return onlyNumberKey(event)" id="discount_amount"
+                                                                                    class="form-control" />
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <div class="form-group">
+                                                                                <label class="formGroupExampleInput2 label_discount_total">Discount
+                                                                                    Total ($)</label>
+                                                                                <input type="text" disabled
+                                                                                    style="text-align:right; border:0px;background-color:white;"
+                                                                                    onkeypress="return onlyNumberKey(event)" id="discount_total"
+                                                                                    class="form-control" />
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-
-                                                                <div class="col-12">
-                                                                    <div class="row mt-4">
+                                    
+                                                                <div class="col-12 mb-3">
+                                                                    <div class="row">
+                                                                        <div class="col-12 my-3" style="justify-content:end;display:flex">
+                                                                            <div class="form-group">
+                                                                                <!-- border-style:none -->
+                                                                                <label>Subtotal ($): <label>
+                                                                                        <input type="text"
+                                                                                            style="font-weight: bold;text-align:right;border:none;background-color:white"
+                                                                                            name="subtotal" id="subtotal"
+                                                                                            class="form-control no-outline subtotal" disabled>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                    
+                                                                <div class="col-12 mb-3">
+                                                                    <div class="row">
                                                                         <div class="col">
                                                                             <div class="form-group">
-                                                                                <label
-                                                                                    class="formGroupExampleInput">Total
-                                                                                    Amount($)</label>
+                                                                                <label class="formGroupExampleInput2">Dollar Amount ($)</label>
+                                                                                <input type="text" id="dollar_amount"
+                                                                                    style="font-weight: bold;border:none; text-align:right;background-color:white"
+                                                                                    class="form-control dollar_amount" disabled />
+                                    
+                                                                            </div>
+                                                                        </div>
+                                    
+                                                                        <div class="col">
+                                                                            <div class="form-group">
+                                                                                <label class="formGroupExampleInput2">Peso Rate (Php)</label>
                                                                                 <input type="text"
-                                                                                    id="total_amountdollar"
-                                                                                    placeholder="Total Amount"
-                                                                                    class="form-control">
-
+                                                                                    style="font-weight: bold;border:none; text-align:right;background-color:white"
+                                                                                    onkeypress="return onlyNumberKey(event)" id="peso_rate"
+                                                                                    class="form-control" disabled />
                                                                             </div>
                                                                         </div>
                                                                         <div class="col">
                                                                             <div class="form-group">
-                                                                                <label
-                                                                                    class="formGroupExampleInput">Total
-                                                                                    Amount
-                                                                                    (PHP)</label>
-                                                                                <input type="text" id="total_amountphp"
-                                                                                    placeholder="Total Amount"
-                                                                                    class="form-control">
-
+                                                                                <label class="formGroupExampleInput2" for="form3Example2">Converted
+                                                                                    Amount</label>
+                                                                                <input type="text"
+                                                                                    style="font-weight: bold;border:none; text-align:right;background-color:white"
+                                                                                    onkeypress="return onlyNumberKey(event)" id="converted_amount"
+                                                                                    class="form-control converted_amount" disabled />
                                                                             </div>
                                                                         </div>
                                                                     </div>
-
-                                                                    <!-- <button type="button" class="btn btn-primary" style=" color:white; background-color: #CF8029">Save changes</button> -->
                                                                 </div>
+
+                                                               
 
                                                                 <div class="col-12">
                                                                     <div class="row mt-5">
@@ -399,12 +411,13 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            
+                                        
 
-                                    </div>
+                                    
                         </form>
-
+               
+          
                         <div class="form-group has-search">
                             <div class=" tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
@@ -561,8 +574,9 @@
             </div>
         </div>
 
-    </div>
-</div>
+    
+
+
 
 
 
@@ -963,7 +977,234 @@ $.ajaxSetup ({
             });
     }
     check_profile();
+    
 });
+
+let total_deduction_amount = 0
+$(document).ready(function() {
+    const api = "https://api.exchangerate-api.com/v4/latest/USD";
+    let x = 1;
+    let toast1 = $('.toast1');;
+
+    display_item_rows();
+    toast1.toast({
+        delay: 5000,
+        animation: true
+    });
+
+    $('.close').on('click', function(e) {
+        e.preventDefault();
+        toast1.toast('hide');
+    })
+
+    $("#error_msg").hide();
+    $("#success_msg").hide();
+
+    $('.close').on('click', function(e) {
+        e.preventDefault();
+        toast1.toast('hide');
+    })
+
+
+    $("#discount_amount").addClass('d-none');
+    $("#discount_total").addClass('d-none');
+    $(".label_discount_amount").addClass('d-none');
+    $(".label_discount_total").addClass('d-none');
+
+    $('input[type=radio][id=discount_type]').change(function() {
+
+if (subtotal == 0) {
+    $("#discount_amount").addClass('d-none');
+    $("#discount_total").addClass('d-none');
+    $(".label_discount_amount").addClass('d-none');
+    $(".label_discount_total").addClass('d-none');
+} else { 
+    if (this.value == 'fixed') {
+                //write your logic here
+                console.log("FIXED");
+                $("#discount_amount").removeClass('d-none');
+                $("#discount_total").removeClass('d-none');
+                $(".label_discount_amount").removeClass('d-none');
+                $(".label_discount_total").removeClass('d-none');
+
+                $('#discount_amount').val('');
+                $('#discount_total').val('');
+
+            }
+            else if (this.value == 'percentage') {
+                //write your logic here
+                console.log("PERCENTAGE");
+                $("#discount_amount").removeClass('d-none');
+                $("#discount_total").removeClass('d-none');
+                $(".label_discount_amount").removeClass('d-none');
+                $(".label_discount_total").removeClass('d-none');
+
+                $('#discount_amount').val('');
+                $('#discount_total').val('');
+            }
+        }
+        subtotal();
+        Additems_total();
+    })
+
+    $('#discount_amount').on('keyup', function() {
+        subtotal();
+    })
+
+    $('#discount_amount').focusout(function() {
+        if ($('#discount_amount').val() == "") {
+
+            $('#discount_amount').val('0.00')
+        }
+    })
+
+    function subtotal() {
+        let discount_type = $("input[id='discount_type']:checked").val();
+        let discount_amount = $('#discount_amount').val();
+        let discount_total = $('#discount_total').val();
+        let subtotal = $('#subtotal').val();
+        var sum = 0;
+
+        $('#show_items .amount').each(function() {
+            sum += Number($(this).val());
+        });
+
+        if (discount_type == 'fixed') {
+            $('#discount_total').val((discount_amount * 1).toFixed(2));
+            $('#subtotal').val((sum - $('#discount_total').val()).toFixed(2));
+            $('#dollar_amount').val($('#subtotal').val());
+        } else if (discount_type == 'percentage') {
+            $('#discount_total').val(((discount_amount / 100) * sum).toFixed(2));
+            $('#subtotal').val((sum - $('#discount_total').val()).toFixed(2));
+            $('#dollar_amount').val($('#subtotal').val());
+
+        }
+        getResults_Converted();
+    }
+
+    // FUNCTION FOR DISPLAY RESULTS AND CONVERTED AMOUNT
+    function getResults_Converted() {
+        fetch(`${api}`)
+            .then(currency => {
+                return currency.json();
+            }).then(displayResults);
+    }
+
+    // FUNCTION FOR DISPLAY RESULTS AND CONVERTED AMOUNT
+    function displayResults(currency) {
+        let dollar_amount = $("#dollar_amount").val();
+        let peso_rate = 0;
+        let converted_amount = 0;
+        let fromRate = currency.rates['USD'];
+        let toRate = currency.rates['PHP'];
+        peso_rate = (toRate / fromRate).toFixed(2);
+        converted_amount = ((toRate / fromRate) * dollar_amount).toFixed(2);
+        $('#peso_rate').val(parseFloat(peso_rate));
+        $('#converted_amount').val(parseFloat(converted_amount));
+        // $('#grand_total').val((converted_amount - total_deduction_amount).toFixed(
+        //     2));
+    }
+
+    // FUNCTION FOR KEYUP CLASS DEDUCTIONS FOR DEDUCTIONS
+    $('#show_deduction_items').on("keyup", ".multi2", function() {
+        let grand_total = 0;
+        let parent = $(this).closest('.row');
+        let deduction_amount = parent.find('.deduction_amount').val() ? parent.find(
+                '.deduction_amount')
+            .val() : 0;
+        // grand_total = parseFloat($('#converted_amount').val()) - parseFloat(deduction_amount);
+        // $('#grand_total').val(grand_total.toFixed(
+        //     2));
+        DeductionItems_total();
+
+    });
+
+    // FUNCTION FOR KEYUP CLASS MULTI INPUTS FOR ADD ITEMS
+    $('#show_items').on("keyup", ".multi", function() {
+        let sub_total = 0;
+        let parent = $(this).closest('.row');
+        let quantity = parent.find('.quantity').val() ? parent.find('.quantity').val() : 0;
+        let rate = parent.find('.rate').val() ? parent.find('.rate').val() : 0;
+        sub_total = parseFloat(quantity) * parseFloat(rate);
+        parent.find('.amount').val(parseFloat(sub_total).toFixed(2));
+        subtotal();
+        getResults_Converted();
+        Additems_total();
+        DeductionItems_total();
+    });
+
+    // FUNCTION FOR DISPLAYING SUBTOTAL AMOUNT AND DOLLAR AMOUNT
+    function Additems_total() {
+        var sum = 0;
+        let converted_amount = 0;
+        $('#show_items .amount').each(function() {
+            sum += Number($(this).val());
+        });
+        $('#subtotal').val(parseFloat(sum).toFixed(2));
+        $('#dollar_amount').val(parseFloat(sum).toFixed(2));
+
+    }
+
+    // FUNCTION FOR CALCUTAION DEDUCTIONS
+    function DeductionItems_total() {
+        var sum = 0;
+        let converted_amount = 0;
+        let dollar_amount = 0;
+        let converted_amount_input = 0;
+        let peso_rate = 0;
+        $('#show_deduction_items .deduction_amount').each(function() {
+            sum += Number($(this).val());
+        })
+
+        $('#show_items .amount').each(function() {
+            converted_amount += Number($(this).val());
+        });
+
+        dollar_amount = $('#dollar_amount').val();
+        peso_rate = $('#peso_rate').val();
+        converted_amount_input = (parseFloat(dollar_amount) * parseFloat(peso_rate)).toFixed(2);
+        $('#grand_total').val((parseFloat(converted_amount_input) - parseFloat(sum)).toFixed(2));
+    }
+
+
+// ONLY NUMBERS FOR NUMBER INPUTS
+function onlyNumberKey(evt) {
+    // Only ASCII character in that range allowed
+    var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+    if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+        return false;
+    return true;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+});
+
+
 </script>
 
 
