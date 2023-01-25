@@ -281,45 +281,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
-                                                        <div class="col-12">
-                                                            <div class="col pt-3">
-                                                                <div class="form-group">
-                                                                    <label for="formGroupExampleInput">Item
-                                                                        Description</label>
-                                                                    <input type="text" class="form-control"
-                                                                        id="item_description"
-                                                                        placeholder="Item Description">
-
-                                                                    <!-- <div class="row mt-4">
-                                                                <div class="col">
-                                                                    <div class="form-group">
-                                                                        <label for="formGroupExampleInput">Item
-                                                                            Description</label>
-                                                                        <input type="text" class="form-control" id="item_description" placeholder="Item Description">
-                                                                    </div>
->>>>>>> d0cb3e933e96400649f772b9dd9e883662f29679
-                                                                </div>
-                                                                <div class="col">
-                                                                    <div class="form-group">
-                                                                        <label
-                                                                            class="formGroupExampleInput">Quantity</label>
-                                                                        <input type="text" class="form-control"
-                                                                            id="quantity" placeholder="Quantity"
-                                                                            class="form-control">
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col">
-                                                                    <div class="form-group">
-                                                                        <label
-                                                                            class="formGroupExampleInput">Rate</label>
-                                                                        <input type="text" id="rate" placeholder="Rate"
-                                                                            class="form-control">
-                                                                    </div>
-                                                                </div>
-
-                                                            </div> -->
                                                                     <div id="show_items">
                                                                         <div class="col-12 mb-3">
                                                                             <div class="row">
@@ -335,49 +296,100 @@
                                                                         id="add_item1"> <i
                                                                             class="fa fa-plus pe-1"></i></button>
                                                                 </div>
-
-                                                                <div class="col-12">
-                                                                    <div class="col pt-3">
-                                                                        <div class="form-group">
-                                                                            <label class="formGroupExampleInput">Peso
-                                                                                Rate</label>
-                                                                            <input type="text" id="peso_rate"
-                                                                                placeholder="Peso Rate"
-                                                                                class="form-control">
+                                                                <div class="col-12 mb-3">
+                                                                    <div class="row">
+                                                                        <div class="col"
+                                                                            style="display: flex;flex-direction: column-reverse;align-items: center;">
+                                                                            <div class="form-group">
+                                                                                <label class="formGroupExampleInput2">Discount Type</label>
+                                                                                <br>
+                                                                                <input class="form-check-input" type="radio" name="discount_type"
+                                                                                    id="discount_type" value="fixed">
+                                                                                <label class="formGroupExampleInput2">
+                                                                                    Fxd &nbsp; &nbsp;
+                                                                                </label>
+                                                                                <input class="discount_type form-check-input" type="radio"
+                                                                                    name="discount_type" id="discount_type" value="percentage">
+                                                                                <label class="formGroupExampleInput2">
+                                                                                    %
+                                                                                </label>
+                                                                                <!-- <input type="text" id="discount_type" class="form-control" /> -->
+                                    
+                                                                            </div>
+                                                                        </div>
+                                    
+                                                                        <div class="col">
+                                                                            <div class="form-group">
+                                                                                <label class="formGroupExampleInput2 label_discount_amount">Discount
+                                                                                    Amount ($)</label>
+                                                                                <input type="text" style="text-align:right" ;
+                                                                                    onkeypress="return onlyNumberKey(event)" id="discount_amount"
+                                                                                    class="form-control" />
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <div class="form-group">
+                                                                                <label class="formGroupExampleInput2 label_discount_total">Discount
+                                                                                    Total ($)</label>
+                                                                                <input type="text" disabled
+                                                                                    style="text-align:right; border:0px;background-color:white;"
+                                                                                    onkeypress="return onlyNumberKey(event)" id="discount_total"
+                                                                                    class="form-control" />
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-
-                                                                <div class="col-12">
-                                                                    <div class="row mt-4">
+                                    
+                                                                <div class="col-12 mb-3">
+                                                                    <div class="row">
+                                                                        <div class="col-12 my-3" style="justify-content:end;display:flex">
+                                                                            <div class="form-group">
+                                                                                <!-- border-style:none -->
+                                                                                <label>Subtotal ($): <label>
+                                                                                        <input type="text"
+                                                                                            style="font-weight: bold;text-align:right;border:none;background-color:white"
+                                                                                            name="subtotal" id="subtotal"
+                                                                                            class="form-control no-outline subtotal" disabled>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                    
+                                                                <div class="col-12 mb-3">
+                                                                    <div class="row">
                                                                         <div class="col">
                                                                             <div class="form-group">
-                                                                                <label
-                                                                                    class="formGroupExampleInput">Total
-                                                                                    Amount($)</label>
+                                                                                <label class="formGroupExampleInput2">Dollar Amount ($)</label>
+                                                                                <input type="text" id="dollar_amount"
+                                                                                    style="font-weight: bold;border:none; text-align:right;background-color:white"
+                                                                                    class="form-control dollar_amount" disabled />
+                                    
+                                                                            </div>
+                                                                        </div>
+                                    
+                                                                        <div class="col">
+                                                                            <div class="form-group">
+                                                                                <label class="formGroupExampleInput2">Peso Rate (Php)</label>
                                                                                 <input type="text"
-                                                                                    id="total_amountdollar"
-                                                                                    placeholder="Total Amount"
-                                                                                    class="form-control">
-
+                                                                                    style="font-weight: bold;border:none; text-align:right;background-color:white"
+                                                                                    onkeypress="return onlyNumberKey(event)" id="peso_rate"
+                                                                                    class="form-control" disabled />
                                                                             </div>
                                                                         </div>
                                                                         <div class="col">
                                                                             <div class="form-group">
-                                                                                <label
-                                                                                    class="formGroupExampleInput">Total
-                                                                                    Amount
-                                                                                    (PHP)</label>
-                                                                                <input type="text" id="total_amountphp"
-                                                                                    placeholder="Total Amount"
-                                                                                    class="form-control">
-
+                                                                                <label class="formGroupExampleInput2" for="form3Example2">Converted
+                                                                                    Amount</label>
+                                                                                <input type="text"
+                                                                                    style="font-weight: bold;border:none; text-align:right;background-color:white"
+                                                                                    onkeypress="return onlyNumberKey(event)" id="converted_amount"
+                                                                                    class="form-control converted_amount" disabled />
                                                                             </div>
                                                                         </div>
                                                                     </div>
-
-                                                                    <!-- <button type="button" class="btn btn-primary" style=" color:white; background-color: #CF8029">Save changes</button> -->
                                                                 </div>
+
+                                                               
 
                                                                 <div class="col-12">
                                                                     <div class="row mt-5">
@@ -399,12 +411,13 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            
+                                        
 
-                                    </div>
+                                    
                         </form>
-
+               
+          
                         <div class="form-group has-search">
                             <div class=" tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
@@ -561,8 +574,9 @@
             </div>
         </div>
 
-    </div>
-</div>
+    
+
+
 
 
 
@@ -853,6 +867,24 @@ $(document).ready(function() {
 
 
 
+$.ajaxSetup ({
+    headers: {
+        'X-CSRF-TOKEN':$ ('meta[name="csrf-token"]').attr ('content'
+        )
+    }
+})
+            $.ajax ({
+                type:"POST",
+                url: "/invoice",
+                data:"data",
+                dataType:"json",
+                success: function (response) {
+                    console.log (response);
+                }
+            })
+
+
+
     function display_rows() {
         let max_fields = 10;
         let wrapper = $('#show_items');
@@ -945,7 +977,10 @@ $(document).ready(function() {
             });
     }
     check_profile();
+    
 });
+
+
 </script>
 
 

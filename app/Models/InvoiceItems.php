@@ -9,4 +9,9 @@ class InvoiceItems extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function invoice()
+    {
+        return $this->belongsTo('App\Models\Invoice', 'invoice_id');
+    }
 }
