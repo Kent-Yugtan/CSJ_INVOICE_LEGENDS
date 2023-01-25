@@ -7,6 +7,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DeductionTypeController;
 use App\Http\Controllers\Admin\InvoiceController;
+use App\Http\Controllers\Admin\EmailConfigController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -34,7 +35,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // FOR PROFILE TABLE
     Route::resource('admin/profile', ProfileController::class);
     Route::post('saveprofile', [ProfileController::class, 'store']);
-
+    
     // SHOW DEDUCTION TYPE IN PROFILE
     Route::get('show_deduction_type', [ProfileController::class, 'show_deduction_types']);
 
@@ -48,7 +49,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('settings/show_data', [DeductionTypeController::class, 'show_data']);
     Route::get('settings/show_edit/{id}', [DeductionTypeController::class, 'show_edit']);
 
-    //  GET INVOICES FUNCTION
+
+
+    // POST EMAIL TYPE TABLE
+
+    Route::post('saveemailtype', [EmailConfigController::class, 'store']);
+    Route::get('settings/show_emaildata', [EmailConfigController::class, 'show_data']);
+    Route::get('settings/show_emailedit/{id}', [EmailConfigController::class, 'show_edit']);
+
+    //  GET INVOICES FUNCTIONS
     Route::resource('admin/invoice', InvoiceController::class);
     Route::get('admin/current_invoice', [InvoiceController::class, 'current_invoice']);
     Route::get('admin/inactive_invoice', [InvoiceController::class, 'inactive_invoice']);
