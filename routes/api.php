@@ -50,10 +50,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     //  GET INVOICES FUNCTION
     Route::resource('admin/invoice', InvoiceController::class);
-    Route::get('admin/add_invoice', [InvoiceController::class, 'add_invoice']);
     Route::get('admin/current_invoice', [InvoiceController::class, 'current_invoice']);
     Route::get('admin/inactive_invoice', [InvoiceController::class, 'inactive_invoice']);
     Route::get('invoice/createinvoice', [InvoiceController::class, 'check_profile']);
+
+    // FOR POST INVOICE TABLE
+    Route::post('createinvoice', [InvoiceController::class, 'create_invoice']);
 });
 
 

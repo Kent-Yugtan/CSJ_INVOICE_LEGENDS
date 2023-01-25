@@ -8,6 +8,7 @@ use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Stmt\Foreach_;
 
 class InvoiceController extends Controller
 {
@@ -157,5 +158,64 @@ class InvoiceController extends Controller
     public function add_invoice()
     {
         return view('invoice.add');
+    }
+    public function create_invoice(Request $request)
+    {
+        $error = false;
+        $profile_id = $request->profile_id;
+        if ($error === false) {
+            if ($profile_id) {
+                $incoming_data = $request->validate(
+                    [
+                        'profile_id' => '',
+                        'invoice_no' => '',
+                        'description' => 'required',
+                        'sub_total' => '',
+                        'converted_amount' => '',
+                        'discount_type' => '',
+                        'discount_amount' => '',
+                        'discount_total' => '',
+                        'grand_total_amount' => '',
+                        'notes' => '',
+                    ]
+                );
+
+                $incoming_data += [
+                    'invoice_status' => 'Pending',
+                ];
+                $store_data = Invoice::create($incoming_data);
+                if ($store_data) {
+
+                    if ($request->invoiceItem) {
+                        foreach ($request->invoiceItem as $key => $value) {
+                            $datainvoiceitem = [
+                                'item_description' => $value['item_description'],
+                                'quantity' => $value['item_qty'],
+                                'rate' => $value['item_rate'],
+                                'total_amount' => $value['item_total_amount'],
+                            ];
+                            $store_data->invoice_items()->create($datainvoiceitem);
+                        }
+                    }
+
+                    if ($request->Deductions) {
+                        foreach ($request->Deductions as $key => $value) {
+                            $dataDeductions = [
+                                'profile_id' => $request->profile_id,
+                                'deduction_type_id' => $value['deduction_type_id'],
+                                'amount' => $value['deduction_amount'],
+                            ];
+                            $store_data->deductions()->create($dataDeductions);
+                        }
+                    }
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => "Invoice has been successfully added to the database.",
+                        'data' => $store_data,
+                    ], 200);
+                }
+            }
+        }
     }
 }
