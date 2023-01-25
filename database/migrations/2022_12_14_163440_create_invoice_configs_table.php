@@ -15,6 +15,11 @@ class CreateInvoiceConfigsTable extends Migration
     {
         Schema::create('invoice_configs', function (Blueprint $table) {
             $table->id();
+            $table->longText('invoice_logo')->nullable();
+            $table->string('invoice_title')->nullable();
+            $table->string('invoice_email')->unique();
+            $table->string('bill_to_address')->nullable();
+            $table->string('ship_to_address')->nullable();
             $table->timestamps();
         });
     }

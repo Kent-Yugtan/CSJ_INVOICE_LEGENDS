@@ -8,25 +8,30 @@
             <div class="card shadow p-2 mb-5 bg-white rounded" style="width: 100%; height:100%">
                 <div class="card-header">Create Email</div>
                 <div class="row px-4 pb-4" id="header">
-                    <form name="emailstore" id="email_store" method="post" action="javascript:void(0)" class="row g-3 needs-validation" novalidate>
+                    <form name="emailstore" id="email_store" method="post" action="javascript:void(0)"
+                        class="row g-3 needs-validation" novalidate>
                         @csrf
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">ID</label>
-                            <input id="Identification" name="email" type="text" class="form-control" placeholder="ID" required>
+                            <input id="Identification" name="email" type="text" class="form-control" placeholder="ID"
+                                required>
                         </div>
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Full Name</label>
-                            <input id="full_name" name="username" type="text" class="form-control" placeholder="Full Name" required>
+                            <input id="full_name" name="username" type="text" class="form-control"
+                                placeholder="Full Name" required>
                         </div>
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Email Address</label>
-                            <input id="email_address" name="Email Address" type="text" class="form-control" placeholder="Email Address" required>
+                            <input id="email_address" name="Email Address" type="text" class="form-control"
+                                placeholder="Email Address" required>
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Position</label>
-                            <select class="form-select @error('position') is-invalid @enderror" id="position" name="position" aria-label="Default select example" defaultValue="select">
+                            <select class="form-select @error('position') is-invalid @enderror" id="position"
+                                name="position" aria-label="Default select example" defaultValue="select">
                                 <option selected disabled value="">Please Select Position</option>
                                 <option value="Lead Developer">Lead Developer</option>
                                 <option value="Senior Developer">Senior Developer</option>
@@ -39,11 +44,15 @@
 
 
                         <div class="col mb-3">
-                            <button type="submit" style="width:100%; height:50px;color:white; background-color: #CF8029;" class="btn ">Save </button>
+                            <button type="submit"
+                                style="width:100%; height:50px;color:white; background-color: #CF8029;"
+                                class="btn ">Save </button>
                         </div>
 
                         <div class="col mb-3">
-                            <button type="button" style="width:100%; height:50px;color:white; background-color: #A4A6B3;" class="btn">Close</button>
+                            <button type="button"
+                                style="width:100%; height:50px;color:white; background-color: #A4A6B3;"
+                                class="btn">Close</button>
                         </div>
                     </form>
                 </div>
@@ -73,7 +82,8 @@
 
                                 <td class="text-center"> <button value=' + item
                                     .id +
-                                    ' class="editButton btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button> </td>
+                                    ' class="editButton btn btn-outline-primary" data-bs-toggle="modal"
+                                        data-bs-target="#editModal">Edit</button> </td>
 
 
                                 </td>
@@ -92,7 +102,8 @@
 
     </div>
 
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-dialog">
                 <div class="modal-content ">
@@ -105,7 +116,8 @@
 
                                 <div class="form-group mt-3">
                                     <label for="formGroupExampleInput">Email Address</label>
-                                    <input id="edit_email_address" type="text" class="form-control" placeholder="Email Address">
+                                    <input id="edit_email_address" type="text" class="form-control"
+                                        placeholder="Email Address">
                                 </div>
 
                                 <div class="form-group mt-3">
@@ -119,10 +131,14 @@
 
                                     <div class="row mt-3">
                                         <div class="col mt-3">
-                                            <button type="button" class="btn btn-secondary w-100" style=" color:#CF8029; background-color:white; " data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-secondary w-100"
+                                                style=" color:#CF8029; background-color:white; "
+                                                data-bs-dismiss="modal">Close</button>
                                         </div>
                                         <div class="col mt-3">
-                                            <button type="submit" class="btn btn-secondary w-100" style="color:White; background-color:#CF8029; " data-bs-dismiss="modal">Update</button>
+                                            <button type="submit" class="btn btn-secondary w-100"
+                                                style="color:White; background-color:#CF8029; "
+                                                data-bs-dismiss="modal">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -133,12 +149,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
 
     <div style="position: fixed; top: 60px; right: 20px;">
         <div class="toast toast1 toast-bootstrap" role="alert" aria-live="assertive" aria-atomic="true">
@@ -159,8 +169,14 @@
     <!-- <button type="button" class="btn btn-primary" id="showtoast">Show Toast</button> -->
 
     <script type="text/javascript">
-        $(document).ready(function() {
-            show_data();
+    $(document).ready(function() {
+        // show_data();
+        function show_data(filters) {
+            let filter = {
+                page_size: 10,
+                page: 1,
+                ...filters,
+            }
 
             $('#table_email tbody').empty();
             axios.get(`${apiUrl}/api/settings/show_data?${new URLSearchParams(filter)}`, {
@@ -179,7 +195,8 @@
                                     .toFixed(2) +
                                     '</td>';
                                 tr +=
-                                    '<td style="width:45%;" class="text-center"> <button value=' + item
+                                    '<td style="width:45%;" class="text-center"> <button value=' +
+                                    item
                                     .id +
                                     ' class="editButton btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" >Edit</button> </td>';
                                 tr += '</tr>';
@@ -256,7 +273,7 @@
                         $('.toast1 .toast-title').html('Email');
                         $('.toast1 .toast-body').html(response.data.message);
                         toast1.toast('show');
-                        show_data();
+                        // show_data();
                     }
                 })
                 .catch(function(error) {
@@ -305,14 +322,14 @@
                 }).catch(function(error) {
                     console.log("ERROR", error);
                 });
-        })
+        });
 
         $('#email_update').submit(function(e) {
             e.preventDefault();
 
             let email_id = $('#email_id').val();
             let Identification = $("#edit_Identification").val();
-            let Full Name = $("#edit_full_name").val();
+            let FullName = $("#edit_full_name").val();
 
             let data = {
                 id: email_id,
@@ -337,7 +354,7 @@
                         $('.toast1 .toast-title').html('Email');
                         $('.toast1 .toast-body').html(response.data.message);
                         toast1.toast('show');
-                        show_data();
+                        // show_data();
                         console.log('success', data.data);
                     }
                 })
@@ -360,13 +377,13 @@
                         toast1.toast('show');
                     }
                 });
-        })
         });
+    });
 
-        function capitalize(s) {
-            if (typeof s !== 'string') return "";
-            return s.charAt(0).toUpperCase() + s.slice(1);
-        }
-    </script>
+
+    function capitalize(s) {
+        if (typeof s !== 'string') return "";
+        return s.charAt(0).toUpperCase() + s.slice(1);
+    }
     </script>
     @endsection
