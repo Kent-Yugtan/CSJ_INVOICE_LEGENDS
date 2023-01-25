@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DeductionTypeController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\EmailConfigController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -53,6 +54,9 @@ Route::middleware(['AuthCheck'])->group(function () {
 
     // POST DEDUCTION TYPES TABLE
     Route::get('/settings/deductiontype', [DeductionTypeController::class, 'view_deductiontype']);
+
+    // SETTINGS EMAIL CONFIG
+    Route::get('/settings/emailconfig', [EmailConfigController::class, 'show_config']);
 });
 
 

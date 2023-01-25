@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\EmailConfig;
 use Illuminate\Http\Request;
 
@@ -81,5 +82,10 @@ class EmailConfigController extends Controller
     public function destroy(EmailConfig $emailConfig)
     {
         //
+    }
+
+    public function show_config()
+    {
+        return view("settings.emailconfig");
     }
 }

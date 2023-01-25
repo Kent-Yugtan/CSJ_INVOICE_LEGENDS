@@ -86,9 +86,8 @@
                                         <div class="form-group">
                                             <label class="formGroupExampleInput2 label_discount_amount">Discount
                                                 Amount ($)</label>
-                                            <input type="text" style="text-align:right" ;
-                                                onkeypress="return onlyNumberKey(event)" id="discount_amount"
-                                                class="form-control" />
+                                            <input type="number" step="any" style="text-align:right;"
+                                                name="discount_amount" id="discount_amount" class="form-control" />
                                         </div>
                                     </div>
                                     <div class="col">
@@ -97,8 +96,8 @@
                                                 Total ($)</label>
                                             <input type="text" disabled
                                                 style="text-align:right; border:0px;background-color:white;"
-                                                onkeypress="return onlyNumberKey(event)" id="discount_total"
-                                                class="form-control" />
+                                                onkeypress="return onlyNumberKey(event)" name="discount_total"
+                                                id="discount_total" class="form-control" />
                                         </div>
                                     </div>
                                 </div>
@@ -238,8 +237,8 @@
                                     </div>
                                     <div class="col-4 mb-3" style="justify-content:end;display:flex">
                                         <!-- border-style:none -->
-                                        <input type="number" id="grand_total" class="form-control no-outline"
-                                            style="text-align:right;">
+                                        <input type="text" id="grand_total" class="form-control no-outline"
+                                            style="text-align:right;border:0;background-color:white;" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -248,8 +247,8 @@
                                 <div class="row">
                                     <div class="col-12 form-control">
                                         <label for="floatingTextarea">Comments</label>
-                                        <textarea class="form-control" placeholder="Leave a comment here"
-                                            id="floatingTextarea"></textarea>
+                                        <textarea class="form-control" placeholder="Leave a comment here" id="notes"
+                                            name="notes"></textarea>
 
                                     </div>
                                 </div>
@@ -304,6 +303,7 @@ $(document).ready(function() {
     const api = "https://api.exchangerate-api.com/v4/latest/USD";
     let x = 1;
     let toast1 = $('.toast1');;
+    check_profile();
 
     display_item_rows();
     toast1.toast({
@@ -527,7 +527,7 @@ $(document).ready(function() {
         add_rows += '<div class="form-group">';
         add_rows += '<label class="formGroupExampleInput2">Quantity</label>';
         add_rows +=
-            '<input type="number" name="quantity" id="quantity" style="text-align:right;" class="form-control multi quantity" />';
+            '<input type="number" step="any" name="quantity" id="quantity" style="text-align:right;" class="form-control multi quantity" />';
         add_rows += '</div>';
         add_rows += ' </div>';
 
@@ -535,7 +535,7 @@ $(document).ready(function() {
         add_rows += '<div class="form-group">';
         add_rows += '<label class="formGroupExampleInput2" for="form3Example2">Rate</label>';
         add_rows +=
-            '<input type="text" name="rate" id="rate" style="text-align:right;" class="form-control multi rate" />';
+            '<input type="number" step="any" name="rate" id="rate" style="text-align:right;" class="form-control multi rate" />';
         add_rows += '</div>';
         add_rows += '</div>';
 
@@ -613,8 +613,16 @@ function check_profile() {
                         add_rows += '<div class="col-8">';
                         add_rows += '<div class="form-group w-100">';
                         add_rows += '<label class="formGroupExampleInput2">Deduction Type</label>';
-                        add_rows += '<input type="text" id="deduction_type" value="' + item
-                            .deduction_type.deduction_name + '" class="form-control" disabled />';
+
+                        add_rows +=
+                            '<select class="form-control deduction_type" id="deduction_type" name="deduction_type">';
+                        add_rows += '<option value=' + item.deduction_type.id + '>' + item.deduction_type
+                            .deduction_name + '</option> ';
+                        add_rows += '</select>';
+
+                        // add_rows += '<input type="text" id="deduction_type" value="' + item
+                        //     .deduction_type.deduction_name + '" class="form-control" disabled />';
+
                         add_rows += '</div>';
                         add_rows += '</div>';
                         add_rows += '<div class="col-4">';
@@ -648,7 +656,7 @@ function check_profile() {
 }
 
 
-check_profile();
+
 
 $('#invoice_items').submit(function(e) {
     e.preventDefault();
@@ -657,28 +665,47 @@ $('#invoice_items').submit(function(e) {
     let invoice_no = $('#invoice_no').val();
     // INVOICE TABLE
     let invoice_description = $('#invoice_description').val();
-    let invoice_subtotal;
+    let invoice_subtotal = $('#subtotal').val();
+    let invoice_converted_amount = $('#converted_amount').val();
     let invoice_discount_type = $('#discount_type:checked').val();
-    let invoice_discount_amount;
-    let invoice_discount_total;
-    let invoice_total_amount;
-    let invoice_status;
-    let invoice_notes;
+    let invoice_discount_amount = $('#discount_amount').val();
+    let invoice_discount_total = $('#discount_total').val();
+    let invoice_total_amount = $('#grand_total').val();
+    let invoice_notes = $('#notes').val();
 
-    // INVOICE ITEMS
+    // INVOICE ITEMS TABLE
     let item_description = $(".item_description").serializeArray();
-
-    // $('.item_description').val();
     let item_qty = $('.quantity').serializeArray();
     let item_rate = $('.rate').serializeArray();
-    let item_total_amount = $('.amount').serializeArray();
+    let item_total_amount = $('.amount').val();
+
+    // DEDUCTIONS TABLE
+    let deduction_type_id = $('.deduction_type').serializeArray();
+    let deduction_type_amount = $('.deduction_amount').serializeArray();
+
+    console.log("profile_id", profile_id);
+    console.log("invoice_no", invoice_no);
+    console.log("invoice_description", invoice_description);
+    console.log("invoice_subtotal", invoice_subtotal);
+    console.log("converted_amount", converted_amount);
+    console.log("invoice_discount_type", invoice_discount_type);
+    console.log("invoice_discount_amount", invoice_discount_amount);
+    console.log("invoice_discount_total", invoice_discount_total);
+    console.log("invoice_total_amount", invoice_total_amount);
+    console.log("invoice_notes", invoice_notes);
+
+    console.log("item_description", item_description);
+    console.log("item_qty", item_qty);
+    console.log("item_rate", item_rate);
+    console.log("item_total_amount", item_total_amount);
+
+    console.log("deduction_type_id", deduction_type_id);
+    console.log("deduction_type_amount", deduction_type_amount);
 
 
 
-    console.log(item_description);
-    console.log(item_qty);
-    console.log(item_rate);
-    console.log(item_total_amount);
+
+
 
 
 
