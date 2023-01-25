@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\EmailConfigController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\InvoiceConfigController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -51,12 +53,18 @@ Route::post('invoice',[InvoiceController::class, 'store']);
     Route::get('/invoice/current', [InvoiceController::class, 'current']);
     Route::get('/invoice/inactive', [InvoiceController::class, 'inactive']);
     Route::get('/invoice/add', [InvoiceController::class, 'add_invoice']);
+    
 
     // POST DEDUCTION TYPES TABLE
     Route::get('/settings/deductiontype', [DeductionTypeController::class, 'view_deductiontype']);
 
     // SETTINGS EMAIL CONFIG
     Route::get('/settings/emailconfig', [EmailConfigController::class, 'show_config']);
+
+    // Invoice Config
+
+    Route::get('/settings/invoiceconfig', [InvoiceConfigController::class,'show_invoiceconfig']);
+
 });
 
 

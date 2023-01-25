@@ -337,7 +337,7 @@ $(document).ready(function() {
         };
 
         axios
-            .post(apiUrl + "/api/saveemailtype", data, {
+            .post(apiUrl + "/api/Deductiontype", data, {
                 headers: {
                     Authorization: token,
                 },
