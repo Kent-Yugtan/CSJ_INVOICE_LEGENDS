@@ -47,12 +47,12 @@
                     </nav>
                 </div>
 
-                <!-- <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="{{url('settings/deductiontype')}}">
                     <div class="sb-nav-link-icon">
                         <i class="fa-solid fa-plus-minus"></i>
                     </div>
-                    Deductions
-                </a> -->
+                    Deductions Type
+                </a>
 
                 <!-- <a class="nav-link" href="tables.html">
                     <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
@@ -73,7 +73,7 @@
                 <div class="collapse" id="collapseLayouts3" aria-labelledby="headingOne"
                     data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="{{url('settings/deductiontype')}}">Deduction Type</a>
+
                         <a class="nav-link" href="{{url('settings/emailconfig')}}">Email config</a>
                         <a class="nav-link" href="{{url('settings/invoiceconfig')}}">Invoice Config</a>
 
