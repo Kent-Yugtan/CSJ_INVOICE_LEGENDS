@@ -179,7 +179,7 @@ $(document).ready(function() {
             ...filters,
         }
         $('#table_deduction tbody').empty();
-        axios.get(`${apiUrl}/api/settings/show_data?${new URLSearchParams(filter)}`, {
+        axios.get(`${apiUrl}/api/settings/show_emaildata?${new URLSearchParams(filter)}`, {
                 headers: {
                     Authorization: token,
                 },
@@ -256,7 +256,7 @@ $(document).ready(function() {
         };
 
         axios
-            .post(apiUrl + "/api/savedeductiontype", data, {
+            .post(apiUrl + "/api/saveemailtype", data, {
                 headers: {
                     Authorization: token,
                 },
@@ -301,7 +301,7 @@ $(document).ready(function() {
         $('#deduction_id').val(id);
 
         axios
-            .get(apiUrl + '/api/settings/show_edit/' + id, {
+            .get(apiUrl + '/api/settings/show_emailedit/' + id, {
                 headers: {
                     Authorization: token,
                 },
@@ -337,7 +337,7 @@ $(document).ready(function() {
         };
 
         axios
-            .post(apiUrl + "/api/savedeductiontype", data, {
+            .post(apiUrl + "/api/saveemailtype", data, {
                 headers: {
                     Authorization: token,
                 },
