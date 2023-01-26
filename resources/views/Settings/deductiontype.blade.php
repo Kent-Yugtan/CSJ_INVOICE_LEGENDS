@@ -191,11 +191,13 @@ $(document).ready(function() {
                         res.data.data.map((item) => {
                             let tr = '<tr>';
                             tr += '<td style="width:40%;">' + item.deduction_name + '</td>';
-                            tr += '<td style="width:5%;" class="text-end">' + item.deduction_amount
+                            tr += '<td style="width:5%;" class="text-end">' + item
+                                .deduction_amount
                                 .toFixed(2) +
                                 '</td>';
                             tr +=
-                                '<td style="width:45%;" class="text-center"> <button value=' + item
+                                '<td style="width:45%;" class="text-center"> <button value=' +
+                                item
                                 .id +
                                 ' class="editButton btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" >Edit</button> </td>';
                             tr += '</tr>';

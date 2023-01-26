@@ -105,7 +105,7 @@ $(document).ready(function() {
             })
             .then(function(res) {
                 res = res.data;
-                console.log('res', res);
+                console.log('res123', res);
                 if (res.success) {
                     if (res.data.data.length > 0) {
                         ;
@@ -129,8 +129,9 @@ $(document).ready(function() {
                             tr += '<td> NOT YET </td>';
                             tr +=
                                 '<td  class="text-center"> <a href="' + apiUrl +
-                                '/admin/editProfile/' +
-                                item.id + ' " class="btn btn-outline-primary">Edit</a> </td>';
+                                '/admin/viewProfile/' +
+                                item.id +
+                                '" class="btn btn-outline-primary">View</a> </td>';
                             tr += '</tr>';
                             $("#tbl_user tbody").append(tr);
 

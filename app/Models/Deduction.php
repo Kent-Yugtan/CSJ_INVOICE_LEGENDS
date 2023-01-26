@@ -20,8 +20,12 @@ class Deduction extends Model
         return $this->belongsTo('App\Models\invoice', 'invoice_id');
     }
 
-    public function DeductionTypes()
+    public function deduction_type()
     {
-        return $this->belongsTo('App\Models\DeductionTypes', 'deduction_type_id');
+        return $this->belongsTo('App\Models\DeductionType', 'deduction_type_id');
+    }
+    public function profile_deduction_type()
+    {
+        return $this->belongsTo('App\Models\ProfileDeductionTypes', 'deduction_type_id');
     }
 }

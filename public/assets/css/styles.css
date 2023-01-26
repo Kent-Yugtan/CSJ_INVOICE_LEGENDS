@@ -12655,13 +12655,14 @@ button.toast-close-button {
 }
 .toast .toast-header div:first-child {
     width: 5% !important;
-}.toast .toast-header div:nth-child(2) {
+}
+.toast .toast-header div:nth-child(2) {
     width: 90% !important;
 }
 .toast .toast-header div:last-child {
     width: 5% !important;
 }
 
-.cursor-pointer{
+.cursor-pointer {
     cursor: pointer;
 }
