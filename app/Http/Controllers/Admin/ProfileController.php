@@ -310,7 +310,7 @@ class ProfileController extends Controller
     {
         $data = User::select(
             [
-                'profiles.*',
+                'users.*',
                 'position',
                 'phone_number',
                 'address',
