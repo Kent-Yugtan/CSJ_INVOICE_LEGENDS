@@ -106,9 +106,67 @@
                 <div class="col-md-4 w-100">
                     <div class="input-group">
                         <button type="button" style="color:white; background-color: #CF8029;"
-                            class="btn form-check-inline pe-3 "><i class="fa fa-plus pe-1"></i>Create
-                            Invoice</button>
+                            class="btn form-check-inline pe-3"class="fa fa-plus pe-1" data-bs-toggle="modal" data-bs-target="#modalContactForm">
 
+                           + Create Invoice</button>
+                            
+                        
+                            <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h4 class="modal-title w-100 font-weight-bold">Create Invoice</h4>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body mx-3">
+                                  <div class="md-form mb-3">
+                                   Invoice #
+                                    <input type="text" id="form34" class="form-control validate">
+                                    <label data-error="wrong" data-success="right" for="form34"></label>
+                                  </div>
+                          
+                                  <div class="md-form mb-2">
+                                    Description
+                                    <input type="email" id="form29" class="form-control validate">
+                                    <label data-error="wrong" data-success="right" for="form29"></label>
+                                  </div>
+                          
+                                  <div class="md-form mb-2">
+                                    Item Description
+                                    <input type="text" id="form32" class="form-control validate">
+                                    <label data-error="wrong" data-success="right" for="form32"></label>
+                                  </div>
+                          
+                                  <div class="md-form mb-2">
+                                    Quantity
+                                    <input type="text" id="form32" class="form-control validate">
+                                    <label data-error="wrong" data-success="right" for="form32"></label>
+                                  
+                                </div>
+
+                                  <div class="md-form mb-2">
+                                    Total Amount
+                                    <input type="text" id="form32" class="form-control validate">
+                                    <label data-error="wrong" data-success="right" for="form32"></label>
+                                  </div>
+                                  <div class="modal-footer justify-content-center">
+                                    <a type="button" class="btn btn-outline-warning waves-effect">Save<i class="fas fa-paper-plane-o ml-1"></i></a>
+                                  </div>
+                                </div>
+                                <!--/.Content-->
+                              </div>
+                            </div>
+
+
+                          
+                                </div>
+                                
+                              </div>
+                            </div>
+                          </div>
                         <input type="text" aria-label="First name" class="form-control form-check-inline">
                         <div class="form-group has-search">
                             <span class="fa fa-search form-control-feedback"></span>
