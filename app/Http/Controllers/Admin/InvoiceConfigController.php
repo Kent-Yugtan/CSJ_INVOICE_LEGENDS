@@ -89,4 +89,10 @@ class InvoiceConfigController extends Controller
     {
         return view("settings.invoiceconfig");
     }
+
+
+    public function show_editinvoice()
+    {
+        return view("settings.editinvoice");
+    }
 }
