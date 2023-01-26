@@ -64,6 +64,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // FOR EMAIL CONFIG TABLE
     Route::get('get_name', [EmailConfigController::class, 'get_name']);
+    Route::get('emailconfigs/show_data', [EmailConfigController::class, 'show_data']);
+    Route::get('emailconfigs/show_edit/{id}', [EmailConfigController::class, 'show_edit']);
+    Route::post('emailconfigs_store', [EmailConfigController::class, 'emailconfig_store']);
 
     // FOR POST INVOICE TABLE
     Route::post('createinvoice', [InvoiceController::class, 'create_invoice']);
