@@ -16,8 +16,32 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
+
     <!-- Styles -->
     <link href="{{ asset('/assets/css/styles.css') }}" rel="stylesheet">
+
+    <!-- Script -->
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src="{{ asset('/assets/js/bootstrap.bundle.min.js') }}"></script>
+
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- Sparkline Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js"></script>
+
+    <!-- Sparkline Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+
+    <script src="{{ asset('/assets/js/scripts.js') }}"></script>
+
+
 </head>
 
 <body style="  background-color: #363740;">
@@ -84,9 +108,11 @@
         </main>
     </div>
 
-    <!-- Scripts -->
-    <script src="{{ asset('/public/assets/js/bootstrap.bundle.min.js') }}" defer></script>
-    <script src="{{ asset('/public/assets/js/scripts.js') }}" defer></script>
-</body>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+
 
 </html>

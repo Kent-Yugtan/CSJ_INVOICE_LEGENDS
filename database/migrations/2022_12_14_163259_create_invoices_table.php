@@ -19,10 +19,11 @@ class CreateInvoicesTable extends Migration
             $table->string('invoice_no')->nullable();
             $table->string('description')->nullable();
             $table->string('sub_total')->nullable();
+            $table->string('converted_amount')->nullable();
             $table->string('discount_type')->nullable();
             $table->string('discount_amount')->nullable();
             $table->string('discount_total')->nullable();
-            $table->string('total_amount')->nullable();
+            $table->string('grand_total_amount')->nullable();
             $table->string('invoice_status')->nullable();
             $table->string('created_by')->nullable();
             $table->date('date_received')->nullable();

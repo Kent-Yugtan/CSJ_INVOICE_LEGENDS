@@ -32,12 +32,12 @@
 
     <div class="row">
         <div class="col ">
-            <form>
-                <div class="input-group ">
-                    <input type="text" class="form-control form-check-inline" placeholder="Search">
-                    <button class="btn" style=" color:white; background-color: #CF8029;width:30%" type="button"
-                        id="button-addon2">Search</button>
-                </div>
+            <div class="input-group ">
+                <input id="search" name="search" type="text" class="form-control form-check-inline"
+                    placeholder="Search">
+                <button class="btn" style=" color:white; background-color: #CF8029;width:30%"
+                    id="button-submit">Search</button>
+            </div>
             </form>
         </div>
     </div>
@@ -49,68 +49,134 @@
                     <i class="fas fa-table me-1"></i>
                     Current Profile
                 </div>
-                <div class="card-body table-responsive">
-                    <table style=" color: #A4A6B3; " class="table table-hover" id="datatablesSimple">
+                <div id="tbl_user_wrapper" class="card-body table-responsive">
+                    <table style=" color: #A4A6B3; " class="table table-hover" id="tbl_user">
                         <thead>
                             <tr>
                                 <th>User</th>
                                 <th>Status</th>
                                 <th>Phone Number</th>
                                 <th>Position</th>
-                                <th>Department</th>
-                                <th>latest Invoice</th>
+                                <th>Latest Invoice</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
-
-                        <tbody>
-                            <tr>
-                                <td> <a class="navbar-brand" href="#">
-                                        <img style="width:40px;" class="rounded-pill"
-                                            src="{{ asset('/images/profile.jpg') }}" alt="" title="">
-                                        <!-- <img src="Invoices-logo.png" alt="Logo" style="width:40px;"
-                                            class="rounded-pill">  -->
-                                    </a>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>2011/04/25</td>
-                                <td class="text-center">
-                                    <a href="editProfile"> <button type="button"
-                                            class="btn btn-outline-primary">Edit</button></a>
-
-                                    <a href="viewProfile"> <button type="button"
-                                            class="btn btn-outline-primary">View</button></a>
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td> <a class="navbar-brand" href="#">
-                                        <img style="width:40px;" class="rounded-pill"
-                                            src="{{ asset('/images/images.png') }}" alt="" title="">
-                                    </a>Garrett Winters</td>
-                                <td>Accountant</td>
-                                <td>Tokyo</td>
-                                <td>63</td>
-                                <td>2011/07/25</td>
-                                <td>2011/04/25</td>
-                                <td class="text-center">
-                                    <a href="editProfile"> <button type="button"
-                                            class="btn btn-outline-primary">Edit</button></a>
-
-                                    <a href="viewProfile"> <button type="button"
-                                            class="btn btn-outline-primary">View</button></a>
-                                </td>
-
-                            </tr>
-
-                        </tbody>
+                        <tbody></tbody>
                     </table>
+
+                    <div style="display: flex; justify-content: space-between;">
+                        <div class="page_showing" id="tbl_user_showing"></div>
+                        <ul class="pagination" id="tbl_user_pagination"></ul>
+                    </div>
+
                 </div>
             </div>
+
         </div>
     </div>
 </div>
 
+<script type="text/javascript">
+$(document).ready(function() {
+
+    show_data();
+
+    $('#button-submit').on('click', function() {
+        let search = $('#search').val();
+        show_data({
+            search
+        });
+    })
+
+    function show_data(filters) {
+        let filter = {
+            page_size: 50,
+            page: 1,
+            ...filters,
+        }
+
+        $('#tbl_user tbody').empty();
+
+        axios
+            .get(`${apiUrl}/api/admin/current_show_data?${new URLSearchParams(filter)}`, {
+                headers: {
+                    Authorization: token,
+                },
+            })
+            .then(function(res) {
+                res = res.data;
+                console.log('res123', res);
+                if (res.success) {
+                    if (res.data.data.length > 0) {
+                        ;
+                        res.data.data.map((item) => {
+                            let tr = '<tr style="vertical-align:sub;">';
+
+                            if (item.file_path) {
+                                tr +=
+                                    '<td>  <img style="width:40px;" class="rounded-pill" src ="' +
+                                    item
+                                    .file_path + '"> ' + item.full_name + ' </td>';
+                            } else {
+                                tr +=
+                                    '<td>  <img style="width:40px;" class="rounded-pill" src ="/images/default.png"> ' +
+                                    item.full_name + ' </td>';
+                            }
+
+                            tr += '<td>' + item.profile_status + '</td>';
+                            tr += '<td>' + item.phone_number + '</td>';
+                            tr += '<td>' + item.position + '</td>';
+                            tr += '<td> NOT YET </td>';
+                            tr +=
+                                '<td  class="text-center"> <a href="' + apiUrl +
+                                '/admin/viewProfile/' +
+                                item.id +
+                                '" class="btn btn-outline-primary">View</a> </td>';
+                            tr += '</tr>';
+                            $("#tbl_user tbody").append(tr);
+
+                            return ''
+                        })
+
+                        $('#tbl_user_pagination').empty();
+                        res.data.links.map(item => {
+                            let li =
+                                `<li class="page-item cursor-pointer ${item.active ? 'active':''}"><a class="page-link" data-url="${item.url}">${item.label}</a></li>`
+                            $('#tbl_user_pagination').append(li)
+                            return ""
+                        })
+
+                        $("#tbl_user_pagination .page-item .page-link").on('click', function() {
+                            let url = $(this).data('url')
+                            $.urlParam = function(name) {
+                                var results = new RegExp("[?&]" + name + "=([^&#]*)").exec(
+                                    url
+                                );
+
+                                return results !== null ? results[1] || 0 : false;
+                            };
+
+                            let search = $('#search').val();
+                            show_data({
+                                search,
+                                page: $.urlParam('page')
+                            });
+                        })
+
+                        let tbl_user_showing =
+                            `Showing ${res.data.from} to ${res.data.to} of ${res.data.total} entries`;
+                        $('#tbl_user_showing').html(tbl_user_showing);
+                    } else {
+                        $("#tbl_user tbody").append(
+                            '<tr><td colspan="6" class="text-center">No data</td></tr>');
+                    }
+                }
+            })
+            .catch(function(error) {
+                // console.log("catch error");
+            });
+    }
+
+});
+</script>
 @endsection

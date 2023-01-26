@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\InvoiceConfig;
 use Illuminate\Http\Request;
+
 
 class InvoiceConfigController extends Controller
 {
@@ -81,5 +83,16 @@ class InvoiceConfigController extends Controller
     public function destroy(InvoiceConfig $invoiceConfig)
     {
         //
+    }
+
+    public function show_invoiceconfig()
+    {
+        return view("settings.invoiceconfig");
+    }
+
+
+    public function show_editinvoice()
+    {
+        return view("settings.editinvoice");
     }
 }

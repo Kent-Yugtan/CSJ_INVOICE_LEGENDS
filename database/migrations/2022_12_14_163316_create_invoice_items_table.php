@@ -16,7 +16,7 @@ class CreateInvoiceItemsTable extends Migration
         Schema::create('invoice_items', function (Blueprint $table) {
             $table->id();
             $table->integer('invoice_id')->unassigned();
-            $table->string('description')->nullable();
+            $table->string('item_description')->nullable();
             $table->double('rate')->nullable();
             $table->double('quantity')->nullable();
             $table->double('total_amount')->nullable();

@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\EmailConfig;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class EmailConfigController extends Controller
@@ -81,5 +83,20 @@ class EmailConfigController extends Controller
     public function destroy(EmailConfig $emailConfig)
     {
         //
+    }
+
+    public function show_config()
+    {
+        return view("settings.emailconfig");
+    }
+
+    public function get_name()
+    {
+        $users = User::orderby("last_name", "ASC")->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $users,
+        ], 200);
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\UserController;
+use App\Models\ProfileDeductionTypes;
 use Illuminate\Http\Request;
 
-class UserControllerController extends Controller
+class ProfileDeductionTypesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,16 +13,6 @@ class UserControllerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
     {
         //
     }
@@ -41,21 +31,10 @@ class UserControllerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\UserController  $userController
+     * @param  \App\Models\ProfileDeductionTypes  $profileDeductionTypes
      * @return \Illuminate\Http\Response
      */
-    public function show(UserController $userController)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\UserController  $userController
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(UserController $userController)
+    public function show(ProfileDeductionTypes $profileDeductionTypes)
     {
         //
     }
@@ -64,10 +43,10 @@ class UserControllerController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\UserController  $userController
+     * @param  \App\Models\ProfileDeductionTypes  $profileDeductionTypes
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, UserController $userController)
+    public function update(Request $request, ProfileDeductionTypes $profileDeductionTypes)
     {
         //
     }
@@ -75,10 +54,10 @@ class UserControllerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\UserController  $userController
+     * @param  \App\Models\ProfileDeductionTypes  $profileDeductionTypes
      * @return \Illuminate\Http\Response
      */
-    public function destroy(UserController $userController)
+    public function destroy(ProfileDeductionTypes $profileDeductionTypes)
     {
         //
     }
