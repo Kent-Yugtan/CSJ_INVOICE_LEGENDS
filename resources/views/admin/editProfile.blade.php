@@ -281,300 +281,291 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                                    <div id="show_items">
-                                                                        <div class="col-12 mb-3">
-                                                                            <div class="row">
-                                                                                <!-- FOR TABLE INVOICE DESCRIPTION DISPLAY -->
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                </div>
-                                                                <div class="form-group" style="text-align:end">
-                                                                    </br>
-                                                                    <button class="btn" style="width:5%;color:red"
-                                                                        id="add_item1"> <i
-                                                                            class="fa fa-plus pe-1"></i></button>
-                                                                </div>
-                                                                <div class="col-12 mb-3">
-                                                                    <div class="row">
-                                                                        <div class="col"
-                                                                            style="display: flex;flex-direction: column-reverse;align-items: center;">
-                                                                            <div class="form-group">
-                                                                                <label class="formGroupExampleInput2">Discount Type</label>
-                                                                                <br>
-                                                                                <input class="form-check-input" type="radio" name="discount_type"
-                                                                                    id="discount_type" value="fixed">
-                                                                                <label class="formGroupExampleInput2">
-                                                                                    Fxd &nbsp; &nbsp;
-                                                                                </label>
-                                                                                <input class="discount_type form-check-input" type="radio"
-                                                                                    name="discount_type" id="discount_type" value="percentage">
-                                                                                <label class="formGroupExampleInput2">
-                                                                                    %
-                                                                                </label>
-                                                                                <!-- <input type="text" id="discount_type" class="form-control" /> -->
-                                    
-                                                                            </div>
-                                                                        </div>
-                                    
-                                                                        <div class="col">
-                                                                            <div class="form-group">
-                                                                                <label class="formGroupExampleInput2 label_discount_amount">Discount
-                                                                                    Amount ($)</label>
-                                                                                <input type="text" style="text-align:right" ;
-                                                                                    onkeypress="return onlyNumberKey(event)" id="discount_amount"
-                                                                                    class="form-control" />
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col">
-                                                                            <div class="form-group">
-                                                                                <label class="formGroupExampleInput2 label_discount_total">Discount
-                                                                                    Total ($)</label>
-                                                                                <input type="text" disabled
-                                                                                    style="text-align:right; border:0px;background-color:white;"
-                                                                                    onkeypress="return onlyNumberKey(event)" id="discount_total"
-                                                                                    class="form-control" />
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                    
-                                                                <div class="col-12 mb-3">
-                                                                    <div class="row">
-                                                                        <div class="col-12 my-3" style="justify-content:end;display:flex">
-                                                                            <div class="form-group">
-                                                                                <!-- border-style:none -->
-                                                                                <label>Subtotal ($): <label>
-                                                                                        <input type="text"
-                                                                                            style="font-weight: bold;text-align:right;border:none;background-color:white"
-                                                                                            name="subtotal" id="subtotal"
-                                                                                            class="form-control no-outline subtotal" disabled>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                    
-                                                                <div class="col-12 mb-3">
-                                                                    <div class="row">
-                                                                        <div class="col">
-                                                                            <div class="form-group">
-                                                                                <label class="formGroupExampleInput2">Dollar Amount ($)</label>
-                                                                                <input type="text" id="dollar_amount"
-                                                                                    style="font-weight: bold;border:none; text-align:right;background-color:white"
-                                                                                    class="form-control dollar_amount" disabled />
-                                    
-                                                                            </div>
-                                                                        </div>
-                                    
-                                                                        <div class="col">
-                                                                            <div class="form-group">
-                                                                                <label class="formGroupExampleInput2">Peso Rate (Php)</label>
-                                                                                <input type="text"
-                                                                                    style="font-weight: bold;border:none; text-align:right;background-color:white"
-                                                                                    onkeypress="return onlyNumberKey(event)" id="peso_rate"
-                                                                                    class="form-control" disabled />
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col">
-                                                                            <div class="form-group">
-                                                                                <label class="formGroupExampleInput2" for="form3Example2">Converted
-                                                                                    Amount</label>
-                                                                                <input type="text"
-                                                                                    style="font-weight: bold;border:none; text-align:right;background-color:white"
-                                                                                    onkeypress="return onlyNumberKey(event)" id="converted_amount"
-                                                                                    class="form-control converted_amount" disabled />
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                               
-
-                                                                <div class="col-12">
-                                                                    <div class="row mt-5">
-                                                                        <div class="col mb-5">
-                                                                            <button type="button"
-                                                                                class="btn btn-secondary w-100"
-                                                                                style=" color:#CF8029; background-color:white; "
-                                                                                data-bs-dismiss="modal">Close</button>
-                                                                        </div>
-                                                                        <div class="col">
-                                                                            <button type="submit"
-                                                                                class="btn btn-secondary w-100"
-                                                                                style=" color:White; background-color:#CF8029; "
-                                                                                data-bs-dismiss="modal">Save</button>
-                                                                        </div>
-                                                                    </div>
+                                                        <div id="show_items">
+                                                            <div class="col-12 mb-3">
+                                                                <div class="row">
+                                                                    <!-- FOR TABLE INVOICE DESCRIPTION DISPLAY -->
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            
-                                        
+                                                    <div class="form-group" style="text-align:end">
+                                                        </br>
+                                                        <button class="btn" style="width:5%;color:red" id="add_item1">
+                                                            <i class="fa fa-plus pe-1"></i></button>
+                                                    </div>
+                                                    <div class="col-12 mb-3">
+                                                        <div class="row">
+                                                            <div class="col"
+                                                                style="display: flex;flex-direction: column-reverse;align-items: center;">
+                                                                <div class="form-group">
+                                                                    <label class="formGroupExampleInput2">Discount
+                                                                        Type</label>
+                                                                    <br>
+                                                                    <input class="form-check-input" type="radio"
+                                                                        name="discount_type" id="discount_type"
+                                                                        value="fixed">
+                                                                    <label class="formGroupExampleInput2">
+                                                                        Fxd &nbsp; &nbsp;
+                                                                    </label>
+                                                                    <input class="discount_type form-check-input"
+                                                                        type="radio" name="discount_type"
+                                                                        id="discount_type" value="percentage">
+                                                                    <label class="formGroupExampleInput2">
+                                                                        %
+                                                                    </label>
+                                                                    <!-- <input type="text" id="discount_type" class="form-control" /> -->
 
-                                    
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label
+                                                                        class="formGroupExampleInput2 label_discount_amount">Discount
+                                                                        Amount ($)</label>
+                                                                    <input type="text" style="text-align:right" ;
+                                                                        onkeypress="return onlyNumberKey(event)"
+                                                                        id="discount_amount" class="form-control" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label
+                                                                        class="formGroupExampleInput2 label_discount_total">Discount
+                                                                        Total ($)</label>
+                                                                    <input type="text" disabled
+                                                                        style="text-align:right; border:0px;background-color:white;"
+                                                                        onkeypress="return onlyNumberKey(event)"
+                                                                        id="discount_total" class="form-control" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 mb-3">
+                                                        <div class="row">
+                                                            <div class="col-12 my-3"
+                                                                style="justify-content:end;display:flex">
+                                                                <div class="form-group">
+                                                                    <!-- border-style:none -->
+                                                                    <label>Subtotal ($): <label>
+                                                                            <input type="text"
+                                                                                style="font-weight: bold;text-align:right;border:none;background-color:white"
+                                                                                name="subtotal" id="subtotal"
+                                                                                class="form-control no-outline subtotal"
+                                                                                disabled>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 mb-3">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label class="formGroupExampleInput2">Dollar Amount
+                                                                        ($)</label>
+                                                                    <input type="text" id="dollar_amount"
+                                                                        style="font-weight: bold;border:none; text-align:right;background-color:white"
+                                                                        class="form-control dollar_amount" disabled />
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label class="formGroupExampleInput2">Peso Rate
+                                                                        (Php)</label>
+                                                                    <input type="text"
+                                                                        style="font-weight: bold;border:none; text-align:right;background-color:white"
+                                                                        onkeypress="return onlyNumberKey(event)"
+                                                                        id="peso_rate" class="form-control" disabled />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label class="formGroupExampleInput2"
+                                                                        for="form3Example2">Converted
+                                                                        Amount</label>
+                                                                    <input type="text"
+                                                                        style="font-weight: bold;border:none; text-align:right;background-color:white"
+                                                                        onkeypress="return onlyNumberKey(event)"
+                                                                        id="converted_amount"
+                                                                        class="form-control converted_amount"
+                                                                        disabled />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="row mt-5">
+                                                            <div class="col mb-5">
+                                                                <button type="button" class="btn btn-secondary w-100"
+                                                                    style=" color:#CF8029; background-color:white; "
+                                                                    data-bs-dismiss="modal">Close</button>
+                                                            </div>
+                                                            <div class="col">
+                                                                <button type="submit" class="btn btn-secondary w-100"
+                                                                    style=" color:White; background-color:#CF8029; "
+                                                                    data-bs-dismiss="modal">Save</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                         </form>
-               
-          
-                        <div class="form-group has-search">
-                            <div class=" tab-content" id="pills-tabContent">
-                                <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
-                                    aria-labelledby="pills-home-tab">
-                                    <div class="card-body table-responsive">
-                                        <table style=" color: #A4A6B3;font-size: 14px;" class="table table-hover"
-                                            id="datatablesSimple">
-                                            <div class="col-md-4 w-100">
-                                                <div class="input-group">
-                                                    <button style="color:white; background-color: #CF8029;"
-                                                        data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                                        type="submit" id="button-addon2"
-                                                        class="btn form-check-inline pe-3 "><i
-                                                            class="fa fa-plus pe-1"></i>Create
-                                                        Invoice</button>
-                                                    <input type="text" aria-label="First name"
-                                                        class="form-control form-check-inline">
-                                                    <div class="form-group has-search">
-                                                        <span class="fa fa-search form-control-feedback"></span>
-                                                        <input type="text" class="form-control" placeholder="Search">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <thead>
-                                                <tr>
-                                                    <th>Invoice #</th>
-                                                    <th>Status</th>
-                                                    <th>Due Date</th>
-                                                    <th>Total Amount</th>
-                                                    <th class="text-center">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td><button
-                                                            style="width:100%; height:20px; font-size:10px; padding: 0px;"
-                                                            type="button" class="btn btn-danger btn-xs">Pending</button>
-                                                    </td>
-                                                    <td>12/31/2022</td>
-                                                    <td>Edinburgh</td>
-                                                    <td class="text-center" style="font-size:14px">
-                                                        <button style="width:90px" type="button"
-                                                            class="fa-sharp fa-solid fa-eye view-hover"></button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td><button
-                                                            style="width:100%; height:20px; font-size:10px; padding: 0px;"
-                                                            type="button" class="btn btn-info">Cancelled</button></td>
-                                                    <td>12/31/2022</td>
-                                                    <td>Edinburgh</td>
-                                                    <td class="text-center" style="font-size:14px">
-                                                        <button type="button"
-                                                            class="fa-sharp fa-solid fa-eye view-hover"></button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td><button
-                                                            style="width:100%; height:20px; font-size:10px; padding: 0px;"
-                                                            type="button" class="btn btn-success">Paid</button>
-                                                    </td>
-                                                    <td>12/31/2022</td>
-                                                    <td>Edinburgh</td>
-                                                    <td class="text-center" style="font-size:14px">
-                                                        <button type="button"
-                                                            class="fa-sharp fa-solid fa-eye view-hover"></button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="pills-profile" role="tabpanel"
-                                    aria-labelledby="pills-profile-tab">
-                                    <div class="card-body table-responsive">
-                                        <table style=" color: #A4A6B3;font-size: 14px;" class="table table-hover"
-                                            id="datatablesSimple">
-                                            <div class="col-md-4 w-100">
-                                                <div class="input-group">
-                                                    <button type="button"
-                                                        style="color:white; background-color: #CF8029;"
-                                                        class="btn form-check-inline pe-3 "><i
-                                                            class="fa fa-plus pe-1"></i>Create
-                                                        Deduction</button>
-                                                    <input type="text" aria-label="First name"
-                                                        class="form-control form-check-inline">
-                                                    <div class="form-group has-search">
-                                                        <span class="fa fa-search form-control-feedback"></span>
-                                                        <input type="text" class="form-control" placeholder="Search">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <thead>
-                                                <tr>
-                                                    <th>Deduction</th>
-                                                    <th>Status</th>
-                                                    <th>Date Created</th>
-                                                    <th>Amount</th>
-                                                    <th class="text-center" id="action1">Action</th>
+                    </div>
+                </div>
 
-                                                </tr>
-                                            </thead>
 
-                                            <tbody>
-                                                <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td><button
-                                                            style="width:100%; height:20px; font-size:10px; padding: 0px;"
-                                                            type="button" class="btn btn-danger btn-xs">Pending</button>
-                                                    </td>
-                                                    <td>12/31/2022</td>
-                                                    <td>Edinburgh</td>
-                                                    <td class="text-center" style="font-size:14px">
-                                                        <button style="width:90px" type="button"
-                                                            class="fa-sharp fa-solid fa-eye view-hover"></button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td><button
-                                                            style="width:100%; height:20px; font-size:10px; padding: 0px;"
-                                                            type="button" class="btn btn-info">Cancelled</button></td>
-                                                    <td>12/31/2022</td>
-                                                    <td>Edinburgh</td>
-                                                    <td class="text-center" style="font-size:14px">
-                                                        <button type="button"
-                                                            class="fa-sharp fa-solid fa-eye view-hover"></button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td><button
-                                                            style="width:100%; height:20px; font-size:10px; padding: 0px;"
-                                                            type="button" class="btn btn-success">Paid</button>
-                                                    </td>
-                                                    <td>12/31/2022</td>
-                                                    <td>Edinburgh</td>
-                                                    <td class="text-center" style="font-size:14px">
-                                                        <button type="button"
-                                                            class="fa-sharp fa-solid fa-eye view-hover"></button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                <div class="form-group has-search">
+                    <div class=" tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                            aria-labelledby="pills-home-tab">
+                            <div class="card-body table-responsive">
+                                <table style=" color: #A4A6B3;font-size: 14px;" class="table table-hover"
+                                    id="datatablesSimple">
+                                    <div class="col-md-4 w-100">
+                                        <div class="input-group">
+                                            <button style="color:white; background-color: #CF8029;"
+                                                data-bs-toggle="modal" data-bs-target="#exampleModal" type="submit"
+                                                id="button-addon2" class="btn form-check-inline pe-3 "><i
+                                                    class="fa fa-plus pe-1"></i>Create
+                                                Invoice</button>
+                                            <input type="text" aria-label="First name"
+                                                class="form-control form-check-inline">
+                                            <div class="form-group has-search">
+                                                <span class="fa fa-search form-control-feedback"></span>
+                                                <input type="text" class="form-control" placeholder="Search">
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                    <thead>
+                                        <tr>
+                                            <th>Invoice #</th>
+                                            <th>Status</th>
+                                            <th>Due Date</th>
+                                            <th>Total Amount</th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td><button style="width:100%; height:20px; font-size:10px; padding: 0px;"
+                                                    type="button" class="btn btn-danger btn-xs">Pending</button>
+                                            </td>
+                                            <td>12/31/2022</td>
+                                            <td>Edinburgh</td>
+                                            <td class="text-center" style="font-size:14px">
+                                                <button style="width:90px" type="button"
+                                                    class="fa-sharp fa-solid fa-eye view-hover"></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td><button style="width:100%; height:20px; font-size:10px; padding: 0px;"
+                                                    type="button" class="btn btn-info">Cancelled</button></td>
+                                            <td>12/31/2022</td>
+                                            <td>Edinburgh</td>
+                                            <td class="text-center" style="font-size:14px">
+                                                <button type="button"
+                                                    class="fa-sharp fa-solid fa-eye view-hover"></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td><button style="width:100%; height:20px; font-size:10px; padding: 0px;"
+                                                    type="button" class="btn btn-success">Paid</button>
+                                            </td>
+                                            <td>12/31/2022</td>
+                                            <td>Edinburgh</td>
+                                            <td class="text-center" style="font-size:14px">
+                                                <button type="button"
+                                                    class="fa-sharp fa-solid fa-eye view-hover"></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                            aria-labelledby="pills-profile-tab">
+                            <div class="card-body table-responsive">
+                                <table style=" color: #A4A6B3;font-size: 14px;" class="table table-hover"
+                                    id="datatablesSimple">
+                                    <div class="col-md-4 w-100">
+                                        <div class="input-group">
+                                            <button type="button" style="color:white; background-color: #CF8029;"
+                                                class="btn form-check-inline pe-3 "><i
+                                                    class="fa fa-plus pe-1"></i>Create
+                                                Deduction</button>
+                                            <input type="text" aria-label="First name"
+                                                class="form-control form-check-inline">
+                                            <div class="form-group has-search">
+                                                <span class="fa fa-search form-control-feedback"></span>
+                                                <input type="text" class="form-control" placeholder="Search">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <thead>
+                                        <tr>
+                                            <th>Deduction</th>
+                                            <th>Status</th>
+                                            <th>Date Created</th>
+                                            <th>Amount</th>
+                                            <th class="text-center" id="action1">Action</th>
+
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td><button style="width:100%; height:20px; font-size:10px; padding: 0px;"
+                                                    type="button" class="btn btn-danger btn-xs">Pending</button>
+                                            </td>
+                                            <td>12/31/2022</td>
+                                            <td>Edinburgh</td>
+                                            <td class="text-center" style="font-size:14px">
+                                                <button style="width:90px" type="button"
+                                                    class="fa-sharp fa-solid fa-eye view-hover"></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td><button style="width:100%; height:20px; font-size:10px; padding: 0px;"
+                                                    type="button" class="btn btn-info">Cancelled</button></td>
+                                            <td>12/31/2022</td>
+                                            <td>Edinburgh</td>
+                                            <td class="text-center" style="font-size:14px">
+                                                <button type="button"
+                                                    class="fa-sharp fa-solid fa-eye view-hover"></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td><button style="width:100%; height:20px; font-size:10px; padding: 0px;"
+                                                    type="button" class="btn btn-success">Paid</button>
+                                            </td>
+                                            <td>12/31/2022</td>
+                                            <td>Edinburgh</td>
+                                            <td class="text-center" style="font-size:14px">
+                                                <button type="button"
+                                                    class="fa-sharp fa-solid fa-eye view-hover"></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
-    
+
 
 
 
@@ -867,21 +858,20 @@ $(document).ready(function() {
 
 
 
-$.ajaxSetup ({
-    headers: {
-        'X-CSRF-TOKEN':$ ('meta[name="csrf-token"]').attr ('content'
-        )
-    }
-})
-            $.ajax ({
-                type:"POST",
-                url: "/invoice",
-                data:"data",
-                dataType:"json",
-                success: function (response) {
-                    console.log (response);
-                }
-            })
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    })
+    $.ajax({
+        type: "POST",
+        url: "/invoice",
+        data: "data",
+        dataType: "json",
+        success: function(response) {
+            console.log(response);
+        }
+    })
 
 
 
@@ -977,10 +967,8 @@ $.ajaxSetup ({
             });
     }
     check_profile();
-    
+
 });
-
-
 </script>
 
 

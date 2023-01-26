@@ -31,7 +31,7 @@ Auth::routes();
 Route::get('/', function () {
     // return view('welcome');
     return view('auth/login');
-    echo auth()->user();
+    // echo auth()->user();
 });
 
 
@@ -46,7 +46,7 @@ Route::middleware(['AuthCheck'])->group(function () {
     // Route::post('admin/SaveProfile', [ProfileController::class, 'store']);
 
     Route::get('/admin/current', [ProfileController::class, 'current_show']);
-    Route::get('/admin/editProfile/{id}', [ProfileController::class, 'edit']);
+    Route::get('/admin/viewProfile/{id}', [ProfileController::class, 'viewProfile']);
     Route::get('/admin/inactive', [ProfileController::class, 'inactive']);
 
     // Route::get('/invoice/add', InvoiceController::class);
@@ -64,6 +64,7 @@ Route::middleware(['AuthCheck'])->group(function () {
 
     // Invoice Config
     Route::get('/settings/invoiceconfig', [InvoiceConfigController::class, 'show_invoiceconfig']);
+    Route::get('/settings/editinvoice', [InvoiceConfigController::class, 'show_editinvoice']);
 });
 
 

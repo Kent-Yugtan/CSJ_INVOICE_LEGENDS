@@ -8,15 +8,8 @@
             <div class="card shadow p-2 mb-5 bg-white rounded" style="width: 100%; height:100%">
                 <div class="card-header">Create Email</div>
                 <div class="row px-4 pb-4" id="header">
-                    <form name="emailstore" id="email_store" method="post" action="javascript:void(0)"
-                        class="row g-3 needs-validation" novalidate>
+                    <form id="emailconfig_store" class="row g-3 needs-validation" novalidate>
                         @csrf
-
-                        <div class="mb-3">
-                            <label mb-2 style="color: #A4A6B3;">ID</label>
-                            <input id="Identification" name="email" type="text" class="form-control" placeholder="ID"
-                                required>
-                        </div>
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Full Name</label>
                             <input id="full_name" name="username" type="text" class="form-control"
@@ -170,214 +163,23 @@
 
     <script type="text/javascript">
     $(document).ready(function() {
-        // show_data();
-        function show_data(filters) {
-            let filter = {
-                page_size: 10,
-                page: 1,
-                ...filters,
-            }
+        get_names();
 
-            $('#table_email tbody').empty();
-            axios.get(`${apiUrl}/api/settings/show_data?${new URLSearchParams(filter)}`, {
-                    headers: {
-                        Authorization: token,
-                    },
-                })
-                .then(function(res) {
-                    res = res.data;
-                    if (res.success) {
-                        if (res.data.data.length > 0) {
-                            res.data.data.map((item) => {
-                                let tr = '<tr>';
-                                tr += '<td style="width:40%;">' + item.Identification + '</td>';
-                                tr += '<td style="width:5%;" class="text-end">' + item.full_name
-                                    .toFixed(2) +
-                                    '</td>';
-                                tr +=
-                                    '<td style="width:45%;" class="text-center"> <button value=' +
-                                    item
-                                    .id +
-                                    ' class="editButton btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" >Edit</button> </td>';
-                                tr += '</tr>';
-                                $("#table_email tbody").append(tr);
-
-                                return ''
-                            })
-
-                            $('#tbl_pagination').empty();
-                            res.data.links.map(item => {
-                                let li =
-                                    `<li class="page-item cursor-pointer ${item.active ? 'active':''}"><a class="page-link" data-url="${item.url}">${item.label}</a></li>`
-                                $('#tbl_pagination').append(li)
-                                return ""
-                            })
-
-                            $("#tbl_pagination .page-item .page-link").on('click', function() {
-                                let url = $(this).data('url')
-                                $.urlParam = function(name) {
-                                    var results = new RegExp("[?&]" + name + "=([^&#]*)").exec(
-                                        url
-                                    );
-
-                                    return results !== null ? results[1] || 0 : false;
-                                };
-
-                                let search = $('#search').val();
-                                show_data({
-                                    search,
-                                    page: $.urlParam('page')
-                                });
-                            })
-
-                            let tbl_user_showing =
-                                `Showing ${res.data.from} to ${res.data.to} of ${res.data.total} entries`;
-                            $('#tbl_showing').html(tbl_user_showing);
-                        } else {
-                            $("#tbl_user tbody").append(
-                                '<tr><td colspan="6" class="text-center">No data</td></tr>');
-                        }
-                    }
-                })
-                .catch(function(error) {
-                    console.log("catch error", error);
-                });
-
-        }
-
-        $('#email_store').submit(function(e) {
-            e.preventDefault();
-
-            let Identification = $("#Identification").val();
-            let full_name = $("full_name").val();
-
-            let data = {
-                Identification: Identification,
-                full_name: full_name,
-            };
-
+        function get_names() {
             axios
-                .post(apiUrl + "/api/saveemail", data, {
+                .get(apiUrl + '/api/get_name', {
                     headers: {
                         Authorization: token,
                     },
-                })
-                .then(function(response) {
-                    // console.log("then", response.data.success);
+                }).then(function(response) {
                     let data = response.data;
-                    if (data.success) {
-                        // console.log('success', data.data.message);
-                        $('#Identification').val('');
-                        $('#full_name').val('');
-
-                        $('.toast1 .toast-title').html('Email');
-                        $('.toast1 .toast-body').html(response.data.message);
-                        toast1.toast('show');
-                        // show_data();
-                    }
-                })
-                .catch(function(error) {
-                    if (error.response.data.errors) {
-                        let errors = error.response.data.errors;
-                        let fieldnames = Object.keys(errors);
-                        Object.values(errors).map((item, index) => {
-                            fieldname = fieldnames[0].split('_');
-                            fieldname.map((item2, index2) => {
-                                fieldname['key'] = capitalize(item2);
-                                return ""
-                            });
-                            fieldname = fieldname.join(" ");
-                            $('.toast1 .toast-title').html(fieldname);
-                            $('.toast1 .toast-body').html(Object.values(errors)[0].join(
-                                "\n\r"));
-                        })
-                        toast1.toast('show');
-                    }
-                });
-        })
-
-        $(document).on('click', '.editButton', function(e) {
-            e.preventDefault();
-            let id = $(this).val();
-            $('#deduction_id').val(id);
-
-            axios
-                .get(apiUrl + '/api/settings/show_emailedit/' + id, {
-                    headers: {
-                        Authorization: token,
-                    },
-                })
-                .then(function(response) {
-                    let data = response.data;
-                    console.log("SUCCESS", data.data);
-                    if (data.success) {
-
-                        $('#edit_Identification').val(data.data.Identification);
-                        $('#edit_full_name').val(data.data.full_name);
-
-                    } else {
-                        console.log("ERROR");
-                    }
+                    console.log("SUCCESS", data);
 
                 }).catch(function(error) {
                     console.log("ERROR", error);
                 });
-        });
+        }
 
-        $('#email_update').submit(function(e) {
-            e.preventDefault();
-
-            let email_id = $('#email_id').val();
-            let Identification = $("#edit_Identification").val();
-            let FullName = $("#edit_full_name").val();
-
-            let data = {
-                id: email_id,
-                Identification: Identification,
-                full_name: full_name,
-            };
-
-            axios
-                .post(apiUrl + "/api/saveemail", data, {
-                    headers: {
-                        Authorization: token,
-                    },
-                })
-                .then(function(response) {
-                    // console.log("then", response.data.success);
-                    let data = response.data;
-                    if (data.success) {
-
-                        $('#edit_Identification').val('');
-                        $('#edit_full_name').val('');
-
-                        $('.toast1 .toast-title').html('Email');
-                        $('.toast1 .toast-body').html(response.data.message);
-                        toast1.toast('show');
-                        // show_data();
-                        console.log('success', data.data);
-                    }
-                })
-                .catch(function(error) {
-                    if (error.response.data.errors) {
-                        let errors = error.response.data.errors;
-                        console.log("error", errors);
-                        let fieldnames = Object.keys(errors);
-                        Object.values(errors).map((item, index) => {
-                            fieldname = fieldnames[0].split('_');
-                            fieldname.map((item2, index2) => {
-                                fieldname['key'] = capitalize(item2);
-                                return ""
-                            });
-                            fieldname = fieldname.join(" ");
-                            $('.toast1 .toast-title').html(fieldname);
-                            $('.toast1 .toast-body').html(Object.values(errors)[0].join(
-                                "\n\r"));
-                        })
-                        toast1.toast('show');
-                    }
-                });
-        });
     });
 
 

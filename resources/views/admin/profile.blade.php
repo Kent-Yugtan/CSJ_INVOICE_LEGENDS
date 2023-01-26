@@ -375,7 +375,7 @@ $(document).ready(function() {
             .get(apiUrl + '/api/show_deduction_type', {
                 headers: {
                     Authorization: token,
-                }
+                },
             }).then(function(response) {
                 response = response.data
                 // console.log('RESPONSE SELECT', response);
