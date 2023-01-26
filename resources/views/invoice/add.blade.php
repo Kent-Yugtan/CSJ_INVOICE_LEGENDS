@@ -263,6 +263,8 @@
                                     <button type="submit" class="btn btn-secondary w-100"
                                         style="color:White; background-color:#CF8029;">Save</button>
                                 </div>
+
+
                                 <div>
                                     <button type="button" class="btn btn-secondary w-100"
                                         style=" color:#CF8029; background-color:white; "
@@ -292,6 +294,7 @@
         </div>
     </div>
 </div>
+
 
 <script type="text/javascript">
 let total_deduction_amount = 0
@@ -732,7 +735,6 @@ $('#invoice_items').on('submit', function(e) {
         Deductions,
     }
 
-    console.log("data", data);
 
     axios.
     post(apiUrl + "/api/createinvoice", data, {
@@ -740,22 +742,19 @@ $('#invoice_items').on('submit', function(e) {
             Authorization: token
         },
     }).then(function(response) {
-        console.log("response", response);
         let data = response.data;
-        console.log("success", data);
         if (data.success) {
-            console.log('success', data);
 
             $('.toast1 .toast-title').html('Create Invoices');
             $('.toast1 .toast-body').html(response.data.message);
             toast1.toast('show');
+            refresh();
         }
-        check_profile();
     }).catch(function(error) {
-        console.log("error", error);
         if (error.response.data.errors) {
             let errors = error.response.data.errors;
             let fieldnames = Object.keys(errors);
+
             Object.values(errors).map((item, index) => {
                 fieldname = fieldnames[0].split('_');
                 fieldname.map((item2, index2) => {
@@ -763,6 +762,7 @@ $('#invoice_items').on('submit', function(e) {
                     return ""
                 });
                 fieldname = fieldname.join(" ");
+
                 $('.toast1 .toast-title').html(fieldname);
                 $('.toast1 .toast-body').html(Object.values(errors)[0].join(
                     "\n\r"));
@@ -770,6 +770,18 @@ $('#invoice_items').on('submit', function(e) {
             toast1.toast('show');
         }
     });
+
+    function refresh() {
+        setTimeout(function() {
+            location.reload()
+        }, 3000);
+    }
+
+    function capitalize(s) {
+        if (typeof s !== 'string') return "";
+        return s.charAt(0).toUpperCase() + s.slice(1);
+    }
+
 
 });
 </script>

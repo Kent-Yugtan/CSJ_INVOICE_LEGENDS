@@ -256,11 +256,10 @@ class ProfileController extends Controller
      * @param  \App\Models\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request)
+    public function viewProfile(Request $request)
     {
         $findid = User::with('profile', 'profile.profile_deduction_types')->find($request->id);
-        // return $findid;
-        return view("admin.editProfile", compact('findid'));
+        return view("admin.viewProfile", compact('findid'));
     }
 
     public function show_edit(Request $request, $id)
@@ -278,19 +277,6 @@ class ProfileController extends Controller
                 'data' => $finduser_profile,
             ], 200);
         }
-
-        // if ($finduser_profile->profile) {
-        //     return response()->json([
-        //         'success' => true,
-        //         'data' => $finduser_profile,
-        //     ]);
-        // } else {
-        //     $find_userid = User::find($id);
-        //     return response()->json([
-        //         'success' => true,
-        //         'data' => $find_userid,
-        //     ]);
-        // }
     }
 
     /**
@@ -324,7 +310,7 @@ class ProfileController extends Controller
     {
         $data = User::select(
             [
-                'users.*',
+                'profiles.*',
                 'position',
                 'phone_number',
                 'address',
@@ -383,10 +369,6 @@ class ProfileController extends Controller
         return view('admin.inactive');
     }
 
-    public function viewProfile()
-    {
-        return view('admin.viewProfile');
-    }
     public function editProfile()
     {
         return view('admin.editProfile');

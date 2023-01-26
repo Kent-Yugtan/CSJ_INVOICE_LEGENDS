@@ -94,16 +94,10 @@ class InvoiceController extends Controller
     // }
 
     // CHECK PROFILE
-    public function check_profile()
+    public function check_profile(Request $request)
     {
-        $user_id = auth()->user()->id;
-        $check_profile = Profile::select([
-            'profiles.*',
-            DB::raw('(SELECT
-                     SUM(amount)
-                 FROM profile_deduction_types WHERE
-                 profile_deduction_types.profile_id = profiles.id) as `total_deduction`')
-        ])->with(['profile_deduction_types', 'profile_deduction_types.deduction_type'])
+        $user_id = $request->id;
+        $check_profile = Profile::with(['profile_deduction_types', 'profile_deduction_types.deduction_type'])
             ->where('user_id', $user_id)->first();
 
         if (!$check_profile) {
@@ -116,27 +110,32 @@ class InvoiceController extends Controller
                 'success' => true,
                 'message' => "Success",
                 'data' => $check_profile,
-                'invoice_no' => $this->generate_invoice($check_profile->id),
             ], 200);
         }
     }
 
-    public function generate_invoice($profile_id)
-    {
-        $last_invoice = Invoice::where('profile_id', $profile_id)->orderBy('invoice_no', 'desc')->first();
-        $last_num = 0;
-        if ($last_invoice) {
-            // $last_num = $last_invoice->invoice_no != null ? $last_invoice->invoice_no + 1 : 00001;
-            $last_num = (int) str_replace('5PP-', "", $last_invoice->invoice_no);
-            $_last_num = str_pad($last_num + 1, 5, '0', STR_PAD_LEFT);
-            $last_num = '5PP-' . $_last_num;
-        } else {
-            // $last_num = 00001;
-            $last_num = '5PP-00001';
-        }
-        // $invoice_num = sprintf("%05d", $last_num);
-        return $last_num;
-    }
+    // public function generate_invoice()
+    // {
+    //     // $last_invoice = Invoice::where('profile_id', $profile_id)->orderBy('invoice_no', 'desc')->first();
+    //     $last_invoice = Invoice::latest('invoice_no')->first();
+    //     $last_num = 0;
+    //     if ($last_invoice) {
+    //         // $last_num = $last_invoice->invoice_no != null ? $last_invoice->invoice_no + 1 : 00001;
+    //         $last_num = (int) str_replace('5PP-', "", $last_invoice->invoice_no);
+    //         $_last_num = str_pad($last_num + 1, 5, '0', STR_PAD_LEFT);
+    //         $last_num = '5PP-' . $_last_num;
+    //     } else {
+    //         // $last_num = 00001;
+    //         $last_num = '5PP-00001';
+    //     }
+    //     // $invoice_num = sprintf("%05d", $last_num);
+    //     // return $last_num;
+    //     return response()->json([
+    //         'success' => true,
+    //         'message' => "Success generate Invoice Number",
+    //         'data' => $last_num,
+    //     ], 200);
+    // }
 
     public function current()
     {
@@ -168,7 +167,6 @@ class InvoiceController extends Controller
                 $incoming_data = $request->validate(
                     [
                         'profile_id' => '',
-                        'invoice_no' => '',
                         'description' => 'required',
                         'sub_total' => '',
                         'converted_amount' => '',
@@ -182,6 +180,7 @@ class InvoiceController extends Controller
 
                 $incoming_data += [
                     'invoice_status' => 'Pending',
+                    'invoice_no' => $this->generate_invoice(),
                 ];
                 $store_data = Invoice::create($incoming_data);
                 if ($store_data) {
@@ -217,5 +216,50 @@ class InvoiceController extends Controller
                 }
             }
         }
+    }
+
+    public function show_invoice(Request $request)
+    {
+
+        // $invoices = Invoice::with('profile.user', 'profile.deduction.profile_deduction_type.deduction_type', 'invoice_items')
+        //     ->where(
+        //         function ($q) use ($request) {
+        //             $q->orWhere('invoice_no', 'LIKE', '%' . $request->search . '%');
+        //         }
+        //     );
+
+        // $invoices = \App\Models\Invoice::select([
+        //     'invoices.*',
+        // ])->where(function ($q) use ($request) {
+        //     if ($request->search) {
+        //         $q->orWhere('invoice_no', 'LIKE', '%' . $request->search . '%');
+        //     }
+        // })->with(['profile.user', 'profile.deduction.profile_deduction_type.deduction_type', 'invoice_items']);
+
+        // if (isset($request->profile_id)) {
+        //     $invoices->where('profile_id', '2');
+        // } else {
+        //     $invoices->where('profile_id', '2');
+        // }
+
+        $invoices = Invoice::with('profile.user', 'profile.deduction.profile_deduction_type.deduction_type', 'invoice_items')
+            ->where(
+                function ($q) use ($request) {
+                    $q->orWhere('invoice_no', 'LIKE', '%' . $request->search . '%');
+                }
+            )->orderby('created_at', 'desc');
+
+        if ($request->page_size) {
+            $invoices = $invoices->limit($request->page_size)
+                ->paginate($request->page_size, ['*'], 'page', $request->page)
+                ->toArray();
+        } else {
+            $invoices = $invoices->get();
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $invoices,
+        ], 200);
     }
 }
