@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\ProfileDeductionTypes;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,21 @@ class ProfileDeductionTypesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $error = false;
+        $profileDeductionTypes = $request->id;
+        if ($error === false) {
+            if (!$profileDeductionTypes) {
+
+                $storeData = ProfileDeductionTypes::Create($request->input());
+                return response()->json([
+                    'success' => 'true',
+                    'message' => 'Deduction has been successfully assign to this profile.',
+                    'data' => $storeData,
+                ]);
+            } else {
+            }
+        }
     }
 
     /**

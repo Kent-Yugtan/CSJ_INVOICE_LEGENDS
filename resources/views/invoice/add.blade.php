@@ -306,7 +306,7 @@ $(document).ready(function() {
 
     let toast1 = $('.toast1');
     toast1.toast({
-        delay: 5000,
+        delay: 3000,
         animation: true
     });
 

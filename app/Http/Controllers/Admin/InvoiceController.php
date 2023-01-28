@@ -249,4 +249,32 @@ class InvoiceController extends Controller
             'data' => $invoices,
         ], 200);
     }
+    public function count_pending()
+    {
+        $pending = Invoice::where('invoice_status', 'Pending')->count();
+        if ($pending) {
+            return $pending;
+        }
+    }
+    public function count_overdue()
+    {
+        $overdue = Invoice::where('invoice_status', 'Overdue')->count();
+        if ($overdue) {
+            return $overdue;
+        }
+    }
+    public function count_paid()
+    {
+        $paid = Invoice::where('invoice_status', 'Paid')->count();
+        if ($paid) {
+            return $paid;
+        }
+    }
+    public function count_cancelled()
+    {
+        $cancelled = Invoice::where('invoice_status', 'Cancelled')->count();
+        if ($cancelled) {
+            return $cancelled;
+        }
+    }
 }
