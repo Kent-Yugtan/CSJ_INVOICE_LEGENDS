@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\ProfileDeductionTypes;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,21 @@ class ProfileDeductionTypesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $error = false;
+        $profileDeductionTypes = $request->id;
+        if ($error === false) {
+            if (!$profileDeductionTypes) {
+
+                $storeData = ProfileDeductionTypes::Create($request->input());
+                return response()->json([
+                    'success' => 'true',
+                    'message' => 'Deduction has been successfully added to this profile.',
+                    'data' => $storeData,
+                ]);
+            } else {
+            }
+        }
     }
 
     /**
@@ -57,8 +72,18 @@ class ProfileDeductionTypesController extends Controller
      * @param  \App\Models\ProfileDeductionTypes  $profileDeductionTypes
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProfileDeductionTypes $profileDeductionTypes)
+    public function destroy(Request $request)
     {
         //
+        $profileDeductionType_id = $request->id;
+        if ($profileDeductionType_id) {
+            $profileDeductionTypes = ProfileDeductionTypes::where('id', $profileDeductionType_id)->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Deduction has been successfully removed from the profile.',
+                'data' => $profileDeductionTypes,
+            ]);
+        }
     }
 }
