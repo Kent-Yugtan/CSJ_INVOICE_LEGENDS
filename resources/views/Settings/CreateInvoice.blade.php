@@ -152,19 +152,17 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 px-2 w-25">
+        <div class="col-md-6 px-2 w-25">php
             <div class="card shadow p-2 mb-5 bg-white rounded " style="width: 100%; height:25%">
                 <!-- <div class="card-header">Profile Information</div> -->
                 <div class="row mt-3">
                     <div class="col g-5">
                         <div class="pb-3">
-                            <button type="button" class="btn btn-secondary w-100"
-                                style=" color:White; background-color:#CF8029; " data-bs-dismiss="modal">Save</button>
+                            <button type="button" class="btn btn-secondary w-100" style=" color:White; background-color:#CF8029; " data-bs-dismiss="modal">Save</button>
 
                         </div>
                         <div>
-                            <button type="button" class="btn btn-secondary w-100"
-                                style=" color:#CF8029; background-color:white; " data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary w-100" style=" color:#CF8029; background-color:white; " data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>

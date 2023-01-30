@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DeductionTypeController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\EmailConfigController;
+use App\http\Controllers\Admin\InvoiceConfigController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -70,6 +71,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // FOR POST INVOICE TABLE
     Route::post('createinvoice', [InvoiceController::class, 'create_invoice']);
+
+    //  FOR INVOICE CONFIG TABLE
+    Route::get('invoiceconfgis/showdata', [InvoiceConfigController::class, 'show_data']);
+    Route::post('invoiceconfigs_store', [InvoiceConfigController::class, 'invoiceconfigs_store']);
 });
 
 

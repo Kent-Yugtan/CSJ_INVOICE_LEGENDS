@@ -8,36 +8,30 @@
             <div class="card shadow p-2 mb-5 bg-white rounded" style="width: 100%; height:100%">
                 <div class="card-header">Create Invoice Configuration</div>
                 <div class="row px-4 pb-4" id="header">
-                    <form name="emailstore" id="email_store" method="post" action="javascript:void(0)"
-                        class="row g-3 needs-validation" novalidate>
+                    <form name="invoiceconfigs_store" id="invoiceconfigs_store" method="post" action="javascript:void(0)" class="row g-3 needs-validation" novalidate>
                         @csrf
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Invoice Title</label>
-                            <input id="invoice_title" name="email" type="text" class="form-control" placeholder=" Title"
-                                required>
+                            <input id="invoice_title" name="email" type="text" class="form-control" placeholder=" Title" required>
                         </div>
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Invoice Email</label>
-                            <input id="invoice_email" name="username" type="text" class="form-control"
-                                placeholder="Email" required>
+                            <input id="invoice_email" name="username" type="text" class="form-control" placeholder="Email" required>
                         </div>
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Bill to Address</label>
-                            <input id="bill_address" name="Email Address" type="text" class="form-control"
-                                placeholder="From" required>
+                            <input id="bill_address" name="Email Address" type="text" class="form-control" placeholder="From" required>
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Ship to Address</label>
-                            <input id="ship_address" name="Email Address" type="text" class="form-control"
-                                placeholder="To" required>
+                            <input id="ship_address" name="Email Address" type="text" class="form-control" placeholder="To" required>
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Position</label>
-                            <select class="form-select @error('position') is-invalid @enderror" id="position"
-                                name="position" aria-label="Default select example" defaultValue="select">
+                            <select class="form-select @error('position') is-invalid @enderror" id="position" name="position" aria-label="Default select example" defaultValue="select">
                                 <option selected disabled value="">Please Select Position</option>
                                 <option value="Lead Developer">Lead Developer</option>
                                 <option value="Senior Developer">Senior Developer</option>
@@ -50,15 +44,11 @@
 
 
                         <div class="col mb-3">
-                            <button type="submit"
-                                style="width:100%; height:50px;color:white; background-color: #CF8029;"
-                                class="btn ">Save </button>
+                            <button type="submit" style="width:100%; height:50px;color:white; background-color: #CF8029;" class="btn ">Save </button>
                         </div>
 
                         <div class="col mb-3">
-                            <button type="button"
-                                style="width:100%; height:50px;color:white; background-color: #A4A6B3;"
-                                class="btn">Close</button>
+                            <button type="button" style="width:100%; height:50px;color:white; background-color: #A4A6B3;" class="btn">Close</button>
                         </div>
                     </form>
                 </div>
@@ -68,7 +58,17 @@
         <div class="col-md-6 px-2">
             <div class="card shadow  bg-white rounded " style="width: 100%; ">
                 <div class="card-body table-responsive ">
-                    <table style="color: #A4A6B3;" class="table " id="table_email">
+                    <div class="row mt-3">
+                        <div class="col">
+                            <div class="w-100">
+                                <input id="search" type="text" class="form-control form-check-inline" placeholder="Search">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn w-100" style="color:white; background-color: #CF8029;width:30%" id="button_search">Search</button>
+                        </div>
+                    </div>
+                    <table style="color: #A4A6B3;" class="table " id="table_invoiceconfig">
                         <thead>
                             <th>Invoice Title</th>
                             <th>Invoice Email</th>
@@ -89,8 +89,7 @@
                                 <td></td>
                                 <td class="text-center"> <button value=' + item
                                     .id +
-                                    ' class="editButton btn btn-outline-primary" data-bs-toggle="modal"
-                                        data-bs-target="#editModal">Edit</button> </td>
+                                    ' class="editButton btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button> </td>
 
 
                                 </td>
@@ -109,8 +108,7 @@
 
     </div>
 
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-dialog">
                 <div class="modal-content ">
@@ -142,9 +140,7 @@
 
                                     <div class="mb-3">
                                         <label mb-2 style="color: #A4A6B3;">Position</label>
-                                        <select class="form-select @error('position') is-invalid @enderror"
-                                            id="position" name="position" aria-label="Default select example"
-                                            defaultValue="select">
+                                        <select class="form-select @error('position') is-invalid @enderror" id="position" name="position" aria-label="Default select example" defaultValue="select">
                                             <option selected disabled value="">Please Select Position</option>
                                             <option value="Lead Developer">Lead Developer</option>
                                             <option value="Senior Developer">Senior Developer</option>
@@ -156,14 +152,10 @@
 
                                     <div class="row mt-3">
                                         <div class="col mt-3">
-                                            <button type="button" class="btn btn-secondary w-100"
-                                                style=" color:#CF8029; background-color:white; "
-                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-secondary w-100" style=" color:#CF8029; background-color:white; " data-bs-dismiss="modal">Close</button>
                                         </div>
                                         <div class="col mt-3">
-                                            <button type="submit" class="btn btn-secondary w-100"
-                                                style="color:White; background-color:#CF8029; "
-                                                data-bs-dismiss="modal">Update</button>
+                                            <button type="submit" class="btn btn-secondary w-100" style="color:White; background-color:#CF8029; " data-bs-dismiss="modal">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -174,5 +166,109 @@
             </div>
         </div>
     </div>
+    <div style="position: fixed; top: 60px; right: 20px;">
+        <div class="toast toast1 toast-bootstrap" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <div><i class="fa fa-newspaper-o"> </i></div>
+                <div><strong class="mr-auto m-l-sm toast-title">Notification</strong></div>
+                <div>
+                    <button type="button" class="ml-2 mb-1 close float-end" data-dismiss="toast" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            <div class="toast-body">
+                Hello, you can push notifications to your visitors with this toast feature.
+            </div>
+        </div>
+    </div>
 
+
+    <!-- // CLICK TO STORE DATA -->
+    <script type="text/javascript">
+        $(document).ready(function(e) {
+            let toast1 = $('.toast1');
+            // show_data();
+            $('#invoiceconfigs_store').submit(function(e) {
+                e.preventDefault();
+
+                let invoice_title = $('#invoice_title').val();
+                let invoice_email = $('#invoice_email').val();
+                let bill_address = $('#bill_address').val();
+                let ship_address = $('#ship_address').val();
+                let position = $('#position').val();
+
+                let data = {
+                    invoice_title: invoice_title,
+                    invoice_email: invoice_email,
+                    bill_address: bill_address,
+                    ship_address: ship_address,
+                    title: position,
+                }
+
+                axios
+                    .post(apiUrl + '/api/invoiceconfigs_store', data, {
+                        headers: {
+                            Authorization: token,
+
+                        },
+                    })
+                    .then(function(response) {
+                        let data = response.data;
+                        if (data.success) {
+                            console.log('success', data);
+                            $('#invoice_title').val("");
+                            $('#invoice_email').val("");
+                            $('#bill_address').val("");
+                            $('#ship_address').val("");
+                            $('#position').val("");
+
+                            $('.toast1 .toast-title').html('Invoice Configuration');
+                            $('.toast1 .toast-body').html(response.data.message);
+                            toast1.toast('show');
+
+                            // show_data();
+                        }
+                        console.log(
+                            data
+                        );
+
+
+                    })
+                    .catch(function(error) {
+
+                        if (error.response.data.errors) {
+
+                            let errors = error.response.data.errors;
+                            let fieldnames = Object.keys(errors);
+
+                            Object.values(errors).map((item, index) => {
+
+                                fieldname = fieldnames[0].split('_');
+                                fieldname.map((item2, index) => {
+                                    fieldname['key'] = capitalize(item2);
+                                    return ""
+                                });
+                                fieldname = fieldname.join(" ");
+                                $('.toast1 .toast-title').html(fieldname);
+                                $('.toast1 .toast-body').html(Object.values(errors)[0].join(
+                                    "\n\r"));
+                            })
+
+
+
+
+
+                        }
+                        toast1.toast('show');
+                    });
+
+            });
+
+            function capitalize(s) {
+                if (typeof s !== 'string') return "";
+                return s.charAt(0).toUpperCase() + s.slice(1);
+            }
+        });
+    </script>
     @endsection

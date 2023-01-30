@@ -65,6 +65,7 @@ Route::middleware(['AuthCheck'])->group(function () {
     // Invoice Config
     Route::get('/settings/invoiceconfig', [InvoiceConfigController::class, 'show_invoiceconfig']);
     Route::get('/settings/editinvoice', [InvoiceConfigController::class, 'show_editinvoice']);
+    Route::get('/settings/invoice_configs', [InvoiceConfigController::class, 'index']);
 });
 
 

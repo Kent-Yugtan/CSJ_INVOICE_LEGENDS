@@ -16,7 +16,7 @@ class InvoiceConfigController extends Controller
      */
     public function index()
     {
-        //
+        return view ('<invoice_configs></invoice_configs>')
     }
 
     /**
@@ -35,9 +35,55 @@ class InvoiceConfigController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function invoiceconfigs_store(Request $request)
     {
-        //
+        $error = false;
+        $invoiceconfigs_id = $request->id;
+        if ($error === false) {
+            if (!$invoiceconfigs_id) {
+                $incoming_data = $request->validate([
+                    'invoice_title' => 'required|unique:invoice_configs',
+                    'invoice_email' => 'email|required|unique:invoice_configs',
+                    'bill_address' => 'required|unique:invoice_configs',
+                    'ship_address' => 'required|unique:invoice_configs',
+                    'title' => '',
+                ]);
+                $store_data = InvoiceConfig::create($incoming_data);
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Invoice Configuration has been successfully added to database.',
+                    'data' => $store_data,
+
+                ], 200);
+            } else {
+                $data = InvoiceConfig::find($invoiceconfig_id);
+                if ($data->invoice_title != $request->invoice_title) {
+                    $request->validate([
+                        'invoice_title' => 'required|',
+
+                    ]);
+                }
+
+                if ($data->invoice_email != $request->invoice_email) {
+                    $request->validate([
+                        'invoice_email' => 'required|unique:invoice_configs',
+                    ]);
+                }
+
+                $store_data = InvoiceConfig::where('id', $invoiceConfig_id)->update(
+                    [
+                        'invoice_email' => $request->invoice_email,
+                        'title' => $request->title,
+                    ]
+                );
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Email Configuration has been successfully updated to the database.',
+                    'data' => $store_data,
+
+                ], 200);
+            }
+        }
     }
 
     /**
