@@ -17,7 +17,7 @@
                 </div>
                 <div class="col">
                     <button type="submit" class="btn w-100" style=" color:white; background-color: #CF8029;width:30%"
-                        id="button-submit">Search</button>
+                        id="button_search">Search</button>
                 </div>
             </div>
 
@@ -151,7 +151,7 @@
 $(document).ready(function() {
     show_data();
 
-    $('#button-submit').on('click', function() {
+    $('#button_search').on('click', function() {
         let search = $('#search').val();
         show_data({
             search
@@ -186,6 +186,7 @@ $(document).ready(function() {
             })
             .then(function(res) {
                 res = res.data;
+                console.log("RES", res);
                 if (res.success) {
                     if (res.data.data.length > 0) {
                         res.data.data.map((item) => {
@@ -235,7 +236,7 @@ $(document).ready(function() {
                             `Showing ${res.data.from} to ${res.data.to} of ${res.data.total} entries`;
                         $('#tbl_showing').html(tbl_user_showing);
                     } else {
-                        $("#tbl_user tbody").append(
+                        $("#table_deduction tbody").append(
                             '<tr><td colspan="6" class="text-center">No data</td></tr>');
                     }
                 }
@@ -356,7 +357,6 @@ $(document).ready(function() {
                     $('.toast1 .toast-body').html(response.data.message);
                     toast1.toast('show');
                     show_data();
-                    console.log('success', data.data);
                 }
             })
             .catch(function(error) {
