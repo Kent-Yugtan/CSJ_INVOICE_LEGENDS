@@ -68,7 +68,20 @@
         <div class="col-md-6 px-2">
             <div class="card shadow  bg-white rounded " style="width: 100%; ">
                 <div class="card-body table-responsive ">
-                    <table style="color: #A4A6B3;" class="table " id="table_email">
+                    <div class="row mt-3">
+                        <div class="col">
+                            <div class="w-100">
+                                <input id="search" type="text" class="form-control form-check-inline"
+                                    placeholder="Search">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn w-100"
+                                style="color:white; background-color: #CF8029;width:30%"
+                                id="button_search">Search</button>
+                        </div>
+                    </div>
+                    <table style="color: #A4A6B3;" class="table " id="table_invoiceconfig">
                         <thead>
                             <th>Invoice Title</th>
                             <th>Invoice Email</th>
@@ -175,4 +188,44 @@
         </div>
     </div>
 
+    <script type="text/javascript">
+        $(document).ready(function() {
+            let toast1 = $('.toast1');
+            show_data();
+    
+            $('#button_search').on('click', function() {
+                let search = $('#search').val();
+                show_data({
+                    search
+                });
+            })
+            toast1.toast({
+                delay: 5000,
+                animation: true
+            });
+    
+            $('.close').on('click', function(e) {
+                e.preventDefault();
+                toast1.toast('hide');
+            })
+    
+            $("#error_msg").hide();
+            $("#success_msg").hide();
+    
+            // SHOW DATA
+            function show_data(filters) {
+                let filter = {
+                    page_size: 10,
+                    page: 1,
+                    ...filters,
+                }
+                $('#table_invoiceconfigs tbody').empty();
+                axios.get(`${apiUrl}/api/invoiceconfigs/show_data?${new URLSearchParams(filter)}`, {
+                        headers: {
+                            Authorization: token,
+                        },
+                    })
+
+                    
+        </script>
     @endsection
