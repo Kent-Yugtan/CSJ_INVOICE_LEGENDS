@@ -150,9 +150,6 @@
 $(document).ready(function() {
     show_data();
 
-
-
-
     $('#button_search').on('click', function() {
         let search = $('#search').val();
         show_data({
@@ -181,29 +178,30 @@ $(document).ready(function() {
             ...filters,
         }
         $('#table_deduction tbody').empty();
-        axios.get(`${apiUrl}/api/settings/show_data?${new URLSearchParams(filter)}`, {
+        axios.get(`${apiUrl}/api/settings/show_deduction_data?${new URLSearchParams(filter)}`, {
                 headers: {
                     Authorization: token,
                 },
             })
             .then(function(res) {
                 res = res.data;
-                // console.log("RES", res);
+                console.log("RES123", res);
                 if (res.success) {
                     if (res.data.data.length > 0) {
                         res.data.data.map((item) => {
                             let tr = '<tr>';
                             tr += '<td class="td" style="width:40%;">' + item.deduction_name +
                                 '</td>';
-                            tr += '<td style="width:5%;" class="td text-end">' + parseFloat(item
-                                    .deduction_amount).toFixed(2) +
+                            tr += '<td style="width:5%;" class="td text-end">' + Number(parseFloat(
+                                    item
+                                    .deduction_amount).toFixed(2)).toLocaleString(
+                                    'en', {
+                                        minimumFractionDigits: 2
+                                    }) +
                                 '</td>';
                             tr +=
 
                                 '<td style="width:45%;" class="text-center"> <button value=' +
-                                item
-                                .id +
-                                ' id="view" class="view btn btn-outline-primary">View</button><button value=' +
                                 item.id +
                                 ' class="editButton btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" >Edit</button> </td>';
                             tr += '</tr>';
@@ -256,7 +254,7 @@ $(document).ready(function() {
         e.preventDefault();
 
         let deduction_name = $("#deduction_name").val();
-        let deduction_amount = $("#deduction_amount").val();
+        let deduction_amount = parseFloat($("#deduction_amount").val()).toFixed(2);
 
         let data = {
             deduction_name: deduction_name,
@@ -342,7 +340,7 @@ $(document).ready(function() {
         let data = {
             id: deduction_id,
             deduction_name: deduction_name,
-            deduction_amount: deduction_amount,
+            deduction_amount: parseFloat(deduction_amount).toFixed(2),
         };
 
         axios
