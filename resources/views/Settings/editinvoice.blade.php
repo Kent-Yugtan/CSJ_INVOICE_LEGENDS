@@ -207,7 +207,7 @@
         </div>    
 
         <div class="col-6 px-2 w-25">
-            <div class="card shadow p-2 mb-5 bg-white rounded " style="width: 100%; height:40%">
+            <div class="card shadow p-2 mb-5 bg-white rounded pt-7" style="width: 100%; height:40%">
                 <!-- <div class="card-header">Profile Information</div> -->
                 <div class="row">
                     <div class="col g-5">
@@ -228,7 +228,7 @@
 
                 <div class="row ">
                     <div class="col g-5">
-                        <div class="pb-1">
+                        <div class="pb-">
                             <button type="button" class="btn btn-secondary w-100"
                                 style=" color:White; background-color:#CF8029; ">Download</button>
                         </div>
