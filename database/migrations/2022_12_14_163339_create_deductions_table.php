@@ -17,7 +17,7 @@ class CreateDeductionsTable extends Migration
             $table->id();
             $table->integer('profile_id')->unassigned();
             $table->integer('invoice_id')->unassigned();
-            $table->integer('deduction_type_id')->unassigned();
+            $table->integer('profile_deduction_type_id')->unassigned();
             $table->double('amount')->nullable();
             $table->timestamps();
         });

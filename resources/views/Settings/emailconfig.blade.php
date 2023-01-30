@@ -161,231 +161,236 @@
                 delay: 5000,
                 animation: true
             });
-
-            $('.close').on('click', function(e) {
-                e.preventDefault();
-                toast1.toast('hide');
-            })
-
-            $("#error_msg").hide();
-            $("#success_msg").hide();
-
-            // SHOW DATA
-            function show_data(filters) {
-                let filter = {
-                    page_size: 10,
-                    page: 1,
-                    ...filters,
-                }
-                $('#table_emailconfigs tbody').empty();
-                axios.get(`${apiUrl}/api/emailconfigs/show_data?${new URLSearchParams(filter)}`, {
-                        headers: {
-                            Authorization: token,
-                        },
-                    })
-                    .then(function(response) {
-                        let data = response.data;
-                        console.log("SUCCES", data);
-                        if (data.success) {
-                            if (data.data.data.length > 0) {
-                                data.data.data.map((item) => {
-                                    let tr = '<tr>';
-                                    tr += '<td>' + item.fullname + '</td>';
-                                    tr += '<td>' + item
-                                        .email_address +
-                                        '</td>';
-                                    tr += '<td>' + item
-                                        .title +
-                                        '</td>';
-                                    tr +=
-                                        '<td class="text-center"> <button value=' + item.id +
-                                        ' class="editButton btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" >Edit</button> </td>';
-                                    tr += '</tr>';
-                                    $("#table_emailconfigs tbody").append(tr);
-
-                                    return ''
-                                })
-
-                                $('#tbl_pagination').empty();
-                                data.data.links.map(item => {
-                                    let li =
-                                        `<li class="page-item cursor-pointer ${item.active ? 'active':''}"><a class="page-link" data-url="${item.url}">${item.label}</a></li>`
-                                    $('#tbl_pagination').append(li)
-                                    return ""
-
-                                })
-
-                                $("#tbl_pagination .page-item .page-link").on('click', function() {
-                                    let url = $(this).data('url')
-                                    $.urlParam = function(name) {
-                                        var results = new RegExp("[?&]" + name + "=([^&#]*)").exec(
-                                            url
-                                        );
-                                        return results !== null ? results[1] || 0 : false;
-                                    };
-
-                                    let search = $('#search').val();
-                                    show_data({
-                                        search,
-                                        page: $.urlParam('page')
-                                    });
-                                })
-
-                                let table_emailconfigs =
-                                    `Showing ${data.data.from} to ${data.data.to} of ${data.data.total} entries`;
-                                $('#tbl_showing').html(table_emailconfigs);
-                            } else {
-                                $("#table_emailconfigs tbody").append(
-                                    '<tr><td colspan="6" class="text-center">No data</td></tr>');
-                            }
-                        }
-                    })
-                    .catch(function(error) {
-                        console.log("catch error", error);
-                    });
-
-            }
-            // CLICK TO EDIT BUTTON
-            $(document).on('click', '.editButton', function(e) {
-                e.preventDefault();
-                let id = $(this).val();
-                $('#emailconfig_id').val(id);
-
-                axios
-                    .get(apiUrl + '/api/emailconfigs/show_edit/' + id, {
-                        headers: {
-                            Authorization: token,
-                        },
-                    })
-                    .then(function(response) {
-                        let data = response.data;
-                        console.log("SUCCESS", data.data);
-                        if (data.success) {
-
-                            $('#edit_fullname').val(data.data.fullname);
-                            $('#edit_email_address').val(data.data.email_address);
-                            $('#edit_position').val(data.data.title);
-
-                        } else {
-                            console.log("ERROR");
-                        }
-
-                    }).catch(function(error) {
-                        console.log("ERROR", error);
-                    });
-            })
-
-            // CLICK TO STORE DATA
-            $('#emailconfigs_store').submit(function(e) {
-                e.preventDefault();
-
-                let fullname = $('#fullname').val();
-                let email_address = $('#email_address').val();
-                let position = $('#position').val();
-
-                let data = {
-                    fullname: fullname,
-                    email_address: email_address,
-                    title: position,
-                }
-                axios
-                    .post(apiUrl + '/api/emailconfigs_store', data, {
-                        headers: {
-                            Authorization: token,
-                        },
-                    }).then(function(response) {
-                        let data = response.data;
-                        if (data.success) {
-                            console.log('success', data);
-                            $('#fullname').val("");
-                            $('#email_address').val("");
-                            $("#position").val("");
-
-                            $('.toast1 .toast-title').html('Email Configuration');
-                            $('.toast1 .toast-body').html(response.data.message);
-                            toast1.toast('show');
-
-                            show_data();
-                        }
-
-                    }).catch(function(error) {
-                        if (error.response.data.errors) {
-                            let errors = error.response.data.errors;
-                            let fieldnames = Object.keys(errors);
-                            Object.values(errors).map((item, index) => {
-                                fieldname = fieldnames[0].split('_');
-                                fieldname.map((item2, index2) => {
-                                    fieldname['key'] = capitalize(item2);
-                                    return ""
-                                });
-                                fieldname = fieldname.join(" ");
-                                $('.toast1 .toast-title').html(fieldname);
-                                $('.toast1 .toast-body').html(Object.values(errors)[0].join(
-                                    "\n\r"));
-                            })
-                            toast1.toast('show');
-                        }
-                    });
-            })
-
-            // CLICK TO UPDATE DATA
-            $('#emailconfigs_update').submit(function(e) {
-                e.preventDefault();
-
-                let update_id = $('#emailconfig_id').val();
-                let edit_fullname = $('#edit_fullname').val();
-                let edit_email_address = $('#edit_email_address').val();
-                let edit_position = $('#edit_position').val();
-
-
-                let data = {
-                    id: update_id,
-                    fullname: edit_fullname,
-                    email_address: edit_email_address,
-                    title: edit_position,
-                }
-
-                axios
-                    .post(apiUrl + '/api/emailconfigs_store', data, {
-                        headers: {
-                            Authorization: token,
-                        },
-                    }).then(function(response) {
-                        let data = response.data;
-                        if (data.success) {
-                            console.log('success', data);
-                            $('#fullname').val("");
-                            $('#email_address').val("");
-                            $("#position").val("");
-
-                            $('.toast1 .toast-title').html('Email Configuration');
-                            $('.toast1 .toast-body').html(response.data.message);
-                            toast1.toast('show');
-
-                            show_data();
-                        }
-
-                    }).catch(function(error) {
-                        if (error.response.data.errors) {
-                            let errors = error.response.data.errors;
-                            let fieldnames = Object.keys(errors);
-                            Object.values(errors).map((item, index) => {
-                                fieldname = fieldnames[0].split('_');
-                                fieldname.map((item2, index2) => {
-                                    fieldname['key'] = capitalize(item2);
-                                    return ""
-                                });
-                                fieldname = fieldname.join(" ");
-                                $('.toast1 .toast-title').html(fieldname);
-                                $('.toast1 .toast-body').html(Object.values(errors)[0].join(
-                                    "\n\r"));
-                            })
-                            toast1.toast('show');
-                        }
-                    });
-
-            });
+        })
+        toast1.toast({
+            delay: 3000,
+            animation: true
         });
+
+        $('.close').on('click', function(e) {
+            e.preventDefault();
+            toast1.toast('hide');
+        })
+
+        $("#error_msg").hide();
+        $("#success_msg").hide();
+
+        // SHOW DATA
+        function show_data(filters) {
+            let filter = {
+                page_size: 10,
+                page: 1,
+                ...filters,
+            }
+            $('#table_emailconfigs tbody').empty();
+            axios.get(`${apiUrl}/api/emailconfigs/show_data?${new URLSearchParams(filter)}`, {
+                    headers: {
+                        Authorization: token,
+                    },
+                })
+                .then(function(response) {
+                    let data = response.data;
+                    console.log("SUCCES", data);
+                    if (data.success) {
+                        if (data.data.data.length > 0) {
+                            data.data.data.map((item) => {
+                                let tr = '<tr>';
+                                tr += '<td>' + item.fullname + '</td>';
+                                tr += '<td>' + item
+                                    .email_address +
+                                    '</td>';
+                                tr += '<td>' + item
+                                    .title +
+                                    '</td>';
+                                tr +=
+                                    '<td class="text-center"> <button value=' + item.id +
+                                    ' class="editButton btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" >Edit</button> </td>';
+                                tr += '</tr>';
+                                $("#table_emailconfigs tbody").append(tr);
+
+                                return ''
+                            })
+
+                            $('#tbl_pagination').empty();
+                            data.data.links.map(item => {
+                                let li =
+                                    `<li class="page-item cursor-pointer ${item.active ? 'active':''}"><a class="page-link" data-url="${item.url}">${item.label}</a></li>`
+                                $('#tbl_pagination').append(li)
+                                return ""
+
+                            })
+
+                            $("#tbl_pagination .page-item .page-link").on('click', function() {
+                                let url = $(this).data('url')
+                                $.urlParam = function(name) {
+                                    var results = new RegExp("[?&]" + name + "=([^&#]*)").exec(
+                                        url
+                                    );
+                                    return results !== null ? results[1] || 0 : false;
+                                };
+
+                                let search = $('#search').val();
+                                show_data({
+                                    search,
+                                    page: $.urlParam('page')
+                                });
+                            })
+
+                            let table_emailconfigs =
+                                `Showing ${data.data.from} to ${data.data.to} of ${data.data.total} entries`;
+                            $('#tbl_showing').html(table_emailconfigs);
+                        } else {
+                            $("#table_emailconfigs tbody").append(
+                                '<tr><td colspan="6" class="text-center">No data</td></tr>');
+                        }
+                    }
+                })
+                .catch(function(error) {
+                    console.log("catch error", error);
+                });
+
+        }
+        // CLICK TO EDIT BUTTON
+        $(document).on('click', '.editButton', function(e) {
+            e.preventDefault();
+            let id = $(this).val();
+            $('#emailconfig_id').val(id);
+
+            axios
+                .get(apiUrl + '/api/emailconfigs/show_edit/' + id, {
+                    headers: {
+                        Authorization: token,
+                    },
+                })
+                .then(function(response) {
+                    let data = response.data;
+                    console.log("SUCCESS", data.data);
+                    if (data.success) {
+
+                        $('#edit_fullname').val(data.data.fullname);
+                        $('#edit_email_address').val(data.data.email_address);
+                        $('#edit_position').val(data.data.title);
+
+                    } else {
+                        console.log("ERROR");
+                    }
+
+                }).catch(function(error) {
+                    console.log("ERROR", error);
+                });
+        })
+
+        // CLICK TO STORE DATA
+        $('#emailconfigs_store').submit(function(e) {
+            e.preventDefault();
+
+            let fullname = $('#fullname').val();
+            let email_address = $('#email_address').val();
+            let position = $('#position').val();
+
+            let data = {
+                fullname: fullname,
+                email_address: email_address,
+                title: position,
+            }
+            axios
+                .post(apiUrl + '/api/emailconfigs_store', data, {
+                    headers: {
+                        Authorization: token,
+                    },
+                }).then(function(response) {
+                    let data = response.data;
+                    if (data.success) {
+                        console.log('success', data);
+                        $('#fullname').val("");
+                        $('#email_address').val("");
+                        $("#position").val("");
+
+                        $('.toast1 .toast-title').html('Email Configuration');
+                        $('.toast1 .toast-body').html(response.data.message);
+                        toast1.toast('show');
+
+                        show_data();
+                    }
+
+                }).catch(function(error) {
+                    if (error.response.data.errors) {
+                        let errors = error.response.data.errors;
+                        let fieldnames = Object.keys(errors);
+                        Object.values(errors).map((item, index) => {
+                            fieldname = fieldnames[0].split('_');
+                            fieldname.map((item2, index2) => {
+                                fieldname['key'] = capitalize(item2);
+                                return ""
+                            });
+                            fieldname = fieldname.join(" ");
+                            $('.toast1 .toast-title').html(fieldname);
+                            $('.toast1 .toast-body').html(Object.values(errors)[0].join(
+                                "\n\r"));
+                        })
+                        toast1.toast('show');
+                    }
+                });
+        })
+
+        // CLICK TO UPDATE DATA
+        $('#emailconfigs_update').submit(function(e) {
+            e.preventDefault();
+
+            let update_id = $('#emailconfig_id').val();
+            let edit_fullname = $('#edit_fullname').val();
+            let edit_email_address = $('#edit_email_address').val();
+            let edit_position = $('#edit_position').val();
+
+
+            let data = {
+                id: update_id,
+                fullname: edit_fullname,
+                email_address: edit_email_address,
+                title: edit_position,
+            }
+
+            axios
+                .post(apiUrl + '/api/emailconfigs_store', data, {
+                    headers: {
+                        Authorization: token,
+                    },
+                }).then(function(response) {
+                    let data = response.data;
+                    if (data.success) {
+                        console.log('success', data);
+                        $('#fullname').val("");
+                        $('#email_address').val("");
+                        $("#position").val("");
+
+                        $('.toast1 .toast-title').html('Email Configuration');
+                        $('.toast1 .toast-body').html(response.data.message);
+                        toast1.toast('show');
+
+                        show_data();
+                    }
+
+                }).catch(function(error) {
+                    if (error.response.data.errors) {
+                        let errors = error.response.data.errors;
+                        let fieldnames = Object.keys(errors);
+                        Object.values(errors).map((item, index) => {
+                            fieldname = fieldnames[0].split('_');
+                            fieldname.map((item2, index2) => {
+                                fieldname['key'] = capitalize(item2);
+                                return ""
+                            });
+                            fieldname = fieldname.join(" ");
+                            $('.toast1 .toast-title').html(fieldname);
+                            $('.toast1 .toast-body').html(Object.values(errors)[0].join(
+                                "\n\r"));
+                        })
+                        toast1.toast('show');
+                    }
+                });
+
+        });
+
 
         function capitalize(s) {
             if (typeof s !== 'string') return "";

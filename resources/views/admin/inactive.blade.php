@@ -33,8 +33,10 @@
     <div class="row">
         <div class="col ">
             <div class="input-group ">
-                <input id="search" name="search" type="text" class="form-control form-check-inline" placeholder="Search">
-                <button class="btn" style=" color:white; background-color: #CF8029;width:30%" id="button-submit">Search</button>
+                <input id="search" name="search" type="text" class="form-control form-check-inline"
+                    placeholder="Search">
+                <button class="btn" style=" color:white; background-color: #CF8029;width:30%"
+                    id="button-submit">Search</button>
             </div>
             </form>
         </div>
@@ -75,104 +77,104 @@
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function() {
+$(document).ready(function() {
 
-        show_data();
+    show_data();
 
-        $('#button-submit').on('click', function() {
-            let search = $('#search').val();
-            show_data({
-                search
-            });
-        })
+    $('#button-submit').on('click', function() {
+        let search = $('#search').val();
+        show_data({
+            search
+        });
+    })
 
-        function show_data(filters) {
-            let filter = {
-                page_size: 50,
-                page: 1,
-                ...filters,
-            }
-
-            $('#tbl_user tbody').empty();
-
-            axios
-                .get(`${apiUrl}/api/admin/current_show_data?${new URLSearchParams(filter)}`, {
-                    headers: {
-                        Authorization: token,
-                    },
-                })
-                .then(function(res) {
-                    res = res.data;
-                    console.log('res', res);
-                    if (res.success) {
-                        if (res.data.data.length > 0) {
-                            res.data.data.map((item) => {
-                                let tr = '<tr>';
-
-                                if (item.file_path) {
-                                    tr +=
-                                        '<td>  <img style="width:40px;" class="rounded-pill" src ="' +
-                                        item
-                                        .file_path + '"> ' + item.full_name + ' </td>';
-                                } else {
-                                    tr +=
-                                        '<td>  <img style="width:40px;" class="rounded-pill" src ="/images/default.png"> ' +
-                                        item.full_name + ' </td>';
-                                }
-
-                                tr += '<td>' + item.profile_status + '</td>';
-                                tr += '<td>' + item.phone_number + '</td>';
-                                tr += '<td>' + item.position + '</td>';
-                                tr += '<td> NOT YET </td>';
-                                tr +=
-                                    '<td  class="text-center"> <a href="' + apiUrl +
-                                    '/admin/editProfile/' +
-                                    item.id + ' " class="btn btn-outline-primary">Edit</a> </td>';
-                                tr += '</tr>';
-                                $("#tbl_user tbody").append(tr);
-
-                                return ''
-                            })
-
-                            $('#tbl_user_pagination').empty();
-                            res.data.links.map(item => {
-                                let li =
-                                    `<li class="page-item cursor-pointer ${item.active ? 'active':''}"><a class="page-link" data-url="${item.url}">${item.label}</a></li>`
-                                $('#tbl_user_pagination').append(li)
-                                return ""
-                            })
-
-                            $("#tbl_user_pagination .page-item .page-link").on('click', function() {
-                                let url = $(this).data('url')
-                                $.urlParam = function(name) {
-                                    var results = new RegExp("[?&]" + name + "=([^&#]*)").exec(
-                                        url
-                                    );
-
-                                    return results !== null ? results[1] || 0 : false;
-                                };
-
-                                let search = $('#search').val();
-                                show_data({
-                                    search,
-                                    page: $.urlParam('page')
-                                });
-                            })
-
-                            let tbl_user_showing =
-                                `Showing ${res.data.from} to ${res.data.to} of ${res.data.total} entries`;
-                            $('#tbl_user_showing').html(tbl_user_showing);
-                        } else {
-                            $("#tbl_user tbody").append(
-                                '<tr><td colspan="6" class="text-center">No data</td></tr>');
-                        }
-                    }
-                })
-                .catch(function(error) {
-                    // console.log("catch error");
-                });
+    function show_data(filters) {
+        let filter = {
+            page_size: 50,
+            page: 1,
+            ...filters,
         }
 
-    });
+        $('#tbl_user tbody').empty();
+
+        axios
+            .get(`${apiUrl}/api/admin/current_show_data_inactive?${new URLSearchParams(filter)}`, {
+                headers: {
+                    Authorization: token,
+                },
+            })
+            .then(function(res) {
+                res = res.data;
+                console.log('res', res);
+                if (res.success) {
+                    if (res.data.data.length > 0) {
+                        res.data.data.map((item) => {
+                            let tr = '<tr>';
+
+                            if (item.file_path) {
+                                tr +=
+                                    '<td>  <img style="width:40px;" class="rounded-pill" src ="' +
+                                    item
+                                    .file_path + '"> ' + item.full_name + ' </td>';
+                            } else {
+                                tr +=
+                                    '<td>  <img style="width:40px;" class="rounded-pill" src ="/images/default.png"> ' +
+                                    item.full_name + ' </td>';
+                            }
+
+                            tr += '<td>' + item.profile_status + '</td>';
+                            tr += '<td>' + item.phone_number + '</td>';
+                            tr += '<td>' + item.position + '</td>';
+                            tr += '<td> NOT YET </td>';
+                            tr +=
+                                '<td  class="text-center"> <a href="' + apiUrl +
+                                '/admin/editProfile/' +
+                                item.id + ' " class="btn btn-outline-primary">Edit</a> </td>';
+                            tr += '</tr>';
+                            $("#tbl_user tbody").append(tr);
+
+                            return ''
+                        })
+
+                        $('#tbl_user_pagination').empty();
+                        res.data.links.map(item => {
+                            let li =
+                                `<li class="page-item cursor-pointer ${item.active ? 'active':''}"><a class="page-link" data-url="${item.url}">${item.label}</a></li>`
+                            $('#tbl_user_pagination').append(li)
+                            return ""
+                        })
+
+                        $("#tbl_user_pagination .page-item .page-link").on('click', function() {
+                            let url = $(this).data('url')
+                            $.urlParam = function(name) {
+                                var results = new RegExp("[?&]" + name + "=([^&#]*)").exec(
+                                    url
+                                );
+
+                                return results !== null ? results[1] || 0 : false;
+                            };
+
+                            let search = $('#search').val();
+                            show_data({
+                                search,
+                                page: $.urlParam('page')
+                            });
+                        })
+
+                        let tbl_user_showing =
+                            `Showing ${res.data.from} to ${res.data.to} of ${res.data.total} entries`;
+                        $('#tbl_user_showing').html(tbl_user_showing);
+                    } else {
+                        $("#tbl_user tbody").append(
+                            '<tr><td colspan="6" class="text-center">No data</td></tr>');
+                    }
+                }
+            })
+            .catch(function(error) {
+                // console.log("catch error");
+            });
+    }
+
+});
 </script>
 @endsection

@@ -8,7 +8,8 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DeductionTypeController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\EmailConfigController;
-use App\http\Controllers\Admin\InvoiceConfigController;
+use App\Http\Controllers\Admin\ProfileDeductionTypesController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -39,15 +40,19 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // SHOW DEDUCTION TYPE IN PROFILE
     Route::get('show_deduction_type', [ProfileController::class, 'show_deduction_types']);
+    Route::get('show_ProfileDeductionType', [ProfileController::class, 'show_ProfileDeductionType']);
 
     // Route::post('admin/UpdateProfile', [ProfileController::class, 'store'])->name('profile.update');
-    Route::get('admin/current_show_data', [ProfileController::class, 'current_show_data']);
+    Route::get('admin/current_show_data_active', [ProfileController::class, 'current_show_data_active']);
+    Route::get('admin/current_show_data_inactive', [ProfileController::class, 'current_show_data_inactive']);
     Route::get('admin/viewProfile/{id}', [ProfileController::class, 'store']);
+    // Route::get('admin/viewProfile/{user_id}/{profile_id}', [ProfileController::class, 'store']);
     Route::get('admin/show_edit/{id}', [ProfileController::class, 'show_edit']);
 
     // POST DEDUCTION TYPES TABLE
     Route::post('savedeductiontype', [DeductionTypeController::class, 'store']);
-    Route::get('settings/show_data', [DeductionTypeController::class, 'show_data']);
+    Route::get('settings/show_deduction_data', [DeductionTypeController::class, 'show_deduction_data']);
+    Route::get('settings/show_profileDeductionType_data/{profile_id}', [DeductionTypeController::class, 'show_profileDeductionType_data']);
     Route::get('settings/show_edit/{id}', [DeductionTypeController::class, 'show_edit']);
 
     // POST EMAIL TYPE TABLE
@@ -72,9 +77,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // FOR POST INVOICE TABLE
     Route::post('createinvoice', [InvoiceController::class, 'create_invoice']);
 
-    //  FOR INVOICE CONFIG TABLE
-    Route::get('invoiceconfgis/showdata', [InvoiceConfigController::class, 'show_data']);
-    Route::post('invoiceconfigs_store', [InvoiceConfigController::class, 'invoiceconfigs_store']);
+    // POST PROFILE DEDUCTION TYPES TABLE
+    Route::post('saveProfileDeductionTypes', [ProfileDeductionTypesController::class, 'store']);
+    Route::post('editProfileDeductionTypes', [ProfileDeductionTypesController::class, 'store']);
+    Route::post('showProfileDeductionTypes/{id}', [ProfileDeductionTypesController::class, 'show']);
+    Route::post('deleteProfileDeductionTypes/{id}', [ProfileDeductionTypesController::class, 'destroy']);
 });
 
 

@@ -46,7 +46,8 @@ Route::middleware(['AuthCheck'])->group(function () {
     // Route::post('admin/SaveProfile', [ProfileController::class, 'store']);
 
     Route::get('/admin/current', [ProfileController::class, 'current_show']);
-    Route::get('/admin/viewProfile/{id}', [ProfileController::class, 'viewProfile']);
+    // Route::get('/admin/viewProfile/{id}/{profile_id}', [ProfileController::class, 'viewProfile']);
+    Route::get('/admin/viewProfile/{id}/{profile_id}', [ProfileController::class, 'viewProfile']);
     Route::get('/admin/inactive', [ProfileController::class, 'inactive']);
 
     // Route::get('/invoice/add', InvoiceController::class);

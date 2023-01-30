@@ -1,14 +1,15 @@
 @extends('layouts.master')
 @section('content-dashboard')
-
 <div class="container-fluid px-4 pb-4">
     <h1 class="mt-0">Deduction Types</h1>
     <ol class="breadcrumb mb-3"></ol>
     <div class="row mt-5">
         <div class="col-md-6 px-2">
-            <button class="btn w-50" style="color:white; background-color: #CF8029; margin-top:5px "
-                data-bs-toggle="modal" data-bs-target="#addModal" type="submit" id="button-addon2"> <i
-                    class="fa fa-plus pe-1"></i> Add Deduction Type </></button>
+            <button class="btn w-50" style="color:white; background-color: #CF8029; margin-top:5px"
+                data-bs-toggle="modal" data-bs-target="#addModal" type="submit" id="button-addon2">
+                <i class="fa fa-plus pe-1"></i>
+                Add Deduction Type
+            </button>
             <div class="row mt-3">
                 <div class="col">
                     <div class="w-100">
@@ -36,7 +37,6 @@
                         <div class="page_showing" id="tbl_showing"></div>
                         <ul class="pagination" id="tbl_pagination"></ul>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -146,10 +146,12 @@
         </div>
     </div>
 </div>
-
 <script type="text/javascript">
 $(document).ready(function() {
     show_data();
+
+
+
 
     $('#button_search').on('click', function() {
         let search = $('#search').val();
@@ -160,7 +162,7 @@ $(document).ready(function() {
 
     let toast1 = $('.toast1');
     toast1.toast({
-        delay: 5000,
+        delay: 3000,
         animation: true
     });
 
@@ -186,20 +188,23 @@ $(document).ready(function() {
             })
             .then(function(res) {
                 res = res.data;
-                console.log("RES", res);
+                // console.log("RES", res);
                 if (res.success) {
                     if (res.data.data.length > 0) {
                         res.data.data.map((item) => {
                             let tr = '<tr>';
-                            tr += '<td style="width:40%;">' + item.deduction_name + '</td>';
-                            tr += '<td style="width:5%;" class="text-end">' + item
-                                .deduction_amount
-                                .toFixed(2) +
+                            tr += '<td class="td" style="width:40%;">' + item.deduction_name +
+                                '</td>';
+                            tr += '<td style="width:5%;" class="td text-end">' + parseFloat(item
+                                    .deduction_amount).toFixed(2) +
                                 '</td>';
                             tr +=
+
                                 '<td style="width:45%;" class="text-center"> <button value=' +
                                 item
                                 .id +
+                                ' id="view" class="view btn btn-outline-primary">View</button><button value=' +
+                                item.id +
                                 ' class="editButton btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" >Edit</button> </td>';
                             tr += '</tr>';
                             $("#table_deduction tbody").append(tr);
@@ -257,6 +262,7 @@ $(document).ready(function() {
             deduction_name: deduction_name,
             deduction_amount: deduction_amount,
         };
+        console.log("DATA", data);
 
         axios
             .post(apiUrl + "/api/savedeductiontype", data, {
@@ -379,6 +385,8 @@ $(document).ready(function() {
                 }
             });
     })
+
+
 });
 
 function capitalize(s) {
