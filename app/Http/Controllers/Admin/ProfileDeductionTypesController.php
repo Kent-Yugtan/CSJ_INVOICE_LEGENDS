@@ -28,9 +28,9 @@ class ProfileDeductionTypesController extends Controller
     {
 
         $error = false;
-        $profileDeductionTypes = $request->id;
+        $profileDeductionTypes_id = $request->id;
         if ($error === false) {
-            if (!$profileDeductionTypes) {
+            if (!$profileDeductionTypes_id) {
 
                 $storeData = ProfileDeductionTypes::Create($request->input());
                 return response()->json([
@@ -39,6 +39,18 @@ class ProfileDeductionTypesController extends Controller
                     'data' => $storeData,
                 ]);
             } else {
+                // $data = ProfileDeductionTypes::find($profileDeductionTypes_id);
+
+                $store_data = ProfileDeductionTypes::where('id', $profileDeductionTypes_id)->update(
+                    [
+                        'amount' => $request->amount
+                    ]
+                );
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Profile Deduction Type has been successfully updated to the database.',
+                    'data' => $store_data,
+                ], 200);
             }
         }
     }
@@ -49,9 +61,16 @@ class ProfileDeductionTypesController extends Controller
      * @param  \App\Models\ProfileDeductionTypes  $profileDeductionTypes
      * @return \Illuminate\Http\Response
      */
-    public function show(ProfileDeductionTypes $profileDeductionTypes)
+    public function show(Request $request)
     {
         //
+        $profileDeductionType_id = $request->id;
+        $data = ProfileDeductionTypes::with('deduction_type')->where('id', $profileDeductionType_id)->first();
+
+        return response()->json([
+            'success' => true,
+            'data' => $data,
+        ], 200);
     }
 
     /**

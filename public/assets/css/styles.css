@@ -7865,7 +7865,7 @@ fieldset:disabled .btn {
     margin-right: 0.25rem !important;
 }
 
-.me-2 {
+.profile-close-2 {
     margin-right: 0.5rem !important;
 }
 
@@ -12672,11 +12672,12 @@ button.toast-close-button {
 .profile-close {
     /* background-color: red; */
     position: relative;
-    bottom: 15px;
-    left: 12px;
-    color: white;
-    width: 20px;
-    height: 20px;
+    z-index: 2;
+    margin-right: 10px;
+    margin-left: -20px;
+    bottom: 12px;
+    border: none;
+    background-color: transparent;
 }
 
 .profile-close:hover {
