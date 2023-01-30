@@ -650,140 +650,140 @@ function check_profile() {
             console.log("error", error);
         });
 
-}
 
 
-$('#invoice_items').on('submit', function(e) {
-    let toast1 = $('.toast1');
-    e.preventDefault();
 
-    // CONDITION IF THERE IS BLANK ROW
-    $('#show_items .row1').each(function() {
-        let parent = $(this).closest('.row1');
-        let row_item = $(this).parent();
-        let item_rate = $(this).find('.rate').val();
-        let item_qty = $(this).find('.quantity').val();
+    $('#invoice_items').on('submit', function(e) {
+        let toast1 = $('.toast1');
+        e.preventDefault();
 
-        if (item_rate == "" && item_qty == "") {
+        // CONDITION IF THERE IS BLANK ROW
+        $('#show_items .row1').each(function() {
+            let parent = $(this).closest('.row1');
+            let row_item = $(this).parent();
+            let item_rate = $(this).find('.rate').val();
+            let item_qty = $(this).find('.quantity').val();
 
-            // console.log("row_item", parent);
+            if (item_rate == "" && item_qty == "") {
 
-            if ($('#show_items > .row').length === 1) {
-                $('#show_items > .row').find('.col-remove-item').removeClass('d-none')
-                    .addClass(
-                        'd-none');
-            } else {
-                $(parent).remove();
+                // console.log("row_item", parent);
+
+                if ($('#show_items > .row').length === 1) {
+                    $('#show_items > .row').find('.col-remove-item').removeClass('d-none')
+                        .addClass(
+                            'd-none');
+                } else {
+                    $(parent).remove();
+                }
             }
-        }
-        x--;
-    });
+            x--;
+        });
 
-    let profile_id = $('#profile_id').val();
-    let invoice_no = $('#invoice_no').val();
-    // INVOICE TABLE
-    let invoice_description = $('#invoice_description').val();
-    let invoice_subtotal = $('#subtotal').val();
-    let invoice_converted_amount = $('#converted_amount').val();
-    let invoice_discount_type = $('#discount_type:checked').val();
-    let invoice_discount_amount = $('#discount_amount').val();
-    let invoice_discount_total = $('#discount_total').val();
-    let invoice_total_amount = $('#grand_total').val();
-    let invoice_notes = $('#notes').val();
+        let profile_id = $('#profile_id').val();
+        let invoice_no = $('#invoice_no').val();
+        // INVOICE TABLE
+        let invoice_description = $('#invoice_description').val();
+        let invoice_subtotal = $('#subtotal').val();
+        let invoice_converted_amount = $('#converted_amount').val();
+        let invoice_discount_type = $('#discount_type:checked').val();
+        let invoice_discount_amount = $('#discount_amount').val();
+        let invoice_discount_total = $('#discount_total').val();
+        let invoice_total_amount = $('#grand_total').val();
+        let invoice_notes = $('#notes').val();
 
-    // INVOICE ITEMS TABLE
-    let invoiceItem = [];
-    $('#show_items .row').each(function() {
-        let item_description = $(this).find('.item_description').val();
-        let item_rate = $(this).find('.rate').val();
-        let item_qty = $(this).find('.quantity').val();
-        let item_total_amount = $(this).find('.amount').val();
+        // INVOICE ITEMS TABLE
+        let invoiceItem = [];
+        $('#show_items .row').each(function() {
+            let item_description = $(this).find('.item_description').val();
+            let item_rate = $(this).find('.rate').val();
+            let item_qty = $(this).find('.quantity').val();
+            let item_total_amount = $(this).find('.amount').val();
 
-        invoiceItem.push({
-            item_description,
-            item_rate,
-            item_qty,
-            item_total_amount,
-        })
-    });
-
-    // DEDUCTIONS TABLE
-    let Deductions = [];
-    $('#show_deduction_items .row').each(function() {
-        let deduction_type_id = $(this).find('.deduction_type').val();
-        let deduction_amount = $(this).find('.deduction_amount').val();
-
-        Deductions.push({
-            deduction_type_id,
-            deduction_amount,
-        })
-
-    });
-
-    let data = {
-        profile_id: profile_id,
-        invoice_no: invoice_no,
-        description: invoice_description,
-        sub_total: invoice_subtotal,
-        converted_amount: invoice_converted_amount,
-        discount_type: invoice_discount_type,
-        discount_amount: invoice_discount_amount,
-        discount_total: invoice_discount_total,
-        grand_total_amount: invoice_total_amount,
-        notes: invoice_notes,
-        invoiceItem,
-        Deductions,
-    }
-
-
-    axios.
-    post(apiUrl + "/api/createinvoice", data, {
-        headers: {
-            Authorization: token
-        },
-    }).then(function(response) {
-        let data = response.data;
-        if (data.success) {
-
-            $('.toast1 .toast-title').html('Create Invoices');
-            $('.toast1 .toast-body').html(response.data.message);
-            toast1.toast('show');
-            refresh();
-        }
-    }).catch(function(error) {
-        if (error.response.data.errors) {
-            let errors = error.response.data.errors;
-            let fieldnames = Object.keys(errors);
-
-            Object.values(errors).map((item, index) => {
-                fieldname = fieldnames[0].split('_');
-                fieldname.map((item2, index2) => {
-                    fieldname['key'] = capitalize(item2);
-                    return ""
-                });
-                fieldname = fieldname.join(" ");
-
-                $('.toast1 .toast-title').html(fieldname);
-                $('.toast1 .toast-body').html(Object.values(errors)[0].join(
-                    "\n\r"));
+            invoiceItem.push({
+                item_description,
+                item_rate,
+                item_qty,
+                item_total_amount,
             })
-            toast1.toast('show');
-        }
-    });
+        });
 
-    function refresh() {
-        setTimeout(function() {
-            location.reload()
-        }, 3000);
-    }
+        // DEDUCTIONS TABLE
+        let Deductions = [];
+        $('#show_deduction_items .row').each(function() {
+            let profile_deduction_type_id = $(this).find('.deduction_type').val();
+            let deduction_amount = $(this).find('.deduction_amount').val();
+
+            Deductions.push({
+                profile_deduction_type_id,
+                deduction_amount,
+            })
+
+        });
+
+        let data = {
+            profile_id: profile_id,
+            invoice_no: invoice_no,
+            description: invoice_description,
+            sub_total: invoice_subtotal,
+            converted_amount: invoice_converted_amount,
+            discount_type: invoice_discount_type,
+            discount_amount: invoice_discount_amount,
+            discount_total: invoice_discount_total,
+            grand_total_amount: invoice_total_amount,
+            notes: invoice_notes,
+            invoiceItem,
+            Deductions,
+        }
+        console.log("Deductions", Deductions);
+
+        // axios.
+        // post(apiUrl + "/api/createinvoice", data, {
+        //     headers: {
+        //         Authorization: token
+        //     },
+        // }).then(function(response) {
+        //     let data = response.data;
+        //     if (data.success) {
+
+        //         $('.toast1 .toast-title').html('Create Invoices');
+        //         $('.toast1 .toast-body').html(response.data.message);
+        //         toast1.toast('show');
+        //         refresh();
+        //     }
+        // }).catch(function(error) {
+        //     if (error.response.data.errors) {
+        //         let errors = error.response.data.errors;
+        //         let fieldnames = Object.keys(errors);
+
+        //         Object.values(errors).map((item, index) => {
+        //             fieldname = fieldnames[0].split('_');
+        //             fieldname.map((item2, index2) => {
+        //                 fieldname['key'] = capitalize(item2);
+        //                 return ""
+        //             });
+        //             fieldname = fieldname.join(" ");
+
+        //             $('.toast1 .toast-title').html(fieldname);
+        //             $('.toast1 .toast-body').html(Object.values(errors)[0].join(
+        //                 "\n\r"));
+        //         })
+        //         toast1.toast('show');
+        //     }
+        // });
+
+        // function refresh() {
+        //     setTimeout(function() {
+        //         location.reload()
+        //     }, 3000);
+        // }
+
+    });
 
     function capitalize(s) {
         if (typeof s !== 'string') return "";
         return s.charAt(0).toUpperCase() + s.slice(1);
     }
-
-
-});
+}
 </script>
 
 @endsection

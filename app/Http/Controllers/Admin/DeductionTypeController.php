@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\DeductionType;
+use App\Models\Profile;
+use App\Models\ProfileDeductionTypes;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -139,10 +141,10 @@ class DeductionTypeController extends Controller
         ]);
     }
 
-    public function show_data(Request $request)
+    public function show_deduction_data(Request $request)
     {
         $deductionType = new DeductionType();
-
+        $deductionType = $deductionType->with('profile_deduction_types')->doesntHave('profile_deduction_types');
         if ($request->search) {
             $deductionType = $deductionType->where(
                 function ($q) use ($request) {
@@ -162,6 +164,17 @@ class DeductionTypeController extends Controller
         return response()->json([
             'success' => true,
             'data' => $deductionType,
+        ], 200);
+    }
+
+    public function show_profileDeductionType_data(Request $request)
+    {
+        $profile_id = $request->profile_id;
+        $profile = Profile::with('profile_deduction_types', 'profile_deduction_types.deduction_type')->where('id', $profile_id)->first();
+
+        return response()->json([
+            'success' => true,
+            'data' => $profile,
         ], 200);
     }
 }

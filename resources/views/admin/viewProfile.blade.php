@@ -3,6 +3,7 @@
 </script>
 @section('content-dashboard')
 
+
 <div class="container-fluid pt-0">
     <h1 class="mt-0">View Profile</h1>
     <ol class="breadcrumb mb-3"></ol>
@@ -187,12 +188,12 @@
                                 id="formGroupExampleInput2" placeholder="Date Hired">
                         </div>
 
-                        <div class="mb-3">
+                        <!-- <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Deduction Types</label>
                             <select class="select2-multiple form-control form-select" name="deduction_types[]"
                                 multiple="multiple" id="select2Multiple">
                             </select>
-                        </div>
+                        </div> -->
 
                         <div class="row">
                             <div class="col mb-3">
@@ -285,27 +286,46 @@
 
                                 <div class="tab-pane fade" id="pills-profile" role="tabpanel"
                                     aria-labelledby="pills-profile-tab">
+
+                                    <div class="col-md-4 w-100">
+                                        <div class="input-group">
+                                            <button type="button" id="submit-create-deduction"
+                                                class="btn form-check-inline pe-3" data-bs-toggle="modal"
+                                                data-bs-target="#modal-create-deduction"
+                                                style="color:white; background-color: #CF8029;">
+                                                <i class="fa fa-plus pe-1"></i>
+                                                Create Deduction
+                                            </button>
+                                            <input type="text" aria-label="First name"
+                                                class="form-control form-check-inline">
+
+                                            <div class="form-group has-search">
+                                                <span class="fa fa-search form-control-feedback"></span>
+                                                <input type="text" class="form-control" id="search_deduction"
+                                                    placeholder="Search">
+                                            </div>
+
+                                            <div class="col-12 my-3">
+                                                <table class="table-responsive" id="tableDeleteProfileDeductioType">
+                                                    <thead></thead>
+                                                    <tbody>
+                                                        <tr>
+
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <!-- <select style="width: 505px;"
+                                                            class="select2-multiple form-control form-select"
+                                                            name="deduction_types[]" multiple="multiple"
+                                                            id="select2Multiple" disabled>
+                                                        </select> -->
+                                            </div>
+
+                                        </div>
+                                    </div>
                                     <div class="card-body table-responsive">
                                         <table style=" color: #A4A6B3;font-size: 14px;" class="table table-hover"
                                             id="dataTable_deduction">
-                                            <div class="col-md-4 w-100">
-                                                <div class="input-group">
-                                                    <button type="button" id="submit-create-deduction"
-                                                        class="btn form-check-inline pe-3" data-bs-toggle="modal"
-                                                        data-bs-target="#modal-create-deduction"
-                                                        style="color:white; background-color: #CF8029;">
-                                                        <i class="fa fa-plus pe-1"></i>
-                                                        Create Deduction
-                                                    </button>
-                                                    <input type="text" aria-label="First name"
-                                                        class="form-control form-check-inline">
-                                                    <div class="form-group has-search">
-                                                        <span class="fa fa-search form-control-feedback"></span>
-                                                        <input type="text" class="form-control" id="search_deduction"
-                                                            placeholder="Search">
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <thead>
                                                 <tr>
                                                     <th>Deduction Name</th>
@@ -678,7 +698,7 @@
     </div>
     <!-- END MODAL ADD -->
 
-    <!-- START MODAL EDIT -->
+    <!-- START MODAL DEDUCTION EDIT -->
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -722,7 +742,53 @@
             </div>
         </div>
     </div>
-    <!-- END MODAL EDIT -->
+    <!-- START MODAL DEDUCTION EDIT -->
+
+    <!-- START MODAL PROFILE DEDUCTION TYPE EDIT -->
+    <div class="modal fade" id="ProfileDeductioneditModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-dialog">
+                <div class="modal-content ">
+                    <div class="modal-body ">
+                        <div class="row">
+                            <h5> Update Profile Deduction</h5>
+                            <form id="ProfileDeductionedit">
+                                @csrf
+                                <input type="text" id="profileDeductionType_id">
+
+                                <div class="form-group mt-3">
+                                    <label for="formGroupExampleInput">Profile Deduction Name</label>
+                                    <input type="text" class="form-control" placeholder="Profile Deduction Name"
+                                        disabled>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="formGroupExampleInput">Amount</label>
+                                    <input id="profile_edit_deduction_amount" type="text" class="form-control"
+                                        placeholder="Amount">
+
+                                    <div class="row mt-3">
+                                        <div class="col">
+                                            <button type="button" class="btn btn-secondary w-100"
+                                                style=" color:#CF8029; background-color:white; "
+                                                data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="submit" class="btn btn-secondary w-100"
+                                                style="color:White; background-color:#CF8029; "
+                                                data-bs-dismiss="modal">Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- START MODAL DEDUCTION EDIT -->
 
     <script type="text/javascript">
     let total_deduction_amount = 0
@@ -734,6 +800,7 @@
 
         show_edit();
 
+        // ADD PROFILE DEDUCTION
         $(document).on('click', '#dataTable_deduction .viewButton', function(e) {
             e.preventDefault();
             let profile_id = $('#profile_id_show').val();
@@ -748,8 +815,6 @@
                 'amount': rCell3,
             };
             console.log("DATA", data);
-            // rowData.remove();
-
             axios
                 .post(apiUrl + '/api/saveProfileDeductionTypes', data, {
                     headers: {
@@ -757,10 +822,32 @@
                     },
                 }).then(function(response) {
                     let data = response.data;
-                    console.log("SUCCESS", data);
+                    $('.toast1 .toast-title').html('Profile Deduction');
+                    $('.toast1 .toast-body').html(data.message);
+
+                    $('#tableDeleteProfileDeductioType tbody tr').empty();
+                    $('#tableDeleteProfileDeductioType tbody tr').html(
+                        show_profileDeductionType_data());
+                    show_deduction_data();
+                    toast1.toast('show');
                 }).catch(function(error) {
-                    let error_data = error.data;
-                    console.log("ERROR", error_data);
+                    if (error.response.data.errors) {
+                        let errors = error.response.data.errors;
+                        let fieldnames = Object.keys(errors);
+                        Object.values(errors).map((item, index) => {
+                            fieldname = fieldnames[0].split('_');
+                            fieldname.map((item2, index2) => {
+                                fieldname['key'] = capitalize(item2);
+                                return ""
+                            });
+                            fieldname = fieldname.join(" ");
+                            $('.toast1 .toast-title').html(fieldname);
+                            $('.toast1 .toast-body').html(Object.values(errors)[0]
+                                .join(
+                                    "\n\r"));
+                        })
+                        toast1.toast('show');
+                    }
                 });
 
         });
@@ -803,11 +890,11 @@
                             $("#photo").attr("src", "/images/default.png");
                         }
 
-                        // console.log('profile_deduction_types', data.data.profile.profile_deduction_types);
+                        // console.log('profile_deduction_types', data);
                         let profile_deduction_types_reduce = data.data.profile.profile_deduction_types
                             .reduce((
                                 a, b) => {
-                                a.push(b.deduction_type_id)
+                                a.push(b.id)
                                 return a
                             }, [])
                         // console.log('profile_deduction_types_reduce', profile_deduction_types_reduce);
@@ -832,12 +919,14 @@
         })
 
         show_data();
-
-        function show_data() {
+        // SHOW DATA ON TABLE
+        function show_data(filters) {
             let url = window.location.pathname;
             let urlSplit = url.split('/');
-            // console.log(urlSplit.length);
-            if (urlSplit.length === 4) {
+
+
+            if (urlSplit.length === 5) {
+                // console.log("sddsadsa", urlSplit.length);
                 let page = $("#tbl_pagination_invoice .page-item.active .page-link").html();
                 let filter = {
                     page_size: 10,
@@ -846,7 +935,7 @@
                     search: $('#search_invoice').val(),
 
                 }
-                console.log("page", page);
+                // console.log("page", page);
                 $('#dataTable_invoice tbody').empty();
                 axios.get(`${apiUrl}/api/admin/show_invoice?${new URLSearchParams(filter)}`, {
                     headers: {
@@ -854,7 +943,7 @@
                     },
                 }).then(function(response) {
                     let data = response.data;
-                    console.log("data", data);
+                    // console.log("SHOW DATA", data);
                     if (data.success) {
                         if (data.data.data.length > 0) {
                             data.data.data.map((item) => {
@@ -931,6 +1020,7 @@
                 });
             }
         }
+
 
         let toast1 = $('.toast1');
         toast1.toast({
@@ -1028,7 +1118,8 @@
                         $("#gcash_no").val("");
                         $("#date_hired").val("");
                         $("#photo").attr("src", "/images/default.png");
-                        show_deduction();
+                        show_deduction_data();
+                        show_profileDeductionType_data();
                         // select2Multiple
                         $('.toast1 .toast-title').html('Profile');
                         $('.toast1 .toast-body').html(data.message);
@@ -1056,35 +1147,61 @@
                 });
         })
 
-        show_deduction();
+        // REMOVE PROFILE DEDUCTION 
+        $(document).on('click', '#tableDeleteProfileDeductioType .deleteProfileDeduction', function(
+            e) {
+            e.preventDefault();
+            let row = $(this).closest("td");
+            let profileDeductionType_id = row.find(".editProfileDeduction").val();
+            console.log("delete", profileDeductionType_id);
+            // })
+            axios.post(apiUrl + '/api/deleteProfileDeductionTypes/' + profileDeductionType_id, {
+                headers: {
+                    Authorization: token
+                },
+            }).then(function(response) {
+                let data = response.data;
+                $('.toast1 .toast-title').html('Profile Deduction');
+                $('.toast1 .toast-body').html(data.message);
 
-        function show_deduction() {
-            axios
-                .get(apiUrl + '/api/show_deduction_type', {
-                    headers: {
-                        Authorization: token,
-                    }
-                }).then(function(response) {
-                    response = response.data
-                    if (response.success) {
-                        if (response.data.length > 0) {
-                            $('#select2Multiple').empty();
-                            response.data.map((item) => {
-                                let option = '<option>';
-                                option += "<option value=" + item.id + ">" + item.id + " - " +
-                                    item
-                                    .deduction_name +
-                                    " - " + item.deduction_amount +
-                                    "</option>"
-                                $("#select2Multiple").append(option);
-                                return '';
-                            })
-                        }
-                    }
-                }).catch(function(error) {
-                    console.log('ERROR', error);
-                });
-        }
+                $('#dataTable_deduction tbody').empty();
+                $('#dataTable_deduction tbody').html(
+                    show_deduction_data());
+                $('#tableDeleteProfileDeductioType tbody tr').empty();
+                $('#tableDeleteProfileDeductioType tbody tr').html(
+                    show_profileDeductionType_data());
+                toast1.toast('show');
+
+
+            }).catch(function(error) {
+                if (error.response.data.errors) {
+                    let errors = error.response.data.errors;
+                    let fieldnames = Object.keys(errors);
+                    Object.values(errors).map((item, index) => {
+                        fieldname = fieldnames[0].split('_');
+                        fieldname.map((item2, index2) => {
+                            fieldname['key'] = capitalize(item2);
+                            return ""
+                        });
+                        fieldname = fieldname.join(" ");
+                        $('.toast1 .toast-title').html(fieldname);
+                        $('.toast1 .toast-body').html(Object.values(errors)[0]
+                            .join(
+                                "\n\r"));
+                    })
+                    toast1.toast('show');
+                }
+            })
+        })
+
+        // EDIT PROFILE DEDUCTION TYPE
+        $(document).on('click', '#tableDeleteProfileDeductioType .editProfileDeduction', function(e) {
+            e.preventDefault();
+
+            console.log("EDIT FOR UPATE");
+
+        })
+
 
         $('.select2-multiple').select2({
             placeholder: "Select",
@@ -1098,7 +1215,8 @@
 
         $("#discount_amount").addClass('d-none');
         $("#discount_total").addClass('d-none');
-        $(".label_discount_amount").addClass('d-none');
+        $(
+            ".label_discount_amount").addClass('d-none');
         $(".label_discount_total").addClass('d-none');
 
         $('input[type=radio][id=discount_type]').change(function() {
@@ -1118,7 +1236,6 @@
                     $(".label_discount_total").removeClass('d-none');
 
                     $('#discount_amount').val('0.00');
-                    $('#discount_total').val('0.00');
 
                 } else if (this.value == 'percentage') {
                     //write your logic here
@@ -1387,6 +1504,7 @@
 
                     } else {
                         let deduction_count = data.data.profile_deduction_types.length;
+                        // console.log("profile_deduction_types", data);
                         if (deduction_count > 0) {
                             data.data.profile_deduction_types.map((item) => {
                                 let wrapper = $('#show_deduction_items');
@@ -1398,8 +1516,8 @@
                                     '<label class="formGroupExampleInput2">Deduction Type</label>';
 
                                 add_rows +=
-                                    '<select class="form-control deduction_type" id="deduction_type" name="deduction_type">';
-                                add_rows += '<option value=' + item.deduction_type.id +
+                                    '<select class="form-control profile_deduction_type" id="profile_deduction_type" name="profile_deduction_type">';
+                                add_rows += '<option value=' + item.id +
                                     '>' + item
                                     .deduction_type
                                     .deduction_name + '</option> ';
@@ -1501,13 +1619,15 @@
             // DEDUCTIONS TABLE
             let Deductions = [];
             $('#show_deduction_items .row').each(function() {
-                let deduction_type_id = $(this).find('.deduction_type').val() ? $(this).find(
-                    '.deduction_type').val() : 0;
+                let profile_deduction_type_id = $(this).find('.profile_deduction_type').val() ?
+                    $(this)
+                    .find(
+                        '.profile_deduction_type').val() : 0;
                 let deduction_amount = $(this).find('.deduction_amount').val() ? $(this).find(
                     '.deduction_amount').val() : 0;
 
                 Deductions.push({
-                    deduction_type_id,
+                    profile_deduction_type_id,
                     deduction_amount,
                 })
 
@@ -1528,6 +1648,7 @@
                 Deductions,
             }
 
+            console.log("Deductions", Deductions);
             axios.
             post(apiUrl + "/api/createinvoice", data, {
                 headers: {
@@ -1638,13 +1759,14 @@
             show_deduction_data();
         });
 
+
         show_deduction_data();
-        // SHOW DEDUCTIONS DATA IN TABLE
+
         function show_deduction_data(filters) {
             let url = window.location.pathname;
             let urlSplit = url.split('/');
             // console.log(urlSplit.length);
-            if (urlSplit.length === 4) {
+            if (urlSplit.length === 5) {
                 let page = $("#tbl_pagination_deduction .page-item.active .page-link").html();
                 let filter = {
                     page_size: 10,
@@ -1652,16 +1774,15 @@
                     user_id: urlSplit[3],
                     search: $('#search_deduction').val(),
                 }
-                console.log("deduction", page);
                 $('#dataTable_deduction tbody').empty();
-                axios.get(`${apiUrl}/api/settings/show_data?${new URLSearchParams(filter)}`, {
+                axios.get(`${apiUrl}/api/settings/show_deduction_data?${new URLSearchParams(filter)}`, {
                         headers: {
                             Authorization: token,
                         },
                     })
                     .then(function(res) {
                         res = res.data;
-                        console.log("RES", res);
+                        // console.log("SHOW DEDUCTION DATA", res);
                         if (res.success) {
                             if (res.data.data.length > 0) {
                                 res.data.data.map((item) => {
@@ -1679,7 +1800,6 @@
                                     tr += '<td style="text-align:center;">' + mm + '-' + dd +
                                         '-' +
                                         yy + '</td>';
-
                                     tr +=
                                         '<td class="text-center"> <button value=' +
                                         item
@@ -1687,13 +1807,11 @@
                                         ' id="viewButton" class="viewButton btn-sm" style="border:none;background:none;"><i style="font-size: 16px;" class="fa-sharp fa-solid fa-plus view-hover"></i></button><button value=' +
                                         item
                                         .id +
-                                        ' id="editButton" class="btn-sm" style="border:none;background:none;" data-bs-toggle="modal" data-bs-target="#editModal" ><i style="font-size: 16px;" class="fa-sharp fa-solid fa-eye view-hover"></i></button> </td>';
+                                        ' id="editButton" class="btn-sm" style="border:none;background:none;" data-bs-toggle="modal" data-bs-target="#editModal"><i style="font-size: 16px;" class="fa-sharp fa-solid fa-eye view-hover"></i></button> </td>';
                                     tr += '</tr>';
                                     $("#dataTable_deduction tbody").append(tr);
-
                                     return ''
                                 })
-
                                 $('#tbl_pagination_deduction').empty();
                                 res.data.links.map(item => {
                                     let li =
@@ -1701,7 +1819,6 @@
                                     $('#tbl_pagination_deduction').append(li)
                                     return ""
                                 })
-
                                 $("#tbl_pagination_deduction .page-item .page-link").on('click',
                                     function() {
                                         $("#tbl_pagination_deduction .page-item").removeClass('active');
@@ -1712,23 +1829,61 @@
                                                 .exec(
                                                     url
                                                 );
-
                                             return results !== null ? results[1] || 0 : false;
                                         };
-
                                         let search = $('#search').val();
                                         show_deduction_data({
                                             search,
                                             page: $.urlParam('page')
                                         });
                                     })
-
                                 let tbl_showing_deduction =
                                     `Showing ${res.data.from} to ${res.data.to} of ${res.data.total} entries`;
                                 $('#tbl_showing_deduction').html(tbl_showing_deduction);
                             } else {
                                 $("#dataTable_deduction tbody").append(
                                     '<tr><td colspan="6" class="text-center">No data</td></tr>');
+                            }
+                        }
+                    })
+                    .catch(function(error) {
+                        console.log("catch error", error);
+                    });
+            }
+        }
+
+        show_profileDeductionType_data();
+        // SHOW DEDUCTIONS DATA IN TABLE
+        function show_profileDeductionType_data() {
+            let url = window.location.pathname;
+            let urlSplit = url.split('/');
+
+            if (urlSplit.length === 5) {
+                let profile_id = urlSplit[4];
+
+                // console.log("profile_id", profile_id);
+                // $('#dataTable_deduction tbody').empty();
+                axios.get(apiUrl + '/api/settings/show_profileDeductionType_data/' + profile_id, {
+                        headers: {
+                            Authorization: token,
+                        },
+                    })
+                    .then(function(response) {
+                        let data = response.data;
+                        // console.log("show_profileDeductionType_data", data);
+                        if (data.success) {
+                            if (data.data.profile_deduction_types.length > 0) {
+                                data.data.profile_deduction_types.map((item) => {
+                                    let td = '<td>';
+                                    td +=
+                                        "<button type='button' data-bs-toggle='modal' data-bs-target='#ProfileDeductioneditModal' id='editProfileDeduction' class='editProfileDeduction btn btn-primary my-1 mx-1' value=" +
+                                        item.id + ">" + item.deduction_type.deduction_name +
+                                        "<span value=" + item.id +
+                                        " id='deleteProfileDeduction' class='deleteProfileDeduction profile-close' aria-hidden='true' >&times;</span></button>";
+                                    td += '</td>';
+                                    $("#tableDeleteProfileDeductioType tbody tr").append(td);
+                                    return '';
+                                })
                             }
                         }
                     })
@@ -1797,6 +1952,7 @@
                         }, 3000);
                         $("#save-deduction").attr("data-bs-dismiss", "modal");
                         show_deduction_data();
+
                     }
                 })
                 .catch(function(error) {
@@ -1812,8 +1968,9 @@
                             });
                             fieldname = fieldname.join(" ");
                             $('.toast1 .toast-title').html(fieldname);
-                            $('.toast1 .toast-body').html(Object.values(errors)[0].join(
-                                "\n\r"));
+                            $('.toast1 .toast-body').html(Object.values(errors)[0]
+                                .join(
+                                    "\n\r"));
                         })
                         toast1.toast('show');
                     }

@@ -136,7 +136,7 @@ $(document).ready(function() {
                             tr +=
                                 '<td  class="text-center"> <a href="' + apiUrl +
                                 '/admin/viewProfile/' +
-                                item.id +
+                                item.id + "/" + item.profile.id +
                                 '" class="btn btn-outline-primary">View</a> </td>';
                             tr += '</tr>';
                             $("#tbl_user tbody").append(tr);

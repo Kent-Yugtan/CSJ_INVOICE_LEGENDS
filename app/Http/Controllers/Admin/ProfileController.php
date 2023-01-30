@@ -303,7 +303,7 @@ class ProfileController extends Controller
 
     public function current_show_data_active(Request $request)
     {
-        $data = User::select(
+        $data = User::with('profile')->select(
             [
                 'users.*',
                 'position',

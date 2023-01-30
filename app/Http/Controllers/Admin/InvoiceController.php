@@ -201,7 +201,7 @@ class InvoiceController extends Controller
                         foreach ($request->Deductions as $key => $value) {
                             $dataDeductions = [
                                 'profile_id' => $request->profile_id,
-                                'deduction_type_id' => $value['deduction_type_id'],
+                                'profile_deduction_type_id' => $value['profile_deduction_type_id'],
                                 'amount' => $value['deduction_amount'],
                             ];
                             $store_data->deductions()->create($dataDeductions);
