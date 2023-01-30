@@ -26,6 +26,6 @@ class Deduction extends Model
     }
     public function profile_deduction_type()
     {
-        return $this->belongsTo('App\Models\ProfileDeductionTypes', 'deduction_type_id');
+        return $this->belongsTo('App\Models\ProfileDeductionTypes', 'profile_deduction_type_id');
     }
 }

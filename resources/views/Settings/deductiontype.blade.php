@@ -1,14 +1,15 @@
 @extends('layouts.master')
 @section('content-dashboard')
-
 <div class="container-fluid px-4 pb-4">
     <h1 class="mt-0">Deduction Types</h1>
     <ol class="breadcrumb mb-3"></ol>
     <div class="row mt-5">
         <div class="col-md-6 px-2">
-            <button class="btn w-50" style="color:white; background-color: #CF8029; margin-top:5px "
-                data-bs-toggle="modal" data-bs-target="#addModal" type="submit" id="button-addon2"> <i
-                    class="fa fa-plus pe-1"></i> Add Deduction Type </></button>
+            <button class="btn w-50" style="color:white; background-color: #CF8029; margin-top:5px"
+                data-bs-toggle="modal" data-bs-target="#addModal" type="submit" id="button-addon2">
+                <i class="fa fa-plus pe-1"></i>
+                Add Deduction Type
+            </button>
             <div class="row mt-3">
                 <div class="col">
                     <div class="w-100">
@@ -17,7 +18,7 @@
                 </div>
                 <div class="col">
                     <button type="submit" class="btn w-100" style=" color:white; background-color: #CF8029;width:30%"
-                        id="button-submit">Search</button>
+                        id="button_search">Search</button>
                 </div>
             </div>
 
@@ -36,7 +37,6 @@
                         <div class="page_showing" id="tbl_showing"></div>
                         <ul class="pagination" id="tbl_pagination"></ul>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -146,12 +146,11 @@
         </div>
     </div>
 </div>
-
 <script type="text/javascript">
 $(document).ready(function() {
     show_data();
 
-    $('#button-submit').on('click', function() {
+    $('#button_search').on('click', function() {
         let search = $('#search').val();
         show_data({
             search
@@ -160,7 +159,7 @@ $(document).ready(function() {
 
     let toast1 = $('.toast1');
     toast1.toast({
-        delay: 5000,
+        delay: 3000,
         animation: true
     });
 
@@ -179,26 +178,31 @@ $(document).ready(function() {
             ...filters,
         }
         $('#table_deduction tbody').empty();
-        axios.get(`${apiUrl}/api/settings/show_data?${new URLSearchParams(filter)}`, {
+        axios.get(`${apiUrl}/api/settings/show_deduction_data?${new URLSearchParams(filter)}`, {
                 headers: {
                     Authorization: token,
                 },
             })
             .then(function(res) {
                 res = res.data;
+                console.log("RES123", res);
                 if (res.success) {
                     if (res.data.data.length > 0) {
                         res.data.data.map((item) => {
                             let tr = '<tr>';
-                            tr += '<td style="width:40%;">' + item.deduction_name + '</td>';
-                            tr += '<td style="width:5%;" class="text-end">' + item
-                                .deduction_amount
-                                .toFixed(2) +
+                            tr += '<td class="td" style="width:40%;">' + item.deduction_name +
+                                '</td>';
+                            tr += '<td style="width:5%;" class="td text-end">' + Number(parseFloat(
+                                    item
+                                    .deduction_amount).toFixed(2)).toLocaleString(
+                                    'en', {
+                                        minimumFractionDigits: 2
+                                    }) +
                                 '</td>';
                             tr +=
+
                                 '<td style="width:45%;" class="text-center"> <button value=' +
-                                item
-                                .id +
+                                item.id +
                                 ' class="editButton btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" >Edit</button> </td>';
                             tr += '</tr>';
                             $("#table_deduction tbody").append(tr);
@@ -235,7 +239,7 @@ $(document).ready(function() {
                             `Showing ${res.data.from} to ${res.data.to} of ${res.data.total} entries`;
                         $('#tbl_showing').html(tbl_user_showing);
                     } else {
-                        $("#tbl_user tbody").append(
+                        $("#table_deduction tbody").append(
                             '<tr><td colspan="6" class="text-center">No data</td></tr>');
                     }
                 }
@@ -250,12 +254,13 @@ $(document).ready(function() {
         e.preventDefault();
 
         let deduction_name = $("#deduction_name").val();
-        let deduction_amount = $("#deduction_amount").val();
+        let deduction_amount = parseFloat($("#deduction_amount").val()).toFixed(2);
 
         let data = {
             deduction_name: deduction_name,
             deduction_amount: deduction_amount,
         };
+        console.log("DATA", data);
 
         axios
             .post(apiUrl + "/api/savedeductiontype", data, {
@@ -335,7 +340,7 @@ $(document).ready(function() {
         let data = {
             id: deduction_id,
             deduction_name: deduction_name,
-            deduction_amount: deduction_amount,
+            deduction_amount: parseFloat(deduction_amount).toFixed(2),
         };
 
         axios
@@ -356,7 +361,6 @@ $(document).ready(function() {
                     $('.toast1 .toast-body').html(response.data.message);
                     toast1.toast('show');
                     show_data();
-                    console.log('success', data.data);
                 }
             })
             .catch(function(error) {
@@ -379,6 +383,8 @@ $(document).ready(function() {
                 }
             });
     })
+
+
 });
 
 function capitalize(s) {

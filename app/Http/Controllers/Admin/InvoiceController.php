@@ -201,7 +201,7 @@ class InvoiceController extends Controller
                         foreach ($request->Deductions as $key => $value) {
                             $dataDeductions = [
                                 'profile_id' => $request->profile_id,
-                                'deduction_type_id' => $value['deduction_type_id'],
+                                'profile_deduction_type_id' => $value['profile_deduction_type_id'],
                                 'amount' => $value['deduction_amount'],
                             ];
                             $store_data->deductions()->create($dataDeductions);
@@ -221,33 +221,20 @@ class InvoiceController extends Controller
     public function show_invoice(Request $request)
     {
 
-        // $invoices = Invoice::with('profile.user', 'profile.deduction.profile_deduction_type.deduction_type', 'invoice_items')
-        //     ->where(
-        //         function ($q) use ($request) {
-        //             $q->orWhere('invoice_no', 'LIKE', '%' . $request->search . '%');
-        //         }
-        //     );
-
-        // $invoices = \App\Models\Invoice::select([
-        //     'invoices.*',
-        // ])->where(function ($q) use ($request) {
-        //     if ($request->search) {
-        //         $q->orWhere('invoice_no', 'LIKE', '%' . $request->search . '%');
-        //     }
-        // })->with(['profile.user', 'profile.deduction.profile_deduction_type.deduction_type', 'invoice_items']);
-
-        // if (isset($request->profile_id)) {
-        //     $invoices->where('profile_id', '2');
-        // } else {
-        //     $invoices->where('profile_id', '2');
-        // }
+        $findProfile = Profile::firstWhere('user_id', $request->user_id);
 
         $invoices = Invoice::with('profile.user', 'profile.deduction.profile_deduction_type.deduction_type', 'invoice_items')
-            ->where(
+            ->where('profile_id', $findProfile->id);
+
+        if ($request->search) {
+            $invoices = $invoices->where(
                 function ($q) use ($request) {
                     $q->orWhere('invoice_no', 'LIKE', '%' . $request->search . '%');
                 }
-            )->orderby('created_at', 'desc');
+            );
+        }
+
+        $invoices = $invoices->orderby('created_at', 'desc');
 
         if ($request->page_size) {
             $invoices = $invoices->limit($request->page_size)
@@ -261,5 +248,33 @@ class InvoiceController extends Controller
             'success' => true,
             'data' => $invoices,
         ], 200);
+    }
+    public function count_pending()
+    {
+        $pending = Invoice::where('invoice_status', 'Pending')->count();
+        if ($pending) {
+            return $pending;
+        }
+    }
+    public function count_overdue()
+    {
+        $overdue = Invoice::where('invoice_status', 'Overdue')->count();
+        if ($overdue) {
+            return $overdue;
+        }
+    }
+    public function count_paid()
+    {
+        $paid = Invoice::where('invoice_status', 'Paid')->count();
+        if ($paid) {
+            return $paid;
+        }
+    }
+    public function count_cancelled()
+    {
+        $cancelled = Invoice::where('invoice_status', 'Cancelled')->count();
+        if ($cancelled) {
+            return $cancelled;
+        }
     }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content-dashboard')
-
+@inject('profile', 'App\Http\Controllers\Admin\ProfileController')
 <div class="container-fluid px-4">
     <h1 class="mt-4">Current Profiles</h1>
     <ol class="breadcrumb mb-4"></ol>
@@ -10,9 +10,12 @@
             <div class="card-hover card shadow p-2 mb-4 bg-white rounded" style="width: 100%;">
                 <div>
                     <div class="row text-center py-3">
-                        <Label class="fs-3">COUNT</Label>
+                        <Label class="fs-1">
+                            {{$profile->count_active() ? $profile->count_active() : 0 ;}}
+                        </Label>
                     </div>
-                    <div class="card-body text-center py-1" style="border-bottom: none; color: #A4A6B3;">Pending</div>
+                    <div class="card-body text-center py-1" style="border-bottom: none; color: #A4A6B3;">Active Profiles
+                    </div>
                 </div>
                 <div class="d-flex align-items-center justify-content-between"></div>
             </div>
@@ -21,9 +24,12 @@
             <div class="card-hover card shadow p-2 mb-4 bg-white rounded" style="width: 100%;">
                 <div>
                     <div class="row text-center py-3">
-                        <Label class="fs-3">COUNT</Label>
+                        <Label class="fs-1">
+                            {{$profile->count_inactive() ? $profile->count_inactive() : 0 ;}}
+                        </Label>
                     </div>
-                    <div class="card-body text-center py-1" style="border-bottom: none;color: #A4A6B3; ">Paid</div>
+                    <div class="card-body text-center py-1" style="border-bottom: none;color: #A4A6B3; ">Inactive
+                        Profiles</div>
                 </div>
                 <div class="d-flex align-items-center justify-content-between"></div>
             </div>
@@ -90,7 +96,7 @@ $(document).ready(function() {
 
     function show_data(filters) {
         let filter = {
-            page_size: 50,
+            page_size: 10,
             page: 1,
             ...filters,
         }
@@ -98,7 +104,7 @@ $(document).ready(function() {
         $('#tbl_user tbody').empty();
 
         axios
-            .get(`${apiUrl}/api/admin/current_show_data?${new URLSearchParams(filter)}`, {
+            .get(`${apiUrl}/api/admin/current_show_data_active?${new URLSearchParams(filter)}`, {
                 headers: {
                     Authorization: token,
                 },
@@ -130,7 +136,7 @@ $(document).ready(function() {
                             tr +=
                                 '<td  class="text-center"> <a href="' + apiUrl +
                                 '/admin/viewProfile/' +
-                                item.id +
+                                item.id + "/" + item.profile.id +
                                 '" class="btn btn-outline-primary">View</a> </td>';
                             tr += '</tr>';
                             $("#tbl_user tbody").append(tr);

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Profile;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\DeductionType;
 use App\Models\ProfileDeductionTypes;
 use Illuminate\Support\Facades\DB;
@@ -81,7 +81,6 @@ class ProfileController extends Controller
                     $request->validate([
                         'email' => 'required|unique:users',
                     ]);
-                    return $findUser->email;
                 }
             }
         }
@@ -162,29 +161,29 @@ class ProfileController extends Controller
                             $incoming_data,
                         );
                     }
-                    $deduction_type_id = $request->deduction_type_id;
+                    // $deduction_type_id = $request->deduction_type_id;
+                    // foreach (json_decode($deduction_type_id) as $q) {
+                    //     $findProfile = Profile::where('user_id', $findUser->id)->first();
+                    //     $findProfileDeductionTypes = ProfileDeductionTypes::where('profile_id', $findProfile->id)
+                    //         ->where('deduction_type_id', $q)
+                    //         ->first();
 
-                    foreach (json_decode($deduction_type_id) as $q) {
-                        $findProfile = Profile::where('user_id', $findUser->id)->first();
-                        $findProfileDeductionTypes = ProfileDeductionTypes::where('profile_id', $findProfile->id)
-                            ->where('deduction_type_id', $q)
-                            ->first();
+                    //     $dataDeductionType = \App\Models\DeductionType::find($q);
 
-                        $dataDeductionType = \App\Models\DeductionType::find($q);
-
-                        if ($findProfileDeductionTypes) {
-                            $findProfileDeductionTypes->fill([
-                                'deduction_type_id' => $q,
-                                'amount' => $dataDeductionType->deduction_amount
-                            ])->save();
-                        } else {
-                            ProfileDeductionTypes::create([
-                                'profile_id' => $findProfile->id,
-                                'deduction_type_id' => $q,
-                                'amount' => $dataDeductionType->deduction_amount
-                            ]);
-                        }
-                    }
+                    //     if ($findProfileDeductionTypes) {
+                    //         $findProfileDeductionTypes->fill([
+                    //             'deduction_type_id' => $q,
+                    //             'amount' => $dataDeductionType->deduction_amount
+                    //         ])->save();
+                    //     }
+                    // else {
+                    //     ProfileDeductionTypes::create([
+                    //         'profile_id' => $findProfile->id,
+                    //         'deduction_type_id' => $q,
+                    //         'amount' => $dataDeductionType->deduction_amount
+                    //     ]);
+                    //   }
+                    //}
                 }
             } else {
                 $userCreate = User::create($userCreateData);
@@ -194,7 +193,6 @@ class ProfileController extends Controller
                     );
 
                     $deduction_type_id = $request->deduction_type_id;
-
                     foreach (json_decode($deduction_type_id) as $q) {
                         $findProfile = Profile::where('user_id', $userCreate->id)->first();
                         $findProfileDeductionTypes = ProfileDeductionTypes::where('profile_id', $findProfile->id)
@@ -224,16 +222,12 @@ class ProfileController extends Controller
                     'success' => true,
                     'message' => 'Your Profile has been successfully added to the database.',
                     'data' => $userCreate,
-                    'remain' => json_decode($deduction_type_id),
-                    'remove' => $q,
                 ], 200);
             } else {
                 return response()->json([
                     'success' => true,
                     'message' => 'Your Profile has been successfully updated to the database.',
                     'data' => $userCreate,
-                    'remain' => json_decode($deduction_type_id),
-                    'remove' => $q,
                 ], 200);
             }
         }
@@ -306,9 +300,9 @@ class ProfileController extends Controller
         return view('admin.current');
     }
 
-    public function current_show_data(Request $request)
+    public function current_show_data_active(Request $request)
     {
-        $data = User::select(
+        $data = User::with('profile')->select(
             [
                 'users.*',
                 'position',
@@ -354,6 +348,55 @@ class ProfileController extends Controller
             'data' => $data,
         ], 200);
     }
+
+    public function current_show_data_inactive(Request $request)
+    {
+        $data = User::select(
+            [
+                'users.*',
+                'position',
+                'phone_number',
+                'address',
+                'province',
+                'city',
+                'zip_code',
+                'profile_status',
+                'acct_no',
+                'acct_name',
+                'bank_name',
+                'bank_location',
+                'gcash_no',
+                'date_hired',
+                'file_name',
+                'file_original_name',
+                'file_path',
+                'file_size',
+                DB::raw("CONCAT(first_name, ' ', last_name) full_name")
+            ],
+        )->profile()->where('profile_status', 'Inactive');
+
+        if ($request->search) {
+            $data = $data->where(
+                function ($q) use ($request) {
+                    $q->orWhere(DB::raw("CONCAT(first_name, ' ', last_name)"), 'LIKE', '%' . $request->search . '%');
+                    $q->orWhere('position', 'LIKE', '%' . $request->search . '%');
+                }
+            );
+        }
+
+        if ($request->page_size) {
+            $data = $data->limit($request->page_size)
+                ->paginate($request->page_size, ['*'], 'page', $request->page)
+                ->toArray();
+        } else {
+            $data = $data->get();
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $data,
+        ], 200);
+    }
     public function show_deduction_types(Request $request)
     {
         $deduction_type = DeductionType::orderby("id", "ASC")->get();
@@ -372,5 +415,20 @@ class ProfileController extends Controller
     public function editProfile()
     {
         return view('admin.editProfile');
+    }
+
+    public function count_active()
+    {
+        $active = Profile::where('profile_status', 'Active')->count();
+        if ($active) {
+            return $active;
+        }
+    }
+    public function count_inactive()
+    {
+        $inactive = Profile::where('profile_status', 'Inactive')->count();
+        if ($inactive) {
+            return $inactive;
+        }
     }
 }
