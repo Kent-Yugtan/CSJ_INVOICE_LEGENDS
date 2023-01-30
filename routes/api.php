@@ -79,6 +79,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // POST PROFILE DEDUCTION TYPES TABLE
     Route::post('saveProfileDeductionTypes', [ProfileDeductionTypesController::class, 'store']);
+    Route::post('editProfileDeductionTypes', [ProfileDeductionTypesController::class, 'store']);
+    Route::post('showProfileDeductionTypes/{id}', [ProfileDeductionTypesController::class, 'show']);
     Route::post('deleteProfileDeductionTypes/{id}', [ProfileDeductionTypesController::class, 'destroy']);
 });
 

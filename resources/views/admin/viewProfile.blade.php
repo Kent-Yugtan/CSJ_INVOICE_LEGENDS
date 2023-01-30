@@ -246,25 +246,26 @@
                             <div class=" tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
                                     aria-labelledby="pills-home-tab">
+
+                                    <div class="col-md-4 w-100">
+                                        <div class="input-group">
+                                            <button style="color:white; background-color: #CF8029;"
+                                                data-bs-toggle="modal" data-bs-target="#exampleModal" type="submit"
+                                                id="button-addon2" name="button-addon2"
+                                                class="btn form-check-inline pe-3 "><i
+                                                    class="fa fa-plus pe-1"></i>Create Invoice</button>
+                                            <input type="text" aria-label="First name"
+                                                class="form-control form-check-inline">
+                                            <div class="form-group has-search">
+                                                <span class="fa fa-search form-control-feedback"></span>
+                                                <input type="text" class="form-control" id="search_invoice"
+                                                    placeholder="Search">
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="card-body table-responsive">
                                         <table style=" color: #A4A6B3;font-size: 14px;" class="table table-hover"
                                             id="dataTable_invoice">
-                                            <div class="col-md-4 w-100">
-                                                <div class="input-group">
-                                                    <button style="color:white; background-color: #CF8029;"
-                                                        data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                                        type="submit" id="button-addon2" name="button-addon2"
-                                                        class="btn form-check-inline pe-3 "><i
-                                                            class="fa fa-plus pe-1"></i>Create Invoice</button>
-                                                    <input type="text" aria-label="First name"
-                                                        class="form-control form-check-inline">
-                                                    <div class="form-group has-search">
-                                                        <span class="fa fa-search form-control-feedback"></span>
-                                                        <input type="text" class="form-control" id="search_invoice"
-                                                            placeholder="Search">
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <thead>
                                                 <tr>
                                                     <th style="text-align:right;">Invoice #</th>
@@ -305,7 +306,7 @@
                                                     placeholder="Search">
                                             </div>
 
-                                            <div class="col-12 my-3">
+                                            <div class="col-12 pt-3">
                                                 <table class="table-responsive" id="tableDeleteProfileDeductioType">
                                                     <thead></thead>
                                                     <tbody>
@@ -353,7 +354,7 @@
     </div>
     <!-- START CREATE INVOICE MODAL -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" style="width:100%;height:100%">
+        <div class="modal-dialog modal-lg" style="width:100%;">
             <div class=" modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="createnvoice1">Create Invoice</h1>
@@ -501,7 +502,7 @@
                                                         <div class="form-group">
                                                             <label class="formGroupExampleInput2"
                                                                 for="form3Example2">Converted
-                                                                Amount</label>
+                                                                Amount (Php)</label>
                                                             <input type="text"
                                                                 style="font-weight: bold;border:none; text-align:right;background-color:white"
                                                                 onkeypress="return onlyNumberKey(event)"
@@ -589,7 +590,8 @@
                                             <div class="col-12 mb-3">
                                                 <div class="row">
                                                     <div class="col-8" style="text-align:right;">
-                                                        <label style="vertical-align: -webkit-baseline-middle">Total:
+                                                        <label style="vertical-align: -webkit-baseline-middle">Total
+                                                            (Php):
                                                             <label>
                                                     </div>
                                                     <div class="col-4 mb-3" style="justify-content:end;display:flex">
@@ -753,19 +755,19 @@
                     <div class="modal-body ">
                         <div class="row">
                             <h5> Update Profile Deduction</h5>
-                            <form id="ProfileDeductionedit">
+                            <form id="ProfileDeductiontype_update">
                                 @csrf
-                                <input type="text" id="profileDeductionType_id">
+                                <input type="text" id="profileDeductionType_id" hidden>
 
                                 <div class="form-group mt-3">
                                     <label for="formGroupExampleInput">Profile Deduction Name</label>
-                                    <input type="text" class="form-control" placeholder="Profile Deduction Name"
+                                    <input type="text" id="edit_profileDeductionType_name" class="form-control"
                                         disabled>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="formGroupExampleInput">Amount</label>
-                                    <input id="profile_edit_deduction_amount" type="text" class="form-control"
+                                    <input id="edit_profileDeductionType_amount" type="text" class="form-control"
                                         placeholder="Amount">
 
                                     <div class="row mt-3">
@@ -903,7 +905,6 @@
                         }, 1000)
                     }
 
-
                 })
                 .catch(function(error) {
                     console.log("ERROR", error);
@@ -1021,7 +1022,6 @@
             }
         }
 
-
         let toast1 = $('.toast1');
         toast1.toast({
             delay: 3000,
@@ -1035,7 +1035,6 @@
         })
         $("#error_msg").hide();
         $("#success_msg").hide();
-
 
         $('#ProfileUpdate').submit(function(e) {
             e.preventDefault();
@@ -1194,11 +1193,28 @@
             })
         })
 
-        // EDIT PROFILE DEDUCTION TYPE
+        // SHOW EDIT PROFILE DEDUCTION TYPE
         $(document).on('click', '#tableDeleteProfileDeductioType .editProfileDeduction', function(e) {
             e.preventDefault();
+            $('#profileDeductionType_id').val($(this).val());
+            let profileDeductionType_id = $('#profileDeductionType_id').val();
+            console.log("EDIT FOR UPATE", profileDeductionType_id);
 
-            console.log("EDIT FOR UPATE");
+            axios.post(apiUrl + '/api/showProfileDeductionTypes/' + profileDeductionType_id, {
+                headers: {
+                    Authorization: token
+                },
+            }).then(function(response) {
+                let data = response.data;
+                console.log("SUCCESS", data);
+
+                $('#edit_profileDeductionType_name').val(data.data.deduction_type
+                    .deduction_name);
+                $('#edit_profileDeductionType_amount').val(data.data.amount);
+
+            }).catch(function(error) {
+                console.log("ERROR", error);
+            })
 
         })
 
@@ -1504,7 +1520,7 @@
 
                     } else {
                         let deduction_count = data.data.profile_deduction_types.length;
-                        // console.log("profile_deduction_types", data);
+                        console.log("profile_deduction_types", data);
                         if (deduction_count > 0) {
                             data.data.profile_deduction_types.map((item) => {
                                 let wrapper = $('#show_deduction_items');
@@ -1531,10 +1547,10 @@
                                 add_rows += '<div class="col-4">';
                                 add_rows += '<div class="form-group ">';
                                 add_rows +=
-                                    '<label class="formGroupExampleInput2">Deduction Amount</label>';
+                                    '<label class="formGroupExampleInput2">Deduction Amount (Php)</label>';
                                 add_rows +=
                                     '<input type="Number" value="' + item
-                                    .deduction_type.deduction_amount +
+                                    .amount +
                                     '" onkeypress="return onlyNumberKey(event)" style="text-align:right;" id="deduction_amount" name="deduction_amount" class="form-control multi2 deduction_amount" />';
                                 add_rows += '</div>';
                                 add_rows += '</div>';
@@ -1878,8 +1894,9 @@
                                     td +=
                                         "<button type='button' data-bs-toggle='modal' data-bs-target='#ProfileDeductioneditModal' id='editProfileDeduction' class='editProfileDeduction btn btn-primary my-1 mx-1' value=" +
                                         item.id + ">" + item.deduction_type.deduction_name +
-                                        "<span value=" + item.id +
-                                        " id='deleteProfileDeduction' class='deleteProfileDeduction profile-close' aria-hidden='true' >&times;</span></button>";
+                                        "</button><button type='button' id='deleteProfileDeduction' class='deleteProfileDeduction profile-close' aria-hidden='true'><span style='color:black;' value=" +
+                                        item.id +
+                                        ">&times;</span></button>";
                                     td += '</td>';
                                     $("#tableDeleteProfileDeductioType tbody tr").append(td);
                                     return '';
@@ -1916,6 +1933,34 @@
                 });
         })
 
+
+        // MODAL OF PROFILE DEDUCTION TYPE BUTTON
+        $('#ProfileDeductiontype_update').submit(function(e) {
+            e.preventDefault();
+            console.log("UPDATE");
+            let profileDeductionType_id = $('#profileDeductionType_id').val();
+            let profileDeductionType_amount = $('#edit_profileDeductionType_amount').val();
+
+            let data = {
+                id: profileDeductionType_id,
+                amount: profileDeductionType_amount,
+            };
+            axios.post(apiUrl + '/api/editProfileDeductionTypes', data, {
+                headers: {
+                    Authorization: token
+                },
+            }).then(function(response) {
+                let data = response.data;
+                console.log("SUCCESS", data);
+
+            }).catch(function(error) {
+                console.log("ERROR", error);
+            })
+
+        })
+
+
+        // MODAL OF DEDUCTION TYPE UPDATE BUTTON
         $('#deductiontype_update').submit(function(e) {
             e.preventDefault();
 
