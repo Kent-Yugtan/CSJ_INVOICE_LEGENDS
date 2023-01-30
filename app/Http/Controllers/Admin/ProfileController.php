@@ -81,7 +81,6 @@ class ProfileController extends Controller
                     $request->validate([
                         'email' => 'required|unique:users',
                     ]);
-                    return $findUser->email;
                 }
             }
         }
@@ -162,28 +161,29 @@ class ProfileController extends Controller
                             $incoming_data,
                         );
                     }
-                    $deduction_type_id = $request->deduction_type_id;
-                    foreach (json_decode($deduction_type_id) as $q) {
-                        $findProfile = Profile::where('user_id', $findUser->id)->first();
-                        $findProfileDeductionTypes = ProfileDeductionTypes::where('profile_id', $findProfile->id)
-                            ->where('deduction_type_id', $q)
-                            ->first();
+                    // $deduction_type_id = $request->deduction_type_id;
+                    // foreach (json_decode($deduction_type_id) as $q) {
+                    //     $findProfile = Profile::where('user_id', $findUser->id)->first();
+                    //     $findProfileDeductionTypes = ProfileDeductionTypes::where('profile_id', $findProfile->id)
+                    //         ->where('deduction_type_id', $q)
+                    //         ->first();
 
-                        $dataDeductionType = \App\Models\DeductionType::find($q);
+                    //     $dataDeductionType = \App\Models\DeductionType::find($q);
 
-                        if ($findProfileDeductionTypes) {
-                            $findProfileDeductionTypes->fill([
-                                'deduction_type_id' => $q,
-                                'amount' => $dataDeductionType->deduction_amount
-                            ])->save();
-                        } else {
-                            ProfileDeductionTypes::create([
-                                'profile_id' => $findProfile->id,
-                                'deduction_type_id' => $q,
-                                'amount' => $dataDeductionType->deduction_amount
-                            ]);
-                        }
-                    }
+                    //     if ($findProfileDeductionTypes) {
+                    //         $findProfileDeductionTypes->fill([
+                    //             'deduction_type_id' => $q,
+                    //             'amount' => $dataDeductionType->deduction_amount
+                    //         ])->save();
+                    //     }
+                    // else {
+                    //     ProfileDeductionTypes::create([
+                    //         'profile_id' => $findProfile->id,
+                    //         'deduction_type_id' => $q,
+                    //         'amount' => $dataDeductionType->deduction_amount
+                    //     ]);
+                    //   }
+                    //}
                 }
             } else {
                 $userCreate = User::create($userCreateData);
@@ -193,7 +193,6 @@ class ProfileController extends Controller
                     );
 
                     $deduction_type_id = $request->deduction_type_id;
-
                     foreach (json_decode($deduction_type_id) as $q) {
                         $findProfile = Profile::where('user_id', $userCreate->id)->first();
                         $findProfileDeductionTypes = ProfileDeductionTypes::where('profile_id', $findProfile->id)

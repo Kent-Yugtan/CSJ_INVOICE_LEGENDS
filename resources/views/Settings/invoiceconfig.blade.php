@@ -183,92 +183,42 @@
         </div>
     </div>
 
-
-    <!-- // CLICK TO STORE DATA -->
     <script type="text/javascript">
-        $(document).ready(function(e) {
-            let toast1 = $('.toast1');
-            // show_data();
-            $('#invoiceconfigs_store').submit(function(e) {
-                e.preventDefault();
+        $(document).ready(function() {
+                    let toast1 = $('.toast1');
+                    show_data();
 
-                let invoice_title = $('#invoice_title').val();
-                let invoice_email = $('#invoice_email').val();
-                let bill_address = $('#bill_address').val();
-                let ship_address = $('#ship_address').val();
-                let position = $('#position').val();
-
-                let data = {
-                    invoice_title: invoice_title,
-                    invoice_email: invoice_email,
-                    bill_address: bill_address,
-                    ship_address: ship_address,
-                    title: position,
-                }
-
-                axios
-                    .post(apiUrl + '/api/invoiceconfigs_store', data, {
-                        headers: {
-                            Authorization: token,
-
-                        },
+                    $('#button_search').on('click', function() {
+                        let search = $('#search').val();
+                        show_data({
+                            search
+                        });
                     })
-                    .then(function(response) {
-                        let data = response.data;
-                        if (data.success) {
-                            console.log('success', data);
-                            $('#invoice_title').val("");
-                            $('#invoice_email').val("");
-                            $('#bill_address').val("");
-                            $('#ship_address').val("");
-                            $('#position').val("");
-
-                            $('.toast1 .toast-title').html('Invoice Configuration');
-                            $('.toast1 .toast-body').html(response.data.message);
-                            toast1.toast('show');
-
-                            // show_data();
-                        }
-                        console.log(
-                            data
-                        );
-
-
-                    })
-                    .catch(function(error) {
-
-                        if (error.response.data.errors) {
-
-                            let errors = error.response.data.errors;
-                            let fieldnames = Object.keys(errors);
-
-                            Object.values(errors).map((item, index) => {
-
-                                fieldname = fieldnames[0].split('_');
-                                fieldname.map((item2, index) => {
-                                    fieldname['key'] = capitalize(item2);
-                                    return ""
-                                });
-                                fieldname = fieldname.join(" ");
-                                $('.toast1 .toast-title').html(fieldname);
-                                $('.toast1 .toast-body').html(Object.values(errors)[0].join(
-                                    "\n\r"));
-                            })
-
-
-
-
-
-                        }
-                        toast1.toast('show');
+                    toast1.toast({
+                        delay: 5000,
+                        animation: true
                     });
 
-            });
+                    $('.close').on('click', function(e) {
+                        e.preventDefault();
+                        toast1.toast('hide');
+                    })
 
-            function capitalize(s) {
-                if (typeof s !== 'string') return "";
-                return s.charAt(0).toUpperCase() + s.slice(1);
-            }
-        });
+                    $("#error_msg").hide();
+                    $("#success_msg").hide();
+
+                    // SHOW DATA
+                    function show_data(filters) {
+                        let filter = {
+                            page_size: 10,
+                            page: 1,
+                            ...filters,
+                        }
+                        $('#table_invoiceconfigs tbody').empty();
+                        axios.get(`${apiUrl}/api/invoiceconfigs/show_data?${new URLSearchParams(filter)}`, {
+                            headers: {
+                                Authorization: token,
+                            },
+                        })
     </script>
     @endsection

@@ -96,7 +96,7 @@ $(document).ready(function() {
 
     function show_data(filters) {
         let filter = {
-            page_size: 50,
+            page_size: 10,
             page: 1,
             ...filters,
         }
