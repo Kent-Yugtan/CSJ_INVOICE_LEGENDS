@@ -96,24 +96,25 @@
                         <table class="table">
                             <thead class="thead-dark" style="border-radius:5px;background-color: black;color:white">
                                 <tr>
-                                    <th class="scope">Description</th>
-                                    <th class="scope">Quantity</th>
-                                    <th class="scope">Rate</th>
-                                    <th class="scope">Amount</th>
+                                        
+                                    <th class="scope" >Description</th>
+                                    <th class="scope" style="text-align:end">Quantity</th>
+                                    <th class="scope" style="text-align:end" >Rate</th>
+                                    <th class="scope" style="text-align:end">Amount</th>
                                 </tr>
                             </thead>
                             <tbody class="px-3">
                                 <tr>
                                     <td class="scope">Joshua Payment for 12/09/2022 </td>
-                                    <td class="scope">1</td>
-                                    <td class="scope">$100.00</td>
-                                    <td class="scope">$100.00</td>
+                                    <td class="scope"style="text-align:end" >1</td>
+                                    <td class="scope" style="text-align:end" >$100.00</td>
+                                    <td class="scope" style="text-align:end">$100.00</td>
                                 </tr>
                                 <tr>
                                     <td class="scope"> Joshua Payment for 12/09/2022 </td>
-                                    <td class="scope">1</td>
-                                    <td class="scope">$100.00</td>
-                                    <td class="scope">$100.00</td>
+                                    <td class="scope" style="text-align:end">1</td>
+                                    <td class="scope"style="text-align:end">$100.00</td>
+                                    <td class="scope" style="text-align:end">$100.00</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -125,7 +126,7 @@
                     <div class="col-md-auto">
                         <medium> Subtotal: </medium>
                     </div>
-                    <div class="col col-lg-2 mx-3" style="text-align:end">
+                    <div class="col col-lg-2 mx-3 h6" style="text-align:end">
                         100$
                     </div>
                 </div>
@@ -136,7 +137,7 @@
                     <div class="col-md-auto">
                         <medium> Subtotal PHP: </medium>
                     </div>
-                    <div class="col col-lg-2 mx-3" style="text-align:end">
+                    <div class="col col-lg-2 mx-3 h6" style="text-align:end">
                         P5602.00
                     </div>
 
@@ -158,7 +159,7 @@
                     <div class="col-md-auto">
                         <small class="text-muted"> SSS </small>
                     </div>
-                    <div class="col col-lg-2 mx-3" style="text-align:end;color:red;">
+                    <div class="col col-lg-2 mx-3 h6" style="text-align:end;color:red;">
                         P-200
                     </div>
                 </div>
@@ -168,7 +169,7 @@
                     <div class="col-md-auto">
                         <small class="text-muted"> Phil-Health </small>
                     </div>
-                    <div class="col col-lg-2 mx-3" style="text-align:end;color:red;">
+                    <div class="col col-lg-2 mx-3 h6" style="text-align:end;color:red;">
                         P-100
                     </div>
                 </div>
@@ -178,7 +179,7 @@
                     <div class="col-md-auto">
                         <small class="text-muted"> Pag-ibig </small>
                     </div>
-                    <div class="col col-lg-2 mx-3" style="text-align:end;color:red;">
+                    <div class="col col-lg-2 mx-3 h6" style="text-align:end;color:red;">
                         P-100
                     </div>
                 </div> <br><br><br><br>
@@ -186,28 +187,29 @@
                     <div class="col mx-3">
                     </div>
                     <div class="col-md-auto">
-                        <h5> Grand Total </h5>
+                        <h4> Grand Total </h4>
                     </div>
                     <div class="col col-lg-2 mx-3" style="text-align:end">
                     </div>
                 </div>
-                <div class=" row">
+                <div class=" row " style="margin-bottom:500px">
                     <div class="col mx-3">
                     </div>
                     <div class="col-md-auto">
-                        <medium> Total </medium>
+                        <medium class="h6"> Total: </medium>
                     </div>
-                    <div class="col col-lg-2 mx-3" style="text-align:end">
+                    <div class="col col-lg-2 mx-3 h6" style="text-align:end ">
                         P5202.00
                     </div>
-                </div>
-            </div>
-        </div>
+                </div> 
+                
+            </div>                    
+        </div>    
 
         <div class="col-6 px-2 w-25">
             <div class="card shadow p-2 mb-5 bg-white rounded " style="width: 100%; height:40%">
                 <!-- <div class="card-header">Profile Information</div> -->
-                <div class="row mt-2">
+                <div class="row">
                     <div class="col g-5">
                         <div class="pb-1">
                             <button type="button" class="btn btn-secondary w-100"
@@ -224,7 +226,7 @@
                     </div>
                 </div>
 
-                <div class="row mt-5">
+                <div class="row ">
                     <div class="col g-5">
                         <div class="pb-1">
                             <button type="button" class="btn btn-secondary w-100"
