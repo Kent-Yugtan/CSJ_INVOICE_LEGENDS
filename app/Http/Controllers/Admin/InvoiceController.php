@@ -158,6 +158,21 @@ class InvoiceController extends Controller
     {
         return view('invoice.add');
     }
+    public function edit_invoice()
+    {
+        return view('admin.editInvoice');
+    }
+
+    public function editInvoice(Request $request)
+    {
+        $invoice_id = $request->id;
+        $invoice = Invoice::with('profile.deduction.profile_deduction_type.deduction_type', 'invoice_items', 'profile.user')->where('id', $invoice_id)->first();
+
+        return response()->json([
+            'success' => true,
+            'data' => $invoice,
+        ]);
+    }
     public function create_invoice(Request $request)
     {
         $error = false;
@@ -220,10 +235,9 @@ class InvoiceController extends Controller
 
     public function show_invoice(Request $request)
     {
-
         $findProfile = Profile::firstWhere('user_id', $request->user_id);
 
-        $invoices = Invoice::with('profile.user', 'profile.deduction.profile_deduction_type.deduction_type', 'invoice_items')
+        $invoices = Invoice::with('profile.user', 'profile.deduction.profile_deduction_types.deduction_type', 'invoice_items')
             ->where('profile_id', $findProfile->id);
 
         if ($request->search) {
@@ -275,6 +289,20 @@ class InvoiceController extends Controller
         $cancelled = Invoice::where('invoice_status', 'Cancelled')->count();
         if ($cancelled) {
             return $cancelled;
+        }
+    }
+
+    public function getInvoiceStatus(Request $request)
+    {
+        $invoice_no = $request->id;
+        if ($invoice_no) {
+
+            $data = Invoice::find($invoice_no);
+
+            return response()->json([
+                'success' => true,
+                'data' => $data->invoice_status,
+            ]);
         }
     }
 }
