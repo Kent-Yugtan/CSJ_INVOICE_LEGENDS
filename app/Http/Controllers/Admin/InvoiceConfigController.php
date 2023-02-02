@@ -16,7 +16,7 @@ class InvoiceConfigController extends Controller
      */
     public function index()
     {
-        return view ('<invoice_configs></invoice_configs>')
+        return view('<invoice_configs></invoice_configs>');
     }
 
     /**
@@ -38,9 +38,9 @@ class InvoiceConfigController extends Controller
     public function invoiceconfigs_store(Request $request)
     {
         $error = false;
-        $invoiceconfigs_id = $request->id;
+        $invoiceconfig_id = $request->id;
         if ($error === false) {
-            if (!$invoiceconfigs_id) {
+            if (!$invoiceconfig_id) {
                 $incoming_data = $request->validate([
                     'invoice_title' => 'required|unique:invoice_configs',
                     'invoice_email' => 'email|required|unique:invoice_configs',
@@ -70,7 +70,7 @@ class InvoiceConfigController extends Controller
                     ]);
                 }
 
-                $store_data = InvoiceConfig::where('id', $invoiceConfig_id)->update(
+                $store_data = InvoiceConfig::where('id', $invoiceconfig_id)->update(
                     [
                         'invoice_email' => $request->invoice_email,
                         'title' => $request->title,

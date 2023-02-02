@@ -5,7 +5,7 @@
     <ol class="breadcrumb mb-3"></ol>
     <div class="row">
         <div class="col-6 px-2 w-75">
-            <div class="card shadow px-5 p-2 bg-white rounded" style="width: 100%; height:100%">
+            <div class="card shadow px-5 p-2 bg-white rounded " style="width: 100%; height:90%; ">
                 <div class="row">
                     <div class="col-6 pt-5  fw-bolder">
                         Joshua Saubon
@@ -72,8 +72,7 @@
                     </div>
                     <div class="col-2"></div>
                     <div class="col-6">
-                        <div class="rounded-3"
-                            style="height:50px;background-color:#A4A6B3;display:flex;align-items:center">
+                        <div class="rounded-3" style="height:50px;background-color:#A4A6B3;display:flex;align-items:center">
                             <div class="col-6" style="text-align: right;">
                                 <h5>
                                     <span>
@@ -96,24 +95,24 @@
                         <table class="table">
                             <thead class="thead-dark" style="border-radius:5px;background-color: black;color:white">
                                 <tr>
-                                        
-                                    <th class="scope" >Description</th>
+
+                                    <th class="scope">Description</th>
                                     <th class="scope" style="text-align:end">Quantity</th>
-                                    <th class="scope" style="text-align:end" >Rate</th>
+                                    <th class="scope" style="text-align:end">Rate</th>
                                     <th class="scope" style="text-align:end">Amount</th>
                                 </tr>
                             </thead>
                             <tbody class="px-3">
                                 <tr>
                                     <td class="scope">Joshua Payment for 12/09/2022 </td>
-                                    <td class="scope"style="text-align:end" >1</td>
-                                    <td class="scope" style="text-align:end" >$100.00</td>
+                                    <td class="scope" style="text-align:end">1</td>
+                                    <td class="scope" style="text-align:end">$100.00</td>
                                     <td class="scope" style="text-align:end">$100.00</td>
                                 </tr>
                                 <tr>
                                     <td class="scope"> Joshua Payment for 12/09/2022 </td>
                                     <td class="scope" style="text-align:end">1</td>
-                                    <td class="scope"style="text-align:end">$100.00</td>
+                                    <td class="scope" style="text-align:end">$100.00</td>
                                     <td class="scope" style="text-align:end">$100.00</td>
                                 </tr>
                             </tbody>
@@ -192,7 +191,7 @@
                     <div class="col col-lg-2 mx-3" style="text-align:end">
                     </div>
                 </div>
-                <div class=" row " style="margin-bottom:500px">
+                <div class=" row " style="margin-bottom:300px">
                     <div class="col mx-3">
                     </div>
                     <div class="col-md-auto">
@@ -201,40 +200,35 @@
                     <div class="col col-lg-2 mx-3 h6" style="text-align:end ">
                         P5202.00
                     </div>
-                </div> 
-                
-            </div>                    
-        </div>    
+                </div>
+
+            </div>
+        </div>
 
         <div class="col-6 px-2 w-25">
-            <div class="card shadow p-2 mb-5 bg-white rounded pt-7" style="width: 100%; height:40%">
+            <div class="card shadow p-2 mb-5 bg-white rounded pt-10" style="width: 100%; height:35%">
                 <!-- <div class="card-header">Profile Information</div> -->
                 <div class="row">
                     <div class="col g-5">
-                        <div class="pb-1">
-                            <button type="button" class="btn btn-secondary w-100"
-                                style=" color:White; background-color:green; ">Paid Invoice</button>
+                        <div class="pb-1 pt-3">
+                            <button type="button" class="btn btn-secondary w-100" style=" color:White; background-color:green; ">Paid Invoice</button>
                         </div>
                         <div>
-                            <button type="button" class="btn btn-secondary w-100"
-                                style=" color:White; background-color:gray; ">Cancel Invoice</button>
+                            <button type="button" class="btn btn-secondary w-100" style=" color:White; background-color:gray; ">Cancel Invoice</button>
                         </div>
                         <div class="pt-1">
-                            <button type="button" class="btn btn-secondary w-100"
-                                style=" color:White; background-color:red; ">Delete Invoice</button>
+                            <button type="button" class="btn btn-secondary w-100" style=" color:White; background-color:red; ">Delete Invoice</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="row ">
                     <div class="col g-5">
-                        <div class="pb-">
-                            <button type="button" class="btn btn-secondary w-100"
-                                style=" color:White; background-color:#CF8029; ">Download</button>
+                        <div class="pb-1">
+                            <button type="button" class="btn btn-secondary w-100" style=" color:White; background-color:#CF8029; ">Download</button>
                         </div>
                         <div>
-                            <button type="button" class="btn btn-secondary w-100"
-                                style=" color:White; background-color:#CF8029; ">Edit Invoice</button>
+                            <button type="button" class="btn btn-secondary w-100" style=" color:White; background-color:#CF8029; ">Edit Invoice</button>
                         </div>
                     </div>
                 </div>
