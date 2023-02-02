@@ -68,6 +68,14 @@ Route::middleware(['AuthCheck'])->group(function () {
     Route::get('/settings/invoiceconfig', [InvoiceConfigController::class, 'show_invoiceconfig']);
     Route::get('/settings/editinvoice', [InvoiceConfigController::class, 'show_editinvoice']);
     Route::get('/settings/invoice_configs', [InvoiceConfigController::class, 'index']);
+
+    // USER ROUTES 
+    Route::get('/user/dashboard', [DashboardController::class, 'index']);
+    Route::get('/user/profile', [ProfileController::class, 'index']);
+    Route::get('/user/current', [ProfileController::class, 'current_show']);
+    Route::get('/user/viewProfile/{id}/{profile_id}', [ProfileController::class, 'viewProfile']);
+    Route::get('/user/inactive', [ProfileController::class, 'inactive']);
+    Route::get('/user/editInvoice/', [InvoiceController::class, 'edit_invoice']);
 });
 
 

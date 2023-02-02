@@ -219,6 +219,7 @@
                             headers: {
                                 Authorization: token,
                             },
-                        })
+                        });
+                    };
     </script>
     @endsection
