@@ -54,7 +54,7 @@ Route::middleware(['AuthCheck'])->group(function () {
     // Route::get('invoice/add_invoice', [InvoiceController::class, 'add_invoice']);
     Route::get('/invoice/current', [InvoiceController::class, 'current']);
     Route::get('/invoice/inactive', [InvoiceController::class, 'inactive']);
-    Route::get('/invoice/add', [InvoiceController::class, 'add_invoice']);
+    Route::get('/invoice/addInvoice', [InvoiceController::class, 'add_invoice']);
     Route::get('/admin/editInvoice/{id}', [InvoiceController::class, 'edit_invoice']);
 
 

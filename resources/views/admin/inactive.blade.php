@@ -1,8 +1,8 @@
 @extends('layouts.master')
 @section('content-dashboard')
-
+@inject('invoice', 'App\Http\Controllers\Admin\InvoiceController')
 <div class="container-fluid px-4">
-    <h1 class="mt-4">InactiveProfiles</h1>
+    <h1 class="mt-4">Inactive Profiles</h1>
     <ol class="breadcrumb mb-4"></ol>
 
     <div class="row">
@@ -10,9 +10,11 @@
             <div class="card-hover card shadow p-2 mb-4 bg-white rounded" style="width: 100%;">
                 <div>
                     <div class="row text-center py-3">
-                        <Label class="fs-3">COUNT</Label>
+                        <Label class="fs-3">
+                            {{$invoice->count_paid() ? $invoice->count_paid() : 0 ;}}
+                        </Label>
                     </div>
-                    <div class="card-body text-center py-1" style="border-bottom: none; color: #A4A6B3;">Pending</div>
+                    <div class="card-body text-center py-1" style="border-bottom: none; color: #A4A6B3;">Paid</div>
                 </div>
                 <div class="d-flex align-items-center justify-content-between"></div>
             </div>
@@ -21,9 +23,11 @@
             <div class="card-hover card shadow p-2 mb-4 bg-white rounded" style="width: 100%;">
                 <div>
                     <div class="row text-center py-3">
-                        <Label class="fs-3">COUNT</Label>
+                        <Label class="fs-3">
+                            {{$invoice->count_pending() ? $invoice->count_pending() : 0;}}
+                        </Label>
                     </div>
-                    <div class="card-body text-center py-1" style="border-bottom: none;color: #A4A6B3; ">Paid</div>
+                    <div class="card-body text-center py-1" style="border-bottom: none;color: #A4A6B3; ">Pending</div>
                 </div>
                 <div class="d-flex align-items-center justify-content-between"></div>
             </div>

@@ -156,7 +156,7 @@ class InvoiceController extends Controller
     }
     public function add_invoice()
     {
-        return view('invoice.add');
+        return view('invoice.addInvoice');
     }
     public function edit_invoice()
     {
@@ -166,7 +166,8 @@ class InvoiceController extends Controller
     public function editInvoice(Request $request)
     {
         $invoice_id = $request->id;
-        $invoice = Invoice::with('profile.deduction.profile_deduction_type.deduction_type', 'invoice_items', 'profile.user')->where('id', $invoice_id)->first();
+        // $invoice = Invoice::with('profile.deduction.profile_deduction_types.deduction_type', 'invoice_items', 'profile.user')->where('id', $invoice_id)->first();
+        $invoice = Invoice::with('deductions.profile_deduction_types.deduction_type', 'invoice_items', 'profile.user')->where('id', $invoice_id)->first();
 
         return response()->json([
             'success' => true,
@@ -237,7 +238,7 @@ class InvoiceController extends Controller
     {
         $findProfile = Profile::firstWhere('user_id', $request->user_id);
 
-        $invoices = Invoice::with('profile.user', 'profile.deduction.profile_deduction_types.deduction_type', 'invoice_items')
+        $invoices = Invoice::with('profile.user', 'profile.deductions.profile_deduction_types.deduction_type', 'invoice_items')
             ->where('profile_id', $findProfile->id);
 
         if ($request->search) {

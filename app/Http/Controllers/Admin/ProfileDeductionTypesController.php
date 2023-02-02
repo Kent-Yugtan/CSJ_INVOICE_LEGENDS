@@ -132,12 +132,14 @@ class ProfileDeductionTypesController extends Controller
 
     public function show_deduction_data(Request $request)
     {
-        $profileDeductionType = DeductionType::doesntHave('profile_deduction_types')->get();
-        // $profileDeductionType = ProfileDeductionTypes::with('deductions', 'deduction_type')->doesntHave('deduction_type')->where('profile_id', $profile_id)->first();
+        $profile_id = $request->profile_id;
+        $profileDeductionType = DeductionType::with(['profile_deduction_types' => function ($q) use ($profile_id) {
+            $q->where('profile_id', $profile_id);
+        }]);
 
         return response()->json([
             'success' => true,
-            'data' => $profileDeductionType,
+            'data' => $profileDeductionType->get(),
         ], 200);
     }
 }

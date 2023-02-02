@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content-dashboard')
 <div class="container-fluid pt-0">
-    <h1 class="mt-0">Edit Invoice</h1>
+    <h1 class="mt-0">View Invoice</h1>
     <ol class="breadcrumb mb-3"></ol>
     <div class="row">
         <div class="col-6 px-2 w-75">
@@ -82,7 +82,7 @@
 
                             <div class="col-6" style="text-align: right;">
                                 <h5>
-                                    <span class="me-3">$100.00</span>
+                                    <div class="me-3" id="balance_due"></div>
                                 </h5>
                             </div>
                         </div>
@@ -91,10 +91,9 @@
 
                 <div class="row pt-3">
                     <div class="col-12 table-responsive">
-                        <table class="table">
+                        <table class="table" id="table_invoiceItems">
                             <thead class="thead-dark" style="border-radius:5px;background-color: black;color:white">
                                 <tr>
-
                                     <th class="scope">Description</th>
                                     <th class="scope" style="text-align:end">Quantity</th>
                                     <th class="scope" style="text-align:end">Rate</th>
@@ -102,7 +101,7 @@
                                 </tr>
                             </thead>
                             <tbody class="px-3">
-                                <tr>
+                                <!-- <tr>
                                     <td class="scope">Joshua Payment for 12/09/2022 </td>
                                     <td class="scope" style="text-align:end">1</td>
                                     <td class="scope" style="text-align:end">$100.00</td>
@@ -113,103 +112,65 @@
                                     <td class="scope" style="text-align:end">1</td>
                                     <td class="scope" style="text-align:end">$100.00</td>
                                     <td class="scope" style="text-align:end">$100.00</td>
-                                </tr>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col mx-3">
-                    </div>
-                    <div class="col-md-auto">
-                        <medium> Subtotal: </medium>
-                    </div>
-                    <div class="col col-lg-2 mx-3 h6" style="text-align:end">
-                        100$
-                    </div>
-                </div>
-                <div class=" row">
-                    <div class="col mx-3">
-
-                    </div>
-                    <div class="col-md-auto">
-                        <medium> Subtotal PHP: </medium>
-                    </div>
-                    <div class="col col-lg-2 mx-3 h6" style="text-align:end">
-                        P5602.00
+                    <div class="col-5">Notes:</div>
+                    <div class="col">
+                        <label class="text-muted"> Subtotal: </label>
                     </div>
 
-                </div>
-
-                <div class=" row">
-                    <div class="col mx-3">
-                    </div>
-                    <div class="col-md-auto">
-                        <h5> Deductions </h5>
-                    </div>
-                    <div class="col col-lg-2 mx-3" style="text-align:end">
-                    </div>
+                    <div id="sub_total" class="col mx-2 h6" style="text-align:end"></div>
                 </div>
                 <div class="row">
-                    <div class="col mx-3">
+                    <div class="col-5" id="notes"></div>
+                    <div class="col">
+                        <label class="text-muted">Subtotal (PHP): </label>
+                    </div>
+                    <div id="convertedAmount" class="col mx-2 h6" style="text-align:end">
+                    </div>
 
-                    </div>
-                    <div class="col-md-auto">
-                        <small class="text-muted"> SSS </small>
-                    </div>
-                    <div class="col col-lg-2 mx-3 h6" style="text-align:end;color:red;">
-                        P-200
-                    </div>
                 </div>
-                <div class="row">
-                    <div class="col mx-3">
+
+                <div class="row pt-3">
+                    <div class="col-5"></div>
+                    <div class="col">
+                        <h5> DEDUCTIONS </h5>
                     </div>
-                    <div class="col-md-auto">
-                        <small class="text-muted"> Phil-Health </small>
-                    </div>
-                    <div class="col col-lg-2 mx-3 h6" style="text-align:end;color:red;">
-                        P-100
-                    </div>
+                    <div class="col mx-2" style="text-align:end"></div>
                 </div>
-                <div class="row">
-                    <div class="col mx-3">
-                    </div>
-                    <div class="col-md-auto">
-                        <small class="text-muted"> Pag-ibig </small>
-                    </div>
-                    <div class="col col-lg-2 mx-3 h6" style="text-align:end;color:red;">
-                        P-100
-                    </div>
-                </div> <br><br><br><br>
-                <div class=" row">
-                    <div class="col mx-3">
-                    </div>
-                    <div class="col-md-auto">
-                        <h4> Grand Total </h4>
-                    </div>
-                    <div class="col col-lg-2 mx-3" style="text-align:end">
-                    </div>
+
+
+                <div class="row deductions" id="deductions">
+
                 </div>
-                <div class=" row " style="margin-bottom:500px">
-                    <div class="col mx-3">
-                    </div>
-                    <div class="col-md-auto">
-                        <medium class="h6"> Total: </medium>
-                    </div>
-                    <div class="col col-lg-2 mx-3 h6" style="text-align:end ">
-                        P5202.00
+
+                <div class="row pt-3">
+                    <div class="col-5"></div>
+                    <div class="col">
+                        <h5> GRAND TOTAL </h5>
                     </div>
                 </div>
 
+                <div class="row pb-5">
+                    <div class="col-5"></div>
+                    <div class="col">
+                        <label class="text-muted">Total: </label>
+                    </div>
+                    <div class="col mx-2 h6" id="grand_total_amount" style="text-align:end"></div>
+                </div>
             </div>
         </div>
 
         <div class="col-6 px-2 w-25">
-            <div class="card shadow p-2 mb-5 bg-white rounded pt-7" style="width: 100%; height:40%">
+            <div class="card shadow p-2 mb-5 bg-white rounded" style="width: 100%; height:45vh">
                 <!-- <div class="card-header">Profile Information</div> -->
-                <div class="row">
-                    <div class="col g-5">
-                        <div class="pb-1">
+                <div class="row pt-3">
+                    <div class="col">
+                        <div class="pb-2">
                             <button type="button" class="btn btn-secondary w-100"
                                 style=" color:White; background-color:green; ">Paid Invoice</button>
                         </div>
@@ -217,20 +178,20 @@
                             <button type="button" class="btn btn-secondary w-100"
                                 style=" color:White; background-color:gray; ">Cancel Invoice</button>
                         </div>
-                        <div class="pt-1">
+                        <div class="pt-2">
                             <button type="button" class="btn btn-secondary w-100"
                                 style=" color:White; background-color:red; ">Delete Invoice</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="row ">
-                    <div class="col g-5">
-                        <div class="pb-">
+                <div class="row pt-5">
+                    <div class="col">
+                        <div class="pb-2">
                             <button type="button" class="btn btn-secondary w-100"
                                 style=" color:White; background-color:#CF8029; ">Download</button>
                         </div>
-                        <div>
+                        <div class="pb-2">
                             <button type="button" class="btn btn-secondary w-100"
                                 style=" color:White; background-color:#CF8029; ">Edit Invoice</button>
                         </div>
@@ -276,7 +237,98 @@ $(document).ready(function() {
                         $('#city-province').html(data.data.profile.city + ", " + data.data.profile
                             .province);
                         $('#zip_code').html("Philippines " + data.data.profile.zip_code);
-                        $('#date_created').html(mm + " " + dd + " " + yy);
+                        $('#date_created').html(mm + " " + dd + ", " + yy);
+                        $('#notes').html(data.data.notes);
+
+
+                        if (data.data.invoice_items.length > 0) {
+                            let balance_due = parseFloat(data.data.sub_total ? data.data.sub_total : 0) +
+                                parseFloat(data.data
+                                    .discount_total ? data.data
+                                    .discount_total : 0);
+                            let converted_amount = parseFloat(data.data.converted_amount ? data.data
+                                .converted_amount :
+                                0);
+                            $('#balance_due').html((balance_due)
+                                .toLocaleString('en-US', {
+                                    style: 'currency',
+                                    currency: 'USD'
+                                }));
+                            data.data.invoice_items.map((item) => {
+                                let tr = '<tr>';
+                                tr += '<td class="scope">' + item.item_description + '</td>'
+                                tr += '<td class="scope" style="text-align:end">' + item.quantity +
+                                    '</td>'
+                                tr += '<td class="scope" style="text-align:end">' + item.rate
+                                    .toLocaleString('en-US', {
+                                        style: 'currency',
+                                        currency: 'USD'
+                                    }) +
+                                    '</td>'
+                                tr += '<td class="scope" style="text-align:end">' + item
+                                    .total_amount.toLocaleString('en-US', {
+                                        style: 'currency',
+                                        currency: 'USD'
+                                    }) + '</td>'
+                                tr += '</tr>';
+
+                                $('#table_invoiceItems tbody').append(tr);
+                                return '';
+                            })
+
+                            $('#sub_total').html(balance_due.toLocaleString('en-US', {
+                                style: 'currency',
+                                currency: 'USD'
+                            }));
+
+                            $('#convertedAmount').html(converted_amount.toLocaleString('en-US', {
+                                style: 'currency',
+                                currency: 'PHP'
+                            }));
+
+                            if (data.data.deductions.length > 0) {
+                                data.data.deductions.map((item) => {
+                                    let deduction_amount = parseFloat(item.profile_deduction_types
+                                        .amount ? item.profile_deduction_types.amount : 0);
+                                    let parent = $(this).closest('.row .deductions');
+                                    let div_rows = '';
+                                    div_rows += '<div class="col-5 row_deductions"></div>';
+                                    div_rows += '<div class="col text-muted">' + item
+                                        .profile_deduction_types
+                                        .deduction_type.deduction_name + '</div>';
+                                    div_rows +=
+                                        '<div class="col mx-2 h6" style="text-align:end;color:red;">' +
+                                        deduction_amount.toLocaleString('en-US', {
+                                            style: 'currency',
+                                            currency: 'PHP'
+                                        }) + '</div>';
+
+                                    $(".row .deductions").append(div_rows);
+                                    return '';
+
+                                })
+                            } else {
+                                let parent = $(this).closest('.row .deductions');
+                                let div_rows = '';
+                                div_rows += '<div class="col-5 row_deductions"></div>';
+                                div_rows += '<div class="col">"NO DEDUCTIONS"</div>';
+                                div_rows +=
+                                    '<div class="col mx-2 h6" style="text-align:end;color:red;"></div>';
+                                $(".row .deductions").append(div_rows);
+                                return '';
+                            }
+                            let grand_total_amount = parseFloat(data.data.grand_total_amount ? data.data
+                                .grand_total_amount : 0);
+                            $('#grand_total_amount').html(grand_total_amount.toLocaleString(
+                                'en-US', {
+                                    style: 'currency',
+                                    currency: 'PHP'
+                                }));
+
+                        } else {
+                            $("#table_invoiceItems tbody").append(
+                                '<tr><td colspan="4" class="text-center">No data</td></tr>');
+                        }
 
                         console.log("SUCCESS", data);
                     }

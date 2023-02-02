@@ -162,11 +162,11 @@ $(document).ready(function() {
                                 return results !== null ? results[1] || 0 : false;
                             };
 
-                            let search = $('#search').val();
-                            show_data({
-                                search,
-                                page: $.urlParam('page')
-                            });
+                            // let search = $('#search').val();
+                            // show_data({
+                            //     search,
+                            //     page: $.urlParam('page')
+                            // });
                         })
 
                         let tbl_user_showing =
