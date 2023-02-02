@@ -17,7 +17,7 @@
                             <div class="col-12 mb-3">
                                 <input id="profile_id" name="profile_id" type="text" hidden>
                                 <div class="form-group w-50">
-                                    <label class="formGroupExampleInput2">Invoice #</label>
+                                    <label class="formGroupExampleInput2">Profile</label>
                                     <input id="invoice_no" style="font-weight: bold;border:none;background-color:white"
                                         disabled name="invoice_no" type="text" class="form-control">
                                 </div>
@@ -255,15 +255,14 @@
                 </div>
 
                 <div class="col-md-6 px-2 w-25">
-                    <div class="card shadow p-2 mb-5 bg-white rounded " style="width: 100%; height:20%">
+                    <div class="card shadow p-2 mb-5 bg-white rounded " style="width: 100%; height:20vh">
                         <!-- <div class="card-header">Profile Information</div> -->
-                        <div class="row mt-3">
-                            <div class="col g-5">
+                        <div class="row pt-3">
+                            <div class="col">
                                 <div class="pb-3">
                                     <button type="submit" class="btn btn-secondary w-100"
                                         style="color:White; background-color:#CF8029;">Save</button>
                                 </div>
-
 
                                 <div>
                                     <button type="button" class="btn btn-secondary w-100"

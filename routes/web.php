@@ -54,7 +54,8 @@ Route::middleware(['AuthCheck'])->group(function () {
     // Route::get('invoice/add_invoice', [InvoiceController::class, 'add_invoice']);
     Route::get('/invoice/current', [InvoiceController::class, 'current']);
     Route::get('/invoice/inactive', [InvoiceController::class, 'inactive']);
-    Route::get('/invoice/add', [InvoiceController::class, 'add_invoice']);
+    Route::get('/invoice/addInvoice', [InvoiceController::class, 'add_invoice']);
+    Route::get('/admin/editInvoice/{id}', [InvoiceController::class, 'edit_invoice']);
 
 
     // POST DEDUCTION TYPES TABLE
@@ -66,6 +67,15 @@ Route::middleware(['AuthCheck'])->group(function () {
     // Invoice Config
     Route::get('/settings/invoiceconfig', [InvoiceConfigController::class, 'show_invoiceconfig']);
     Route::get('/settings/editinvoice', [InvoiceConfigController::class, 'show_editinvoice']);
+    Route::get('/settings/invoice_configs', [InvoiceConfigController::class, 'index']);
+
+    // USER ROUTES 
+    Route::get('/user/dashboard', [DashboardController::class, 'userindex']);
+    Route::get('/user/profile', [ProfileController::class, 'userindex']);
+    Route::get('/user/current', [ProfileController::class, 'usercurrent_show']);
+    Route::get('/user/viewProfile/{id}/{profile_id}', [ProfileController::class, 'userviewProfile']);
+    Route::get('/user/inactive', [ProfileController::class, 'userinactive']);
+    Route::get('/user/editInvoice/', [InvoiceController::class, 'useredit_invoice']);
 });
 
 

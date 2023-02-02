@@ -24,6 +24,13 @@ class ProfileController extends Controller
     {
         return view('admin.profile');
     }
+    public function userindex()
+    {
+        return view('user.userprofile');
+    }
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -300,6 +307,11 @@ class ProfileController extends Controller
         return view('admin.current');
     }
 
+    public function usercurrent_show(Request $request)
+    {
+        return view('user.usercurrent');
+    }
+
     public function current_show_data_active(Request $request)
     {
         $data = User::with('profile')->select(
@@ -410,6 +422,17 @@ class ProfileController extends Controller
     public function inactive()
     {
         return view('admin.inactive');
+    }
+
+
+    public function userinactive()
+    {
+        return view('user.userinactive');
+    }
+
+    public function usereditProfile()
+    {
+        return view('user.usereditProfile');
     }
 
     public function editProfile()

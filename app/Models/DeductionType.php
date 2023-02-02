@@ -10,11 +10,6 @@ class DeductionType extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function deduction()
-    {
-        return $this->hasMany('App\Models\Deduction', 'deduction_type_id');
-    }
-
     public function profile_deduction_types()
     {
         return $this->hasMany('App\Models\ProfileDeductionTypes', 'deduction_type_id');

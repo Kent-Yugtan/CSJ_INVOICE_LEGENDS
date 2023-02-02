@@ -29,7 +29,7 @@ class Profile extends Model
         return $this->hasMany('App\Models\ProfileDeductionTypes', 'profile_id');
     }
 
-    public function deduction()
+    public function deductions()
     {
         return $this->hasMany('App\Models\Deduction', 'profile_id');
     }

@@ -141,10 +141,9 @@ class DeductionTypeController extends Controller
         ]);
     }
 
-    public function show_deduction_data(Request $request)
+    public function show_data(Request $request)
     {
         $deductionType = new DeductionType();
-        $deductionType = $deductionType->with('profile_deduction_types')->doesntHave('profile_deduction_types');
         if ($request->search) {
             $deductionType = $deductionType->where(
                 function ($q) use ($request) {
@@ -167,14 +166,34 @@ class DeductionTypeController extends Controller
         ], 200);
     }
 
-    public function show_profileDeductionType_data(Request $request)
-    {
-        $profile_id = $request->profile_id;
-        $profile = Profile::with('profile_deduction_types', 'profile_deduction_types.deduction_type')->where('id', $profile_id)->first();
 
-        return response()->json([
-            'success' => true,
-            'data' => $profile,
-        ], 200);
-    }
+    // public function show_deduction_data(Request $request)
+    // {
+    //     $profile_id = $request->profile_id;
+    //     return $profile_id;
+    //     $deductionType = new DeductionType();
+    //     $deductionType = $deductionType->with('profile_deduction_types')->doesntHave('profile_deduction_types')->where('profile_id', $profile_id);
+    //     if ($request->search) {
+    //         $deductionType = $deductionType->where(
+    //             function ($q) use ($request) {
+    //                 $q->orWhere('deduction_name', 'LIKE', '%' . $request->search . '%');
+    //             }
+    //         );
+    //     }
+
+    //     if ($request->page_size) {
+    //         $deductionType = $deductionType->limit($request->page_size)
+    //             ->paginate($request->page_size, ['*'], 'page', $request->page)
+    //             ->toArray();
+    //     } else {
+    //         $deductionType = $deductionType->get();
+    //     }
+
+    //     return response()->json([
+    //         'success' => true,
+    //         'data' => $deductionType,
+    //     ], 200);
+    // }
+
+
 }

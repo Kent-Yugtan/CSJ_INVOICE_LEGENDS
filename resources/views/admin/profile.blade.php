@@ -199,11 +199,11 @@
                                 Profile</button>
                         </div>
 
-                        <div class="col mb-3">
+                        <!-- <div class="col mb-3">
                             <button type="submit"
                                 style="width:100%; height:50px;color:white; background-color: #A4A6B3;"
                                 class="btn">Change Password</button>
-                        </div>
+                        </div> -->
                     </form>
                 </div>
             </div>

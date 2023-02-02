@@ -12683,3 +12683,8 @@ button.toast-close-button {
 .profile-close:hover {
     color: #000;
 }
+
+.editInvoice{
+    border: none;
+    background-color: white;
+}
