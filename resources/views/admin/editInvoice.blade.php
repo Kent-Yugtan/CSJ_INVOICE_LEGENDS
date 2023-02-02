@@ -5,7 +5,7 @@
     <ol class="breadcrumb mb-3"></ol>
     <div class="row">
         <div class="col-6 px-2 w-75">
-            <div class="card shadow px-5 p-2 bg-white rounded" style="width: 100%; height:100%">
+            <div class="card shadow px-5 p-2 bg-white rounded " style="width: 100%; height:100%; ">
                 <div class="row">
                     <div class="col-6 pt-5  fw-bolder">
                         <div id="fullname"></div>
