@@ -178,7 +178,7 @@ $(document).ready(function() {
             ...filters,
         }
         $('#table_deduction tbody').empty();
-        axios.get(`${apiUrl}/api/settings/show_deduction_data?${new URLSearchParams(filter)}`, {
+        axios.get(`${apiUrl}/api/settings/show_data?${new URLSearchParams(filter)}`, {
                 headers: {
                     Authorization: token,
                 },
@@ -189,7 +189,7 @@ $(document).ready(function() {
                 if (res.success) {
                     if (res.data.data.length > 0) {
                         res.data.data.map((item) => {
-                            let tr = '<tr>';
+                            let tr = '<tr style="vertical-align: middle;">';
                             tr += '<td class="td" style="width:40%;">' + item.deduction_name +
                                 '</td>';
                             tr += '<td style="width:5%;" class="td text-end">' + Number(parseFloat(

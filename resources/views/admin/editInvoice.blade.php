@@ -8,22 +8,20 @@
             <div class="card shadow px-5 p-2 bg-white rounded " style="width: 100%; height:90%; ">
                 <div class="row">
                     <div class="col-6 pt-5  fw-bolder">
-                        Joshua Saubon
-                        <br> joshuasaubon@gmail.com
+                        <div id="fullname"></div>
+                        <div class="pt-3" id="email"></div>
                     </div>
                     <div class="col-6 pt-5  fw-bolder " style="text-align:end">
                         <h2> INVOICES </h2>
-                        <small class="text-muted"> # 5PP-0006</small>
+                        <div class="text-muted" id="invoice_no"></div>
                     </div>
                 </div>
 
                 <div class="row pt-3">
-                    <div class="col-4">
-                        <span>
-                            P9- Baan, Baan Km3
-                            Philippines 8600
-                            Butuan City, Agusan del Norte
-                        </span>
+                    <div class="col-6">
+                        <div id="address"></div>
+                        <div id="city-province"></div>
+                        <div id="zip_code"></div>
                     </div>
                 </div>
 
@@ -37,13 +35,13 @@
                     </div>
 
                     <div class="col-3 " style="text-align: right;">
-                        <span>Dec 7, 2022</span>
+                        <div id="date_created"></div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-6 ">
-                        <span> 5Ppints Production </span>
+                        <span> (5Ppints Production) </span>
                     </div>
 
                     <div class="col-3" style="text-align: right;">
@@ -51,13 +49,13 @@
                     </div>
 
                     <div class="col-3" style="text-align: right;">
-                        Dec 7, 2022
+                        TO BE ASK
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-6 ">
-                        <span>5ppints@gmail.com</span>
+                        <span>(5ppints@gmail.com)</span>
                     </div>
 
                 </div>
@@ -65,9 +63,9 @@
                 <div class="row pt-3">
                     <div class="col-4">
                         <span>
-                            4094 South Power Road
+                            (4094 South Power Road
                             Suite 103-197
-                            Mesa, AZ 85212
+                            Mesa, AZ 85212)
                         </span>
                     </div>
                     <div class="col-2"></div>
@@ -237,4 +235,52 @@
     </div>
 </div>
 
+<script type="text/javascript">
+$(document).ready(function() {
+    show_invoice();
+
+    function show_invoice() {
+        let url = window.location.pathname;
+        let urlSplit = url.split('/');
+        if (urlSplit.length == 4) {
+            let invoice_id = urlSplit[3];
+            console.log("invoice_id", invoice_id);
+            apiUrl
+            axios
+                .get(apiUrl + '/api/admin/editInvoice/' + invoice_id, {
+                    headers: {
+                        Authorization: token,
+                    },
+                }).then(function(response) {
+                    let data = response.data;
+                    if (data.success) {
+                        const month = ["January", "February", "March", "April", "May", "June", "July",
+                            "August", "September", "October", "November", "December"
+                        ];
+                        var newdate = new Date(data.data.created_at);
+                        var mm = month[newdate.getMonth()];
+                        var dd = newdate.getDate();
+                        var yy = newdate.getFullYear();
+
+                        $('#fullname').html(data.data.profile.user.first_name + " " + data.data.profile.user
+                            .last_name);
+                        $('#email').html(data.data.profile.user.email);
+                        $('#invoice_no').html("#" + data.data.invoice_no);
+                        $('#address').html(data.data.profile.address);
+                        $('#city-province').html(data.data.profile.city + ", " + data.data.profile
+                            .province);
+                        $('#zip_code').html("Philippines " + data.data.profile.zip_code);
+                        $('#date_created').html(mm + " " + dd + " " + yy);
+
+                        console.log("SUCCESS", data);
+                    }
+
+                }).catch(function(error) {
+                    console.log("ERROR", error);
+                });
+        }
+
+    }
+})
+</script>
 @endsection
