@@ -163,6 +163,12 @@ class InvoiceController extends Controller
         return view('admin.editInvoice');
     }
 
+    // User
+    public function useredit_invoice()
+    {
+        return view('user.usereditInvoice');
+    }
+
     public function editInvoice(Request $request)
     {
         $invoice_id = $request->id;
