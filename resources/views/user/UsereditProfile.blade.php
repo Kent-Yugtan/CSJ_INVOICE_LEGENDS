@@ -12,20 +12,20 @@
             <div class="card shadow p-2 mb-5 bg-white rounded" style="width: 100%; height:100%">
                 <div class="card-header">Edit Informationssssssssssssssssssssss</div>
                 <div class="row px-4 pb-4">
-                    <form id="ProfileUpdate" method="POST" action="javascript:void(0)" class="row g-3 needs-validation" novalidate>
+                    <form id="user_ProfileUpdate" method="POST" action="javascript:void(0)" class="row g-3 needs-validation" novalidate>
                         @csrf
                         <input type="text" id="user_id" hidden value="{{$findid->id}}">
                         <div class="col mb-3">
                             <div class="profile-pic-div" style="position: relative; height:200px">
-                                <img src="/images/default.png" id="photo">
-                                <input name="file" type="file" id="file">
-                                <label for="file" id="uploadBtn">Choose Photo</label>
+                                <img src="/images/default.png" id="user_photo">
+                                <input name="file" type="file" id="user_file">
+                                <label for="file" id="user_uploadBtn">Choose Photo</label>
                             </div>
                         </div>
 
                         <div class="col pt-3">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="profile_status" name="profile_status" checked>
+                                <input class="form-check-input" type="checkbox" id="user_profile_status" name="profile_status" checked>
                                 <label class="form-check-label" for="status">
                                     Active
                                 </label>
@@ -34,22 +34,22 @@
 
                             <div class="mb-3">
                                 <label mb-2 style="color: #A4A6B3;">First Name</label>
-                                <input id="first_name" name="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror " placeholder="First Name" value="{{ old('first_name') }}" required>
+                                <input id="user_first_name" name="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror " placeholder="First Name" value="{{ old('first_name') }}" required>
 
                             </div>
                             <div class="mb-3">
                                 <label mb-2 style="color: #A4A6B3;">Last Name</label>
-                                <input id="last_name" name="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror " placeholder="Last Name" value="{{ old('last_name') }}" required>
+                                <input id="user_last_name" name="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror " placeholder="Last Name" value="{{ old('last_name') }}" required>
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Email</label>
-                            <input id="email" name="email" type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" required>
+                            <input id="user_email" name="email" type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" required>
                         </div>
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Username</label>
-                            <input id="username" name="username" type="text" class="form-control @error('username') is-invalid @enderror" placeholder="Username" required>
+                            <input id="user_username" name="username" type="text" class="form-control @error('username') is-invalid @enderror" placeholder="Username" required>
                         </div>
                         <!--                         
                         <div class="mb-3">
@@ -73,51 +73,51 @@
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Phone Number</label>
-                            <input id="phone_number" name="phone_number" type="text" class="form-control @error('phone_number') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Phone Number">
+                            <input id="user_phone_number" name="phone_number" type="text" class="form-control @error('phone_number') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Phone Number">
 
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Address</label>
-                            <input id="address" name="address" type="text" class="form-control @error('address') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Address">
+                            <input id="user_address" name="address" type="text" class="form-control @error('address') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Address">
 
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Province</label>
-                            <input id="province" name="province" type="text" class="form-control @error('province') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Province">
+                            <input id="user_province" name="province" type="text" class="form-control @error('province') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Province">
 
                         </div>
 
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">City</label>
-                            <input id="city" name="city" type="text" class="form-control @error('city') is-invalid @enderror" id="formGroupExampleInput2" placeholder="City">
+                            <input id="user_city" name="city" type="text" class="form-control @error('city') is-invalid @enderror" id="formGroupExampleInput2" placeholder="City">
 
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Zip Code</label>
-                            <input id="zip_code" name="zip_code" type="text" class="form-control @error('zip_code') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Zip Code">
+                            <input id="user_zip_code" name="zip_code" type="text" class="form-control @error('zip_code') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Zip Code">
 
                         </div>
 
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Account Number</label>
-                            <input id="acct_no" name="acct_no" type="text" class="form-control @error('acct_no') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Account Number">
+                            <input id="user_acct_no" name="acct_no" type="text" class="form-control @error('acct_no') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Account Number">
 
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Account Name</label>
-                            <input id="acct_name" name="acct_name" type="text" class="form-control @error('acct_name') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Account Name">
+                            <input id="user_acct_name" name="acct_name" type="text" class="form-control @error('acct_name') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Account Name">
 
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Bank Name</label>
-                            <select class="form-select @error('bank_name') is-invalid @enderror" id="bank_name" name="bank_name" aria-label="Default select example">
+                            <select class="form-select @error('bank_name') is-invalid @enderror" id="user_bank_name" name="bank_name" aria-label="Default select example">
                                 <option selected disabled value="">Please Select Bank Name</option>
                                 <option value="BDO Unibank Inc.">BDO Unibank Inc. (BDO)</option>
                                 <option value="Land Bank of the Philippines">Land Bank of the Philippines (LANDBANK)
@@ -153,19 +153,19 @@
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Bank Location</label>
-                            <input id="bank_location" name="bank_location" type="text" class="form-control @error('bank_location') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Bank Address">
+                            <input id="user_bank_location" name="bank_location" type="text" class="form-control @error('bank_location') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Bank Address">
 
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Gcash Number</label>
-                            <input id="gcash_no" name="gcash_no" type="text" class="form-control @error('gcash_no') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Gcash Number">
+                            <input id="user_gcash_no" name="gcash_no" type="text" class="form-control @error('gcash_no') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Gcash Number">
 
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Date Hired</label>
-                            <input id="date_hired" name="date_hired" type="date" class="form-control @error('date_hired') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Date Hired">
+                            <input id="user_date_hired" name="date_hired" type="date" class="form-control @error('date_hired') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Date Hired">
 
                         </div>
 
@@ -203,7 +203,7 @@
                                 <button style="width:100%" class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Deductions</button>
                             </li>
                         </ul>
-                        <form id="CreateInvoice" method="POST" action="javascript:void(0)" class="row g-3 needs-validation" novalidate>
+                        <form id="user_CreateInvoice" method="POST" action="javascript:void(0)" class="row g-3 needs-validation" novalidate>
                             @csrf
                             <div class="col-md-4">
                                 <div class="input-group">
@@ -212,7 +212,7 @@
                                         <div class="modal-dialog modal-lg" style="width:200%;height:900%">
                                             <div class=" modal-content">
                                                 <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="createnvoice1">Create Invoice</h1>
+                                                    <h1 class="modal-title fs-5" id="user_createnvoice1">Create Invoice</h1>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
@@ -222,7 +222,7 @@
                                                             <div class="col pt-3">
                                                                 <div class="form-group">
                                                                     <label for="formGroupExampleInput">Invoice #</label>
-                                                                    <input type="text" class="form-control" id="invoice_no" placeholder="Invoice Number">
+                                                                    <input type="text" class="form-control" id="user_invoice_no" placeholder="Invoice Number">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -231,11 +231,11 @@
                                                                 <div class="form-group">
 
                                                                     <label for="formGroupExampleInput">Description</label>
-                                                                    <input type="text" class="form-control" id="description" placeholder="description">
+                                                                    <input type="text" class="form-control" id="user_description" placeholder="description">
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div id="show_items">
+                                                        <div id="user_show_items">
                                                             <div class="col-12 mb-3">
                                                                 <div class="row">
                                                                     <!-- FOR TABLE INVOICE DESCRIPTION DISPLAY -->
@@ -245,7 +245,7 @@
                                                     </div>
                                                     <div class="form-group" style="text-align:end">
                                                         </br>
-                                                        <button class="btn" style="width:5%;color:red" id="add_item1">
+                                                        <button class="btn" style="width:5%;color:red" id="user_add_item1">
                                                             <i class="fa fa-plus pe-1"></i></button>
                                                     </div>
                                                     <div class="col-12 mb-3">
@@ -255,11 +255,11 @@
                                                                     <label class="formGroupExampleInput2">Discount
                                                                         Type</label>
                                                                     <br>
-                                                                    <input class="form-check-input" type="radio" name="discount_type" id="discount_type" value="fixed">
+                                                                    <input class="form-check-input" type="radio" name="discount_type" id="user_discount_type" value="fixed">
                                                                     <label class="formGroupExampleInput2">
                                                                         Fxd &nbsp; &nbsp;
                                                                     </label>
-                                                                    <input class="discount_type form-check-input" type="radio" name="discount_type" id="discount_type" value="percentage">
+                                                                    <input class="discount_type form-check-input" type="radio" name="discount_type" id="user_discount_type" value="percentage">
                                                                     <label class="formGroupExampleInput2">
                                                                         %
                                                                     </label>
@@ -271,14 +271,14 @@
                                                                 <div class="form-group">
                                                                     <label class="formGroupExampleInput2 label_discount_amount">Discount
                                                                         Amount ($)</label>
-                                                                    <input type="text" style="text-align:right" ; onkeypress="return onlyNumberKey(event)" id="discount_amount" class="form-control" />
+                                                                    <input type="text" style="text-align:right" ; onkeypress="return onlyNumberKey(event)" id="user_discount_amount" class="form-control" />
                                                                 </div>
                                                             </div>
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label class="formGroupExampleInput2 label_discount_total">Discount
                                                                         Total ($)</label>
-                                                                    <input type="text" disabled style="text-align:right; border:0px;background-color:white;" onkeypress="return onlyNumberKey(event)" id="discount_total" class="form-control" />
+                                                                    <input type="text" disabled style="text-align:right; border:0px;background-color:white;" onkeypress="return onlyNumberKey(event)" id="user_discount_total" class="form-control" />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -289,7 +289,7 @@
                                                                 <div class="form-group">
                                                                     <!-- border-style:none -->
                                                                     <label>Subtotal ($): <label>
-                                                                            <input type="text" style="font-weight: bold;text-align:right;border:none;background-color:white" name="subtotal" id="subtotal" class="form-control no-outline subtotal" disabled>
+                                                                            <input type="text" style="font-weight: bold;text-align:right;border:none;background-color:white" name="subtotal" id="user_subtotal" class="form-control no-outline subtotal" disabled>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -300,7 +300,7 @@
                                                                 <div class="form-group">
                                                                     <label class="formGroupExampleInput2">Dollar Amount
                                                                         ($)</label>
-                                                                    <input type="text" id="dollar_amount" style="font-weight: bold;border:none; text-align:right;background-color:white" class="form-control dollar_amount" disabled />
+                                                                    <input type="text" id="user_dollar_amount" style="font-weight: bold;border:none; text-align:right;background-color:white" class="form-control dollar_amount" disabled />
 
                                                                 </div>
                                                             </div>
@@ -308,14 +308,14 @@
                                                                 <div class="form-group">
                                                                     <label class="formGroupExampleInput2">Peso Rate
                                                                         (Php)</label>
-                                                                    <input type="text" style="font-weight: bold;border:none; text-align:right;background-color:white" onkeypress="return onlyNumberKey(event)" id="peso_rate" class="form-control" disabled />
+                                                                    <input type="text" style="font-weight: bold;border:none; text-align:right;background-color:white" onkeypress="return onlyNumberKey(event)" id="user_peso_rate" class="form-control" disabled />
                                                                 </div>
                                                             </div>
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label class="formGroupExampleInput2" for="form3Example2">Converted
                                                                         Amount</label>
-                                                                    <input type="text" style="font-weight: bold;border:none; text-align:right;background-color:white" onkeypress="return onlyNumberKey(event)" id="converted_amount" class="form-control converted_amount" disabled />
+                                                                    <input type="text" style="font-weight: bold;border:none; text-align:right;background-color:white" onkeypress="return onlyNumberKey(event)" id="user_converted_amount" class="form-control converted_amount" disabled />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -343,7 +343,7 @@
                     <div class=" tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                             <div class="card-body table-responsive">
-                                <table style=" color: #A4A6B3;font-size: 14px;" class="table table-hover" id="datatablesSimple">
+                                <table style=" color: #A4A6B3;font-size: 14px;" class="table table-hover" id="user_datatablesSimple">
                                     <div class="col-md-4 w-100">
                                         <div class="input-group">
                                             <button style="color:white; background-color: #CF8029;" data-bs-toggle="modal" data-bs-target="#exampleModal" type="submit" id="button-addon2" class="btn form-check-inline pe-3 "><i class="fa fa-plus pe-1"></i>Create
