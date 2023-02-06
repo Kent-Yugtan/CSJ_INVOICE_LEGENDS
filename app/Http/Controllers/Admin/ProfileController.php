@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Invoice;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use App\Models\DeductionType;
 use App\Models\ProfileDeductionTypes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class ProfileController extends Controller
 {
@@ -314,7 +316,7 @@ class ProfileController extends Controller
 
     public function current_show_data_active(Request $request)
     {
-        $data = User::with('profile')->select(
+        $data = User::with('profile.invoice')->select(
             [
                 'users.*',
                 'position',
@@ -337,6 +339,9 @@ class ProfileController extends Controller
                 DB::raw("CONCAT(first_name, ' ', last_name) full_name")
             ],
         )->profile()->where('profile_status', 'Active');
+        // ->join('invoices', 'profiles.id', '=', 'invoices.profile_id')->orderBy('invoices.created_at', 'DESC');
+
+
 
         if ($request->search) {
             $data = $data->where(

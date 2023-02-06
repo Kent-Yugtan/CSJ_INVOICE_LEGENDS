@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Deduction;
 use App\Models\Invoice;
 use App\Models\Profile;
 use App\Models\User;
@@ -114,29 +115,6 @@ class InvoiceController extends Controller
         }
     }
 
-    // public function generate_invoice()
-    // {
-    //     // $last_invoice = Invoice::where('profile_id', $profile_id)->orderBy('invoice_no', 'desc')->first();
-    //     $last_invoice = Invoice::latest('invoice_no')->first();
-    //     $last_num = 0;
-    //     if ($last_invoice) {
-    //         // $last_num = $last_invoice->invoice_no != null ? $last_invoice->invoice_no + 1 : 00001;
-    //         $last_num = (int) str_replace('5PP-', "", $last_invoice->invoice_no);
-    //         $_last_num = str_pad($last_num + 1, 5, '0', STR_PAD_LEFT);
-    //         $last_num = '5PP-' . $_last_num;
-    //     } else {
-    //         // $last_num = 00001;
-    //         $last_num = '5PP-00001';
-    //     }
-    //     // $invoice_num = sprintf("%05d", $last_num);
-    //     // return $last_num;
-    //     return response()->json([
-    //         'success' => true,
-    //         'message' => "Success generate Invoice Number",
-    //         'data' => $last_num,
-    //     ], 200);
-    // }
-
     public function current()
     {
         return view('invoice.current');
@@ -191,6 +169,7 @@ class InvoiceController extends Controller
                         'profile_id' => '',
                         'description' => 'required',
                         'sub_total' => '',
+                        'peso_rate' => '',
                         'converted_amount' => '',
                         'discount_type' => '',
                         'discount_amount' => '',
@@ -240,36 +219,7 @@ class InvoiceController extends Controller
         }
     }
 
-    public function show_invoice(Request $request)
-    {
-        $findProfile = Profile::firstWhere('user_id', $request->user_id);
 
-        $invoices = Invoice::with('profile.user', 'profile.deductions.profile_deduction_types.deduction_type', 'invoice_items')
-            ->where('profile_id', $findProfile->id);
-
-        if ($request->search) {
-            $invoices = $invoices->where(
-                function ($q) use ($request) {
-                    $q->orWhere('invoice_no', 'LIKE', '%' . $request->search . '%');
-                }
-            );
-        }
-
-        $invoices = $invoices->orderby('created_at', 'desc');
-
-        if ($request->page_size) {
-            $invoices = $invoices->limit($request->page_size)
-                ->paginate($request->page_size, ['*'], 'page', $request->page)
-                ->toArray();
-        } else {
-            $invoices = $invoices->get();
-        }
-
-        return response()->json([
-            'success' => true,
-            'data' => $invoices,
-        ], 200);
-    }
     public function count_pending()
     {
         $pending = Invoice::where('invoice_status', 'Pending')->count();
@@ -310,6 +260,99 @@ class InvoiceController extends Controller
                 'success' => true,
                 'data' => $data->invoice_status,
             ]);
+        }
+    }
+    public function show_deductions_dataONdeductions(Request $request)
+    {
+
+        $deductions = Deduction::with('invoice', 'profile_deduction_types.deduction_type')
+            ->where('profile_id', $request->profile_id);
+
+        if (isset($request->search)) {
+            $deductions = $deductions->where(
+                function ($q) use ($request) {
+                    $q->orWhere('invoice_no', 'LIKE', '%' . $request->search . '%');
+                }
+            );
+        }
+
+        if (isset($request->filter_all_deductions)) {
+            if ($request->filter_all_deductions == 'All') {
+                $deductions =  $deductions->whereHas('invoice', function ($query) use ($request) {
+                    $query->where('invoice_status', '<>', '');
+                });
+            } else {
+                $deductions =  $deductions->whereHas('invoice', function ($query) use ($request) {
+                    $query->where('invoice_status', $request->filter_all_deductions);
+                });
+            }
+        }
+
+        $deductions = $deductions->orderby('created_at', 'desc');
+
+        if ($request->page_size) {
+            $deductions = $deductions->limit($request->page_size)
+                ->paginate($request->page_size, ['*'], 'page', $request->page)
+                ->toArray();
+        } else {
+            $deductions = $deductions->get();
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $deductions,
+        ]);
+    }
+    public function show_invoice(Request $request)
+    {
+        $findProfile = Profile::firstWhere('user_id', $request->user_id);
+
+        $invoices = Invoice::with('profile.user', 'deductions.profile_deduction_types.deduction_type', 'invoice_items')
+            ->where('profile_id', $findProfile->id);
+
+        if (isset($request->search)) {
+            $invoices = $invoices->where(
+                function ($q) use ($request) {
+                    $q->orWhere('invoice_no', 'LIKE', '%' . $request->search . '%');
+                }
+            );
+        }
+
+        if (isset($request->filter_all_invoices)) {
+            if ($request->filter_all_invoices == 'All') {
+                $invoices = $invoices->where('invoice_status', '<>', '');
+            } else {
+                $invoices = $invoices->where('invoice_status', $request->filter_all_invoices);
+            }
+        }
+
+        $invoices = $invoices->orderby('created_at', 'desc');
+
+        if ($request->page_size) {
+            $invoices = $invoices->limit($request->page_size)
+                ->paginate($request->page_size, ['*'], 'page', $request->page)
+                ->toArray();
+        } else {
+            $invoices = $invoices->get();
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $invoices,
+        ], 200);
+    }
+
+    public function show_edit_invoice(Request $request)
+    {
+        $invoice_id = $request->invoice_id;
+        if ($invoice_id) {
+            $data = Invoice::with('deductions.profile_deduction_types.deduction_type', 'invoice_items')
+                ->where('id', $invoice_id)->first();
+
+            return response()->json([
+                'success' => true,
+                'data' => $data,
+            ], 200);
         }
     }
 }

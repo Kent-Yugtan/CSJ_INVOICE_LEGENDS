@@ -72,6 +72,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('admin/show_invoice', [InvoiceController::class, 'show_invoice']);
     Route::get('admin/editInvoice/{id}', [InvoiceController::class, 'editInvoice']);
     Route::get('getInvoiceStatus/{id}', [InvoiceController::class, 'getInvoiceStatus']);
+    Route::get('admin/show_deductions_dataONdeductions', [InvoiceController::class, 'show_deductions_dataONdeductions']);
+    // Route::get('admin/show_edit_invoice/{invoice_id}', [InvoiceController::class, 'show_edit_invoice']);
 
     // FOR EMAIL CONFIG TABLE
     Route::get('get_name', [EmailConfigController::class, 'get_name']);
