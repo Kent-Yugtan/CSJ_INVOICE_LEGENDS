@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.user')
 @section('content-dashboard')
 <div class="container-fluid pt-0">
     <h1 class="mt-0">Add Profile</h1>
@@ -12,7 +12,7 @@
                         @csrf
                         <div class="col mb-3">
                             <div class="profile-pic-div" style="position: relative; height:200px">
-                                <img src="/images/default.png" id="user_photo">
+                                <img src="/images/default.png" id="photo">
                                 <input name="file" type="file" id="user_file">
                                 <label for="file" id="user_uploadBtn">Choose Photo</label>
                             </div>
