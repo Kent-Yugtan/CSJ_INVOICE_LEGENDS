@@ -6,7 +6,7 @@
     <ol class="breadcrumb mb-4"></ol>
 
     <div class="row">
-        <div class="col">
+        <div class="col-12 col-md-6">
             <div class="card-hover card shadow p-2 mb-4 bg-white rounded" style="width: 100%;">
                 <div>
                     <div class="row text-center py-3">
@@ -19,7 +19,7 @@
                 <div class="d-flex align-items-center justify-content-between"></div>
             </div>
         </div>
-        <div class="col">
+        <div class="col-12 col-md-6">
             <div class="card-hover card shadow p-2 mb-4 bg-white rounded" style="width: 100%;">
                 <div>
                     <div class="row text-center py-3">

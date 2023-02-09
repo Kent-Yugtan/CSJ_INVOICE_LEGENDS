@@ -6,8 +6,8 @@
     <ol class="breadcrumb mb-4"></ol>
 
     <div class="row">
-        <div class="col">
-            <div class="card-hover card shadow p-2 mb-4 bg-white rounded" style="width: 100%;">
+        <div class="col-12 col-md-6">
+            <div class="card-hover card shadow p-2 mb-4 bg-white rounded">
                 <div>
                     <div class="row text-center py-3">
                         <Label class="fs-1">
@@ -20,8 +20,8 @@
                 <div class="d-flex align-items-center justify-content-between"></div>
             </div>
         </div>
-        <div class="col">
-            <div class="card-hover card shadow p-2 mb-4 bg-white rounded" style="width: 100%;">
+        <div class="col-12 col-md-6">
+            <div class="card-hover card shadow p-2 mb-4 bg-white rounded">
                 <div>
                     <div class="row text-center py-3">
                         <Label class="fs-1">
@@ -37,8 +37,8 @@
     </div>
 
     <div class="row">
-        <div class="col ">
-            <div class="input-group ">
+        <div class="col-12">
+            <div class="input-group">
                 <input id="search" name="search" type="text" class="form-control form-check-inline"
                     placeholder="Search">
                 <button class="btn" style=" color:white; background-color: #CF8029;width:30%"
@@ -49,14 +49,20 @@
     </div>
 
     <div class="row pt-3">
-        <div class="col">
+        <div class="col-12">
             <div class="card mb-5">
                 <div class="card-header">
                     <i class="fas fa-table me-1"></i>
                     Current Profile
                 </div>
                 <div id="tbl_user_wrapper" class="card-body table-responsive">
-                    <table style=" color: #A4A6B3; " class="table table-hover" id="tbl_user">
+                    <table style=" color: #A4A6B3 ; " class="table table-hover" id="tbl_user">
+                        <style>
+                            .table-responsive {
+                              overflow-x: auto;
+                              overflow-y: hidden;
+                            }
+                          </style>
                         <thead>
                             <tr>
                                 <th>User</th>
@@ -69,7 +75,7 @@
                         </thead>
                         <tbody></tbody>
                     </table>
-
+                        
                     <div style="display: flex; justify-content: space-between;">
                         <div class="page_showing" id="tbl_user_showing"></div>
                         <ul class="pagination" id="tbl_user_pagination"></ul>
