@@ -3,7 +3,7 @@
         <div class="sb-sidenav-menu">
             <div class="nav">
 
-                <a class="nav-link" href="{{url('admin/dashboard')}}">
+                <a class="nav-link" href="{{url('user/dashboard')}}">
                     <div class="sb-nav-link-icon">
                         <i class="fas fa-tachometer-alt"></i>
                     </div>
@@ -23,9 +23,9 @@
                 <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
                     data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="{{url('admin/profile')}}">Add Profile</a>
-                        <a class="nav-link" href="{{url('admin/current')}}">Current Profiles</a>
-                        <a class="nav-link" href="{{url('admin/inactive')}}">Inactive Profiles</a>
+                        <a class="nav-link" href="{{url('user/profile')}}">Add Profile</a>
+                        <a class="nav-link" href="{{url('user/current')}}">Current Profiles</a>
+                        <a class="nav-link" href="{{url('user/inactive')}}">Inactive Profiles</a>
                     </nav>
                 </div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts2"
@@ -73,9 +73,14 @@
                 <div class="collapse" id="collapseLayouts3" aria-labelledby="headingOne"
                     data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        {{-- <a class="nav-link" href="{{url('settings/invoice')}}"> Invoices </a> --}}
+
                         <a class="nav-link" href="{{url('settings/emailconfig')}}">Email config</a>
                         <a class="nav-link" href="{{url('settings/invoiceconfig')}}">Invoice Config</a>
+                        <a class="nav-link" href="{{url('settings/editinvoice')}}">Edit Invoice</a>
+
+
+
+                        {{-- <a class="nav-link" href="{{url('settings/invoice')}}"> Invoices </a> --}}
                     </nav>
                 </div>
             </div>

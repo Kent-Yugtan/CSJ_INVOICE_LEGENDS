@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\DeductionType;
 use App\Models\Profile;
@@ -98,7 +99,12 @@ class ProfileDeductionTypesController extends Controller
         //
         $profileDeductionType_id = $request->id;
         if ($profileDeductionType_id) {
-            $profileDeductionTypes = ProfileDeductionTypes::where('id', $profileDeductionType_id)->delete();
+
+            $profileDeductionTypes = DB::table('profile_deduction_types')
+                ->leftJoin('deductions', 'profile_deduction_types.id', 'deductions.profile_deduction_type_id')
+                ->where('profile_deduction_types.id', $profileDeductionType_id);
+            DB::table('deductions')->where('profile_deduction_type_id', $profileDeductionType_id)->delete();
+            $profileDeductionTypes->delete();
 
             return response()->json([
                 'success' => true,

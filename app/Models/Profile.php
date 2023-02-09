@@ -33,4 +33,8 @@ class Profile extends Model
     {
         return $this->hasMany('App\Models\Deduction', 'profile_id');
     }
+    public function scopeInvoice($q)
+    {
+        return $q->leftJoin('invoices', 'profiles.id', '=', 'invoices.profile_id');
+    }
 }

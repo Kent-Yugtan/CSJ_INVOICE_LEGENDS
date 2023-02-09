@@ -301,7 +301,7 @@ $(document).ready(function() {
 
         if (document.getElementById('file').files.length > 0) {
             formData.append('profile_picture', document.getElementById('file').files[0],
-                "picture.png");
+                document.getElementById('file').files[0].name);
         }
 
         axios.post(apiUrl + '/api/saveprofile', formData, {
