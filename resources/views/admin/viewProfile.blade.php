@@ -313,7 +313,6 @@
 
                                         <div class="row px-4 pb-4" id="header">
                                             <div class="col-12 mb-3">
-                                                <span hidden>profile id</span>
                                                 <input id="profile_id" name="profile_id" type="text" hidden>
                                                 <div class="form-group w-50">
                                                     <!-- <label class="formGroupExampleInput2">Invoice #</label> -->
@@ -356,11 +355,11 @@
                                                             <label class="formGroupExampleInput2">Discount
                                                                 Type</label>
                                                             <br>
-                                                            <input class="form-check-input" type="radio" name="discount_type" id="discount_type" value="fixed">
+                                                            <input class="form-check-input" type="radio" name="discount_type" id="discount_type" value="Fixed">
                                                             <label class="formGroupExampleInput2">
                                                                 Fxd &nbsp; &nbsp;
                                                             </label>
-                                                            <input class="discount_type form-check-input" type="radio" name="discount_type" id="discount_type" value="percentage">
+                                                            <input class="discount_type form-check-input" type="radio" name="discount_type" id="discount_type" value="Percentage">
                                                             <label class="formGroupExampleInput2">
                                                                 %
                                                             </label>
@@ -509,6 +508,7 @@
         </div>
     </div>
 
+
     <!-- START MODAL ADD -->
     <div class="modal fade" id="modal-create-deduction" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -551,7 +551,7 @@
     <!-- END MODAL ADD -->
 
     <!-- START MODAL DEDUCTION EDIT -->
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-dialog">
                 <div class="modal-content ">
@@ -586,7 +586,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- START MODAL DEDUCTION EDIT -->
 
     <!-- START MODAL PROFILE DEDUCTION TYPE EDIT -->
@@ -1208,7 +1208,7 @@
                     $(".label_discount_amount").addClass('d-none');
                     $(".label_discount_total").addClass('d-none');
                 } else {
-                    if (this.value == 'fixed') {
+                    if (this.value == 'Fixed') {
                         //write your logic here
                         // console.log("FIXED");
                         $("#discount_amount").removeClass('d-none');
@@ -1217,8 +1217,9 @@
                         $(".label_discount_total").removeClass('d-none');
 
                         $('#discount_amount').val('0.00');
+                        $('#discount_total').val('0.00');
 
-                    } else if (this.value == 'percentage') {
+                    } else if (this.value == 'Percentage') {
                         //write your logic here
                         // console.log("PERCENTAGE");
                         $("#discount_amount").removeClass('d-none');
@@ -1240,7 +1241,7 @@
 
             function subtotal() {
                 let discount_type = $("input[id='discount_type']:checked").val();
-                let discount_amount = $s('#discount_amount').val();
+                let discount_amount = $('#discount_amount').val();
                 let discount_total = $('#discount_total').val();
                 let subtotal = $('#subtotal').val();
                 var sum = 0;
@@ -1249,16 +1250,15 @@
                     sum += Number($(this).val().replaceAll(',', ''));
                 });
 
-                if (discount_type == 'fixed') {
-                    $('#discount_total').val(PHP(parseFloat(discount_amount ? discount_amount : 0) * 1)
-                        .format());
+                if (discount_type == 'Fixed') {
+                    $('#discount_total').val(PHP(parseFloat(discount_amount ? discount_amount : 0) * 1).format());
                     let sub_total = (sum - $('#discount_total').val().replaceAll(',', ''));
                     $('#subtotal').val(PHP(sub_total).format());
 
                     let dollar_amount = $('#subtotal').val();
                     $('#dollar_amount').val(PHP(dollar_amount).format());
                     DeductionItems_total()
-                } else if (discount_type == 'percentage') {
+                } else if (discount_type == 'Percentage') {
 
                     let percentage = parseFloat(((discount_amount ? discount_amount : 0) / 100) * sum);
                     $('#discount_total').val(PHP(percentage).format());
@@ -1325,7 +1325,7 @@
                     $('#discount_amount').val('0.00');
                 } else {
                     let discount_type = $("input[id='discount_type']:checked").val();
-                    if (discount_type == 'percentage') {
+                    if (discount_type == 'Percentage') {
                         let discount_amount = $('#discount_amount').val();
                         $('#discount_amount').val(parseInt(discount_amount));
                     } else {
@@ -1544,6 +1544,7 @@
                         } else {
                             let deduction_count = data.data.profile_deduction_types.length;
                             console.log("profile_deduction_types", data);
+                            $("#profile_id").val(data.data.id);
                             if (deduction_count > 0) {
                                 data.data.profile_deduction_types.map((item) => {
                                     let wrapper = $('#show_deduction_items');
@@ -1590,8 +1591,6 @@
                         console.log("error", error);
                     });
             });
-
-
 
             $('#invoice_items').on('submit', function(e) {
                 e.preventDefault();
@@ -1700,9 +1699,7 @@
                     Deductions,
                 }
 
-                console.log("Deductions", data);
-                axios.
-                post(apiUrl + "/api/createinvoice", data, {
+                axios.post(apiUrl + "/api/createinvoice", data, {
                     headers: {
                         Authorization: token
                     },
