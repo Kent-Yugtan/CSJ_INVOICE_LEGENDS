@@ -35,9 +35,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::resource('admin/dashboard', DashboardController::class);
 
-    // FOR POST INVOICE TABLE
-    Route::post('createinvoice', [InvoiceController::class, 'create_invoice']);
-
     // FOR PROFILE TABLE
     Route::resource('admin/profile', ProfileController::class);
     Route::post('saveprofile', [ProfileController::class, 'store']);
@@ -65,7 +62,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('settings/show_emailedit/{id}', [EmailConfigController::class, 'show_edit']);
 
     //  GET INVOICES FUNCTIONS
-    Route::resource('admin/invoice', InvoiceController::class);
+    Route::post('createinvoice', [InvoiceController::class, 'create_invoice']);
     Route::get('admin/current_invoice', [InvoiceController::class, 'current_invoice']);
     Route::get('admin/inactive_invoice', [InvoiceController::class, 'inactive_invoice']);
     Route::get('invoice/check_profile/{id}', [InvoiceController::class, 'check_profile']);
@@ -74,7 +71,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('admin/editInvoice/{id}', [InvoiceController::class, 'editInvoice']);
     Route::get('getInvoiceStatus/{id}', [InvoiceController::class, 'getInvoiceStatus']);
     Route::get('admin/show_deductions_dataONdeductions', [InvoiceController::class, 'show_deductions_dataONdeductions']);
-    // Route::get('admin/show_edit_invoice/{invoice_id}', [InvoiceController::class, 'show_edit_invoice']);
+    Route::post('update_status', [InvoiceController::class, 'update_status']);
 
     // FOR EMAIL CONFIG TABLE
     Route::get('get_name', [EmailConfigController::class, 'get_name']);

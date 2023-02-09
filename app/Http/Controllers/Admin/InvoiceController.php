@@ -161,6 +161,25 @@ class InvoiceController extends Controller
 
         ]);
     }
+
+
+    public function update_status(Request $request)
+    {
+        $invoice_id = $request->id;
+        $data = Invoice::find($invoice_id);
+
+        $data->fill([
+            'id' => $invoice_id,
+            'invoice_status' => $request->invoice_status,
+        ])->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => "Invoice status has been successfully updated.",
+            'data' => $data,
+        ]);
+    }
+
     public function create_invoice(Request $request)
     {
         $error = false;

@@ -2,14 +2,14 @@
 
 
 <script>
-function edValueKeyPress() {
-    var edValue = document.getElementById("full_name");
-    var s = edValue.value;
+    function edValueKeyPress() {
+        var edValue = document.getElementById("full_name");
+        var s = edValue.value;
 
-    var lblValue = document.getElementById("full_name_output");
-    lblValue.innerText = " " + s;
+        var lblValue = document.getElementById("full_name_output");
+        lblValue.innerText = " " + s;
 
-}
+    }
 </script>
 
 @section('content-dashboard')
@@ -35,8 +35,7 @@ function edValueKeyPress() {
                         @endif
                     </div>
 
-                    <form method="POST" action="{{ route('profile.save')}}" class="row g-3 needs-validation" novalidate
-                        enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('profile.save')}}" class="row g-3 needs-validation" novalidate enctype="multipart/form-data">
 
                         <div class="col mb-3">
                             <div class="profile-pic-div" style="position: relative; height:200px">
@@ -65,10 +64,7 @@ function edValueKeyPress() {
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Full Name</label>
-                            <input id="full_name" onKeyPress="edValueKeyPress()" onKeyUp="edValueKeyPress()"
-                                name="full_name" type="text"
-                                class="form-control @error('full_name') is-invalid @enderror"
-                                id="formGroupExampleInput2" placeholder="Full Name">
+                            <input id="full_name" onKeyPress="edValueKeyPress()" onKeyUp="edValueKeyPress()" name="full_name" type="text" class="form-control @error('full_name') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Full Name">
                             @error('full_name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -78,8 +74,7 @@ function edValueKeyPress() {
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Position</label>
-                            <select class="form-select @error('position') is-invalid @enderror" name="position"
-                                aria-label="Default select example" defaultValue="select">
+                            <select class="form-select @error('position') is-invalid @enderror" name="position" aria-label="Default select example" defaultValue="select">
                                 <option selected disabled value="">Please Select Position</option>
                                 <option value="Lead Developer">Lead Developer</option>
                                 <option value="Senior Developer">Senior Developer</option>
@@ -98,9 +93,7 @@ function edValueKeyPress() {
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Phone Number</label>
-                            <input name="phone_number" type="text"
-                                class="form-control @error('phone_number') is-invalid @enderror"
-                                id="formGroupExampleInput2" placeholder="Phone Number">
+                            <input name="phone_number" type="text" class="form-control @error('phone_number') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Phone Number">
                             @error('phone_number')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -110,9 +103,7 @@ function edValueKeyPress() {
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Address</label>
-                            <input name="address" type="text"
-                                class="form-control @error('address') is-invalid @enderror" id="formGroupExampleInput2"
-                                placeholder="Address">
+                            <input name="address" type="text" class="form-control @error('address') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Address">
                             @error('address')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -122,9 +113,7 @@ function edValueKeyPress() {
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Province</label>
-                            <input name="province" type="text"
-                                class="form-control @error('province') is-invalid @enderror" id="formGroupExampleInput2"
-                                placeholder="Province">
+                            <input name="province" type="text" class="form-control @error('province') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Province">
                             @error('province')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -134,8 +123,7 @@ function edValueKeyPress() {
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">City</label>
-                            <input name="city" type="text" class="form-control @error('city') is-invalid @enderror"
-                                id="formGroupExampleInput2" placeholder="City">
+                            <input name="city" type="text" class="form-control @error('city') is-invalid @enderror" id="formGroupExampleInput2" placeholder="City">
                             @error('city')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -145,9 +133,7 @@ function edValueKeyPress() {
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Zip Code</label>
-                            <input name="zip_code" type="text"
-                                class="form-control @error('zip_code') is-invalid @enderror" id="formGroupExampleInput2"
-                                placeholder="Zip Code">
+                            <input name="zip_code" type="text" class="form-control @error('zip_code') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Zip Code">
                             @error('zip_code')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -157,8 +143,7 @@ function edValueKeyPress() {
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Profile Status</label>
-                            <select class="form-select @error('profile_status') is-invalid @enderror"
-                                name="profile_status" aria-label="Default select example">
+                            <select class="form-select @error('profile_status') is-invalid @enderror" name="profile_status" aria-label="Default select example">
                                 <option selected disabled value="">Please Select Profile Status</option>
                                 <option value="Active">Active</option>
                                 <option value="Inactive">Inactive</option>
@@ -174,9 +159,7 @@ function edValueKeyPress() {
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Account Number</label>
-                            <input name="acct_no" type="text"
-                                class="form-control @error('acct_no') is-invalid @enderror" id="formGroupExampleInput2"
-                                placeholder="Account Number">
+                            <input name="acct_no" type="text" class="form-control @error('acct_no') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Account Number">
                             @error('acct_no')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -186,9 +169,7 @@ function edValueKeyPress() {
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Account Name</label>
-                            <input name="acct_name" type="text"
-                                class="form-control @error('acct_name') is-invalid @enderror"
-                                id="formGroupExampleInput2" placeholder="Account Name">
+                            <input name="acct_name" type="text" class="form-control @error('acct_name') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Account Name">
                             @error('acct_name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -198,8 +179,7 @@ function edValueKeyPress() {
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Bank Name</label>
-                            <select class="form-select @error('bank_name') is-invalid @enderror" name="bank_name"
-                                aria-label="Default select example">
+                            <select class="form-select @error('bank_name') is-invalid @enderror" name="bank_name" aria-label="Default select example">
                                 <option selected disabled value="">Please Select Bank Name</option>
                                 <option value="BDO Unibank Inc.">BDO Unibank Inc. (BDO)</option>
                                 <option value="Land Bank of the Philippines">Land Bank of the Philippines (LANDBANK)
@@ -242,9 +222,7 @@ function edValueKeyPress() {
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Bank Location</label>
-                            <input name="bank_location" type="text"
-                                class="form-control @error('bank_location') is-invalid @enderror"
-                                id="formGroupExampleInput2" placeholder="Bank Address">
+                            <input name="bank_location" type="text" class="form-control @error('bank_location') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Bank Address">
                             @error('bank_location')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -254,9 +232,7 @@ function edValueKeyPress() {
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Gcash Number</label>
-                            <input name="gcash_no" type="text"
-                                class="form-control @error('gcash_no') is-invalid @enderror" id="formGroupExampleInput2"
-                                placeholder="Gcash Number">
+                            <input name="gcash_no" type="text" class="form-control @error('gcash_no') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Gcash Number">
                             @error('gcash_no')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -266,9 +242,7 @@ function edValueKeyPress() {
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Date Hired</label>
-                            <input name="date_hired" type="date"
-                                class="form-control @error('date_hired') is-invalid @enderror"
-                                id="formGroupExampleInput2" placeholder="Date Hired">
+                            <input name="date_hired" type="date" class="form-control @error('date_hired') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Date Hired">
                             @error('date_hired')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -277,16 +251,13 @@ function edValueKeyPress() {
                         </div>
 
                         <div class="col mb-3">
-                            <button type="submit"
-                                style="width:100%; height:50px;color:white; background-color: #CF8029;" class="btn ">Add
+                            <button type="submit" style="width:100%; height:50px;color:white; background-color: #CF8029;" class="btn ">Add
                                 Profile</button>
                         </div>
 
 
                         <div class="col mb-3">
-                            <button type="submit"
-                                style="width:100%; height:50px;color:white; background-color: #A4A6B3;"
-                                class="btn">Change Password</button>
+                            <button type="submit" style="width:100%; height:50px;color:white; background-color: #A4A6B3;" class="btn">Change Password</button>
                         </div>
                     </form>
                 </div>
