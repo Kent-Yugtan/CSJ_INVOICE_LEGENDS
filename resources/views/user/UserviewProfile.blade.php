@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.user')
 @section('content-dashboard')
 <div class="container-fluid pt-0">
     <h1 class="mt-0">View Profile</h1>

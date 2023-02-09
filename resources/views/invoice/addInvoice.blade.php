@@ -1,10 +1,13 @@
 @extends('layouts.master')
 @section('content-dashboard')
 
+
+
+  
 <div class="container-fluid pt-0">
     <h1 class="mt-0"></h1>
     <ol class="breadcrumb mb-3"></ol>
-    <div class="row whole_row">
+    
         <form id="invoice_items">
             @csrf
             <div class="row px-4 pb-4" id="header">
@@ -39,21 +42,17 @@
                                 <!-- FOR TABLE INVOICE DESCRIPTION DISPLAY -->
                             </div>
 
-                            <div class="col-8 mb-3"></div>
-                            <div class="col-4 mb-3">
-                                <div class="row">
-                                    <div class="col-4 md-2 w-100">
-                                        <div class="form-group">
-                                            </br>
-                                            <button class="btn btn-secondary"
-                                                style="width:100%;color:white; background-color: #CF8029;"
-                                                id="add_item">Add
-                                                Item</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
+                            
+                                
+                                  
+                            <div class="row mb-4">
+                                <div class="col-sm-8"></div>
+                                <div class="col-sm-4"><button class="btn btn-secondary"
+                                    style="width:100%;color:white; background-color: #CF8029;"
+                                    id="add_item">Add
+                                    Item</button></div>
+                              </div>
+                               
                             <div class="col-12 mb-3">
                                 <div class="row">
                                     <div class="col"
@@ -146,23 +145,35 @@
                                 </div>
                             </div>
 
-                            <div class="col-12 mb-3">
-                                <div class="row">
-                                    <div class="col">
-                                        <h3> DEDUCTIONS </h3>
-                                    </div>
-                                </div>
-                            </div>
+                           
 
+
+                            <div class="row">
+                                <div class="col">
+                                 <h3> Deductions </h3>
+                                </div>
+                                <div class="col-6">
+                                 
+                                </div>
+                                <div class="col">
+                                  
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col">
+                                  
+                                </div>
+                                <div class="col-5"style="text-align:end">
+                                  <h5> Grand Total <h5>
+                                </div>
+                                <div class="col">
+                                  
+                                </div>
+                              </div>
 
                             <div class="col-12" id="show_deduction_items">
 
-                                <!-- FOR TABLE INVOICE DESCRIPTION DISPLAY -->
-                                <!-- <div class="col-12 mb-3">
-                                    <div class="row">
-                               
-                                    </div>
-                                </div> -->
+                    
                             </div>
 
                             <!-- <div class="col-12 mb-3">
@@ -221,7 +232,7 @@
                                 <div class="row">
                                     <div class="col-8"></div>
                                     <div class="col-4 text-center mb-3">
-                                        <h4> Grand Total </h4>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -253,28 +264,20 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-6 px-2 w-25">
-                    <div class="card shadow p-2 mb-5 bg-white rounded " style="width: 100%; height:20vh">
-                        <!-- <div class="card-header">Profile Information</div> -->
-                        <div class="row pt-3">
-                            <div class="col">
+                
+                <div class="row-md-6 w-25 px-2">
+                    <div class="card-responsive-md shadow p-2  bg-white rounded " style="width: 100%; height:120px">              
                                 <div class="pb-3">
                                     <button type="submit" class="btn btn-secondary w-100"
                                         style="color:White; background-color:#CF8029;">Save</button>
                                 </div>
-
                                 <div>
                                     <button type="button" class="btn btn-secondary w-100"
                                         style=" color:#CF8029; background-color:white; "
-                                        data-bs-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                        data-bs-dismiss="modal">Close</button></div>
                 </div>
-        </form>
-    </div>
+            </div>
+        </form
 </div>
 
 <div style="position: fixed; top: 60px; right: 20px;">

@@ -5,8 +5,8 @@
     <ol class="breadcrumb mb-3"></ol>
     <div class="row">
 
-        <div class="col-md-5 px-2">
-            <div class="card shadow p-2 mb-5 bg-white rounded" style="width: 100%; height:100%">
+        <div class="col-md-6 px-2">
+            <div class="card shadow p-2 mb-5 bg-white rounded" style="width: 100%; height:100%;">
                 <div class="card-header">Create Email</div>
                 <div class="row px-4 pb-4" id="header">
                     <form id="emailconfigs_store" class="row g-3 needs-validation" novalidate>
@@ -51,8 +51,8 @@
             </div>
         </div>
 
-        <div class="col-md-7 px-2">
-            <div class="card shadow  bg-white rounded " style="height: 100%; ">
+        <div class="col-md-6 px-2">
+            <div class="card shadow  bg-white rounded " style="height: 100%;width:100% ">
                 <div class="card-body table-responsive ">
                     <div class="row mt-3">
                         <div class="col">
@@ -68,7 +68,7 @@
                         </div>
                     </div>
                     <table style="color: #A4A6B3;" class="table " id="table_emailconfigs">
-                        <thead>
+                        <thead class="responsive">
                             <th>Full Name</th>
                             <th>Email Address</th>
                             <th>Position</th>

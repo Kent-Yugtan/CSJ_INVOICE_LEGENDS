@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.user')
 @section('content-dashboard')
 <div class="container-fluid pt-0">
     <h1 class="mt-0">Edit Invoice</h1>
@@ -8,20 +8,20 @@
             <div class="card shadow px-5 p-2 bg-white rounded " style="width: 100%; height:90%; ">
                 <div class="row">
                     <div class="col-6 pt-5  fw-bolder">
-                        <div id="fullname"></div>
-                        <div class="pt-3" id="email"></div>
+                        <div id="user_fullname"></div>
+                        <div class="pt-3" id="user_email"></div>
                     </div>
                     <div class="col-6 pt-5  fw-bolder " style="text-align:end">
                         <h2> INVOICES </h2>
-                        <div class="text-muted" id="invoice_no"></div>
+                        <div class="text-muted" id="user_invoice_no"></div>
                     </div>
                 </div>
 
                 <div class="row pt-3">
                     <div class="col-6">
-                        <div id="address"></div>
-                        <div id="city-province"></div>
-                        <div id="zip_code"></div>
+                        <div id="user_address"></div>
+                        <div id="user_city-province"></div>
+                        <div id="user_zip_code"></div>
                     </div>
                 </div>
 
@@ -35,7 +35,7 @@
                     </div>
 
                     <div class="col-3 " style="text-align: right;">
-                        <div id="date_created"></div>
+                        <div id="user_date_created"></div>
                     </div>
                 </div>
 

@@ -1,6 +1,6 @@
-@extends('layouts.master')
+@extends('layouts.user')
 @section('content-dashboard')
-@inject('profile', 'App\Http\Controllers\Admin\ProfileController')
+@inject('profile', 'App\Http\Controllers\user\ProfileController')
 <div class="container-fluid px-4">
     <h1 class="mt-4">Current Profiles</h1>
     <ol class="breadcrumb mb-4"></ol>

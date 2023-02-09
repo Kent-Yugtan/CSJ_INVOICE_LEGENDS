@@ -1,6 +1,6 @@
-@extends('layouts.master')
+@extends('layouts.user')
 @section('content-dashboard')
-@inject('invoice', 'App\Http\Controllers\Admin\InvoiceController')
+@inject('invoice', 'App\Http\Controllers\User\InvoiceController')
 <div class="container-fluid px-4">
 
 
