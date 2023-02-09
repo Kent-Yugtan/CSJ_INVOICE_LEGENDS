@@ -34,6 +34,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
 
     Route::resource('admin/dashboard', DashboardController::class);
+    Route::post('createinvoice', [InvoiceController::class, 'create_invoice']);
+
 
     // FOR PROFILE TABLE
     Route::resource('admin/profile', ProfileController::class);
@@ -62,7 +64,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('settings/show_emailedit/{id}', [EmailConfigController::class, 'show_edit']);
 
     //  GET INVOICES FUNCTIONS
-    Route::post('createinvoice', [InvoiceController::class, 'create_invoice']);
     Route::get('admin/current_invoice', [InvoiceController::class, 'current_invoice']);
     Route::get('admin/inactive_invoice', [InvoiceController::class, 'inactive_invoice']);
     Route::get('invoice/check_profile/{id}', [InvoiceController::class, 'check_profile']);
@@ -72,6 +73,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('getInvoiceStatus/{id}', [InvoiceController::class, 'getInvoiceStatus']);
     Route::get('admin/show_deductions_dataONdeductions', [InvoiceController::class, 'show_deductions_dataONdeductions']);
     Route::post('update_status', [InvoiceController::class, 'update_status']);
+    Route::post('delete_invoiceItems/{id}', [InvoiceController::class, 'destroy']);
 
     // FOR EMAIL CONFIG TABLE
     Route::get('get_name', [EmailConfigController::class, 'get_name']);
