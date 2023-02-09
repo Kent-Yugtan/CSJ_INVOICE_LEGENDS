@@ -35,6 +35,9 @@
 
     <script src="{{ asset('/assets/js/scripts.js') }}"></script>
     <script src="{{ asset('/assets/js/currency.min.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.js">
+    </script>
 </head>
 
 <body class="sb-nav-fixed">
@@ -48,6 +51,7 @@
             @include('layouts.inc.admin-footer')
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </body>
 

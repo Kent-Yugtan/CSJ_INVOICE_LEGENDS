@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DeductionTypeController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\EmailConfigController;
+use App\Http\Controllers\Admin\InvoiceConfigController;
 use App\Http\Controllers\Admin\ProfileDeductionTypesController;
 
 /*
@@ -72,6 +73,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('admin/show_invoice', [InvoiceController::class, 'show_invoice']);
     Route::get('admin/editInvoice/{id}', [InvoiceController::class, 'editInvoice']);
     Route::get('getInvoiceStatus/{id}', [InvoiceController::class, 'getInvoiceStatus']);
+    Route::get('admin/show_deductions_dataONdeductions', [InvoiceController::class, 'show_deductions_dataONdeductions']);
+    // Route::get('admin/show_edit_invoice/{invoice_id}', [InvoiceController::class, 'show_edit_invoice']);
 
     // FOR EMAIL CONFIG TABLE
     Route::get('get_name', [EmailConfigController::class, 'get_name']);
@@ -87,6 +90,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('settings/show_deduction_data/{profile_id}', [ProfileDeductionTypesController::class, 'show_deduction_data']);
     Route::get('settings/get_deduction/{id}', [ProfileDeductionTypesController::class, 'get_deduction']);
     Route::post('deleteProfileDeductionTypes/{id}', [ProfileDeductionTypesController::class, 'destroy']);
+
+    // FOR INVOICE CONFIG TABLE
+    Route::post('saveInvoiceConfig', [InvoiceConfigController::class, 'store']);
+    Route::get('show_invoiceConfig_data', [InvoiceConfigController::class, 'show_invoiceConfig_data']);
+    Route::get('invoice_config/show_edit/{id}', [InvoiceConfigController::class, 'show_edit']);
+    Route::get('get_invoice_config', [InvoiceController::class, 'get_invoice_config']);
 });
 
 

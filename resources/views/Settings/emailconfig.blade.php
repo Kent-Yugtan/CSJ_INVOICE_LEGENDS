@@ -13,16 +13,19 @@
                         @csrf
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Full Name</label>
-                            <input id="fullname" name="fullname" type="text" class="form-control" placeholder="Fullname">
+                            <input id="fullname" name="fullname" type="text" class="form-control"
+                                placeholder="Fullname">
                         </div>
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Email Address</label>
-                            <input id="email_address" name="email_address" type="email" class="form-control" placeholder="Email Address">
+                            <input id="email_address" name="email_address" type="email" class="form-control"
+                                placeholder="Email Address">
                         </div>
 
                         <div class="mb-3">
                             <label mb-2 style="color: #A4A6B3;">Position</label>
-                            <select class="form-select @error('position') is-invalid @enderror" id="position" name="position" aria-label="Default select example" defaultValue="select">
+                            <select class="form-select @error('position') is-invalid @enderror" id="position"
+                                name="position" aria-label="Default select example" defaultValue="select">
                                 <option selected disabled value="">Please Select Position</option>
                                 <option value="Lead Developer">Lead Developer</option>
                                 <option value="Senior Developer">Senior Developer</option>
@@ -33,11 +36,15 @@
                         </div>
 
                         <div class="col mb-3">
-                            <button type="submit" style="width:100%; height:50px;color:white; background-color: #CF8029;" class="btn">Save</button>
+                            <button type="submit"
+                                style="width:100%; height:50px;color:white; background-color: #CF8029;"
+                                class="btn">Save</button>
                         </div>
 
                         <div class="col mb-3">
-                            <button type="button" style="width:100%; height:50px;color:white; background-color: #A4A6B3;" class="btn">Close</button>
+                            <button type="button"
+                                style="width:100%; height:50px;color:white; background-color: #A4A6B3;"
+                                class="btn">Close</button>
                         </div>
                     </form>
                 </div>
@@ -50,11 +57,14 @@
                     <div class="row mt-3">
                         <div class="col">
                             <div class="w-100">
-                                <input id="search" type="text" class="form-control form-check-inline" placeholder="Search">
+                                <input id="search" type="text" class="form-control form-check-inline"
+                                    placeholder="Search">
                             </div>
                         </div>
                         <div class="col">
-                            <button type="submit" class="btn w-100" style="color:white; background-color: #CF8029;width:30%" id="button_search">Search</button>
+                            <button type="submit" class="btn w-100"
+                                style="color:white; background-color: #CF8029;width:30%"
+                                id="button_search">Search</button>
                         </div>
                     </div>
                     <table style="color: #A4A6B3;" class="table " id="table_emailconfigs">
@@ -79,7 +89,8 @@
 
     </div>
 
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-dialog">
                 <div class="modal-content ">
@@ -97,12 +108,14 @@
 
                                 <div class="form-group mt-3">
                                     <label for="formGroupExampleInput">Email Address</label>
-                                    <input id="edit_email_address" type="text" class="form-control" placeholder="Email Address">
+                                    <input id="edit_email_address" type="text" class="form-control"
+                                        placeholder="Email Address">
                                 </div>
 
                                 <div class="form-group mt-3">
                                     <label mb-2 style="color: #A4A6B3;">Position</label>
-                                    <select class="form-select" id="edit_position" name="edit_position" aria-label="Default select example" defaultValue="select">
+                                    <select class="form-select" id="edit_position" name="edit_position"
+                                        aria-label="Default select example" defaultValue="select">
                                         <option selected disabled value="">Please Select Position</option>
                                         <option value="Lead Developer">Lead Developer</option>
                                         <option value="Senior Developer">Senior Developer</option>
@@ -114,10 +127,14 @@
 
                                 <div class="row mt-3">
                                     <div class="col mt-3">
-                                        <button type="button" class="btn btn-secondary w-100" style=" color:#CF8029; background-color:white; " data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-secondary w-100"
+                                            style=" color:#CF8029; background-color:white; "
+                                            data-bs-dismiss="modal">Close</button>
                                     </div>
                                     <div class="col mt-3">
-                                        <button type="submit" class="btn btn-secondary w-100" style="color:White; background-color:#CF8029; " data-bs-dismiss="modal">Update</button>
+                                        <button type="submit" class="btn btn-secondary w-100"
+                                            style="color:White; background-color:#CF8029; "
+                                            data-bs-dismiss="modal">Update</button>
                                     </div>
                                 </div>
                             </form>
@@ -147,21 +164,21 @@
     <!-- <button type="button" class="btn btn-primary" id="showtoast">Show Toast</button> -->
 
     <script type="text/javascript">
-        $(document).ready(function() {
-            let toast1 = $('.toast1');
-            show_data();
+    $(document).ready(function() {
+        let toast1 = $('.toast1');
+        show_data();
 
-            $('#button_search').on('click', function() {
-                let search = $('#search').val();
-                show_data({
-                    search
-                });
-            })
-            toast1.toast({
-                delay: 5000,
-                animation: true
+        $('#button_search').on('click', function() {
+            let search = $('#search').val();
+            show_data({
+                search
             });
         })
+        toast1.toast({
+            delay: 5000,
+            animation: true
+        });
+
         toast1.toast({
             delay: 3000,
             animation: true
@@ -391,10 +408,11 @@
 
         });
 
-
         function capitalize(s) {
             if (typeof s !== 'string') return "";
             return s.charAt(0).toUpperCase() + s.slice(1);
         }
+
+    })
     </script>
     @endsection
