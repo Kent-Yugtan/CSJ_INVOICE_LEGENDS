@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Deduction;
 use App\Models\Invoice;
+use App\Models\InvoiceConfig;
+use App\Models\InvoiceItems;
 use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use PhpParser\Node\Stmt\Foreach_;
+use PhpParser\Node\Stmt\ForeaceditInvoice_;
 
 class InvoiceController extends Controller
 {
@@ -156,13 +158,16 @@ class InvoiceController extends Controller
         return response()->json([
             'success' => true,
             'data' => $invoice,
+
         ]);
     }
     public function create_invoice(Request $request)
     {
         $error = false;
         $profile_id = $request->profile_id;
+        $invoice_id = $request->invoice_id;
         if ($error === false) {
+            // STORE
             if ($profile_id) {
                 $incoming_data = $request->validate(
                     [
@@ -216,9 +221,86 @@ class InvoiceController extends Controller
                     ], 200);
                 }
             }
+            // UPDATE
+            if ($invoice_id) {
+                $invoice_data = Invoice::find($invoice_id);
+                if ($invoice_data) {
+                    $incoming_data = $request->validate(
+                        [
+                            'description' => 'required',
+                        ],
+                    );
+                    $incoming_data += [
+                        'profile_id' => $invoice_data->profile_id,
+                        'sub_total' => $request->subtotal,
+                        'peso_rate' => $request->peso_rate,
+                        'converted_amount' => $request->converted_amount,
+                        'discount_type' => $request->discount_type,
+                        'discount_amount' => $request->discount_amount,
+                        'discount_total' => $request->discount_total,
+                        'grand_total_amount' => $request->grand_total_amount,
+                        'notes' => $request->notes,
+                        'invoice_status' => 'Pending'
+                    ];
+
+                    $invoice_update_data = $invoice_data->fill($incoming_data)->save();
+
+                    if ($request->invoiceItem) {
+                        foreach ($request->invoiceItem as $key => $value) {
+                            if (!empty($value['item_invoice_id'])) {
+                                $find_invoice_items = InvoiceItems::find($value['item_invoice_id']);
+                                if ($find_invoice_items) {
+                                    $find_invoice_items->fill([
+                                        'item_description' => $value['item_description'],
+                                        'quantity' => $value['item_qty'],
+                                        'rate' => $value['item_rate'],
+                                        'total_amount' => $value['item_total_amount'],
+                                    ])->save();
+                                }
+                            } else {
+                                $store_data = InvoiceItems::create(
+                                    [
+                                        'invoice_id' => $invoice_id,
+                                        'item_description' => $value['item_description'],
+                                        'quantity' => $value['item_qty'],
+                                        'rate' => $value['item_rate'],
+                                        'total_amount' => $value['item_total_amount'],
+                                    ]
+                                );
+                            }
+                        }
+                    }
+
+                    if ($request->Deductions) {
+                        foreach ($request->Deductions as $ket => $value) {
+                            $find_deductions = Deduction::find($value['deduction_id']);
+                            if ($find_deductions) {
+                                $find_deductions->fill([
+                                    'amount' => $value['deduction_amount'],
+                                ])->save();
+                            }
+                        }
+                    }
+                }
+
+                return response()->json([
+                    'success' => true,
+                    'message' => "Invoice has been successfully updated to the database.",
+                    'data' => $invoice_update_data,
+                ], 200);
+            }
         }
     }
 
+    public function get_invoice_config()
+    {
+        $invoice_config = InvoiceConfig::orderBy('id', 'desc')->first();
+
+        return response()->json([
+            'success' => true,
+            'data' => $invoice_config,
+        ], 200);
+    }
 
     public function count_pending()
     {

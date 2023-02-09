@@ -887,7 +887,7 @@
                         $('#bank_location').val(data.data.profile.bank_location);
                         $('#gcash_no').val(data.data.profile.gcash_no);
                         $('#date_hired').val(data.data.profile.date_hired);
-                        // $("#photo").attr("src", data.data.profile.file_path);
+                        $("#photo").attr("src", data.data.profile.file_path);
                         if (data.data.profile.file_path) {
                             $('#photo').val(data.data.profile.file_path);
                         } else {
@@ -1096,8 +1096,10 @@
                 // SENDING ARRAY IN API
                 if (document.getElementById('file').files.length > 0) {
                     formData.append('profile_picture', document.getElementById('file').files[0],
-                        "picture.png");
+                        document.getElementById('file').files[0].name);
                 }
+                // console.log("PICTURE", document.getElementById('file').files[0],
+                // document.getElementById('file').files[0].name);
                 axios.post(apiUrl + '/api/saveprofile', formData, {
                         headers: {
                             Authorization: token,
@@ -1245,7 +1247,8 @@
 
         $("#discount_amount").addClass('d-none');
         $("#discount_total").addClass('d-none');
-        $(".label_discount_amount").addClass('d-none');
+        $(
+            ".label_discount_amount").addClass('d-none');
         $(".label_discount_total").addClass('d-none');
 
         $('input[type=radio][id=discount_type]').change(function() {
@@ -1383,17 +1386,15 @@
         })
 
         $('#show_items').focusout(".multi", function() {
+            let invoiceItems_sum = 0;
+            $('#show_items .row1').each(function() {
+                let parent = $(this).closest('.row1');
+                let quantity = parent.find('.quantity').val();
+                let rate = parent.find('.rate').val();
 
-            let parent = $(this).closest('.row');
-
-            let quantity = $('.quantity').val();
-            $('.quantity').val(PHP(quantity).format());
-            let PHPquantity = $('.quantity').val();
-
-            let rate = $('.rate').val();
-            $('.rate').val(PHP(rate).format());
-            let PHPrate = $('.rate').val();
-
+                parent.find('.quantity').val(PHP(quantity).format());
+                parent.find('.rate').val(PHP(rate).format());
+            })
             DeductionItems_total();
         })
 

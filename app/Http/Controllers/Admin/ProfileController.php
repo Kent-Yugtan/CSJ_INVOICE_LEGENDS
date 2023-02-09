@@ -341,8 +341,6 @@ class ProfileController extends Controller
         )->profile()->where('profile_status', 'Active');
         // ->join('invoices', 'profiles.id', '=', 'invoices.profile_id')->orderBy('invoices.created_at', 'DESC');
 
-
-
         if ($request->search) {
             $data = $data->where(
                 function ($q) use ($request) {

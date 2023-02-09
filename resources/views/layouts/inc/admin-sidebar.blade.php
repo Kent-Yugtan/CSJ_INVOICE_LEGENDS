@@ -73,14 +73,9 @@
                 <div class="collapse" id="collapseLayouts3" aria-labelledby="headingOne"
                     data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-
+                        {{-- <a class="nav-link" href="{{url('settings/invoice')}}"> Invoices </a> --}}
                         <a class="nav-link" href="{{url('settings/emailconfig')}}">Email config</a>
                         <a class="nav-link" href="{{url('settings/invoiceconfig')}}">Invoice Config</a>
-                        <a class="nav-link" href="{{url('settings/editinvoice')}}">Edit Invoice</a>
-
-
-
-                        {{-- <a class="nav-link" href="{{url('settings/invoice')}}"> Invoices </a> --}}
                     </nav>
                 </div>
             </div>
