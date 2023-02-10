@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content-dashboard')
 <div class="container-fluid pt-0">
-    <h1 class="mt-0">View Invoice</h1>
+    <h1 class="mt-0"></h1>
     <ol class="breadcrumb mb-3"></ol>
     <div class="row">
         <div class="col-6 px-2 w-75">
