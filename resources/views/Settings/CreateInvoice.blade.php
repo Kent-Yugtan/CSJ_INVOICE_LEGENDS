@@ -17,85 +17,76 @@
                         <!-- <div class="text-muted" id="invoice_logo"></div> -->
                     </div>
 
-                    <div class="col-4 pt-5  fw-bolder" style="text-align:end">
-                        <h2> INVOICES </h2>
+                    <div class="col-12 col-md-4 pt-5 fw-bolder text-md-right">
+                        <h2>INVOICES</h2>
                         <div class="text-muted" id="invoice_no"></div>
+                      </div>
                     </div>
-                </div>
-
-                <div class="row pt-3">
-                    <div class="col-6">
+                  
+                    <div class="row pt-3">
+                      <div class="col-12 col-md-6">
                         <div id="address"></div>
                         <div id="city-province"></div>
                         <div id="zip_code"></div>
+                      </div>
                     </div>
-                </div>
-
-                <div class="row pt-3">
-                    <div class="col-6 ">
-                        <span class="text-muted"> Bill To:</span>
-                    </div>
-
-                    <div class="col-3" style="text-align: right;">
-                        <span class="text-muted"> Date: </span>
-                    </div>
-
-                    <div class="col-3 " style="text-align: right;">
+                  
+                    <div class="row pt-3">
+                      <div class="col-12 col-md-6">
+                        <span class="text-muted">Bill To:</span>
+                      </div>
+                  
+                      <div class="col-12 col-md-3 text-md-right">
+                        <span class="text-muted">Date:</span>
+                      </div>
+                  
+                      <div class="col-12 col-md-3 text-md-right">
                         <div id="date_created"></div>
+                      </div>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-6 ">
+                  
+                    <div class="row">
+                      <div class="col-12 col-md-6">
                         <div class="fw-bolder" id="invoice_title"></div>
-                        <!-- <span> (5Ppints Production) </span> -->
-                    </div>
-
-                    <div class="col-3" style="text-align: right;">
-                        <span class="text-muted"> Due Date: </span>
-                    </div>
-
-                    <div class="col-3" style="text-align: right;">
+                      </div>
+                  
+                      <div class="col-12 col-md-3 text-md-right">
+                        <span class="text-muted">Due Date:</span>
+                      </div>
+                  
+                      <div class="col-12 col-md-3 text-md-right">
                         TO BE ASK
+                      </div>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-3 ">
+                  
+                    <div class="row">
+                      <div class="col-12 col-md-3">
                         <div id="bill_to_address"></div>
-                        <!-- <span>(5ppints@gmail.com)</span> -->
+                      </div>
                     </div>
-                </div>
 
-                <div class="row pt-3">
-                    <div class="col-3">
-                        <!-- <span>
-                            (4094 South Power Road
-                            Suite 103-197
-                            Mesa, AZ 85212)
-                        </span> -->
-                        <div id="ship_to_address"></div>
-                    </div>
-                    <div class="col-3"></div>
-
-                    <div class="col-6">
-                        <div class="rounded-3" style="height:50px;background-color:#A4A6B3;display:flex;align-items:center">
-                            <div class="col-6" style="text-align: right;">
-                                <h5>
-                                    <span>
-                                        Balance Due:
-                                    </span>
-                                </h5>
-                            </div>
-
-                            <div class="col-6" style="text-align: right;">
-                                <h5>
-                                    <div class="me-3" id="balance_due"></div>
-                                </h5>
+                    <div class="row pt-3">
+                        <div class="col-3">
+                            <div id="ship_to_address"></div>
+                        </div>
+                        <div class="col-3"></div>
+                        <div class="col-6">
+                            <div class="rounded-3 d-flex align-items-center" style="height:50px;background-color:#A4A6B3">
+                                <div class="col-6 d-flex justify-content-end">
+                                    <h5>
+                                        <span>
+                                            Balance Due:
+                                        </span>
+                                    </h5>
+                                </div>
+                                <div class="col-6 d-flex justify-content-end">
+                                    <h5>
+                                        <div class="ml-3" id="balance_due"></div>
+                                    </h5>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
                 <div class="row pt-3">
                     <div class="col-12 table-responsive">
@@ -117,50 +108,53 @@
 
 
                 <div class="row">
-                    <div class="col-5">
-                        <div class="row">
-                            <div class="col-12 align-self-start">
-                                <label class="fw-bold"> Description: </label>
-                            </div>
-                            <div class="col-12" id="view_invoice_description"></div>
+                    <div class="col-12 col-md-5">
+                      <div class="row">
+                        <div class="col-12 align-self-start">
+                          <label class="fw-bold"> Description: </label>
                         </div>
+                        <div class="col-12" id="view_invoice_description"></div>
+                      </div>
                     </div>
-
-
-                    <div class="col-7">
-                        <div class="row">
-                            <div class="col-6">
-                                <label class="text-muted"> SubTotal: </label>
-                            </div>
-                            <div class="col mx-2" id="sub_total" style="text-align:end"></div>
+                  
+                    <div class="col-12 col-md-7">
+                      <div class="row">
+                        <div class="col-12 col-md-6">
+                          <label class="text-muted"> SubTotal: </label>
                         </div>
-
-                        <div class="row">
-                            <div class="col-6 discount_type">
-                                <label class="text-muted"> Discount:</label><span class="text-muted" id="discountType"> </span>
-                            </div>
-                            <div class="col mx-2" id="discountAmount" style="text-align:end"></div>
+                        <div class="col-12 col-md-6" id="sub_total" style="text-align:end"></div>
+                      </div>
+                  
+                      <div class="row">
+                        <div class="col-12 col-md-6 discount_type">
+                          <label class="text-muted"> Discount:</label><span class="text-muted" id="discountType"> </span>
                         </div>
-
-                        <div class="row">
-                            <div class="col-6 Total">
-                                <label class="text-muted"> Total:</label>
-                            </div>
-                            <div id="total" class="col mx-2 h6" style="text-align:end"></div>
+                        <div class="col-12 col-md-6" id="discountAmount" style="text-align:end"></div>
+                      </div>
+                  
+                      <div class="row">
+                        <div class="col-12 col-md-6 Total">
+                          <label class="text-muted"> Total:</label>
                         </div>
-
-                        <div class="row">
-                            <div class="col-8">
-                                <label class="text-muted">Converted Amount (PHP): </label>
-                                <label class="text-muted" id="peso_rate"></label>
-                            </div>
-
-                            <div class=" col converted">
-                                <div id="convertedAmount" class="mx-2 h6" style="text-align:end"></div>
-                            </div>
+                        <div id="total" class="col-12 col-md-6 h6" style="text-align:end"></div>
+                      </div>
+                  
+                      <div class="row">
+                        <div class="col-12 col-md-8">
+                          <label class="text-muted">Converted Amount (PHP): </label>
+                          <label class="text-muted" id="peso_rate"></label>
                         </div>
+                  
+                        <div class="col-12 col-md-4 converted">
+                          <div id="convertedAmount" class="h6" style="text-align:end"></div>
+                        </div>
+                      </div>
                     </div>
-                </div>
+                  </div>
+                  
+                  
+                  
+                  
 
                 <!-- <div class="row">
                     <div class="col align-self-start">
@@ -204,56 +198,49 @@
                     </div> -->
 
                 <div class="row title_deductions pt-3">
-
-                </div>
-
-
-                <div class="row deductions" id="deductions">
-                </div>
-
-                <div class="row total_deductions" id="total_deductions">
-                </div>
-
-                <div class="row pt-3">
-                    <div class="col-5 fw-bold">Notes:</div>
-                    <div class="col">
-                        <h5> GRAND TOTAL </h5>
-                    </div>
-                </div>
-
-                <div class="row pb-5">
-                    <div class="col-5" id="notes"></div>
-                    <div class="col">
-                        <label class="text-muted">Total: </label>
-                    </div>
-                    <div class="col mx-2 h6" id="grand_total_amount" style="text-align:end"></div>
-                </div>
+  <div class="col-5 fw-bold">Deductions:</div>
+</div>
+<div class="row deductions" id="deductions">
+  
+</div>
+<div class="row total_deductions" id="total_deductions">
+ 
+</div>
+<div class="row pt-3">
+  <div class="col-5 fw-bold">Notes:</div>
+  <div class="col fw-bold">
+    <h5> GRAND TOTAL </h5>
+  </div>
+</div>
+<div class="row pb-5">
+  <div class="col-5" id="notes"></div>
+  <div class="col fw-bold">
+    <label class="text-muted">Total: </label>
+  </div>
+  <div class="col mx-2 h6" id="grand_total_amount" style="text-align:end"></div>
+</div>
             </div>
         </div>
+        
+
+
+
 
         <div class="col-6 px-2 w-25">
             <div class="card shadow p-2 mb-5 bg-white rounded">
                 <!-- <div class="card-header">Profile Information</div> -->
                 <div class="row pt-3">
-                  <div class="col-12 col-sm-6">
-                    <div class="pb-2">
-                      <button type="button" class="btn btn-secondary w-100" style=" color:White; background-color:green; ">Paid Invoice</button>
+                    <div class="col">
+                        <div class="pb-2">
+                            <button type="button" id="paid_button" class="btn btn-secondary w-100" style=" color:White; background-color:green; ">Paid Invoice</button>
+                        </div>
+                        <div>
+                            <button type="button" id="cancelled_button" class="btn btn-secondary w-100" style=" color:White; background-color:gray; ">Cancel Invoice</button>
+                        </div>
+                        <div class="pt-2">
+                            <button type="button" id="delete_button" class="btn btn-secondary w-100" style=" color:White; background-color:red; ">Delete Invoice</button>
+                        </div>
                     </div>
-                    <div>
-                      <button type="button" class="btn btn-secondary w-100" style=" color:White; background-color:gray; ">Cancel Invoice</button>
-                    </div>
-                    <div class="pt-2">
-                      <button type="button" class="btn btn-secondary w-100" style=" color:White; background-color:red; ">Delete Invoice</button>
-                    </div>
-                  </div>
-                  <div class="col-12 col-sm-6">
-                    <div class="pb-2">
-                      <button type="button" class="btn btn-secondary w-100" style=" color:White; background-color:#CF8029; ">Download</button>
-                    </div>
-                    <div class="pb-2">
-                      <button type="button" id="edit_invoice" data-bs-toggle="modal" data-bs-target="#updateModal" class="btn btn-secondary w-100" style=" color:White; background-color:#CF8029; ">Edit Invoice</button>
-                    </div>
-                  </div>
                 </div>
               </div>
               
