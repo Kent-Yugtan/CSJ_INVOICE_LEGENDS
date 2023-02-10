@@ -1123,7 +1123,7 @@
                         },
                     }).then(function(response) {
                     let data = response.data;
-                    $('.toast1 .toast-title').html('Profile Deduction');
+                    $('.toast1 .toast-title').html('Deleted Successfully');
                     $('.toast1 .toast-body').html(data.message);
 
                     $('#dataTable_deduction tbody').empty();
@@ -1134,7 +1134,6 @@
                         show_profileDeductionType_data());
 
                     toast1.toast('show');
-
 
                 }).catch(function(error) {
                     if (error.response.data.errors) {
@@ -1691,8 +1690,8 @@
                     sub_total: invoice_subtotal,
                     converted_amount: invoice_converted_amount,
                     discount_type: invoice_discount_type,
-                    discount_amount: invoice_discount_amount,
-                    discount_total: invoice_discount_total,
+                    discount_amount: invoice_discount_amount ? invoice_discount_amount : 0,
+                    discount_total: invoice_discount_total ? invoice_discount_total : 0,
                     grand_total_amount: invoice_total_amount,
                     notes: invoice_notes,
                     invoiceItem,

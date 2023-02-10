@@ -88,8 +88,25 @@ class InvoiceController extends Controller
      */
     public function destroy(Request $request)
     {
-        //
+        $invoice_id = $request->id;
+        if ($invoice_id) {
+            $data = Invoice::with('invoice_items', 'deductions')->find($invoice_id);
+            $last_data = $data;
 
+            if (count($data->deductions) > 0) {
+                $data->deductions()->delete();
+            }
+            if (count($data->invoice_items) > 0) {
+
+                $data->invoice_items()->delete();
+            }
+            $delete_data = Invoice::where('id', $invoice_id)->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => "Invoice has been successfully deleted.",
+            ], 200);
+        }
     }
 
     // public function add_invoice()
@@ -204,12 +221,12 @@ class InvoiceController extends Controller
                         'notes' => '',
                     ]
                 );
-
                 $incoming_data += [
                     'invoice_status' => 'Pending',
                     'invoice_no' => $this->generate_invoice(),
                 ];
                 $store_data = Invoice::create($incoming_data);
+
                 if ($store_data) {
 
                     if ($request->invoiceItem) {
@@ -234,13 +251,12 @@ class InvoiceController extends Controller
                             $store_data->deductions()->create($dataDeductions);
                         }
                     }
-
-                    return response()->json([
-                        'success' => true,
-                        'message' => "Invoice has been successfully added to the database.",
-                        'data' => $store_data,
-                    ], 200);
                 }
+                return response()->json([
+                    'success' => true,
+                    'message' => "Invoice has been successfully added to the database.",
+                    'data' => $store_data,
+                ], 200);
             }
             // UPDATE
             if ($invoiceItems_id && $invoice_id) {
@@ -248,11 +264,11 @@ class InvoiceController extends Controller
                 if ($invoiceItems_id) {
                     $delete = InvoiceItems::where('id', $invoiceItems_id)->delete();
 
-                    // return response()->json([
-                    //     'success' => true,
-                    //     'message' => "Invoice Items has been successfully removed.",
-                    //     'data' =>  $data,
-                    // ], 200);
+                    return response()->json([
+                        'success' => true,
+                        'message' => "Invoice Items has been successfully removed.",
+                        'data' =>  $delete,
+                    ], 200);
                 }
                 if ($invoice_data) {
                     $incoming_data = $request->validate(
@@ -311,13 +327,12 @@ class InvoiceController extends Controller
                             }
                         }
                     }
+                    return response()->json([
+                        'success' => true,
+                        'message' => "Invoice has been successfully updated to the database.",
+                        'data' => $invoice_update_data,
+                    ], 200);
                 }
-                return response()->json([
-                    'success' => true,
-                    'message' => "Invoice has been successfully updated to the database.",
-                    'data' => $invoice_update_data,
-                    'delete' => $delete,
-                ], 200);
             }
             if ($invoice_id) {
                 $invoice_data = Invoice::find($invoice_id);
@@ -378,6 +393,11 @@ class InvoiceController extends Controller
                             }
                         }
                     }
+                    return response()->json([
+                        'success' => true,
+                        'message' => "Invoice has been successfully updated to the database.",
+                        'data' => $invoice_update_data,
+                    ], 200);
                 }
             }
         }
