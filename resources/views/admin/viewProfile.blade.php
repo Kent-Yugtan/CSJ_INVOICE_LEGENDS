@@ -173,13 +173,12 @@
                     <div class="card shadow p-2 mb-5 bg-white rounded" style="width: 100%; height:100%">
                         <!-- <div class="card-header">Profile Information</div> -->
                         <ul class="nav nav-pills mb-3 " id="pills-tab" role="tablist">
-
                             <li class="nav-item" role="presentation" style="width:50%">
-                                <button style="width:100%" class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-selected="true">Invoices</button>
+                                <a href="#pills-invoice" data-bs-toggle="pill" data-bs-target="#pills-invoice" class="nav-link active text-center" data-toggle="tab">Invoices</a>
                             </li>
 
                             <li class="nav-item" role="presentation" style="width:50%">
-                                <button style="width:100%" class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Deductions</button>
+                                <a style="width:100%" href="#pills-deduction" data-bs-toggle="pill" data-bs-target="#pills-deduction" class="nav-link text-center" data-toggle="tab">Profile Deductions</a>
                             </li>
                         </ul>
                         <form id="CreateInvoice" method="POST" action="javascript:void(0)" class="row g-3 needs-validation" novalidate>
@@ -190,11 +189,9 @@
                                 </div>
                             </div>
                         </form>
-
                         <div class="form-group has-search">
-                            <div class=" tab-content" id="pills-tabContent">
-                                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-
+                            <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade show active" id="pills-invoice" role="tabpanel" aria-labelledby="pills-invoice-tab">
                                     <div class="col-md-4 w-100">
                                         <div class="input-group">
                                             <button style="color:white; background-color: #CF8029;" data-bs-toggle="modal" data-bs-target="#exampleModal" type="submit" id="button-addon2" name="button-addon2" class="btn form-check-inline pe-3 "><i class="fa fa-plus pe-1"></i>Add
@@ -232,7 +229,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                <div class="tab-pane fade" id="pills-deduction" role="tabpanel" aria-labelledby="pills-deduction-tab">
 
                                     <div class="col-md-4 w-100">
                                         <div class="input-group">
@@ -275,7 +272,7 @@
                                                     <th>Deduction Name</th>
                                                     <th>Amount</th>
                                                     <th class="text-center">Date Created</th>
-                                                    <th class="text-center" id="action1">Action</th>
+                                                    <!-- <th class="text-center" id="action1">Action</th> -->
 
                                                 </tr>
                                             </thead>
@@ -300,23 +297,30 @@
         <div class="modal-dialog modal-lg" style="width:100%;">
             <div class=" modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="createnvoice1">Add Invoice</h1>
+                    <h1 class="modal-title fs-5">Add Invoice</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row whole_row">
+                    <div class="row">
                         <form id="invoice_items">
                             @csrf
-                            <div class="row px-4 pb-4" id="header">
+                            <div class="row px-4 pt-2" id="header">
                                 <div class="col-md-6 px-2 w-100">
                                     <div class="card shadow p-2 mb-5 bg-white rounded">
 
-                                        <div class="row px-4 pb-4" id="header">
+                                        <div class="row px-4 pb-4 pt-4" id="header">
+
+                                            <input id="profile_id" name="profile_id" type="text" hidden>
+                                            <!-- <label class="formGroupExampleInput2">Invoice #</label> -->
+
                                             <div class="col-12 mb-3">
-                                                <input id="profile_id" name="profile_id" type="text" hidden>
-                                                <div class="form-group w-50">
-                                                    <!-- <label class="formGroupExampleInput2">Invoice #</label> -->
-                                                    <input id="invoice_no" style="font-weight: bold;border:none;background-color:white" disabled name="invoice_no" type="text" class="form-control">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class=" form-group">
+                                                            <label class=" formGroupExampleInput2">Due Date</label>
+                                                            <input id="due_date" name="due_date" type="date" class="form-control">
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -537,7 +541,7 @@
                                             <button type="button" class="btn btn-secondary w-100" style=" color:#CF8029; background-color:white; " data-bs-dismiss="modal">Close</button>
                                         </div>
                                         <div class="col">
-                                            <button type="submit" id="createDeduction_button" class="btn btn-secondary w-100" style="color:White; background-color:#CF8029;">Save</button>
+                                            <button type="submit" id="createDeduction_button" class="btn btn-secondary w-100" style="color:White; background-color:#CF8029;">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -682,7 +686,7 @@
 
         // INVOICE SEARCH AND DISPLAY
         $(document).ready(function() {
-
+            show_data();
             show_edit();
 
             $('#edit_profile').on('click', function(e) {
@@ -849,7 +853,7 @@
                 show_data();
             });
 
-            show_data();
+
             // SHOW DATA ON TABLE
             function show_data(filters) {
                 let url = window.location.pathname;
@@ -1512,14 +1516,18 @@
             // CHECK IF THE USER HAVE THE PROFILE
             $("#exampleModal").on('hide.bs.modal', function() {
                 window.location.reload();
+                // show_data();
             });
 
             $("#modal-create-deduction").on('hide.bs.modal', function() {
-                window.location.reload();
+                window.location.reload()
             });
+
+
 
             $("#invoice_status").on('hide.bs.modal', function() {
                 window.location.reload();
+                // show_data();
             });
 
             $("#button-addon2").click(function(e) {
@@ -1623,6 +1631,7 @@
                 let profile_id = $('#profile_id').val();
                 // let invoice_no = $('#invoice_no').val();
                 // INVOICE TABLE
+                let due_date = $('#due_date').val();
                 let invoice_description = $('#invoice_description').val();
                 let invoice_subtotal = $('#subtotal').val().replaceAll(',', '');
                 let peso_rate = $('#peso_rate').val().replaceAll(',', '')
@@ -1685,6 +1694,7 @@
                 let data = {
                     profile_id: profile_id,
                     // invoice_no: invoice_no,
+                    due_date: due_date,
                     description: invoice_description,
                     peso_rate: peso_rate,
                     sub_total: invoice_subtotal,
@@ -1714,6 +1724,7 @@
                             $('#exampleModal').modal('hide');
                         }, 1500);
                         $("#save").attr("data-bs-dismiss", "modal");
+                        // show_data();
                     }
                 }).catch(function(error) {
                     if (error.response.data.errors) {
@@ -1770,12 +1781,13 @@
 
                         $("#createDeduction_deduction_name").val('');
                         $("#createDeduction_deduction_amount").val('');
-                        $('#tableDeleteProfileDeductioType tbody tr').empty();
-                        $('#tableDeleteProfileDeductioType tbody tr').html(
-                            show_profileDeductionType_data());
+
+                        // $('#tableDeleteProfileDeductioType tbody tr').empty();
+                        // $('#tableDeleteProfileDeductioType tbody tr').html(
+                        //     show_profileDeductionType_data());
+
 
                         setTimeout(function() {
-
                             $('#modal-create-deduction').modal('hide');
                         }, 1500);
                         $("#createDeduction_button").attr("data-bs-dismiss", "modal");
@@ -1808,8 +1820,7 @@
                 // show_deduction_data();
             });
 
-            $('#submit-create-deduction').on('click', function(e) {
-                e.preventDefault();
+            function show_profile_deductions() {
                 let url = window.location.pathname;
                 let urlSplit = url.split('/');
                 if (urlSplit.length === 5) {
@@ -1821,11 +1832,10 @@
                         },
                     }).then(function(response) {
                         let data = response.data;
-                        console.log("DATA", data);
+                        console.log("show_deduction_data", data);
                         if (data.success) {
                             if (data.data.length > 0) {
-                                data.data.filter(f => f.profile_deduction_types
-                                        .length === 0)
+                                data.data.filter(f => f.profile_deduction_types.length === 0)
                                     .map((item) => {
                                         let option = '';
                                         option += "<option value=" + item.id + ">" +
@@ -1840,6 +1850,11 @@
                         console.log("ERROR", error.response.data);
                     })
                 }
+            }
+
+            $('#submit-create-deduction').on('click', function(e) {
+                e.preventDefault();
+                show_profile_deductions();
             })
 
             $('#createDeduction_deduction_name').on('change', function() {
@@ -1853,7 +1868,7 @@
                         },
                     }).then(function(response) {
                         let data = response.data;
-                        console.log("SUSSCESS", data);
+                        console.log("SUCCESS", data);
                         if (data.success) {
                             {
                                 $('#createDeduction_deduction_amount').val(data.data
@@ -1936,10 +1951,9 @@
                                         tr += '<td style="text-align:center;">' + mm + "-" +
                                             dd + "-" +
                                             yy + '</td>';
-                                        tr +=
-                                            '<td class="text-center"> <a href="#" class="btn"><i class="fa-sharp fa-solid fa-eye view-hover"></i></a> </td>';
-
-                                        tr += '</tr>';
+                                        // tr +=
+                                        //     '<td class="text-center"> <a href="#" class="btn"><i class="fa-sharp fa-solid fa-eye view-hover"></i></a> </td>';
+                                        // tr += '</tr>';
                                         $("#dataTable_deduction tbody").append(tr);
                                         return ''
                                     })
@@ -2020,11 +2034,12 @@
                                                 td);
                                         return '';
                                     })
-                                } else {
-                                    $("#tableDeleteProfileDeductioType tbody tr").append(
-                                        '<td style="width:200rem;" class="text-center">No data</td>'
-                                    );
                                 }
+                                // else {
+                                //     $("#tableDeleteProfileDeductioType tbody tr").append(
+                                //         '<td style="width:200rem;" class="text-center">No data</td>'
+                                //     );
+                                // }
                             }
                         })
                         .catch(function(error) {
@@ -2169,6 +2184,16 @@
             //             }
             //         });
             // })
+
+            // TABS WONT CHANGE IF REFRESH
+            $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+                localStorage.setItem('activeTab', $(e.target).attr('href'));
+            });
+            var activeTab = localStorage.getItem('activeTab');
+            if (activeTab) {
+                $('#pills-tab a[href="' + activeTab + '"]').tab('show');
+            }
+
         });
     </script>
     @endsection
