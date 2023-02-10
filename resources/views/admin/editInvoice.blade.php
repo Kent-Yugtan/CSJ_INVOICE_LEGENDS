@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content-dashboard')
 <div class="container-fluid pt-0">
-    <h1 class="mt-0">View Invoice</h1>
+    <h1 class="mt-0"></h1>
     <ol class="breadcrumb mb-3"></ol>
     <div class="row">
         <div class="col-6 px-2 w-75">
@@ -32,6 +32,19 @@
                 </div>
 
                 <div class="row pt-3">
+                    <div class="col-6 ">
+                    </div>
+
+                    <div class="col-3" style="text-align: right;">
+                        <span class="text-muted"> Invoice Status: </span>
+                    </div>
+
+                    <div class="col-3 " style="text-align: right;">
+                        <div id="invoice_status"></div>
+                    </div>
+                </div>
+
+                <div class="row">
                     <div class="col-6 ">
                         <span class="text-muted"> Bill To:</span>
                     </div>
@@ -137,7 +150,8 @@
 
                         <div class="row">
                             <div class="col-6 discount_type">
-                                <label class="text-muted"> Discount:</label><span class="text-muted" id="discountType"> </span>
+                                <label class="text-muted"> Discount:</label><span class="text-muted" id="discountType">
+                                </span>
                             </div>
                             <div class="col mx-2" id="discountAmount" style="text-align:end"></div>
                         </div>
@@ -237,13 +251,13 @@
                 <div class="row pt-3">
                     <div class="col">
                         <div class="pb-2">
-                            <button type="button" class="btn btn-secondary w-100" style=" color:White; background-color:green; ">Paid Invoice</button>
+                            <button type="button" id="paid_button" class="btn btn-secondary w-100" style=" color:White; background-color:green; ">Paid Invoice</button>
                         </div>
                         <div>
-                            <button type="button" class="btn btn-secondary w-100" style=" color:White; background-color:gray; ">Cancel Invoice</button>
+                            <button type="button" id="cancelled_button" class="btn btn-secondary w-100" style=" color:White; background-color:gray; ">Cancel Invoice</button>
                         </div>
                         <div class="pt-2">
-                            <button type="button" class="btn btn-secondary w-100" style=" color:White; background-color:red; ">Delete Invoice</button>
+                            <button type="button" id="delete_button" class="btn btn-secondary w-100" style=" color:White; background-color:red; ">Delete Invoice</button>
                         </div>
                     </div>
                 </div>
@@ -254,7 +268,8 @@
                             <button type="button" class="btn btn-secondary w-100" style=" color:White; background-color:#CF8029; ">Download</button>
                         </div>
                         <div class="pb-2">
-                            <button type="button" id="edit_invoice" data-bs-toggle="modal" data-bs-target="#updateModal" class="btn btn-secondary w-100" style=" color:White; background-color:#CF8029; ">Edit Invoice</button>
+                            <button type="button" id="edit_invoice" data-bs-toggle="modal" data-bs-target="#updateModal" class="btn btn-secondary w-100" style=" color:White; background-color:#CF8029; ">Edit
+                                Invoice</button>
                         </div>
                     </div>
                 </div>
@@ -273,7 +288,7 @@
             </div>
             <div class="modal-body">
                 <div class="row whole_row">
-                    <form id="submit_update_invoice">
+                    <form id="submit_update_invoice" method="POST" action="javascript:void(0)" class="row g-3 needs-validation" novalidate>
                         @csrf
                         <div class="row px-4 pb-4" id="header">
                             <div class="col-md-6 px-2 w-100">
@@ -444,7 +459,7 @@
                                         </div>
                                         <div class="col-6 mb-3">
                                             <div class="pb-3">
-                                                <button type="button" id="update" class="btn btn-secondary w-100" style="color:White; background-color:#CF8029;">Update</button>
+                                                <button type="submit" id="update" class="btn btn-secondary w-100" style="color:White; background-color:#CF8029;">Update</button>
                                             </div>
                                         </div>
                                     </div>
@@ -649,10 +664,7 @@
 
         // });
 
-        // function capitalize(s) {
-        //     if (typeof s !== 'string') return "";
-        //     return s.charAt(0).toUpperCase() + s.slice(1);
-        // }
+
 
         // CHECK IF THE USER HAVE THE PROFILE
         $("#exampleModal").on('hide.bs.modal', function() {
@@ -995,11 +1007,11 @@
                                 'd-none');
                     }
 
-                    // setTimeout(function() {
-                    //     $('#updateModal').modal('hide');
-                    // }, 1500);
-                    // // getResults_Converted();
-                    // $("#update").attr("data-bs-dismiss", "modal");
+                    setTimeout(function() {
+                        $('#updateModal').modal('hide');
+                    }, 2000);
+                    // getResults_Converted();
+                    $("#update").attr("data-bs-dismiss", "modal");
                 }
             }).catch(function(error) {
                 if (error.response.data.errors) {
@@ -1146,7 +1158,7 @@
                                     '<label class="formGroupExampleInput2">Item Desctiption</label>';
                                 add_rows +=
                                     '<input type="text" value="' + item.id +
-                                    '" name="item_id" id="item_id" class="form-control item_id" />';
+                                    '" name="item_id" id="item_id" class="form-control item_id" hidden/>';
                                 add_rows +=
                                     '<input type="text" value="' + item.item_description +
                                     '" name="item_description" id="item_description" class="form-control item_description" />';
@@ -1306,6 +1318,7 @@
                             $('#city-province').html(data.data.profile.city + ", " + data.data.profile
                                 .province);
                             $('#zip_code').html("Philippines " + data.data.profile.zip_code);
+                            $('#invoice_status').html(data.data.invoice_status);
                             $('#date_created').html(mm + " " + dd + ", " + yy);
                             $('#notes').html(data.data.notes);
                             $('#view_invoice_description').html(data.data.description);
@@ -1314,7 +1327,8 @@
                             if (data.data.invoice_items.length > 0) {
                                 let balance_due = parseFloat(data.data.sub_total ? data.data.sub_total :
                                     0);
-                                let sub_total = parseFloat(data.data.sub_total) + parseFloat(data.data.discount_total);
+                                let sub_total = parseFloat(data.data.sub_total) + parseFloat(data.data
+                                    .discount_total);
 
                                 let discount_amount = parseFloat(data.data.discount_amount);
 
@@ -1333,17 +1347,22 @@
                                 }));
 
                                 if (data.data.discount_type === "Fixed") {
-                                    $('#discountType').html(" " + data.data.discount_type + " (" + discount_amount.toLocaleString('en-US', {
-                                        style: 'currency',
-                                        currency: 'USD'
-                                    }) + ")");
+                                    $('#discountType').html(" " + data.data.discount_type + " (" +
+                                        discount_amount.toLocaleString('en-US', {
+                                            style: 'currency',
+                                            currency: 'USD'
+                                        }) + ")");
                                     $('#discountAmount').html(discount_amount.toLocaleString('en-US', {
                                         style: 'currency',
                                         currency: 'USD'
                                     }));
-                                } else {
-                                    $('#discountType').html(" " + data.data.discount_type + " (" + discount_amount + "%)");
+                                } else if (data.data.discount_type === "Percentage") {
+                                    $('#discountType').html(" " + data.data.discount_type + " (" +
+                                        discount_amount + "%)");
                                     $('#discountAmount').html("$" + PHP(data.data.discount_total).format());
+                                } else {
+                                    $('#discountType').html(" ");
+                                    $('#discountAmount').html("$" + PHP(0).format());
                                 }
 
                                 $('#total').html(balance_due.toLocaleString('en-US', {
@@ -1505,9 +1524,10 @@
             });
         }
 
-        // $('#submit_update_invoice').on('submit', function(e) {
-        $('#update').on('click', function(e) {
-            // console.log("sd");
+        $('#submit_update_invoice').submit(function(e) {
+            // $('#update').on('click', function(e) {
+            e.preventDefault();
+            console.log("asd");
 
             let invoice_id = $('#update_invoice_id').val();
             let invoice_description = $('#invoice_description').val();
@@ -1519,8 +1539,6 @@
             let invoice_discount_total = $('#discount_total').val().replaceAll(',', '');
             let invoice_total_amount = $('#grand_total').val().replaceAll(',', '');
             let invoice_notes = $('textarea#notes').val();
-
-
 
             let invoiceItem = [];
             $('#show_items .row').each(function() {
@@ -1578,23 +1596,21 @@
                 Deductions,
             }
 
-            console.log("data", data);
-
-            axios.post(apiUrl + '/api/createinvoice/', data, {
+            axios.post(apiUrl + '/api/createinvoice', data, {
                 headers: {
                     Authorization: token,
                 },
             }).then(function(response) {
                 let data = response.data;
                 if (data.success) {
-                    // console.log("SUCCES", data.success);
-                    $('.toast1 .toast-title').html('Create Invoices');
+                    console.log("SUCCESS", data.success);
+                    $('.toast1 .toast-title').html('Successfully Updated');
                     $('.toast1 .toast-body').html(response.data.message);
 
                     toast1.toast('show');
                     setTimeout(function() {
                         $('#updateModal').modal('hide');
-                    }, 1500);
+                    }, 2000);
                     $("#update").attr("data-bs-dismiss", "modal");
                 }
             }).catch(function(error) {
@@ -1617,24 +1633,145 @@
                     })
                     toast1.toast('show');
                 }
-
-
             })
-
-            // console.log(invoice_id);
-            // console.log(invoice_description);
-            // console.log(invoice_subtotal);
-            // console.log(peso_rate);
-            // console.log(invoice_converted_amount);
-            // console.log(invoice_discount_type);
-            // console.log(invoice_discount_amount);
-            // console.log(invoice_discount_total);
-            // console.log(invoice_total_amount);
-            // console.log(invoiceItem);
-            // console.log(Deductions);
-            // console.log(invoice_notes);
-
         })
+
+        // PAID BUTTON
+        $('#paid_button').on('click', function(e) {
+            e.preventDefault();
+            let url = window.location.pathname
+            let urlSplit = url.split("/");
+            if (urlSplit.length === 4) {
+                let invoice_id = urlSplit[3];
+                let invoice_status = "Paid";
+
+                let data = {
+                    id: invoice_id,
+                    invoice_status: invoice_status,
+                }
+
+                axios.post(apiUrl + '/api/update_status', data, {
+                    headers: {
+                        Authorization: token,
+                    },
+                }).then(function(response) {
+                    let data = response.data;
+                    if (data.success) {
+                        $('.toast1 .toast-title').html('Successfully Updated');
+                        $('.toast1 .toast-body').html(response.data.message);
+
+                        toast1.toast('show');
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 2000);
+
+                    }
+                }).catch(function(error) {
+                    if (error.response.data.errors) {
+                        let errors = error.response.data.errors;
+                        let fieldnames = Object.keys(errors);
+                        Object.values(errors).map((item, index) => {
+                            fieldname = fieldnames[0].split('_');
+                            fieldname.map((item2, index2) => {
+                                fieldname['key'] = capitalize(
+                                    item2);
+                                return ""
+                            });
+                            fieldname = fieldname.join(" ");
+                            $('.toast1 .toast-title').html(fieldname);
+                            $('.toast1 .toast-body').html(Object.values(
+                                    errors)[0]
+                                .join(
+                                    "\n\r"));
+                        })
+                        toast1.toast('show');
+                    }
+                })
+
+            }
+        });
+
+        $('#cancelled_button').on('click', function(e) {
+            e.preventDefault();
+            console.log("CANCELLED");
+            let url = window.location.pathname;
+            let urlSplit = url.split("/");
+            if (urlSplit.length === 4) {
+                let invoice_id = urlSplit[3];
+                let invoice_status = "Cancelled";
+
+                let data = {
+                    id: invoice_id,
+                    invoice_status: invoice_status,
+                }
+                axios.post(apiUrl + '/api/update_status', data, {
+                    headers: {
+                        Authorization: token,
+                    },
+                }).then(function(response) {
+                    let data = response.data;
+                    if (data.success) {
+                        $('.toast1 .toast-title').html('Successfully Updated');
+                        $('.toast1 .toast-body').html(response.data.message);
+
+                        toast1.toast('show');
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 2000)
+
+                    }
+                }).catch(function(error) {
+                    if (error.response.data.errors) {
+                        let errors = error.response.data.errors;
+                        let fieldnames = Object.keys(errors);
+                        Object.values(errors).map((item, index) => {
+                            fieldname = fieldnames[0].split('_');
+                            fieldname.map((item2, index2) => {
+                                fieldname['key'] = capitalize(
+                                    item2);
+                                return ""
+                            });
+                            fieldname = fieldname.join(" ");
+                            $('.toast1 .toast-title').html(fieldname);
+                            $('.toast1 .toast-body').html(Object.values(
+                                    errors)[0]
+                                .join(
+                                    "\n\r"));
+                        })
+                        toast1.toast('show');
+                    }
+                })
+            }
+        });
+
+        $('#delete_button').on('click', function(e) {
+            e.preventDefault();
+
+            let url = window.location.pathname;
+            let urlSplit = url.split("/");
+            if (urlSplit.length === 4) {
+                let invoice_id = urlSplit[3];
+                console.log("DELETE", invoice_id);
+
+                axios.post(apiUrl + '/api/delete_invoice/' + invoice_id, {
+                    headers: {
+                        Authorization: token,
+
+                    },
+                }).then(function(response) {
+                    let data = response.data;
+                    console.log("SUCCESS", data);
+
+                }).catch(function(error) {
+                    console.log("ERROR", error);
+                })
+            }
+        });
+
+        function capitalize(s) {
+            if (typeof s !== 'string') return "";
+            return s.charAt(0).toUpperCase() + s.slice(1);
+        }
     })
 </script>
 @endsection

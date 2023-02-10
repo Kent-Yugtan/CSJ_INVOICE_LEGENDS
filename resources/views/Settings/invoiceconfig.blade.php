@@ -3,99 +3,86 @@
 <div class="container-fluid pt-0">
     <h1 class="mt-0">Invoice Configuration</h1>
     <ol class="breadcrumb mb-3"></ol>
-    <div class="row">
-        <div class="col-md-6 px-2" style="width: 35%;">
-            <div class="card shadow p-2 mb-5 bg-white rounded" style="width: 100%; height:100%">
-                <div class="card-header">Create Invoice Configuration</div>
-                <div class="row px-4 pb-4" id="header">
-                    <form name="invoiceconfigs_store" id="invoiceconfigs_store" method="post"
-                        action="javascript:void(0)" class="row g-3 needs-validation" novalidate>
-                        @csrf
-
-                        <div class="mb-3">
-                            <label style="color: #A4A6B3;" for="formFile" class="form-label">Invoice Logo</label>
-                            <input class="form-control" id="invoice_logo" name="invoice_logo" type="file">
-                        </div>
-
-
-                        <div class=" mb-3">
-                            <label mb-2 style="color: #A4A6B3;">Invoice Title</label>
-                            <input id="invoice_title" name="email" type="text" class="form-control"
-                                placeholder=" Title">
-                        </div>
-
-                        <div class="mb-3">
-                            <label mb-2 style="color: #A4A6B3;">Invoice Email</label>
-                            <input id="invoice_email" name="username" type="text" class="form-control"
-                                placeholder="Email">
-                        </div>
-                        <div class="mb-3">
-                            <label mb-2 style="color: #A4A6B3;">Bill to Address</label>
-                            <input id="bill_to_address" name="Email Address" type="text" class="form-control"
-                                placeholder="From">
-                        </div>
-
-                        <div class="mb-3">
-                            <label mb-2 style="color: #A4A6B3;">Ship to Address</label>
-                            <input id="ship_to_address" name="Email Address" type="text" class="form-control"
-                                placeholder="To">
-                        </div>
-
-                        <div class="col mb-3">
-                            <button type="button"
-                                style="width:100%; height:50px;color:white; background-color: #A4A6B3;"
-                                class="btn">Close</button>
-                        </div>
-
-                        <div class="col mb-3">
-                            <button type="submit"
-                                style="width:100%; height:50px;color:white; background-color: #CF8029;"
-                                class="btn ">Save </button>
-                        </div>
-
-                    </form>
-                </div>
+    
+        <div class="row">
+          <div class="col-md-5 col-sm-12 px-2">
+            <div class="card shadow p-2 mb-5 bg-white rounded">
+              <div class="card-header">Create Invoice Configuration</div>
+              <div class="row px-4 pb-4" id="header">
+                <form name="invoiceconfigs_store" id="invoiceconfigs_store" method="post" action="javascript:void(0)" class="row g-3 needs-validation" novalidate>
+                  @csrf
+      
+                  <div class="mb-3">
+                    <label style="color: #A4A6B3;" for="formFile" class="form-label">Invoice Logo</label>
+                    <input class="form-control" id="invoice_logo" name="invoice_logo" type="file">
+                  </div>
+      
+                  <div class="mb-3">
+                    <label mb-2 style="color: #A4A6B3;">Invoice Title</label>
+                    <input id="invoice_title" name="email" type="text" class="form-control" placeholder=" Title">
+                  </div>
+      
+                  <div class="mb-3">
+                    <label mb-2 style="color: #A4A6B3;">Invoice Email</label>
+                    <input id="invoice_email" name="username" type="text" class="form-control" placeholder="Email">
+                  </div>
+                  <div class="mb-3">
+                    <label mb-2 style="color: #A4A6B3;">Bill to Address</label>
+                    <input id="bill_to_address" name="Email Address" type="text" class="form-control" placeholder="From">
+                  </div>
+      
+                  <div class="mb-3">
+                    <label mb-2 style="color: #A4A6B3;">Ship to Address</label>
+                    <input id="ship_to_address" name="Email Address" type="text" class="form-control" placeholder="To">
+                  </div>
+      
+                  <div class="col mb-3">
+                    <button type="button" style="width:100%; height:50px;color:white; background-color: #A4A6B3;" class="btn">Close</button>
+                  </div>
+      
+                  <div class="col mb-3">
+                    <button type="submit" style="width:100%; height:50px;color:white; background-color: #CF8029;" class="btn ">Save </button>
+                  </div>
+      
+                </form>
+              </div>
             </div>
-        </div>
-
-        <div class="col-md-6 px-2" style="width: 65%;">
-            <div class="card shadow  bg-white rounded " style="width: 100%; ">
-                <div class="card-body table-responsive ">
-                    <div class="row mt-3">
-                        <div class="col">
-                            <div class="w-100">
-                                <input id="search" type="text" class="form-control form-check-inline"
-                                    placeholder="Search">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <button type="submit" class="btn w-100"
-                                style="color:white; background-color: #CF8029;width:30%"
-                                id="button_search">Search</button>
-                        </div>
-                    </div>
-                    <div class="card-body table-responsive" id="tbl_invoiceConfig_wrapper">
-                        <table style="color: #A4A6B3;" class="table table-hover" id="table_invoiceconfig">
-                            <thead>
-                                <th>Invoice Title</th>
-                                <th>Invoice Email</th>
-                                <th class=" text-center">From</th>
-                                <th class=" text-center">To</th>
-                                <th class=" text-center">Action</th>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-
-                    </div>
-                    <div style="display: flex; justify-content: space-between;">
-                        <div class="page_showing" id="tbl_showing"></div>
-                        <ul class="pagination" id="tbl_pagination"></ul>
-                    </div>
-                </div>
+          </div>
+        
+      
+                    <div class="col-lg-7 px-2">
+                        <div class="card shadow bg-white rounded">
+                      <div class="card-body table-responsive">
+                       <div class="form-group row mt-3">
+                             <div class="col-lg-9">
+                <input id="search" type="text" class="form-control" placeholder="Search">
+                      </div>
+              <div class="col-lg-3">
+                <button type="submit" class="btn btn-secondary w-100"style="color:white; background-color: #CF8029;width:30%" id="button_search">Search</button>
+              </div>
             </div>
+            <div class="card-body table-responsive" id="tbl_invoiceConfig_wrapper">
+              <table class="table table-hover table-responsive" id="table_invoiceconfig">
+                <thead>
+                  <th>Invoice Title</th>
+                  <th>Invoice Email</th>
+                  <th class="text-center">From</th>
+                  <th class="text-center">To</th>
+                  <th class="text-center">Action</th>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div class="page_showing" id="tbl_showing"></div>
+              <ul class="pagination" id="tbl_pagination"></ul>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+    
+
 
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">

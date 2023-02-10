@@ -23,6 +23,6 @@ class ProfileDeductionTypes extends Model
 
     public function deductions()
     {
-        return $this->hasMany('App\Models\ProfileDeductionTypes', 'profile_deduction_type_id');
+        return $this->hasMany('App\Models\Deduction', 'profile_deduction_type_id');
     }
 }
