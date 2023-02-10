@@ -209,6 +209,7 @@ class InvoiceController extends Controller
             if ($profile_id) {
                 $incoming_data = $request->validate(
                     [
+
                         'profile_id' => '',
                         'description' => 'required',
                         'sub_total' => '',
@@ -219,6 +220,7 @@ class InvoiceController extends Controller
                         'discount_total' => '',
                         'grand_total_amount' => '',
                         'notes' => '',
+                        'due_date' => '',
                     ]
                 );
                 $incoming_data += [
@@ -286,6 +288,7 @@ class InvoiceController extends Controller
                         'discount_total' => $request->discount_total,
                         'grand_total_amount' => $request->grand_total_amount,
                         'notes' => $request->notes,
+                        'due_date' => $request->due_date,
                         'invoice_status' => 'Pending'
                     ];
 
@@ -352,6 +355,7 @@ class InvoiceController extends Controller
                         'discount_total' => $request->discount_total,
                         'grand_total_amount' => $request->grand_total_amount,
                         'notes' => $request->notes,
+                        'due_date' => $request->due_date,
                         'invoice_status' => 'Pending'
                     ];
 

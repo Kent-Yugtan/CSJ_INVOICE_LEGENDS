@@ -33,19 +33,6 @@
 
                 <div class="row pt-3">
                     <div class="col-6 ">
-                    </div>
-
-                    <div class="col-3" style="text-align: right;">
-                        <span class="text-muted"> Invoice Status: </span>
-                    </div>
-
-                    <div class="col-3 " style="text-align: right;">
-                        <div id="invoice_status"></div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-6 ">
                         <span class="text-muted"> Bill To:</span>
                     </div>
 
@@ -69,15 +56,22 @@
                     </div>
 
                     <div class="col-3" style="text-align: right;">
-                        TO BE ASK
+                        <div id="show_due_date"></div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-3 ">
                         <div id="bill_to_address"></div>
-                        <!-- <span>(5ppints@gmail.com)</span> -->
                     </div>
+                    <div class="col-6" style="text-align: right;">
+                        <span class="text-muted"> Invoice Status: </span>
+                    </div>
+
+                    <div class="col-3 " style="text-align: right;">
+                        <div id="invoice_status"></div>
+                    </div>
+
                 </div>
 
                 <div class="row pt-3">
@@ -288,19 +282,24 @@
             </div>
             <div class="modal-body">
                 <div class="row whole_row">
-                    <form id="submit_update_invoice" method="POST" action="javascript:void(0)" class="row g-3 needs-validation" novalidate>
+                    <form id="submit_update_invoice">
                         @csrf
-                        <div class="row px-4 pb-4" id="header">
+                        <div class="row px-4 pt-2" id="header">
                             <div class="col-md-6 px-2 w-100">
                                 <div class="card shadow p-2 mb-5 bg-white rounded">
-                                    <div class="row px-4 pb-4" id="header">
+
+                                    <div class="row px-4 pb-4 pt-4" id="header">
+                                        <input type="text" id="update_invoice_id" hidden>
+                                        <!-- <label class="formGroupExampleInput2">Invoice #</label> -->
+
                                         <div class="col-12 mb-3">
-                                            <div class="form-group w-50">
-
-                                                <input type="text" id="update_invoice_id" hidden>
-
-                                                <!-- <label class="formGroupExampleInput2">Invoice #</label> -->
-                                                <input id="invoice_no" style="font-weight: bold;border:none;background-color:white" disabled name="invoice_no" type="text" class="form-control">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class=" form-group">
+                                                        <label class=" formGroupExampleInput2">Due Date</label>
+                                                        <input id="due_date" name="due_date" type="date" class="form-control">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -462,6 +461,7 @@
                                                 <button type="submit" id="update" class="btn btn-secondary w-100" style="color:White; background-color:#CF8029;">Update</button>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -919,6 +919,7 @@
             DeductionItems_total();
             x--;
 
+            let due_date = $('#due_date').val();
             let invoice_id = $('#update_invoice_id').val();
             let invoice_description = $('#invoice_description').val();
             let invoice_subtotal = $('#subtotal').val().replaceAll(',', '');
@@ -971,6 +972,7 @@
                 })
             });
             let data = {
+                due_date: due_date,
                 invoice_id: invoice_id,
                 description: invoice_description,
                 subtotal: invoice_subtotal,
@@ -1122,6 +1124,8 @@
                     let data = response.data
                     if (data.success) {
                         console.log("SUCCESS", data);
+                        console.log("DUE", data.data.due_date);
+                        $('#due_date').val(data.data.due_date);
                         $('#invoice_description').val(data.data.description);
                         if (data.data.discount_type === 'Fixed') {
                             $("#discount_amount").removeClass('d-none');
@@ -1139,6 +1143,7 @@
                             $("input[id=discount_type][value=" + data.data.discount_type + "]")
                                 .attr('checked', true)
                         }
+
                         $('#discount_amount').val(data.data.discount_amount);
                         $('#discount_total').val(data.data.discount_total);
                         $('#peso_rate').val(data.data.peso_rate);
@@ -1309,6 +1314,10 @@
                             var dd = newdate.getDate();
                             var yy = newdate.getFullYear();
 
+                            var due_date = new Date(data.data.due_date);
+                            var mm2 = month[due_date.getMonth()];
+                            var dd2 = due_date.getDate();
+                            var yy2 = due_date.getFullYear();
                             $('#fullname').html(data.data.profile.user.first_name + " " + data.data
                                 .profile.user
                                 .last_name);
@@ -1320,6 +1329,7 @@
                             $('#zip_code').html("Philippines " + data.data.profile.zip_code);
                             $('#invoice_status').html(data.data.invoice_status);
                             $('#date_created').html(mm + " " + dd + ", " + yy);
+                            $('#show_due_date').html(mm2 + " " + dd2 + ", " + yy2);
                             $('#notes').html(data.data.notes);
                             $('#view_invoice_description').html(data.data.description);
                             $('#notes').html(data.data.notes);
@@ -1467,16 +1477,6 @@
                                     let parent = $(this).closest('.row .deductions');
                                     let div_rows = '';
 
-                                    // let parent0 = $(this).closest('.row .title_deductions');
-                                    // let div_rows0 = '';
-
-                                    // div_rows0 += '<div class = "col-5" > </div>';
-                                    // div_rows0 += '<div class = "col" >';
-                                    // div_rows0 += '<h5> DEDUCTIONS </h5>';
-                                    // div_rows0 += '</div>';
-                                    // div_rows0 += '<div class = "col mx-2" style = "text-align:end" > </div>';
-                                    // $(".row .title_deductions").append(div_rows0);
-
                                     div_rows += '<div class="col-5 row_deductions"></div>';
                                     div_rows += '<div class="col"></div>';
                                     div_rows +=
@@ -1529,6 +1529,7 @@
             e.preventDefault();
             console.log("asd");
 
+            let due_date = $('#due_date').val();
             let invoice_id = $('#update_invoice_id').val();
             let invoice_description = $('#invoice_description').val();
             let invoice_subtotal = $('#subtotal').val().replaceAll(',', '');
@@ -1582,6 +1583,7 @@
             });
 
             let data = {
+                due_date: due_date,
                 invoice_id: invoice_id,
                 description: invoice_description,
                 subtotal: invoice_subtotal,
@@ -1663,7 +1665,7 @@
                         toast1.toast('show');
                         setTimeout(function() {
                             window.location.reload();
-                        }, 2000);
+                        }, 1500);
 
                     }
                 }).catch(function(error) {
@@ -1713,11 +1715,10 @@
                     if (data.success) {
                         $('.toast1 .toast-title').html('Successfully Updated');
                         $('.toast1 .toast-body').html(response.data.message);
-
                         toast1.toast('show');
                         setTimeout(function() {
                             window.location.reload();
-                        }, 2000)
+                        }, 1500)
 
                     }
                 }).catch(function(error) {
@@ -1760,10 +1761,37 @@
                     },
                 }).then(function(response) {
                     let data = response.data;
+                    if (data.success) {
+
+                        $('.toast1 .toast-title').html('Successfully Deleted');
+                        $('.toast1 .toast-body').html(response.data.message);
+                        toast1.toast('show');
+                        setTimeout(function() {
+                            window.location = document.referrer;
+                        }, 1500)
+                    }
                     console.log("SUCCESS", data);
 
                 }).catch(function(error) {
-                    console.log("ERROR", error);
+                    if (error.response.data.errors) {
+                        let errors = error.response.data.errors;
+                        let fieldnames = Object.keys(errors);
+                        Object.values(errors).map((item, index) => {
+                            fieldname = fieldnames[0].split('_');
+                            fieldname.map((item2, index2) => {
+                                fieldname['key'] = capitalize(
+                                    item2);
+                                return ""
+                            });
+                            fieldname = fieldname.join(" ");
+                            $('.toast1 .toast-title').html(fieldname);
+                            $('.toast1 .toast-body').html(Object.values(
+                                    errors)[0]
+                                .join(
+                                    "\n\r"));
+                        })
+                        toast1.toast('show');
+                    }
                 })
             }
         });
