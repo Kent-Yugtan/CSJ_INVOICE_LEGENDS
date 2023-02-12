@@ -464,12 +464,6 @@
     </div>
 </div>
 
-
-
-
-
-
-
 <div style="position: fixed; top: 20px; right: 20px;">
     <div class="toast toast1 toast-bootstrap" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
@@ -489,568 +483,491 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-                display_rows();
-                show_edit();
+        display_rows();
+        show_edit();
 
-                function show_edit() {
-                    let user_id = $('#user_id').val();
-                    axios.get(apiUrl + '/api/admin/show_edit/' + user_id, {
-                            headers: {
-                                Authorization: token,
-                            },
-                        })
-                        .then(function(response) {
-                            let data = response.data;
-                            console.log("response", data);
-                            if (data.success) {
-                                // console.log("SUCCESS");
-                                // console.log("GENERAL", data.data.email);
-                                console.log("PROFILE", data.data.profile);
-                                $('#first_name').val(data.data.first_name);
-                                $('#last_name').val(data.data.last_name);
-                                $('#email').val(data.data.email);
-                                $('#username').val(data.data.username);
-                                // $('#password').val(data.data.password);
-                                $('#position').val(data.data.profile.position);
-                                $('#phone_number').val(data.data.profile.phone_number);
-                                $('#address').val(data.data.profile.address);
-                                $('#province').val(data.data.profile.province);
-                                $('#city').val(data.data.profile.city);
-                                $('#zip_code').val(data.data.profile.zip_code);
-                                $('#acct_no').val(data.data.profile.acct_no);
-                                $('#acct_name').val(data.data.profile.acct_name);
-                                $('#bank_name').val(data.data.profile.bank_name);
-                                $('#bank_location').val(data.data.profile.bank_location);
-                                $('#gcash_no').val(data.data.profile.gcash_no);
-                                $('#date_hired').val(data.data.profile.date_hired);
-                                // $("#photo").attr("src", data.data.profile.file_path);
-                                if (data.data.profile.file_path) {
-                                    $('#photo').val(data.data.profile.file_path);
-                                } else {
-                                    $("#photo").attr("src", "/images/default.png");
-                                }
+        function show_edit() {
+            let user_id = $('#user_id').val();
+            axios.get(apiUrl + '/api/admin/show_edit/' + user_id, {
+                    headers: {
+                        Authorization: token,
+                    },
+                })
+                .then(function(response) {
+                    let data = response.data;
+                    console.log("response", data);
+                    if (data.success) {
+                        // console.log("SUCCESS");
+                        // console.log("GENERAL", data.data.email);
+                        console.log("PROFILE", data.data.profile);
+                        $('#first_name').val(data.data.first_name);
+                        $('#last_name').val(data.data.last_name);
+                        $('#email').val(data.data.email);
+                        $('#username').val(data.data.username);
+                        // $('#password').val(data.data.password);
+                        $('#position').val(data.data.profile.position);
+                        $('#phone_number').val(data.data.profile.phone_number);
+                        $('#address').val(data.data.profile.address);
+                        $('#province').val(data.data.profile.province);
+                        $('#city').val(data.data.profile.city);
+                        $('#zip_code').val(data.data.profile.zip_code);
+                        $('#acct_no').val(data.data.profile.acct_no);
+                        $('#acct_name').val(data.data.profile.acct_name);
+                        $('#bank_name').val(data.data.profile.bank_name);
+                        $('#bank_location').val(data.data.profile.bank_location);
+                        $('#gcash_no').val(data.data.profile.gcash_no);
+                        $('#date_hired').val(data.data.profile.date_hired);
+                        // $("#photo").attr("src", data.data.profile.file_path);
+                        if (data.data.profile.file_path) {
+                            $('#photo').val(data.data.profile.file_path);
+                        } else {
+                            $("#photo").attr("src", "/images/default.png");
+                        }
 
-                                // console.log('profile_deduction_types', data.data.profile.profile_deduction_types);
-                                let profile_deduction_types_reduce = data.data.profile.profile_deduction_types.reduce((
-                                    a, b) => {
-                                    a.push(b.deduction_type_id)
-                                    return a
-                                }, [])
-                                // console.log('profile_deduction_types_reduce', profile_deduction_types_reduce);
-                                setTimeout(() => {
-                                    $('#select2Multiple').val(profile_deduction_types_reduce).change();
-                                }, 1000)
-                            }
-                        })
-                        .catch(function(error) {
-                            console.log("ERROR", error);
-                        });
-                }
-                show_edit();
-
-                let toast1 = $('.toast1');
-                toast1.toast({
-                    delay: 3000,
-                    animation: true
+                        // console.log('profile_deduction_types', data.data.profile.profile_deduction_types);
+                        let profile_deduction_types_reduce = data.data.profile.profile_deduction_types.reduce((
+                            a, b) => {
+                            a.push(b.deduction_type_id)
+                            return a
+                        }, [])
+                        // console.log('profile_deduction_types_reduce', profile_deduction_types_reduce);
+                        setTimeout(() => {
+                            $('#select2Multiple').val(profile_deduction_types_reduce).change();
+                        }, 1000)
+                    }
+                })
+                .catch(function(error) {
+                    console.log("ERROR", error);
                 });
+        }
+        show_edit();
 
-                $('.close').on('click', function(e) {
-                    e.preventDefault();
-                    toast1.toast('hide');
+        let toast1 = $('.toast1');
+        toast1.toast({
+            delay: 3000,
+            animation: true
+        });
+
+        $('.close').on('click', function(e) {
+            e.preventDefault();
+            toast1.toast('hide');
+        })
+
+        $('#ProfileUpdate').submit(function(e) {
+            e.preventDefault();
+            let user_id = $("#user_id").val();
+            let profile_id = $("#profile_id").val();
+            let first_name = $("#first_name").val();
+            let last_name = $("#last_name").val();
+            let email = $("#email").val();
+            let position = $("#position").val();
+            // let password = $("#password").val();
+            let username = $("#username").val();
+            let phone_number = $("#phone_number").val();
+            let address = $("#address").val();
+            let province = $("#province").val();
+            let city = $("#city").val();
+            let zip_code = $("#zip_code").val();
+            let profile_status = $("#profile_status").val();
+            let acct_no = $("#acct_no").val();
+            let acct_name = $("#acct_name").val();
+            let bank_name = $("#bank_name").val();
+            let bank_location = $("#bank_location").val();
+            let gcash_no = $("#gcash_no").val();
+            let date_hired = $("#date_hired").val();
+            let deduction_type_id = $('#select2Multiple').val();
+            let formData = new FormData();
+            formData.append('id', user_id);
+            formData.append('profile_id', profile_id);
+            formData.append('first_name', first_name);
+            formData.append('last_name', last_name);
+            formData.append('email', email);
+            formData.append('username', username);
+            // formData.append('password', "");
+            formData.append('position', position ?? "");
+            formData.append('phone_number', phone_number);
+            formData.append('address', address);
+            formData.append('province', province);
+            formData.append('city', city);
+            formData.append('zip_code', zip_code);
+            if (document.getElementById('profile_status').checked == true) {
+                formData.append('profile_status', 'Active');
+            } else {
+                formData.append('profile_status', 'Inactive');
+            }
+            formData.append('acct_no', acct_no);
+            formData.append('acct_name', acct_name);
+            formData.append('bank_name', bank_name ?? "");
+            formData.append('bank_location', bank_location);
+            formData.append('gcash_no', gcash_no);
+            formData.append('date_hired', date_hired);
+            formData.append('deduction_type_id', JSON.stringify(deduction_type_id));
+            if (document.getElementById('file').files.length > 0) {
+                formData.append('profile_picture', document.getElementById('file').files[0],
+                    "picture.png");
+            }
+            axios.post(apiUrl + '/api/saveprofile', formData, {
+                    headers: {
+                        Authorization: token,
+                        "Content-Type": "multipart/form-data",
+                    },
                 })
+                .then(function(response) {
+                    let data = response.data;
+                    console.log("SUCCESS", data);
+                    if (data.success == true) {
+                        $("#first_name").val("");
+                        $("#last_name").val("");
+                        $("#email").val("");
+                        $("#username").val("");
+                        $("#position").val("");
+                        $("#phone_number").val("");
+                        $("#address").val("");
+                        $("#province").val("");
+                        $("#city").val("");
+                        $("#zip_code").val("");
+                        $("#profile_status").val("");
+                        $("#acct_no").val("");
+                        $("#acct_name").val("");
+                        $("#bank_name").val("");
+                        $("#bank_location").val("");
+                        $("#gcash_no").val("");
+                        $("#date_hired").val("");
+                        $("#photo").attr("src", "/images/default.png");
+                        show_deduction();
+                        // select2Multiple
+                        $('.toast1 .toast-title').html('Profile');
+                        $('.toast1 .toast-body').html(data.message);
+                        toast1.toast('show');
+                    }
+                })
+                .catch(function(error) {
+                    // console.log('CATCH ERROR', error);
+                    // if (error.response.data.message) {
+                    //     $('#error_full_name').text(error.response.data.errors.full_name[0]);
+                    // }
+                    if (error.response.data.errors) {
+                        let errors = error.response.data.errors;
+                        let fieldnames = Object.keys(errors);
+                        Object.values(errors).map((item, index) => {
+                            fieldname = fieldnames[0].split('_');
+                            fieldname.map((item2, index2) => {
+                                fieldname['key'] = capitalize(item2);
+                                return ""
+                            });
+                            fieldname = fieldname.join(" ");
+                            $('.toast1 .toast-title').html(fieldname);
+                            $('.toast1 .toast-body').html(Object.values(errors)[0]
+                                .join(
+                                    "\n\r"));
+                        })
+                        toast1.toast('show');
+                    }
+                });
+        })
 
-                $('#ProfileUpdate').submit(function(e) {
-                    e.preventDefault();
-                    let user_id = $("#user_id").val();
-                    let profile_id = $("#profile_id").val();
-                    let first_name = $("#first_name").val();
-                    let last_name = $("#last_name").val();
-                    let email = $("#email").val();
-                    let position = $("#position").val();
-                    // let password = $("#password").val();
-                    let username = $("#username").val();
-                    let phone_number = $("#phone_number").val();
-                    let address = $("#address").val();
-                    let province = $("#province").val();
-                    let city = $("#city").val();
-                    let zip_code = $("#zip_code").val();
-                    let profile_status = $("#profile_status").val();
-                    let acct_no = $("#acct_no").val();
-                    let acct_name = $("#acct_name").val();
-                    let bank_name = $("#bank_name").val();
-                    let bank_location = $("#bank_location").val();
-                    let gcash_no = $("#gcash_no").val();
-                    let date_hired = $("#date_hired").val();
-                    let deduction_type_id = $('#select2Multiple').val();
-                    let formData = new FormData();
-                    formData.append('id', user_id);
-                    formData.append('profile_id', profile_id);
-                    formData.append('first_name', first_name);
-                    formData.append('last_name', last_name);
-                    formData.append('email', email);
-                    formData.append('username', username);
-                    // formData.append('password', "");
-                    formData.append('position', position ?? "");
-                    formData.append('phone_number', phone_number);
-                    formData.append('address', address);
-                    formData.append('province', province);
-                    formData.append('city', city);
-                    formData.append('zip_code', zip_code);
-                    if (document.getElementById('profile_status').checked == true) {
-                        formData.append('profile_status', 'Active');
+        $('.close').on('click', function(e) {
+            e.preventDefault();
+            toast1.toast('hide');
+        })
+        $("#error_msg").hide();
+        $("#success_msg").hide();
+
+        show_edit();
+
+        $('.close').on('click', function(e) {
+            e.preventDefault();
+            toast1.toast('hide');
+        })
+        $("#error_msg").hide();
+        $("#success_msg").hide();
+
+        function show_deduction() {
+            axios
+                .get(apiUrl + '/api/show_deduction_type', {
+                    headers: {
+                        Authorization: token,
+                    }
+                }).then(function(response) {
+                    response = response.data
+                    // console.log('RESPONSE SELECT', response);
+                    if (response.success) {
+                        // console.log('SUCCESS');
+                        if (response.data.length > 0) {
+                            $('#select2Multiple').empty();
+                            response.data.map((item) => {
+                                let option = '<option>';
+                                option += "<option value=" + item.id + ">" + item.id + " - " + item
+                                    .deduction_name +
+                                    " - " + item.deduction_amount +
+                                    "</option>"
+                                $("#select2Multiple").append(option);
+                                return '';
+                            })
+                        }
+                    }
+                }).catch(function(error) {
+                    console.log('ERROR', error);
+                });
+        }
+        show_deduction();
+        $('.select2-multiple').select2({
+            placeholder: "Select",
+            // allowClear: true
+        });
+
+        function capitalize(s) {
+            if (typeof s !== 'string') return "";
+            return s.charAt(0).toUpperCase() + s.slice(1);
+        }
+        // FUNCTION CLICK FOR REMOVING INVOICE ITEMS ROWS
+        $(document).on('click', '.remove_items', function(e) {
+            e.preventDefault();
+            let parent = $(this).closest('.row');
+            let sub_total = parent.find('.subtotal').val();
+            let row_item = $(this).parent().parent().parent();
+            console.log("subTOTAL", sub_total);
+            $(row_item).remove();
+            x--;
+            GrandTotal();
+            getResults_Converted();
+
+            if ($('#show_items > .row').length === 1) {
+                $('#show_items > .row').find('.col-remove-item').removeClass('d-none')
+                    .addClass(
+                        'd-none');
+            }
+        });
+
+        $("#add_item1").click(function(e) {
+            e.preventDefault();
+            display_rows()
+        });
+
+        $('#show_items').on("keyup", ".multi", function() {
+            let sub_total = 0;
+            let parent = $(this).closest('.row');
+            let quantity = parent.find('.quantity').val() ? parent.find('.quantity').val() :
+                0;
+            let rate = parent.find('.rate').val() ? parent.find('.rate').val() : 0;
+            sub_total = parseFloat(quantity) * parseFloat(rate);
+            parent.find('.amount').val(sub_total.toFixed(2));
+            GrandTotal();
+            getResults_Converted();
+        });
+
+        function display_rows() {
+            let max_fields = 10;
+            let wrapper = $('#show_items');
+            add_rows = '';
+            add_rows += '<div class="row">';
+
+            add_rows += '<div class="col-md-4 mb-3">';
+            add_rows += '<div class="form-group">';
+            add_rows += '<label class="formGroupExampleInput2">Item Desctiption</label>';
+            add_rows +=
+                '<input type="text" name="item_description" id="item_description" class="form-control item_description" />';
+            add_rows += '</div>';
+            add_rows += '</div>';
+
+            add_rows += '<div class="col-md-2 mb-3">';
+            add_rows += '<div class="form-group">';
+            add_rows += '<label class="formGroupExampleInput2">Quantity</label>';
+            add_rows +=
+                '<input type="number" name="quantity" id="quantity" style="text-align:right;" class="form-control multi quantity" />';
+            add_rows += '</div>';
+            add_rows += ' </div>';
+
+            add_rows += '<div class="col-md-2 mb-3">';
+            add_rows += '<div class="form-group">';
+            add_rows += '<label class="formGroupExampleInput2" for="form3Example2">Rate</label>';
+            add_rows +=
+                '<input type="text" name="rate" id="rate" style="text-align:right;" class="form-control multi rate" />';
+            add_rows += '</div>';
+            add_rows += '</div>';
+
+            add_rows += '<div class="col-md-3 mb-3">';
+            add_rows += '<div class="form-group">';
+            add_rows += '<label class="formGroupExampleInput2" for="form3Example2">Amount</label>';
+            add_rows +=
+                '<input type="text" style="text-align:right;border:none;background-color:white" disabled name="amount" id="amount" class="form-control amount" />';
+            add_rows += '</div>';
+            add_rows += '</div>';
+
+            add_rows += '<div class="col-md-1 col-remove-item d-none">';
+            add_rows += '<div class="form-group">';
+            add_rows += '</br>';
+            add_rows +=
+                '<button class="btn remove_items" style="display: flex;justify-content: center;"><i class="fa fa-trash pe-1" style="color:red"></i></button>';
+            add_rows += '</div>';
+            add_rows += '</div>';
+
+            add_rows += '</div>';
+
+
+
+            $(wrapper).append(add_rows);
+
+            if ($('#show_items > .row').length > 1) {
+                $('#show_items > .row').each(function() {
+                    $(this).find('.col-remove-item').removeClass('d-none');
+                })
+            } else {
+                $('#show_items > .row').find('.col-remove-item').removeClass('d-none').addClass(
+                    'd-none');
+            }
+        }
+        // CHECK IF THE USER HAVE THE PROFILE
+        check_profile();
+
+        function check_profile() {
+            let toast1 = $('.toast1');
+            axios
+                .get(apiUrl + '/api/invoice/createinvoice', {
+                    headers: {
+                        Authorization: token,
+                    }
+                }).then(function(response) {
+                    let data = response.data;
+                    console.log("response", data);
+                    if (!data.success) {
+                        console.log("TRUE", data.success);
+                        $('.whole_row').addClass('d-none');
+                        $('.toast1 .toast-title').html('Invoices');
+                        $('.toast1 .toast-body').html(data.message);
+                        toast1.toast('show');
                     } else {
-                        formData.append('profile_status', 'Inactive');
+                        $('.whole_row').removeClass('d-none');
+                        $('#profile_id').val(data.data.id);
+                        $('#invoice_no').val(data.invoice_no);
                     }
-                    formData.append('acct_no', acct_no);
-                    formData.append('acct_name', acct_name);
-                    formData.append('bank_name', bank_name ?? "");
-                    formData.append('bank_location', bank_location);
-                    formData.append('gcash_no', gcash_no);
-                    formData.append('date_hired', date_hired);
-                    formData.append('deduction_type_id', JSON.stringify(deduction_type_id));
-                    if (document.getElementById('file').files.length > 0) {
-                        formData.append('profile_picture', document.getElementById('file').files[0],
-                            "picture.png");
+                }).catch(function(error) {
+                    console.log("error", error);
+                });
+        }
+
+        $('#ProfileUpdate').submit(function(e) {
+            e.preventDefault();
+            let user_id = $("#user_id").val();
+            let profile_id = $("#profile_id").val();
+            let first_name = $("#first_name").val();
+            let last_name = $("#last_name").val();
+            let email = $("#email").val();
+            let position = $("#position").val();
+            // let password = $("#password").val();
+            let username = $("#username").val();
+            let phone_number = $("#phone_number").val();
+            let address = $("#address").val();
+            let province = $("#province").val();
+            let city = $("#city").val();
+            let zip_code = $("#zip_code").val();
+            let profile_status = $("#profile_status").val();
+            let acct_no = $("#acct_no").val();
+            let acct_name = $("#acct_name").val();
+            let bank_name = $("#bank_name").val();
+            let bank_location = $("#bank_location").val();
+            let gcash_no = $("#gcash_no").val();
+            let date_hired = $("#date_hired").val();
+            let deduction_type_id = $('#select2Multiple').val();
+            let formData = new FormData();
+            formData.append('id', user_id);
+            formData.append('profile_id', profile_id);
+            formData.append('first_name', first_name);
+            formData.append('last_name', last_name);
+            formData.append('email', email);
+            formData.append('username', username);
+            // formData.append('password', "");
+            formData.append('position', position ?? "");
+            formData.append('phone_number', phone_number);
+            formData.append('address', address);
+            formData.append('province', province);
+            formData.append('city', city);
+            formData.append('zip_code', zip_code);
+            if (document.getElementById('profile_status').checked == true) {
+                formData.append('profile_status', 'Active');
+            } else {
+                formData.append('profile_status', 'Inactive');
+            }
+            formData.append('acct_no', acct_no);
+            formData.append('acct_name', acct_name);
+            formData.append('bank_name', bank_name ?? "");
+            formData.append('bank_location', bank_location);
+            formData.append('gcash_no', gcash_no);
+            formData.append('date_hired', date_hired);
+            formData.append('deduction_type_id', JSON.stringify(deduction_type_id));
+            if (document.getElementById('file').files.length > 0) {
+                formData.append('profile_picture', document.getElementById('file').files[0],
+                    "picture.png");
+            }
+            axios.post(apiUrl + '/api/saveprofile', formData, {
+                    headers: {
+                        Authorization: token,
+                        "Content-Type": "multipart/form-data",
+                    },
+                })
+                .then(function(response) {
+                    let data = response.data;
+                    console.log("SUCCESS", data);
+                    if (data.success == true) {
+                        $("#first_name").val("");
+                        $("#last_name").val("");
+                        $("#email").val("");
+                        $("#username").val("");
+                        $("#position").val("");
+                        $("#phone_number").val("");
+                        $("#address").val("");
+                        $("#province").val("");
+                        $("#city").val("");
+                        $("#zip_code").val("");
+                        $("#profile_status").val("");
+                        $("#acct_no").val("");
+                        $("#acct_name").val("");
+                        $("#bank_name").val("");
+                        $("#bank_location").val("");
+                        $("#gcash_no").val("");
+                        $("#date_hired").val("");
+                        $("#photo").attr("src", "/images/default.png");
+                        show_deduction();
+                        // select2Multiple
+                        $('.toast1 .toast-title').html('Profile');
+                        $('.toast1 .toast-body').html(data.message);
+                        toast1.toast('show');
                     }
-                    axios.post(apiUrl + '/api/saveprofile', formData, {
-                            headers: {
-                                Authorization: token,
-                                "Content-Type": "multipart/form-data",
-                            },
-                        })
-                        .then(function(response) {
-                            let data = response.data;
-                            console.log("SUCCESS", data);
-                            if (data.success == true) {
-                                $("#first_name").val("");
-                                $("#last_name").val("");
-                                $("#email").val("");
-                                $("#username").val("");
-                                $("#position").val("");
-                                $("#phone_number").val("");
-                                $("#address").val("");
-                                $("#province").val("");
-                                $("#city").val("");
-                                $("#zip_code").val("");
-                                $("#profile_status").val("");
-                                $("#acct_no").val("");
-                                $("#acct_name").val("");
-                                $("#bank_name").val("");
-                                $("#bank_location").val("");
-                                $("#gcash_no").val("");
-                                $("#date_hired").val("");
-                                $("#photo").attr("src", "/images/default.png");
-                                show_deduction();
-                                // select2Multiple
-                                $('.toast1 .toast-title').html('Profile');
-                                $('.toast1 .toast-body').html(data.message);
-                                toast1.toast('show');
-                            }
-                        })
-                        .catch(function(error) {
-                            // console.log('CATCH ERROR', error);
-                            // if (error.response.data.message) {
-                            //     $('#error_full_name').text(error.response.data.errors.full_name[0]);
-                            // }
-                            if (error.response.data.errors) {
-                                let errors = error.response.data.errors;
-                                let fieldnames = Object.keys(errors);
-                                Object.values(errors).map((item, index) => {
-                                    fieldname = fieldnames[0].split('_');
-                                    fieldname.map((item2, index2) => {
-                                        fieldname['key'] = capitalize(item2);
-                                        return ""
-                                    });
-                                    fieldname = fieldname.join(" ");
-                                    $('.toast1 .toast-title').html(fieldname);
-                                    $('.toast1 .toast-body').html(Object.values(errors)[0]
-                                        .join(
-                                            "\n\r"));
-                                })
-                                toast1.toast('show');
-                            }
-                        });
                 })
+                .catch(function(error) {
+                    // console.log('CATCH ERROR', error);
+                    // if (error.response.data.message) {
+                    //     $('#error_full_name').text(error.response.data.errors.full_name[0]);
+                    // }
+                    if (error.response.data.errors) {
+                        let errors = error.response.data.errors;
+                        let fieldnames = Object.keys(errors);
+                        Object.values(errors).map((item, index) => {
+                            fieldname = fieldnames[0].split('_');
+                            fieldname.map((item2, index2) => {
+                                fieldname['key'] = capitalize(item2);
+                                return ""
+                            });
+                            fieldname = fieldname.join(" ");
+                            $('.toast1 .toast-title').html(fieldname);
+                            $('.toast1 .toast-body').html(Object.values(errors)[0]
+                                .join(
+                                    "\n\r"));
+                        })
+                        toast1.toast('show');
+                    }
+                });
+        })
 
-                $('.close').on('click', function(e) {
-                    e.preventDefault();
-                    toast1.toast('hide');
-                })
-                $("#error_msg").hide();
-                $("#success_msg").hide();
-
-                function show_deduction() {
-                    axios
-                        .get(apiUrl + '/api/show_deduction_type', {
-                            headers: {
-                                Authorization: token,
-                            }
-                        }).then(function(response) {
-                                response = response.data
-                                // console.log('RESPONSE SELECT', response);
-                                if (response.success) {
-                                    // console.log('SUCCESS');
-                                    if (response.data.length > 0) {
-                                        $('#select2Multiple').empty();
-                                        response.data.map((item) => {
-                                                let option = '<option>';
-                                                option += "<option value=" + item.id + ">" + item.id + " - " + item
-                                                    .deduction_name +
-                                                    " - " + item.deduction_amount +
-                                                    "</option>"
-                                                $("#select2Multiple").append(option);
-                                                return '';
-                                            })
-                                            .then(function(response) {
-                                                let data = response.data;
-                                                console.log("response", data);
-                                                if (data.success) {
-                                                    // console.log("SUCCESS");
-                                                    // console.log("GENERAL", data.data.email);
-                                                    console.log("PROFILE", data.data.profile);
-                                                    $('#first_name').val(data.data.first_name);
-                                                    $('#last_name').val(data.data.last_name);
-                                                    $('#email').val(data.data.email);
-                                                    $('#username').val(data.data.username);
-                                                    // $('#password').val(data.data.password);
-                                                    $('#position').val(data.data.profile.position);
-                                                    $('#phone_number').val(data.data.profile.phone_number);
-                                                    $('#address').val(data.data.profile.address);
-                                                    $('#province').val(data.data.profile.province);
-                                                    $('#city').val(data.data.profile.city);
-                                                    $('#zip_code').val(data.data.profile.zip_code);
-                                                    $('#acct_no').val(data.data.profile.acct_no);
-                                                    $('#acct_name').val(data.data.profile.acct_name);
-                                                    $('#bank_name').val(data.data.profile.bank_name);
-                                                    $('#bank_location').val(data.data.profile.bank_location);
-                                                    $('#gcash_no').val(data.data.profile.gcash_no);
-                                                    $('#date_hired').val(data.data.profile.date_hired);
-                                                    // $("#photo").attr("src", data.data.profile.file_path);
-                                                    if (data.data.profile.file_path) {
-                                                        $('#photo').val(data.data.profile.file_path);
-                                                    } else {
-                                                        $("#photo").attr("src", "/images/default.png");
-                                                    }
-
-                                                    // console.log('profile_deduction_types', data.data.profile.profile_deduction_types);
-                                                    let profile_deduction_types_reduce = data.data.profile.profile_deduction_types.reduce((
-                                                        a, b) => {
-                                                        a.push(b.deduction_type_id)
-                                                        return a
-                                                    }, [])
-                                                    // console.log('profile_deduction_types_reduce', profile_deduction_types_reduce);
-                                                    setTimeout(() => {
-                                                        $('#select2Multiple').val(profile_deduction_types_reduce).change();
-                                                    }, 1000)
-                                                }
-                                            })
-                                            .catch(function(error) {
-                                                console.log("ERROR", error);
-                                            });
-                                    }
-                                    show_edit();
-
-                                    $('.close').on('click', function(e) {
-                                        e.preventDefault();
-                                        toast1.toast('hide');
-                                    })
-                                    $("#error_msg").hide();
-                                    $("#success_msg").hide();
-
-                                    function show_deduction() {
-                                        axios
-                                            .get(apiUrl + '/api/show_deduction_type', {
-                                                headers: {
-                                                    Authorization: token,
-                                                }
-                                            }).then(function(response) {
-                                                response = response.data
-                                                // console.log('RESPONSE SELECT', response);
-                                                if (response.success) {
-                                                    // console.log('SUCCESS');
-                                                    if (response.data.length > 0) {
-                                                        $('#select2Multiple').empty();
-                                                        response.data.map((item) => {
-                                                            let option = '<option>';
-                                                            option += "<option value=" + item.id + ">" + item.id + " - " + item
-                                                                .deduction_name +
-                                                                " - " + item.deduction_amount +
-                                                                "</option>"
-                                                            $("#select2Multiple").append(option);
-                                                            return '';
-                                                        })
-                                                    }
-                                                }
-                                            }).catch(function(error) {
-                                                console.log('ERROR', error);
-                                            });
-                                    }
-                                    show_deduction();
-                                    $('.select2-multiple').select2({
-                                        placeholder: "Select",
-                                        // allowClear: true
-                                    });
-
-                                    function capitalize(s) {
-                                        if (typeof s !== 'string') return "";
-                                        return s.charAt(0).toUpperCase() + s.slice(1);
-                                    }
-                                    // FUNCTION CLICK FOR REMOVING INVOICE ITEMS ROWS
-                                    $(document).on('click', '.remove_items', function(e) {
-                                        e.preventDefault();
-                                        let parent = $(this).closest('.row');
-                                        let sub_total = parent.find('.subtotal').val();
-                                        let row_item = $(this).parent().parent().parent();
-                                        console.log("subTOTAL", sub_total);
-                                        $(row_item).remove();
-                                        x--;
-                                        GrandTotal();
-                                        getResults_Converted();
-
-                                        if ($('#show_items > .row').length === 1) {
-                                            $('#show_items > .row').find('.col-remove-item').removeClass('d-none')
-                                                .addClass(
-                                                    'd-none');
-                                        }
-                                    });
-
-                                    $("#add_item1").click(function(e) {
-                                        e.preventDefault();
-                                        display_rows()
-                                    });
-
-                                    $('#show_items').on("keyup", ".multi", function() {
-                                        let sub_total = 0;
-                                        let parent = $(this).closest('.row');
-                                        let quantity = parent.find('.quantity').val() ? parent.find('.quantity').val() :
-                                            0;
-                                        let rate = parent.find('.rate').val() ? parent.find('.rate').val() : 0;
-                                        sub_total = parseFloat(quantity) * parseFloat(rate);
-                                        parent.find('.amount').val(sub_total.toFixed(2));
-                                        GrandTotal();
-                                        getResults_Converted();
-                                    });
+        $('.close').on('click', function(e) {
+            e.preventDefault();
+            toast1.toast('hide');
+        })
+        $("#error_msg").hide();
+        $("#success_msg").hide();
 
 
-
-
-
-                                    $.ajaxSetup({
-                                        headers: {
-                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                        }
-                                    })
-                                    $.ajax({
-                                        type: "POST",
-                                        url: "/invoice",
-                                        data: "data",
-                                        dataType: "json",
-                                        success: function(response) {
-                                            console.log(response);
-                                        }
-                                    })
-
-
-
-                                    function display_rows() {
-                                        let max_fields = 10;
-                                        let wrapper = $('#show_items');
-                                        add_rows = '';
-                                        add_rows += '<div class="row">';
-
-                                        add_rows += '<div class="col-md-4 mb-3">';
-                                        add_rows += '<div class="form-group">';
-                                        add_rows += '<label class="formGroupExampleInput2">Item Desctiption</label>';
-                                        add_rows +=
-                                            '<input type="text" name="item_description" id="item_description" class="form-control item_description" />';
-                                        add_rows += '</div>';
-                                        add_rows += '</div>';
-
-                                        add_rows += '<div class="col-md-2 mb-3">';
-                                        add_rows += '<div class="form-group">';
-                                        add_rows += '<label class="formGroupExampleInput2">Quantity</label>';
-                                        add_rows +=
-                                            '<input type="number" name="quantity" id="quantity" style="text-align:right;" class="form-control multi quantity" />';
-                                        add_rows += '</div>';
-                                        add_rows += ' </div>';
-
-                                        add_rows += '<div class="col-md-2 mb-3">';
-                                        add_rows += '<div class="form-group">';
-                                        add_rows += '<label class="formGroupExampleInput2" for="form3Example2">Rate</label>';
-                                        add_rows +=
-                                            '<input type="text" name="rate" id="rate" style="text-align:right;" class="form-control multi rate" />';
-                                        add_rows += '</div>';
-                                        add_rows += '</div>';
-
-                                        add_rows += '<div class="col-md-3 mb-3">';
-                                        add_rows += '<div class="form-group">';
-                                        add_rows += '<label class="formGroupExampleInput2" for="form3Example2">Amount</label>';
-                                        add_rows +=
-                                            '<input type="text" style="text-align:right;border:none;background-color:white" disabled name="amount" id="amount" class="form-control amount" />';
-                                        add_rows += '</div>';
-                                        add_rows += '</div>';
-
-                                        add_rows += '<div class="col-md-1 col-remove-item d-none">';
-                                        add_rows += '<div class="form-group">';
-                                        add_rows += '</br>';
-                                        add_rows +=
-                                            '<button class="btn remove_items" style="display: flex;justify-content: center;"><i class="fa fa-trash pe-1" style="color:red"></i></button>';
-                                        add_rows += '</div>';
-                                        add_rows += '</div>';
-
-                                        add_rows += '</div>';
-
-
-
-                                        $(wrapper).append(add_rows);
-
-                                        if ($('#show_items > .row').length > 1) {
-                                            $('#show_items > .row').each(function() {
-                                                $(this).find('.col-remove-item').removeClass('d-none');
-                                            })
-                                        } else {
-                                            $('#show_items > .row').find('.col-remove-item').removeClass('d-none').addClass(
-                                                'd-none');
-                                        }
-                                    }
-                                    // CHECK IF THE USER HAVE THE PROFILE
-                                    function check_profile() {
-                                        let toast1 = $('.toast1');
-                                        toast1.toast({
-                                            delay: 5000,
-                                            animation: true
-                                        });
-
-                                        $('.close').on('click', function(e) {
-                                            e.preventDefault();
-                                            toast1.toast('hide');
-                                        })
-
-                                        $('#ProfileUpdate').submit(function(e) {
-                                            e.preventDefault();
-                                            let user_id = $("#user_id").val();
-                                            let profile_id = $("#profile_id").val();
-                                            let first_name = $("#first_name").val();
-                                            let last_name = $("#last_name").val();
-                                            let email = $("#email").val();
-                                            let position = $("#position").val();
-                                            // let password = $("#password").val();
-                                            let username = $("#username").val();
-                                            let phone_number = $("#phone_number").val();
-                                            let address = $("#address").val();
-                                            let province = $("#province").val();
-                                            let city = $("#city").val();
-                                            let zip_code = $("#zip_code").val();
-                                            let profile_status = $("#profile_status").val();
-                                            let acct_no = $("#acct_no").val();
-                                            let acct_name = $("#acct_name").val();
-                                            let bank_name = $("#bank_name").val();
-                                            let bank_location = $("#bank_location").val();
-                                            let gcash_no = $("#gcash_no").val();
-                                            let date_hired = $("#date_hired").val();
-                                            let deduction_type_id = $('#select2Multiple').val();
-                                            let formData = new FormData();
-                                            formData.append('id', user_id);
-                                            formData.append('profile_id', profile_id);
-                                            formData.append('first_name', first_name);
-                                            formData.append('last_name', last_name);
-                                            formData.append('email', email);
-                                            formData.append('username', username);
-                                            // formData.append('password', "");
-                                            formData.append('position', position ?? "");
-                                            formData.append('phone_number', phone_number);
-                                            formData.append('address', address);
-                                            formData.append('province', province);
-                                            formData.append('city', city);
-                                            formData.append('zip_code', zip_code);
-                                            if (document.getElementById('profile_status').checked == true) {
-                                                formData.append('profile_status', 'Active');
-                                            } else {
-                                                formData.append('profile_status', 'Inactive');
-                                            }
-                                            formData.append('acct_no', acct_no);
-                                            formData.append('acct_name', acct_name);
-                                            formData.append('bank_name', bank_name ?? "");
-                                            formData.append('bank_location', bank_location);
-                                            formData.append('gcash_no', gcash_no);
-                                            formData.append('date_hired', date_hired);
-                                            formData.append('deduction_type_id', JSON.stringify(deduction_type_id));
-                                            if (document.getElementById('file').files.length > 0) {
-                                                formData.append('profile_picture', document.getElementById('file').files[0],
-                                                    "picture.png");
-                                            }
-                                            axios.post(apiUrl + '/api/saveprofile', formData, {
-                                                    headers: {
-                                                        Authorization: token,
-                                                        "Content-Type": "multipart/form-data",
-                                                    },
-                                                })
-                                                .then(function(response) {
-                                                    let data = response.data;
-                                                    console.log("SUCCESS", data);
-                                                    if (data.success == true) {
-                                                        $("#first_name").val("");
-                                                        $("#last_name").val("");
-                                                        $("#email").val("");
-                                                        $("#username").val("");
-                                                        $("#position").val("");
-                                                        $("#phone_number").val("");
-                                                        $("#address").val("");
-                                                        $("#province").val("");
-                                                        $("#city").val("");
-                                                        $("#zip_code").val("");
-                                                        $("#profile_status").val("");
-                                                        $("#acct_no").val("");
-                                                        $("#acct_name").val("");
-                                                        $("#bank_name").val("");
-                                                        $("#bank_location").val("");
-                                                        $("#gcash_no").val("");
-                                                        $("#date_hired").val("");
-                                                        $("#photo").attr("src", "/images/default.png");
-                                                        show_deduction();
-                                                        // select2Multiple
-                                                        $('.toast1 .toast-title').html('Profile');
-                                                        $('.toast1 .toast-body').html(data.message);
-                                                        toast1.toast('show');
-                                                    }
-                                                })
-                                                .catch(function(error) {
-                                                    // console.log('CATCH ERROR', error);
-                                                    // if (error.response.data.message) {
-                                                    //     $('#error_full_name').text(error.response.data.errors.full_name[0]);
-                                                    // }
-                                                    if (error.response.data.errors) {
-                                                        let errors = error.response.data.errors;
-                                                        let fieldnames = Object.keys(errors);
-                                                        Object.values(errors).map((item, index) => {
-                                                            fieldname = fieldnames[0].split('_');
-                                                            fieldname.map((item2, index2) => {
-                                                                fieldname['key'] = capitalize(item2);
-                                                                return ""
-                                                            });
-                                                            fieldname = fieldname.join(" ");
-                                                            $('.toast1 .toast-title').html(fieldname);
-                                                            $('.toast1 .toast-body').html(Object.values(errors)[0]
-                                                                .join(
-                                                                    "\n\r"));
-                                                        })
-                                                        toast1.toast('show');
-                                                    }
-                                                });
-                                        })
-
-                                        $('.close').on('click', function(e) {
-                                            e.preventDefault();
-                                            toast1.toast('hide');
-                                        })
-                                        $("#error_msg").hide();
-                                        $("#success_msg").hide();
-
-                                    }).catch(function(error) {
-                                    console.log("error", error);
-                                });
-
-                                check_profile();
+    });
 </script>
 
 

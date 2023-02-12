@@ -11,7 +11,6 @@ use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use PhpParser\Node\Stmt\ForeaceditInvoice_;
 
 class InvoiceController extends Controller
 {
@@ -186,10 +185,21 @@ class InvoiceController extends Controller
         $invoice_id = $request->id;
         $data = Invoice::find($invoice_id);
 
-        $data->fill([
-            'id' => $invoice_id,
-            'invoice_status' => $request->invoice_status,
-        ])->save();
+        $date = date('Y-m-d H:i:s');
+        $status = $request->invoice_status;
+        if ($status === "Paid") {
+            $data->fill([
+                'id' => $invoice_id,
+                'invoice_status' => $request->invoice_status,
+                'date_received' => $date,
+            ])->save();
+        } else {
+            $data->fill([
+                'id' => $invoice_id,
+                'invoice_status' => $request->invoice_status,
+                'date_received' => null,
+            ])->save();
+        }
 
         return response()->json([
             'success' => true,
@@ -211,6 +221,7 @@ class InvoiceController extends Controller
                     [
 
                         'profile_id' => '',
+                        'due_date' => 'required',
                         'description' => 'required',
                         'sub_total' => '',
                         'peso_rate' => '',
@@ -220,7 +231,7 @@ class InvoiceController extends Controller
                         'discount_total' => '',
                         'grand_total_amount' => '',
                         'notes' => '',
-                        'due_date' => '',
+
                     ]
                 );
                 $incoming_data += [
@@ -276,6 +287,7 @@ class InvoiceController extends Controller
                     $incoming_data = $request->validate(
                         [
                             'description' => 'required',
+                            'due_date' => 'required',
                         ],
                     );
                     $incoming_data += [
@@ -288,7 +300,6 @@ class InvoiceController extends Controller
                         'discount_total' => $request->discount_total,
                         'grand_total_amount' => $request->grand_total_amount,
                         'notes' => $request->notes,
-                        'due_date' => $request->due_date,
                         'invoice_status' => 'Pending'
                     ];
 
@@ -343,6 +354,7 @@ class InvoiceController extends Controller
                     $incoming_data = $request->validate(
                         [
                             'description' => 'required',
+                            'due_date' => 'required',
                         ],
                     );
                     $incoming_data += [
@@ -355,7 +367,6 @@ class InvoiceController extends Controller
                         'discount_total' => $request->discount_total,
                         'grand_total_amount' => $request->grand_total_amount,
                         'notes' => $request->notes,
-                        'due_date' => $request->due_date,
                         'invoice_status' => 'Pending'
                     ];
 
@@ -511,6 +522,7 @@ class InvoiceController extends Controller
             $invoices = $invoices->where(
                 function ($q) use ($request) {
                     $q->orWhere('invoice_no', 'LIKE', '%' . $request->search . '%');
+                    $q->orWhere('invoice_status', 'LIKE', '%' . $request->search . '%');
                 }
             );
         }
@@ -546,6 +558,66 @@ class InvoiceController extends Controller
             $data = Invoice::with('deductions.profile_deduction_types.deduction_type', 'invoice_items')
                 ->where('id', $invoice_id)->first();
 
+            return response()->json([
+                'success' => true,
+                'data' => $data,
+            ], 200);
+        }
+    }
+
+    public function active_paid_invoice_count()
+    {
+        $data = Invoice::join('profiles', 'profiles.id', 'invoices.profile_id')
+            ->where('profiles.profile_status', 'Active')
+            ->where('invoices.invoice_status', 'Paid')
+            ->get();
+        if ($data) {
+            return response()->json([
+                'success' => true,
+                'data' => $data,
+            ], 200);
+        }
+    }
+
+    public function active_pending_invoice_count()
+    {
+        $data = Invoice::join('profiles', 'profiles.id', 'invoices.profile_id')
+            ->where('profiles.profile_status', 'Active')
+            ->where('invoices.invoice_status', 'Pending')
+            ->get();
+
+        if ($data) {
+            return response()->json([
+                'success' => true,
+                'data' => $data,
+            ], 200);
+        }
+    }
+
+
+    public function inactive_paid_invoice_count()
+    {
+        $data = Invoice::join('profiles', 'profiles.id', 'invoices.profile_id')
+            ->where('profiles.profile_status', 'Inactive')
+            ->where('invoices.invoice_status', 'Paid')
+            ->get();
+
+        if ($data) {
+            return response()->json([
+                'success' => true,
+                'data' => $data,
+            ], 200);
+        }
+    }
+
+    public function inactive_pending_invoice_count()
+    {
+        $data = Invoice::join('profiles', 'profiles.id', 'invoices.profile_id')
+            ->where('profiles.profile_status', 'Inactive')
+            ->where('invoices.invoice_status', 'Pending')
+            ->get();
+
+        if ($data) {
             return response()->json([
                 'success' => true,
                 'data' => $data,

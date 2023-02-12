@@ -46,8 +46,8 @@ Route::middleware(['AuthCheck'])->group(function () {
     // Route::post('admin/SaveProfile', [ProfileController::class, 'store']);
 
     Route::get('/admin/current', [ProfileController::class, 'current_show']);
-    // Route::get('/admin/viewProfile/{id}/{profile_id}', [ProfileController::class, 'viewProfile']);
-    Route::get('/admin/viewProfile/{id}/{profile_id}', [ProfileController::class, 'viewProfile']);
+    Route::get('/admin/activeProfile/{id}/{profile_id}', [ProfileController::class, 'activeProfile']);
+    Route::get('/admin/inactiveProfile/{id}/{profile_id}', [ProfileController::class, 'inactiveProfile']);
     Route::get('/admin/inactive', [ProfileController::class, 'inactive']);
 
     // Route::get('/invoice/add', InvoiceController::class);
@@ -73,7 +73,7 @@ Route::middleware(['AuthCheck'])->group(function () {
     Route::get('/user/dashboard', [DashboardController::class, 'userindex']);
     Route::get('/user/profile', [ProfileController::class, 'userindex']);
     Route::get('/user/current', [ProfileController::class, 'usercurrent_show']);
-    Route::get('/user/viewProfile/{id}/{profile_id}', [ProfileController::class, 'userviewProfile']);
+    Route::get('/user/activeProfile/{id}/{profile_id}', [ProfileController::class, 'userviewProfile']);
     Route::get('/user/inactive', [ProfileController::class, 'userinactive']);
     Route::get('/user/editInvoice/', [InvoiceController::class, 'useredit_invoice']);
 });

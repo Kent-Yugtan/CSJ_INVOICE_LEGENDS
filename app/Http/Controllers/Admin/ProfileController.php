@@ -259,10 +259,15 @@ class ProfileController extends Controller
      * @param  \App\Models\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function viewProfile(Request $request)
+    public function activeProfile(Request $request)
     {
         $findid = User::with('profile', 'profile.profile_deduction_types')->find($request->id);
-        return view("admin.viewProfile", compact('findid'));
+        return view("admin.activeProfile", compact('findid'));
+    }
+    public function inactiveProfile(Request $request)
+    {
+        $findid = User::with('profile', 'profile.profile_deduction_types')->find($request->id);
+        return view("admin.inactiveProfile", compact('findid'));
     }
 
     public function show_edit(Request $request, $id)
@@ -314,7 +319,7 @@ class ProfileController extends Controller
         return view('user.usercurrent');
     }
 
-    public function current_show_data_active(Request $request)
+    public function show_data_active(Request $request)
     {
         $data = User::with('profile.invoice')->select(
             [
@@ -364,9 +369,9 @@ class ProfileController extends Controller
         ], 200);
     }
 
-    public function current_show_data_inactive(Request $request)
+    public function show_data_inactive(Request $request)
     {
-        $data = User::select(
+        $data = User::with('profile.invoice')->select(
             [
                 'users.*',
                 'position',

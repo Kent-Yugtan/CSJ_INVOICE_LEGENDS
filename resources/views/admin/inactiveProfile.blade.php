@@ -1,12 +1,12 @@
 @extends('layouts.master')
 @section('content-dashboard')
 <div class="container-fluid pt-0">
-    <h1 class="mt-0">View Profile</h1>
+    <h1 class="mt-0">Inactive Profile</h1>
     <ol class="breadcrumb mb-3"></ol>
     <div class="row">
         <div class="col-6 px-2">
             <div class="card shadow p-2 mb-5 bg-white rounded" style="width: 100%; height:100%">
-                <div class="card-header">View Information</div>
+                <div class="card-header">Inactive Information</div>
                 <div class="row px-4 pb-4">
                     <form id="ProfileUpdate" method="POST" action="javascript:void(0)" class="row g-3 needs-validation" novalidate>
                         @csrf
@@ -181,18 +181,11 @@
                                 <a style="width:100%" href="#pills-deduction" data-bs-toggle="pill" data-bs-target="#pills-deduction" class="nav-link text-center" data-toggle="tab">Profile Deductions</a>
                             </li>
                         </ul>
-                        <form id="CreateInvoice" method="POST" action="javascript:void(0)" class="row g-3 needs-validation" novalidate>
-                            @csrf
-                            <div class="col-md-4">
-                                <div class="input-group">
 
-                                </div>
-                            </div>
-                        </form>
                         <div class="form-group has-search">
                             <div class="tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="pills-invoice" role="tabpanel" aria-labelledby="pills-invoice-tab">
-                                    <div class="col-md-4 w-100">
+                                    <div class="col w-100">
                                         <div class="input-group">
                                             <button style="color:white; background-color: #CF8029;" data-bs-toggle="modal" data-bs-target="#exampleModal" type="submit" id="button-addon2" name="button-addon2" class="btn form-check-inline pe-3 "><i class="fa fa-plus pe-1"></i>Add
                                                 Invoice</button>
@@ -230,60 +223,68 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="pills-deduction" role="tabpanel" aria-labelledby="pills-deduction-tab">
-
-                                    <div class="col-md-4 w-100">
-                                        <div class="input-group">
-                                            <button type="button" id="submit-create-deduction" class="btn form-check-inline pe-3" data-bs-toggle="modal" data-bs-target="#modal-create-deduction" style="color:white; background-color: #CF8029;">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <!-- <div class="input-group"> -->
+                                            <button type="button " id="submit-create-deduction" class="btn form-check-inline pe-3" data-bs-toggle="modal" data-bs-target="#modal-create-deduction" style="color:white; background-color: #CF8029;width:100%">
                                                 <i class="fa fa-plus pe-1"></i>
                                                 Add Deduction
                                             </button>
 
-                                            <select class="form-check-inline form-select" id="filter_all_deductions">
-                                                <!-- <option selected value="" disabled>Filter</option> -->
+                                            <!-- <select class="form-check-inline form-select" id="filter_all_deductions">
+                                                <option selected value="" disabled>Filter</option>
                                                 <option value="All">All</option>
                                                 <option value="Cancelled">Cancelled</option>
                                                 <option value="Paid">Paid</option>
                                                 <option value="Pending">Pending</option>
-                                            </select>
-
+                                                </select> -->
+                                        </div>
+                                        <div class="col-6">
                                             <div class="form-group has-search">
                                                 <span class="fa fa-search form-control-feedback"></span>
                                                 <input type="text" class="form-control" id="search_deduction" placeholder="Search">
                                             </div>
+                                        </div>
+                                        <!-- </div> -->
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 pt-3">
+                                            <table class="table-responsive" id="tableDeleteProfileDeductioType">
+                                                <thead></thead>
+                                                <tbody>
+                                                    <tr>
 
-                                            <div class="col-12 pt-3">
-                                                <table class="table-responsive" id="tableDeleteProfileDeductioType">
-                                                    <thead></thead>
-                                                    <tbody>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card-body table-responsive pt-0">
+                                                <table style="color: #A4A6B3;font-size: 14px;" class="table table-hover" id="dataTable_deduction">
+                                                    <thead>
                                                         <tr>
+                                                            <th>Invoice #</th>
+                                                            <th>Status</th>
+                                                            <th>Deduction Name</th>
+                                                            <th>Amount</th>
+                                                            <th class="text-center">Date Created</th>
+                                                            <!-- <th class="text-center" id="action1">Action</th> -->
 
                                                         </tr>
+                                                    </thead>
+                                                    <tbody>
                                                     </tbody>
                                                 </table>
+                                                <div style="display: flex; justify-content: space-between;">
+                                                    <div class="page_showing" id="tbl_showing_deduction"></div>
+                                                    <ul class="pagination" id="tbl_pagination_deduction"></ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-body table-responsive pt-0">
-                                        <table style="color: #A4A6B3;font-size: 14px;" class="table table-hover" id="dataTable_deduction">
-                                            <thead>
-                                                <tr>
-                                                    <th>Invoice #</th>
-                                                    <th>Status</th>
-                                                    <th>Deduction Name</th>
-                                                    <th>Amount</th>
-                                                    <th class="text-center">Date Created</th>
-                                                    <!-- <th class="text-center" id="action1">Action</th> -->
 
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
-                                        <div style="display: flex; justify-content: space-between;">
-                                            <div class="page_showing" id="tbl_showing_deduction"></div>
-                                            <ul class="pagination" id="tbl_pagination_deduction"></ul>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -686,8 +687,14 @@
 
         // INVOICE SEARCH AND DISPLAY
         $(document).ready(function() {
-            show_data();
-            show_edit();
+            // REFRESH WHEN THIS PAGE IS LOAD
+            if (window.performance && window.performance.navigation.type == window.performance.navigation
+                .TYPE_BACK_FORWARD) {
+                window.location.reload();
+            };
+            // show_data();
+            // show_edit()
+            // show_profileDeductionType_data();
 
             $('#edit_profile').on('click', function(e) {
                 $('#file').prop('disabled', false);
@@ -879,7 +886,7 @@
                         },
                     }).then(function(response) {
                         let data = response.data;
-                        // console.log("SHOW DATA", data);
+                        console.log("SHOW DATA", data);
                         if (data.success) {
                             if (data.data.data.length > 0) {
                                 data.data.data.map((item) => {
@@ -887,6 +894,9 @@
                                     var mm = newdate.getMonth() + 1;
                                     var dd = newdate.getDate();
                                     var yy = newdate.getFullYear();
+                                    var due_date = item.due_date;
+                                    var date_now = (new Date()).toISOString().split('T')[0];
+
                                     let tr = '<tr style="vertical-align: middle;">';
                                     tr += '<td hidden>' + item.id + '</td>'
                                     tr += '<td style="text-align:right;">' +
@@ -927,6 +937,27 @@
                                         '" class="btn"><i class="fa-sharp fa-solid fa-eye view-hover"></i></a> </td>';
                                     tr += '</tr>';
 
+
+                                    if (due_date < date_now) {
+
+                                        let invoice_id = item.id;
+                                        let data = {
+                                            id: invoice_id,
+                                            invoice_status: "Overdue",
+                                        }
+                                        axios.post(apiUrl + '/api/update_status', data, {
+                                            headers: {
+                                                Authorization: token
+                                            },
+                                        }).then(function(response) {
+                                            let data = response.data
+                                            if (data.success) {
+                                                console.log("SUCCESS", data);
+                                            }
+                                        }).catch(function(error) {
+                                            console.log("ERROR", error);
+                                        })
+                                    }
                                     $("#dataTable_invoice tbody").append(tr);
                                     return ''
 
@@ -1057,6 +1088,7 @@
                             let data = response.data;
                             console.log("SUCCESS", data);
                             if (data.success == true) {
+
                                 $("#first_name").val("");
                                 $("#last_name").val("");
                                 $("#email").val("");
@@ -1080,10 +1112,21 @@
                                 $('.toast1 .toast-title').html('Profile');
                                 $('.toast1 .toast-body').html(data.message);
 
-                                // show_deduction_data();
-                                $('#tableDeleteProfileDeductioType tbody tr').empty();
-                                $('#tableDeleteProfileDeductioType tbody tr').html(
-                                    show_profileDeductionType_data());
+                                // $('#dataTable_invoice tbody tr').empty();
+                                // $('#dataTable_invoice tbody tr').html(
+                                //     show_data());
+                                // $('#tableDeleteProfileDeductioType tbody tr').empty();
+                                // $('#tableDeleteProfileDeductioType tbody tr').html(
+                                //     show_profileDeductionType_data());
+
+
+                                setTimeout(function() {
+                                    // window.location.reload();
+                                    // History.back();
+                                    location.href = apiUrl + "/admin/current"
+                                    // window.location = document.referrer;
+                                }, 1500)
+
                                 toast1.toast('show');
                             }
                         })
@@ -1887,118 +1930,112 @@
             });
 
             // RESERVE FOR DISPLAY STATUS ON DEDUCTION
-            show_deduction_dataOnDeductions();
+            // show_deduction_dataOnDeductions();
+            // function show_deduction_dataOnDeductions(filters) {
+            //     let url = window.location.pathname;
+            //     let urlSplit = url.split('/');
+            //     // console.log(urlSplit.length);
+            //     if (urlSplit.length === 5) {
+            //         let page = $("#tbl_pagination_deduction .page-item.active .page-link").html();
 
-            function show_deduction_dataOnDeductions(filters) {
-                let url = window.location.pathname;
-                let urlSplit = url.split('/');
-                // console.log(urlSplit.length);
-                if (urlSplit.length === 5) {
-                    let page = $("#tbl_pagination_deduction .page-item.active .page-link").html();
+            //         let filter = {
+            //             page_size: 10,
+            //             page: page ? page : 1,
+            //             profile_id: urlSplit[4],
+            //             search: $('#search_deduction').val(),
+            //             filter_all_deductions: $('#filter_all_deductions').val()
+            //         }
+            //         // console.log("filter", filter);
 
-                    let filter = {
-                        page_size: 10,
-                        page: page ? page : 1,
-                        profile_id: urlSplit[4],
-                        search: $('#search_deduction').val(),
-                        filter_all_deductions: $('#filter_all_deductions').val()
-                    }
-                    // console.log("filter", filter);
+            //         $('#dataTable_deduction tbody').empty();
+            //         axios.get(
+            //                 `${apiUrl}/api/admin/show_deductions_dataONdeductions?${new URLSearchParams(filter)}`, {
+            //                     headers: {
+            //                         Authorization: token,
+            //                     },
+            //                 })
+            //             .then(function(response) {
+            //                 data = response.data;
+            //                 if (data.success) {
+            //                     if (data.data.data.length > 0) {
+            //                         data.data.data.map((item) => {
+            //                             let newdate = new Date(item.created_at);
+            //                             var mm = newdate.getMonth() + 1;
+            //                             var dd = newdate.getDate();
+            //                             var yy = newdate.getFullYear();
 
-                    $('#dataTable_deduction tbody').empty();
-                    axios.get(
-                            `${apiUrl}/api/admin/show_deductions_dataONdeductions?${new URLSearchParams(filter)}`, {
-                                headers: {
-                                    Authorization: token,
-                                },
-                            })
-                        .then(function(response) {
-                            data = response.data;
-                            if (data.success) {
-                                if (data.data.data.length > 0) {
-                                    data.data.data.map((item) => {
-                                        let newdate = new Date(item.created_at);
-                                        var mm = newdate.getMonth() + 1;
-                                        var dd = newdate.getDate();
-                                        var yy = newdate.getFullYear();
+            //                             let tr = '<tr style="vertical-align: middle;">';
 
-                                        let tr = '<tr style="vertical-align: middle;">';
+            //                             tr += '<td hidden>' + item.invoice.id + '</td>';
+            //                             tr += '<td>' + item.invoice.invoice_no + '</td>';
+            //                             if (item.invoice.invoice_status == "Pending") {
+            //                                 tr +=
+            //                                     '<td style="text-align:right;"><button style="width:100%; height:20px; font-size:10px; padding: 0px;" type="button" class="btn btn-danger btn-xs" > Pending </button></td >';
+            //                             } else if (item.invoice.invoice_status ==
+            //                                 "Cancelled") {
 
-                                        tr += '<td hidden>' + item.invoice.id + '</td>';
-                                        tr += '<td>' + item.invoice.invoice_no + '</td>';
-                                        if (item.invoice.invoice_status == "Pending") {
-                                            tr +=
-                                                '<td style="text-align:right;"><button style="width:100%; height:20px; font-size:10px; padding: 0px;" type="button" class="btn btn-danger btn-xs" > Pending </button></td >';
-                                        } else if (item.invoice.invoice_status ==
-                                            "Cancelled") {
+            //                                 tr +=
+            //                                     '<td style="text-align:right;"><button style="width:100%; height:20px; font-size:10px; padding: 0px;" type="button" class="btn btn-info">Cancelled</button></td>';
+            //                             } else {
+            //                                 tr +=
+            //                                     '<td style="text-align:right;"><button style="width:100%; height:20px; font-size:10px; padding: 0px;" type="button" class="btn btn-success">Paid</button></td>';
+            //                             }
 
-                                            tr +=
-                                                '<td style="text-align:right;"><button style="width:100%; height:20px; font-size:10px; padding: 0px;" type="button" class="btn btn-info">Cancelled</button></td>';
-                                        } else {
-                                            tr +=
-                                                '<td style="text-align:right;"><button style="width:100%; height:20px; font-size:10px; padding: 0px;" type="button" class="btn btn-success">Paid</button></td>';
-                                        }
+            //                             tr += '<td style="text-align:center;">' + item
+            //                                 .profile_deduction_types.deduction_type
+            //                                 .deduction_name +
+            //                                 '</td>';
+            //                             tr += '<td style="text-align:center;">' + PHP(item
+            //                                     .amount)
+            //                                 .format() + '</td>';
+            //                             tr += '<td style="text-align:center;">' + mm + "-" +
+            //                                 dd + "-" +
+            //                                 yy + '</td>';
 
-                                        // item.deductions.map((item2) => {
-                                        tr += '<td style="text-align:center;">' + item
-                                            .profile_deduction_types.deduction_type
-                                            .deduction_name +
-                                            '</td>';
-                                        tr += '<td style="text-align:center;">' + PHP(item
-                                                .amount)
-                                            .format() + '</td>';
-                                        // })
-                                        tr += '<td style="text-align:center;">' + mm + "-" +
-                                            dd + "-" +
-                                            yy + '</td>';
-                                        // tr +=
-                                        //     '<td class="text-center"> <a href="#" class="btn"><i class="fa-sharp fa-solid fa-eye view-hover"></i></a> </td>';
-                                        // tr += '</tr>';
-                                        $("#dataTable_deduction tbody").append(tr);
-                                        return ''
-                                    })
-                                    $('#tbl_pagination_deduction').empty();
-                                    data.data.links.map(item => {
-                                        let li =
-                                            `<li class="page-item cursor-pointer ${item.active ? 'active' : ''}"><a class="page-link" data-url="${item.url}">${item.label}</a></li>`
-                                        $('#tbl_pagination_deduction').append(li)
-                                        return ""
-                                    })
-                                    $("#tbl_pagination_deduction .page-item .page-link").on('click',
-                                        function() {
-                                            $("#tbl_pagination_deduction .page-item")
-                                                .removeClass(
-                                                    'active');
-                                            $(this).closest('.page-item').addClass('active');
-                                            let url = $(this).data('url')
-                                            $.urlParam = function(name) {
-                                                var results = new RegExp("[?&]" + name +
-                                                        "=([^&#]*)")
-                                                    .exec(
-                                                        url
-                                                    );
-                                                return results !== null ? results[1] || 0 :
-                                                    false;
-                                            };
+            //                             $("#dataTable_deduction tbody").append(tr);
+            //                             return ''
+            //                         })
+            //                         $('#tbl_pagination_deduction').empty();
+            //                         data.data.links.map(item => {
+            //                             let li =
+            //                                 `<li class="page-item cursor-pointer ${item.active ? 'active' : ''}"><a class="page-link" data-url="${item.url}">${item.label}</a></li>`
+            //                             $('#tbl_pagination_deduction').append(li)
+            //                             return ""
+            //                         })
+            //                         $("#tbl_pagination_deduction .page-item .page-link").on('click',
+            //                             function() {
+            //                                 $("#tbl_pagination_deduction .page-item")
+            //                                     .removeClass(
+            //                                         'active');
+            //                                 $(this).closest('.page-item').addClass('active');
+            //                                 let url = $(this).data('url')
+            //                                 $.urlParam = function(name) {
+            //                                     var results = new RegExp("[?&]" + name +
+            //                                             "=([^&#]*)")
+            //                                         .exec(
+            //                                             url
+            //                                         );
+            //                                     return results !== null ? results[1] || 0 :
+            //                                         false;
+            //                                 };
 
-                                        })
-                                    let tbl_showing_deduction =
-                                        `Showing ${data.data.from} to ${data.data.to} of ${data.data.total} entries`;
-                                    $('#tbl_showing_deduction').html(tbl_showing_deduction);
-                                } else {
-                                    $("#dataTable_deduction tbody").append(
-                                        '<tr><td colspan="6" class="text-center pb-2">No data</td></tr>'
-                                    );
-                                }
-                            }
-                        })
-                        .catch(function(error) {
-                            console.log("catch error", error);
-                        });
-                }
-            }
+            //                             })
+            //                         let tbl_showing_deduction =
+            //                             `Showing ${data.data.from} to ${data.data.to} of ${data.data.total} entries`;
+            //                         $('#tbl_showing_deduction').html(tbl_showing_deduction);
+            //                     } else {
+            //                         $("#dataTable_deduction tbody").append(
+            //                             '<tr><td colspan="6" class="text-center pb-2">No data</td></tr>'
+            //                         );
+            //                     }
+            //                 }
+            //             })
+            //             .catch(function(error) {
+            //                 console.log("catch error", error);
+            //             });
+            //     }
+            // }
 
-            show_profileDeductionType_data();
             // SHOW DEDUCTIONS DATA IN TABLE
             function show_profileDeductionType_data() {
                 let url = window.location.pathname;
@@ -2006,7 +2043,6 @@
 
                 if (urlSplit.length === 5) {
                     let profile_id = urlSplit[4];
-
                     // console.log("profile_id", profile_id);
                     $('#dataTable_deduction tbody').empty();
                     axios.get(apiUrl + '/api/settings/show_profileDeductionType_data/' + profile_id, {
@@ -2035,11 +2071,6 @@
                                         return '';
                                     })
                                 }
-                                // else {
-                                //     $("#tableDeleteProfileDeductioType tbody tr").append(
-                                //         '<td style="width:200rem;" class="text-center">No data</td>'
-                                //     );
-                                // }
                             }
                         })
                         .catch(function(error) {
@@ -2047,30 +2078,6 @@
                         });
                 }
             }
-
-            $(document).on('click', '#editButton', function(e) {
-                e.preventDefault();
-                let id = $(this).val();
-                $('#deduction_id').val(id);
-                axios
-                    .get(apiUrl + '/api/settings/show_edit/' + id, {
-                        headers: {
-                            Authorization: token,
-                        },
-                    })
-                    .then(function(response) {
-                        let data = response.data;
-                        console.log("SUCCESS", data.data);
-                        if (data.success) {
-
-                            $('#edit_deduction_name').val(data.data.deduction_name);
-                            $('#edit_deduction_amount').val(data.data.deduction_amount);
-                        }
-                    }).catch(function(error) {
-                        console.log("ERROR", error);
-                    });
-            })
-
 
             // MODAL OF PROFILE DEDUCTION TYPE BUTTON
             $('#ProfileDeductiontype_update').submit(function(e) {
@@ -2122,70 +2129,7 @@
 
             })
 
-
-            // MODAL OF DEDUCTION TYPE UPDATE BUTTON
-            // $('#deductiontype_update').submit(function(e) {
-            //     e.preventDefault();
-
-            //     let deduction_id = $('#deduction_id').val();
-            //     let deduction_name = $("#edit_deduction_name").val();
-            //     let deduction_amount = $("#edit_deduction_amount").val();
-
-            //     let data = {
-            //         id: deduction_id,
-            //         deduction_name: deduction_name,
-            //         deduction_amount: deduction_amount,
-            //     };
-
-            //     axios
-            //         .post(apiUrl + "/api/savedeductiontype", data, {
-            //             headers: {
-            //                 Authorization: token,
-            //             },
-            //         })
-            //         .then(function(response) {
-            //             // console.log("then", response.data.success);
-            //             let data = response.data;
-            //             if (data.success) {
-
-            //                 $('#edit_deduction_name').val('');
-            //                 $('#edit_deduction_amount').val('');
-
-            //                 $('.toast1 .toast-title').html('Deduction Types');
-            //                 $('.toast1 .toast-body').html(response.data.message);
-            //                 toast1.toast('show');
-
-            //                 setTimeout(function() {
-            //                     $('#modal-create-deduction').modal('hide');
-            //                 }, 1500);
-            //                 $("#save-deduction").attr("data-bs-dismiss", "modal");
-            //                 // show_deduction_data();
-
-            //             }
-            //         })
-            //         .catch(function(error) {
-            //             if (error.response.data.errors) {
-            //                 let errors = error.response.data.errors;
-            //                 console.log("error", errors);
-            //                 let fieldnames = Object.keys(errors);
-            //                 Object.values(errors).map((item, index) => {
-            //                     fieldname = fieldnames[0].split('_');
-            //                     fieldname.map((item2, index2) => {
-            //                         fieldname['key'] = capitalize(item2);
-            //                         return ""
-            //                     });
-            //                     fieldname = fieldname.join(" ");
-            //                     $('.toast1 .toast-title').html(fieldname);
-            //                     $('.toast1 .toast-body').html(Object.values(errors)[0]
-            //                         .join(
-            //                             "\n\r"));
-            //                 })
-            //                 toast1.toast('show');
-            //             }
-            //         });
-            // })
-
-            // TABS WONT CHANGE IF REFRESH
+            // TABS SELECTOR WONT CHANGE IF REFRESH
             $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
                 localStorage.setItem('activeTab', $(e.target).attr('href'));
             });

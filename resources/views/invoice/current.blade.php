@@ -31,12 +31,11 @@
 
     <div class="row">
         <div class="col ">
-            <form action="{{ url('api/admin/current_show_data_active')}}" method="GET">
+            <form action="{{ url('api/admin/show_data_active')}}" method="GET">
                 @csrf
                 <div class="input-group ">
                     <input name="search" type="text" class="form-control form-check-inline" placeholder="Search">
-                    <button class="btn" style=" color:white; background-color: #CF8029;width:30%" type="submit"
-                        id="button-addon2">Search</button>
+                    <button class="btn" style=" color:white; background-color: #CF8029;width:30%" type="submit" id="button-addon2">Search</button>
                 </div>
             </form>
         </div>
@@ -70,8 +69,7 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td class="text-center"> <a href="http://127.0.0.1:8000/settings/invoice" type="button"
-                                        class="btn btn-info">View</bu>
+                                <td class="text-center"> <a href="http://127.0.0.1:8000/settings/invoice" type="button" class="btn btn-info">View</bu>
 
 
                                 </td>
