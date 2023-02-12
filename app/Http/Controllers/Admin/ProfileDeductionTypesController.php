@@ -153,6 +153,13 @@ class ProfileDeductionTypesController extends Controller
                     }
                 }
                 return response()->json($ret, 200);
+            } else {
+                $delete_data = ProfileDeductionTypes::where('id', $profileDeductionType_id)->delete();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Data deleted successfully',
+                    'data' => $delete_data,
+                ], 200);
             }
         }
     }

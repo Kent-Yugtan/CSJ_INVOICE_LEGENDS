@@ -46,10 +46,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('show_ProfileDeductionType', [ProfileController::class, 'show_ProfileDeductionType']);
 
     // Route::post('admin/UpdateProfile', [ProfileController::class, 'store'])->name('profile.update');
-    Route::get('admin/current_show_data_active', [ProfileController::class, 'current_show_data_active']);
-    Route::get('admin/current_show_data_inactive', [ProfileController::class, 'current_show_data_inactive']);
-    Route::get('admin/viewProfile/{id}', [ProfileController::class, 'store']);
-    // Route::get('admin/viewProfile/{user_id}/{profile_id}', [ProfileController::class, 'store']);
+    Route::get('admin/show_data_active', [ProfileController::class, 'show_data_active']);
+    Route::get('admin/show_data_inactive', [ProfileController::class, 'show_data_inactive']);
+    Route::get('admin/activeProfile/{id}', [ProfileController::class, 'store']);
+    Route::get('admin/inactiveProfile/{id}', [ProfileController::class, 'store']);
     Route::get('admin/show_edit/{id}', [ProfileController::class, 'show_edit']);
 
     // POST DEDUCTION TYPES TABLE
@@ -64,6 +64,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('settings/show_emailedit/{id}', [EmailConfigController::class, 'show_edit']);
 
     //  GET INVOICES FUNCTIONS
+    Route::post('update_status', [InvoiceController::class, 'update_status']);
+    Route::post('delete_invoice/{id}', [InvoiceController::class, 'destroy']);
     Route::get('admin/current_invoice', [InvoiceController::class, 'current_invoice']);
     Route::get('admin/inactive_invoice', [InvoiceController::class, 'inactive_invoice']);
     Route::get('invoice/check_profile/{id}', [InvoiceController::class, 'check_profile']);
@@ -72,8 +74,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('admin/editInvoice/{id}', [InvoiceController::class, 'editInvoice']);
     Route::get('getInvoiceStatus/{id}', [InvoiceController::class, 'getInvoiceStatus']);
     Route::get('admin/show_deductions_dataONdeductions', [InvoiceController::class, 'show_deductions_dataONdeductions']);
-    Route::post('update_status', [InvoiceController::class, 'update_status']);
-    Route::post('delete_invoice/{id}', [InvoiceController::class, 'destroy']);
+    Route::get('active_paid_invoice_count', [InvoiceController::class, 'active_paid_invoice_count']);
+    Route::get('active_pending_invoice_count', [InvoiceController::class, 'active_pending_invoice_count']);
+    Route::get('inactive_paid_invoice_count', [InvoiceController::class, 'inactive_paid_invoice_count']);
+    Route::get('inactive_pending_invoice_count', [InvoiceController::class, 'inactive_pending_invoice_count']);
 
     // FOR EMAIL CONFIG TABLE
     Route::get('get_name', [EmailConfigController::class, 'get_name']);

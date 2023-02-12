@@ -31,7 +31,7 @@
 
     <div class="row">
         <div class="col ">
-            <form action="{{ url('api/admin/current_show_data')}}" method="GET">
+            <form>
                 @csrf
                 <div class="input-group ">
                     <input name="search" type="text" class="form-control form-check-inline" placeholder="Search">

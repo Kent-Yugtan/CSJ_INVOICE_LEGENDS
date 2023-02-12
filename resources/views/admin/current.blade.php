@@ -1,8 +1,7 @@
 @extends('layouts.master')
 @section('content-dashboard')
-@inject('profile', 'App\Http\Controllers\Admin\ProfileController')
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Current Profiles</h1>
+    <h1 class="mt-4">Active Profiles</h1>
     <ol class="breadcrumb mb-4"></ol>
 
     <div class="row">
@@ -10,11 +9,10 @@
             <div class="card-hover card shadow p-2 mb-4 bg-white rounded">
                 <div>
                     <div class="row text-center py-3">
-                        <Label class="fs-1">
-                            {{$profile->count_active() ? $profile->count_active() : 0 ;}}
+                        <Label class="fs-1" id="paid_invoices">
                         </Label>
                     </div>
-                    <div class="card-body text-center py-1" style="border-bottom: none; color: #A4A6B3;">Active Profiles
+                    <div class="card-body text-center py-1" style="border-bottom: none; color: #A4A6B3;">Paid Invoices
                     </div>
                 </div>
                 <div class="d-flex align-items-center justify-content-between"></div>
@@ -24,12 +22,10 @@
             <div class="card-hover card shadow p-2 mb-4 bg-white rounded">
                 <div>
                     <div class="row text-center py-3">
-                        <Label class="fs-1">
-                            {{$profile->count_inactive() ? $profile->count_inactive() : 0 ;}}
+                        <Label class="fs-1" id="pending_invoices">
                         </Label>
                     </div>
-                    <div class="card-body text-center py-1" style="border-bottom: none;color: #A4A6B3; ">Inactive
-                        Profiles</div>
+                    <div class="card-body text-center py-1" style="border-bottom: none;color: #A4A6B3; ">Pending Invoices</div>
                 </div>
                 <div class="d-flex align-items-center justify-content-between"></div>
             </div>
@@ -74,10 +70,10 @@
                     <table style=" color: #A4A6B3 ; " class="table table-hover" id="tbl_user">
                         <style>
                             .table-responsive {
-                              overflow-x: auto;
-                              overflow-y: hidden;
+                                overflow-x: auto;
+                                overflow-y: hidden;
                             }
-                          </style>
+                        </style>
                         <thead>
                             <tr>
                                 <th>User</th>
@@ -90,7 +86,7 @@
                         </thead>
                         <tbody></tbody>
                     </table>
-                        
+
                     <div style="display: flex; justify-content: space-between;">
                         <div class="page_showing" id="tbl_user_showing"></div>
                         <ul class="pagination" id="tbl_user_pagination"></ul>
@@ -106,8 +102,40 @@
 <script type="text/javascript">
     $(document).ready(function() {
 
-
         show_data();
+        active_count_paid();
+        active_count_pending()
+
+        function active_count_paid() {
+            axios.get(apiUrl + '/api/active_paid_invoice_count', {
+                headers: {
+                    Authorization: token,
+                },
+            }).then(function(response) {
+                let data = response.data
+                if (data.success) {
+                    // console.log("SUCCESS", data.data.length ? data.data.length : 0);
+                    $('#paid_invoices').html(data.data.length ? data.data.length : 0);
+                }
+            }).catch(function(error) {
+                console.log("ERROR", error);
+            })
+        }
+
+        function active_count_pending() {
+            axios.get(apiUrl + '/api/active_pending_invoice_count', {
+                headers: {
+                    Authorization: token,
+                },
+            }).then(function(response) {
+                let data = response.data
+                if (data.success) {
+                    $('#pending_invoices').html(data.data.length ? data.data.length : 0);
+                }
+            }).catch(function(error) {
+                console.log("ERROR", error);
+            })
+        }
 
         $('#button-submit').on('click', function() {
             let search = $('#search').val();
@@ -127,9 +155,9 @@
             return new Date(mdy[2], mdy[0] - 1, mdy[1]);
         }
 
-        console.log("DATE",
-            datediff(parseDate('2/3/2023'), parseDate('2/4/2023'))
-        );
+        // console.log("DATE",
+        //     datediff(parseDate('2/3/2023'), parseDate('2/4/2023'))
+        // );
 
         function show_data(filters) {
             let filter = {
@@ -141,7 +169,7 @@
             $('#tbl_user tbody').empty();
 
             axios
-                .get(`${apiUrl}/api/admin/current_show_data_active?${new URLSearchParams(filter)}`, {
+                .get(`${apiUrl}/api/admin/show_data_active?${new URLSearchParams(filter)}`, {
                     headers: {
                         Authorization: token,
                     },
@@ -192,7 +220,7 @@
 
                                     tr +=
                                         '<td  class="text-center"> <a href="' + apiUrl +
-                                        '/admin/viewProfile/' +
+                                        '/admin/activeProfile/' +
                                         item.id + "/" + item.profile.id +
                                         '" class="btn btn-outline-primary">View</a> </td>';
 
@@ -221,7 +249,7 @@
 
                                     tr +=
                                         '<td  class="text-center"> <a href="' + apiUrl +
-                                        '/admin/viewProfile/' +
+                                        '/admin/activeProfile/' +
                                         item.id + "/" + item.profile.id +
                                         '" class="btn btn-outline-primary">View</a> </td>';
 

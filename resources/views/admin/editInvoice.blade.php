@@ -71,16 +71,16 @@
                     <div class="col-3 " style="text-align: right;">
                         <div id="invoice_status"></div>
                     </div>
+                </div>
 
+                <div class="row">
+                    <div class="col-6"></div>
+                    <div class="col-3 text-muted" id="text_date_received" style="text-align:right"></div>
+                    <div class="col-3" id="date_received" style="text-align:right"></div>
                 </div>
 
                 <div class="row pt-3">
                     <div class="col-3">
-                        <!-- <span>
-                            (4094 South Power Road
-                            Suite 103-197
-                            Mesa, AZ 85212)
-                        </span> -->
                         <div id="ship_to_address"></div>
                     </div>
                     <div class="col-3"></div>
@@ -94,7 +94,6 @@
                                     </span>
                                 </h5>
                             </div>
-
                             <div class="col-6" style="text-align: right;">
                                 <h5>
                                     <div class="me-3" id="balance_due"></div>
@@ -216,7 +215,7 @@
                 </div>
 
 
-                <div class="row deductions" id="deductions">
+                <div class="deductions">
                 </div>
 
                 <div class="row total_deductions" id="total_deductions">
@@ -251,7 +250,7 @@
                             <button type="button" id="cancelled_button" class="btn btn-secondary w-100" style=" color:White; background-color:gray; ">Cancel Invoice</button>
                         </div>
                         <div class="pt-2">
-                            <button type="button" id="delete_button" class="btn btn-secondary w-100" style=" color:White; background-color:red; ">Delete Invoice</button>
+                            <button type="button" id="delete_button" data-bs-toggle="modal" data-bs-target="#deleteModal" class="btn btn-secondary w-100" style=" color:White; background-color:red; ">Delete Invoice</button>
                         </div>
                     </div>
                 </div>
@@ -489,6 +488,50 @@
         </div>
     </div>
 </div>
+
+<!-- Modal FOR DELETE -->
+<div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="row">
+                    <div class="col">
+                        <span>
+                            <img class="img-team" src="{{ URL('images/Delete.png')}}" style="width: 50%; padding:10px" />
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <span>
+                            <h3> Are you sure?</h3>
+                        </span>
+                    </div>
+                </div>
+                <div class="row pt-3 px-3">
+                    <div class="col">
+                        <span id="invoice_id" hidden></span>
+                        <span class="text-muted"> Do you really want to delete these record? This process cannot be undone.</span>
+                    </div>
+                </div>
+
+                <div class="row pt-3 pb-3 px-3">
+                    <div class="col-6">
+                        <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                    <div class="col-6">
+                        <button type="button" id="invoice_delete" class="btn btn-danger w-100">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script type="text/javascript">
     let total_deduction_amount = 0
@@ -1318,6 +1361,12 @@
                             var mm2 = month[due_date.getMonth()];
                             var dd2 = due_date.getDate();
                             var yy2 = due_date.getFullYear();
+
+                            var date_received = new Date(data.data.date_received);
+                            var mm3 = month[date_received.getMonth()];
+                            var dd3 = date_received.getDate();
+                            var yy3 = date_received.getFullYear();
+
                             $('#fullname').html(data.data.profile.user.first_name + " " + data.data
                                 .profile.user
                                 .last_name);
@@ -1333,6 +1382,43 @@
                             $('#notes').html(data.data.notes);
                             $('#view_invoice_description').html(data.data.description);
                             $('#notes').html(data.data.notes);
+
+                            if (data.data.invoice_status === "Paid") {
+                                $('#text_date_received').html("Date Received:");
+                                $('#date_received').html(mm3 + " " + dd3 + ", " + yy3);
+                                $('#edit_invoice').prop('disabled', true);
+
+                            } else {
+                                $('#text_date_received').html("");
+                                $('#date_received').html("");
+                                $('#edit_invoice').prop('disabled', false);
+                            }
+
+                            let redue_date = data.data.due_date;
+                            let date_now = (new Date()).toISOString().split('T')[0];
+
+                            if (redue_date < date_now) {
+                                let invoice_id = data.data.id;
+                                let invoice_status = 'Overdue';
+                                // console.log("INVOICE_ID", invoice_id);
+                                let data1 = {
+                                    id: invoice_id,
+                                    invoice_status: invoice_status,
+                                };
+
+                                axios.post(apiUrl + '/api/update_status', data1, {
+                                    headers: {
+                                        Authorization: token,
+                                    },
+                                }).then(function(response) {
+                                    let data = response.data;
+                                    if (data.success) {
+                                        console.log("SUCCESS", data);
+                                    }
+                                }).catch(function(error) {
+                                    console.log("ERROR", error);
+                                })
+                            }
 
                             if (data.data.invoice_items.length > 0) {
                                 let balance_due = parseFloat(data.data.sub_total ? data.data.sub_total :
@@ -1430,8 +1516,8 @@
 
                                     let parent0 = $(this).closest('.row .title_deductions');
                                     let div_rows0 = '';
-                                    div_rows0 += '<div class = "col-5" > </div>';
-                                    div_rows0 += '<div class = "col" >';
+                                    div_rows0 += '<div class="col-5"> </div>';
+                                    div_rows0 += '<div class="col">';
                                     div_rows0 += '<h5> DEDUCTIONS </h5>';
                                     div_rows0 += '</div>';
                                     div_rows0 += '<div class = "col mx-2" style = "text-align:end" > </div>';
@@ -1442,18 +1528,16 @@
                                             .amount ? item2.amount :
                                             0);
 
-                                        let parent = $(this).closest('.row .deductions');
+                                        let parent = $(this).closest('.deductions');
                                         let div_rows = '';
-                                        div_rows += '<div class="col-5 row_deductions"></div>';
-                                        div_rows += '<div class="col text-muted">' + item2
-                                            .profile_deduction_types
-                                            .deduction_type.deduction_name + '</div>';
-                                        div_rows +=
-                                            '<div class="col mx-2 h6" style="text-align:end;color:red;">' +
-                                            deduction_amount.toLocaleString('en-US', {
-                                                style: 'currency',
-                                                currency: 'PHP'
-                                            }) + '</div>';
+                                        div_rows += '<div class="row">';
+                                        div_rows += '<div class="col-5"></div>';
+                                        div_rows += '<div class="col text-muted">' + item2.profile_deduction_types.deduction_type.deduction_name + '</div>';
+                                        div_rows += '<div class="col mx-2 h6" style="text-align:end;color:red;">' + deduction_amount.toLocaleString('en-US', {
+                                            style: 'currency',
+                                            currency: 'PHP'
+                                        }) + '</div>';
+                                        div_rows += '</div>';
                                         total_deductions += deduction_amount;
                                         $(".row .deductions").append(div_rows);
                                         return '';
@@ -1461,7 +1545,7 @@
 
                                     let parent1 = $(this).closest('.row .total_deductions');
                                     let div_rows1 = '';
-                                    div_rows1 += '<div class="col-5 row_deductions"></div>';
+                                    div_rows1 += '<div class="col-5"></div>';
                                     div_rows1 += '<div class="col fw-bold">Total Deductions</div>';
                                     div_rows1 +=
                                         '<div class="col mx-2 h6 fw-bold" style="text-align:end;color:red;">' +
@@ -1477,7 +1561,7 @@
                                     let parent = $(this).closest('.row .deductions');
                                     let div_rows = '';
 
-                                    div_rows += '<div class="col-5 row_deductions"></div>';
+                                    div_rows += '<div class="col-5"></div>';
                                     div_rows += '<div class="col"></div>';
                                     div_rows +=
                                         '<div class="col mx-2 h6" style="text-align:end;color:red;"></div>';
@@ -1745,15 +1829,16 @@
             }
         });
 
-        $('#delete_button').on('click', function(e) {
-            e.preventDefault();
+        // REFRESH VIEW PROILE WHEN BACK
+
+        //DELETE INVOICE
+        $('#invoice_delete').on('click', function(e) {
 
             let url = window.location.pathname;
-            let urlSplit = url.split("/");
+            let urlSplit = url.split("/")
             if (urlSplit.length === 4) {
                 let invoice_id = urlSplit[3];
-                console.log("DELETE", invoice_id);
-
+                console.log("INVICEOI", invoice_id);
                 axios.post(apiUrl + '/api/delete_invoice/' + invoice_id, {
                     headers: {
                         Authorization: token,
@@ -1794,7 +1879,7 @@
                     }
                 })
             }
-        });
+        })
 
         function capitalize(s) {
             if (typeof s !== 'string') return "";

@@ -10,11 +10,26 @@
     <div class="row">
         <div class="col-xl-3 col-md-6">
             <div class="card-hover card shadow p-2 mb-4 bg-white rounded" style="max-width: 40rem;">
-                <div class="card-body text-center py-1" style="border-bottom: none; color: #A4A6B3;">Pending</div>
+                <div class="card-body text-center py-1" style="border-bottom: none; color: #A4A6B3;">Paid</div>
                 <div>
                     <div class="row text-center py-3">
                         <Label class="fs-1">
-                            {{$invoice->count_pending() ? $invoice->count_pending() : 0;}}
+                            {{$invoice->count_paid() ? $invoice->count_paid() : 0;}}
+                        </Label>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card-hover card shadow p-2 mb-4 bg-white rounded" style="max-width: 40rem;">
+                <div class="card-body text-center py-1" style="border-bottom: none;color: #A4A6B3; ">Pending</div>
+                <div>
+                    <div class="row text-center py-3">
+                        <Label class="fs-1">
+                            {{$invoice->count_pending() ? $invoice->count_pending() : 0 ;}}
                         </Label>
                     </div>
                 </div>
@@ -30,21 +45,6 @@
                     <div class="row text-center py-3">
                         <Label class="fs-1">
                             {{$invoice->count_overdue() ? $invoice->count_overdue() : 0 ;}}
-                        </Label>
-                    </div>
-                </div>
-                <div class="d-flex align-items-center justify-content-between">
-
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card-hover card shadow p-2 mb-4 bg-white rounded" style="max-width: 40rem;">
-                <div class="card-body text-center py-1" style="border-bottom: none;color: #A4A6B3; ">Completed</div>
-                <div>
-                    <div class="row text-center py-3">
-                        <Label class="fs-1">
-                            {{$invoice->count_paid() ? $invoice->count_paid() : 0 ;}}
                         </Label>
                     </div>
                 </div>
@@ -86,33 +86,27 @@
                                 <div class="col-xl-6">
                                     <div class="mb-3">
                                         <label mb-2 style="color: #A4A6B3;">Profile</label>
-                                        <input type="text" class="form-control" id="formGroupExampleInput"
-                                            placeholder="Profile">
+                                        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Profile">
                                     </div>
                                     <div class="mb-3">
                                         <label mb-2 style="color: #A4A6B3;">Description</label>
-                                        <input type="text" class="form-control" id="formGroupExampleInput2"
-                                            placeholder="Description">
+                                        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Description">
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="mb-3">
                                         <label mb-2 style="color: #A4A6B3;">Invoice #</label>
-                                        <input type="text" class="form-control" id="formGroupExampleInput"
-                                            placeholder="Invoice #">
+                                        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Invoice #">
                                     </div>
                                     <div class="mb-3">
                                         <label mb-2 style="color: #A4A6B3; ">Amount</label>
-                                        <input type="text" class="form-control" id="formGroupExampleInput2"
-                                            placeholder="Amount">
+                                        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Amount">
                                     </div>
 
                                 </div>
                             </div>
 
-                            <button type="submit"
-                                style="width:100%; height:50px;color:white; background-color: #CF8029;" class="btn"
-                                class="btn">Create Invoice</button>
+                            <button type="submit" style="width:100%; height:50px;color:white; background-color: #CF8029;" class="btn" class="btn">Create Invoice</button>
                         </form>
                     </div>
                 </div>
