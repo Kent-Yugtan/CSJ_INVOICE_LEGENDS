@@ -200,11 +200,10 @@
                 <div class="row title_deductions pt-3">
   <div class="col-5 fw-bold">Deductions:</div>
 </div>
-<div class="row deductions" id="deductions">
-  
+<div class="row deductions" id="deductions">  
 </div>
 <div class="row total_deductions" id="total_deductions">
- 
+
 </div>
 <div class="row pt-3">
   <div class="col-5 fw-bold">Notes:</div>
@@ -221,12 +220,7 @@
 </div>
             </div>
         </div>
-        
-
-
-
-
-        <div class="col-6 px-2 w-25">
+        -2 w-25">
             <div class="card shadow p-2 mb-5 bg-white rounded">
                 <!-- <div class="card-header">Profile Information</div> -->
                 <div class="row pt-3">

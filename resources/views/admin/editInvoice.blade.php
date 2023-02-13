@@ -3,8 +3,8 @@
 <div class="container-fluid pt-0">
     <h1 class="mt-0"></h1>
     <ol class="breadcrumb mb-3"></ol>
-    <div class="row">
-        <div class="col-6 px-2 w-75">
+    <div class="row px-4 pb-4"
+    <div class="col-md-6 px-2 w-75">
             <div class="card shadow px-5 p-2 bg-white rounded " style="width: 70%; height:100%;">
                 <div class="row">
                   <div class="col-12 col-md-4 pt-5 fw-bolder">
@@ -184,37 +184,34 @@
                     <div class="col mx-2 h6" id="grand_total_amount" style="text-align:end"></div>
                 </div>
             </div>
-            <div class="col-6 px-2 w-75">
-                <div class="card shadow px-5 p-2 bg-white rounded " style="width: 70%; height:100%;">
-                    
+
+            <div class="row-md-6 w-25 px-2">
+                <div class="card-responsive-md shadow p-2  bg-white rounded "
                     <div class="row pt-3">
-                        <div class="col">
-                            <div class="pb-2">
-                                <button type="button" id="paid_button" class="btn btn-secondary w-100" style=" color:White; background-color:green; ">Paid Invoice</button>
-                            </div>
-                            <div>
-                                <button type="button" id="cancelled_button" class="btn btn-secondary w-100" style=" color:White; background-color:gray; ">Cancel Invoice</button>
-                            </div>
-                            <div class="pt-2">
-                                <button type="button" id="delete_button" data-bs-toggle="modal" data-bs-target="#deleteModal" class="btn btn-secondary w-100" style=" color:White; background-color:red; ">Delete Invoice</button>
-                            </div>
+                      
+                        <div class="w-100 pt-4 pb-2">
+                          <button type="button" id="paid_button" class="btn btn-secondary w-100" style="color: White; background-color: green;">Paid Invoice</button>
                         </div>
+                        <div class="w-100">
+                          <button type="button" id="cancelled_button" class="btn btn-secondary w-100" style="color: White; background-color: gray;">Cancel Invoice</button>
+                        </div>
+                        <div class="w-100 pt-2">
+                          <button type="button" id="delete_button" data-bs-toggle="modal" data-bs-target="#deleteModal" class="btn btn-secondary w-100" style="color: White; background-color: red;">Delete Invoice</button>
+                        </div>
+                      
+                        <div class="w-100 pt-2">
+                          <button type="button" class="btn btn-secondary w-100" style="color: White; background-color: #CF8029;">Download</button>
+                        </div>
+                        <div class="w-100 pt-2 pb-4">
+                          <button type="button" id="edit_invoice" data-bs-toggle="modal" data-bs-target="#updateModal" class="btn btn-secondary w-100" style="color: White; background-color: #CF8029;">Edit Invoice</button>
+                        </div>
+                      </div>
                     </div>
-        
-                    <div class="row pt-5">
-                        <div class="col">
-                            <div class="pb-2">
-                                <button type="button" class="btn btn-secondary w-100" style=" color:White; background-color:#CF8029; ">Download</button>
-                            </div>
-                            <div class="pb-2">
-                                <button type="button" id="edit_invoice" data-bs-toggle="modal" data-bs-target="#updateModal" class="btn btn-secondary w-100" style=" color:White; background-color:#CF8029; ">Edit
-                                    Invoice</button>
-                        
-                            </div>
-                     
+                  </div>
                 </div>
-        </div>
+                
     </div>
+    
 </div>
     
 <!-- MODAL FOR EDIT INVOICE -->
@@ -414,7 +411,6 @@
                     </form>
                 </div>
             
-        
 <div style="position:fixed;top:60px;right:20px;z-index:99999;justify-content:flex-end;display:flex;">
     <div class="toast toast1 toast-bootstrap" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
@@ -431,7 +427,7 @@
         </div>
     </div>
 </div>
-
+    
 <!-- Modal FOR DELETE -->
 <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -475,7 +471,7 @@
     </div>
 </div>
 
-
+    
 <script type="text/javascript">
     let total_deduction_amount = 0
     let x = 1;
