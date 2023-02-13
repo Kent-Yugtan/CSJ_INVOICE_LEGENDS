@@ -470,7 +470,7 @@ class InvoiceController extends Controller
             ]);
         }
     }
-    public function show_deductions_dataONdeductions(Request $request)
+    public function show_profileDeductionType_Button(Request $request)
     {
 
         $deductions = Deduction::with('invoice', 'profile_deduction_types.deduction_type')
@@ -623,5 +623,46 @@ class InvoiceController extends Controller
                 'data' => $data,
             ], 200);
         }
+    }
+    public function show_Profilededuction_Table(Request $request)
+    {
+
+        $deductions = Deduction::with('invoice', 'profile_deduction_types.deduction_type')
+            ->where('profile_id', $request->profile_id);
+
+        // if (isset($request->search)) {
+        //     $deductions = $deductions->where(
+        //         function ($q) use ($request) {
+        //             $q->orWhere('invoice_no', 'LIKE', '%' . $request->search . '%');
+        //         }
+        //     );
+        // }
+
+        // if (isset($request->filter_all_deductions)) {
+        //     if ($request->filter_all_deductions == 'All') {
+        //         $deductions =  $deductions->whereHas('invoice', function ($query) use ($request) {
+        //             $query->where('invoice_status', '<>', '');
+        //         });
+        //     } else {
+        //         $deductions =  $deductions->whereHas('invoice', function ($query) use ($request) {
+        //             $query->where('invoice_status', $request->filter_all_deductions);
+        //         });
+        //     }
+        // }
+
+        $deductions = $deductions->orderby('created_at', 'desc');
+
+        if ($request->page_size) {
+            $deductions = $deductions->limit($request->page_size)
+                ->paginate($request->page_size, ['*'], 'page', $request->page)
+                ->toArray();
+        } else {
+            $deductions = $deductions->get();
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $deductions,
+        ]);
     }
 }

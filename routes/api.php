@@ -73,7 +73,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('admin/show_invoice', [InvoiceController::class, 'show_invoice']);
     Route::get('admin/editInvoice/{id}', [InvoiceController::class, 'editInvoice']);
     Route::get('getInvoiceStatus/{id}', [InvoiceController::class, 'getInvoiceStatus']);
-    Route::get('admin/show_deductions_dataONdeductions', [InvoiceController::class, 'show_deductions_dataONdeductions']);
+    Route::get('admin/show_Profilededuction_Table', [InvoiceController::class, 'show_Profilededuction_Table']);
     Route::get('active_paid_invoice_count', [InvoiceController::class, 'active_paid_invoice_count']);
     Route::get('active_pending_invoice_count', [InvoiceController::class, 'active_pending_invoice_count']);
     Route::get('inactive_paid_invoice_count', [InvoiceController::class, 'inactive_paid_invoice_count']);
@@ -89,7 +89,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('saveProfileDeductionTypes', [ProfileDeductionTypesController::class, 'store']);
     Route::post('editProfileDeductionTypes', [ProfileDeductionTypesController::class, 'store']);
     Route::post('showProfileDeductionTypes/{id}', [ProfileDeductionTypesController::class, 'show']);
-    Route::get('settings/show_profileDeductionType_data/{profile_id}', [ProfileDeductionTypesController::class, 'show_profileDeductionType_data']);
+    Route::get('settings/show_profileDeductionType_Button/{profile_id}', [ProfileDeductionTypesController::class, 'show_profileDeductionType_Button']);
     Route::get('settings/show_deduction_data/{profile_id}', [ProfileDeductionTypesController::class, 'show_deduction_data']);
     Route::get('settings/get_deduction/{id}', [ProfileDeductionTypesController::class, 'get_deduction']);
     Route::post('deleteProfileDeductionTypes/{id}', [ProfileDeductionTypesController::class, 'destroy']);

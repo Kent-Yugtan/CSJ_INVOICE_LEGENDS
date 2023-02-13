@@ -164,7 +164,7 @@ class ProfileDeductionTypesController extends Controller
         }
     }
 
-    public function show_profileDeductionType_data(Request $request)
+    public function show_profileDeductionType_Button(Request $request)
     {
         $profile_id = $request->profile_id;
         $profile = Profile::with('profile_deduction_types', 'profile_deduction_types.deduction_type')->where('id', $profile_id)->first();

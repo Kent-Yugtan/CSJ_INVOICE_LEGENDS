@@ -12798,9 +12798,30 @@ button.toast-close-button {
     opacity: 1;
 }
 .centered {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  margin-top: -50px; /*Half of the height of the loading graphic*/
-  margin-left: -50px; /*Half of the width of the loading graphic*/
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px; /*Half of the height of the loading graphic*/
+    margin-left: -50px; /*Half of the width of the loading graphic*/
 }
+/* 
+@media (max-width: 770px) {
+    .editInvoiceData {
+        width: 100%;
+    }
+}
+@media (max-width: 770px) {
+    .editInvoiceButton {
+        width: 100%;
+    }
+}
+@media (min-width: 768px) {
+    .editInvoiceData {
+        width: 75%;
+    }
+}
+@media (min-width: 768px) {
+    .editInvoiceButton {
+        width: 25%;
+    }
+} */
