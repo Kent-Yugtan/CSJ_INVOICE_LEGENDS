@@ -1,29 +1,31 @@
 @extends('layouts.master')
 @section('content-dashboard')
-<div class="container-fluid pt-0">
+<div class="container-fluid pt-0" id="loader_load">
     <h1 class="mt-0"></h1>
     <ol class="breadcrumb mb-3"></ol>
     <div class="row px-4 pb-4">
         <div class="col-xl-8 px-2 editInvoiceData">
             <div class="card shadow px-5 p-2 bg-white rounded">
                 <div class="row">
-                    <div class="col-12 col-md-4 pt-5 fw-bolder">
+                    <div class="col-md-12 pt-3 fw-bolder text-center">
+                        <img style="width:50px; max-width:100%;" id="invoice_logo" src="">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 pt-5 fw-bolder">
                         <div id="fullname"></div>
                         <div class="pt-3" id="email"></div>
                     </div>
 
-                    <div class="col-12 col-md-4 pt-3 fw-bolder text-center">
-                        <img style="width:50px; max-width:100%;" id="invoice_logo" src="">
-                    </div>
-
-                    <div class="col-12 col-md-4 pt-5 fw-bolder text-right">
+                    <div class="col-sm-6 pt-5 fw-bolder text-md-end">
                         <h2> INVOICES </h2>
                         <div class="text-muted" id="invoice_no"></div>
                     </div>
                 </div>
 
                 <div class="row pt-3">
-                    <div class="col-md-6 col-sm-12">
+                    <div class="col-sm-6">
                         <div id="address"></div>
                         <div id="city-province"></div>
                         <div id="zip_code"></div>
@@ -31,74 +33,73 @@
                 </div>
 
                 <div class="row pt-3">
-                    <div class="col-md-6 col-sm-12">
+                    <div class="col-sm-6">
                         <span class="text-muted">Bill To:</span>
                     </div>
-                    <div class="col-md-3 col-sm-6 text-right">
+                    <div class="col-md-3 text-md-start">
                         <span class="text-muted">Date:</span>
                     </div>
-                    <div class="col-md-3 col-sm-6 text-right">
+                    <div class="col-md-3 text-md-end">
                         <div id="date_created"></div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6 col-sm-12">
+                    <div class="col-sm-6">
                         <div class="fw-bolder" id="invoice_title"></div>
                     </div>
-                    <div class="col-md-3 col-sm-6 text-right">
+                    <div class="col-sm-3 text-md-start">
                         <span class="text-muted">Due Date:</span>
                     </div>
-                    <div class="col-md-3 col-sm-6 text-right">
+                    <div class="col-sm-3 text-md-end">
                         <div id="show_due_date"></div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-3 col-sm-12">
+                    <div class="col-sm-6 text-md-start">
                         <div id="bill_to_address"></div>
                     </div>
-                    <div class="col-md-3 col-sm-6"></div>
-                    <div class="col-md-3 col-sm-6 text-right">
+
+                    <div class="col-sm-3 text-md-start">
                         <span class="text-muted">Invoice Status:</span>
                     </div>
-                    <div class="col-md-3 col-sm-6 text-right">
+                    <div class="col-sm-3 text-md-end">
                         <div id="invoice_status"></div>
                     </div>
                 </div>
-                <div class="col-md-3 col-sm-6" style="text-align: right;">
+                <div class="col-sm-3 " style="text-align: right;">
                     <div id="invoice_status"></div>
                 </div>
 
 
                 <div class="row">
-                    <div class="col-md-6 col-sm-12"></div>
-                    <div class="col-md-3 col-sm-6 text-muted" id="text_date_received" style="text-align: right;">
+                    <div class="col-sm-6"></div>
+                    <div class="col-sm-3 text-muted text-md-start" id="text_date_received">
                     </div>
-                    <div class="col-md-3 col-sm-6" id="date_received" style="text-align: right;">
+                    <div class="col-sm-3 text-md-end" id="date_received">
                     </div>
                 </div>
 
                 <div class="row pt-3">
-                    <div class="col-md-3 col-sm-12">
+                    <div class="col-sm-6">
                         <div id="ship_to_address"></div>
                     </div>
-                    <div class="col-md-3 col-sm-12"></div>
-                    <div class="col-md-6 col-sm-12">
+
+                    <div class="col-sm-6">
                         <div class="rounded-3" style="height: 50px; background-color: #A4A6B3; display: flex; align-items: center;">
-                            <div class="col-md-6 col-sm-6 mx-3" style="text-align: left;">
+                            <div class="col-6 text-start">
                                 <h5>
-                                    <label>Balance Due:</label>
+                                    <labe class="ms-3">Balance Due:</label>
                                 </h5>
                             </div>
-                            <div class="col-md-6 col-sm-6 mx-3" style="text-align: left;">
+                            <div class="col-6 text-end">
                                 <h5>
-                                    <label id="balance_due"></label>
+                                    <label class="me-3" id="balance_due"></label>
                                 </h5>
                             </div>
                         </div>
                     </div>
-
                 </div>
 
                 <div class="row pt-3">
@@ -486,6 +487,11 @@
     </div>
 </div>
 
+<!-- LOADER SPINNER -->
+<div class="spanner">
+    <div class="loader"></div>
+</div>
+
 
 <script type="text/javascript">
     let total_deduction_amount = 0
@@ -501,7 +507,19 @@
     const api = "https://api.exchangerate-api.com/v4/latest/USD";
 
     $(document).ready(function() {
-        show_invoice();
+
+        $(window).on('load', function() {
+            document.getElementById("loader_load").scrollIntoView({
+                behavior: "smooth"
+            })
+            $("div.spanner").addClass("show");
+
+            setTimeout(function() {
+                $("div.spanner").removeClass("show");
+                show_invoice();
+            }, 2000)
+        })
+
         // display_item_rows();
 
 
@@ -1697,14 +1715,16 @@
                 }).then(function(response) {
                     let data = response.data;
                     if (data.success) {
-                        $('.toast1 .toast-title').html('Successfully Updated');
-                        $('.toast1 .toast-body').html(response.data.message);
 
-                        toast1.toast('show');
+                        $("div.spanner").addClass("show");
                         setTimeout(function() {
-                            window.location.reload();
+                            $("div.spanner").removeClass("show");
+                            toast1.toast('show');
+                            $('.toast1 .toast-title').html('Successfully Updated');
+                            $('.toast1 .toast-body').html(response.data.message);
+                            show_invoice();
                         }, 1500);
-
+                        // window.location.reload();
                     }
                 }).catch(function(error) {
                     if (error.response.data.errors) {
@@ -1751,12 +1771,15 @@
                 }).then(function(response) {
                     let data = response.data;
                     if (data.success) {
-                        $('.toast1 .toast-title').html('Successfully Updated');
-                        $('.toast1 .toast-body').html(response.data.message);
-                        toast1.toast('show');
+
+                        $("div.spanner").addClass("show");
                         setTimeout(function() {
-                            window.location.reload();
-                        }, 1500)
+                            $("div.spanner").removeClass("show");
+                            toast1.toast('show');
+                            $('.toast1 .toast-title').html('Successfully Updated');
+                            $('.toast1 .toast-body').html(response.data.message);
+                            show_invoice();
+                        }, 1500);
 
                     }
                 }).catch(function(error) {
@@ -1801,15 +1824,21 @@
                 }).then(function(response) {
                     let data = response.data;
                     if (data.success) {
+                        $('#deleteModal').modal('hide');
 
-                        $('.toast1 .toast-title').html('Successfully Deleted');
-                        $('.toast1 .toast-body').html(response.data.message);
-                        toast1.toast('show');
+                        $("div.spanner").addClass("show");
+
+                        setInterval(function() {
+                            $("div.spanner").removeClass("show");
+                            toast1.toast('show');
+                            $('.toast1 .toast-title').html('Successfully Updated');
+                            $('.toast1 .toast-body').html(response.data.message);
+                        }, 3000)
+
                         setTimeout(function() {
                             window.location = document.referrer;
-                        }, 1500)
+                        }, 5000)
                     }
-                    console.log("SUCCESS", data);
 
                 }).catch(function(error) {
                     if (error.response.data.errors) {

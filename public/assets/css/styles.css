@@ -11919,7 +11919,7 @@ body {
     }
 }
 .sb-nav-fixed .sb-topnav {
-    z-index: 1039;
+    /* z-index: 1039; */
 }
 .sb-nav-fixed #layoutSidenav #layoutSidenav_nav {
     width: 225px;
@@ -12804,24 +12804,3 @@ button.toast-close-button {
     margin-top: -50px; /*Half of the height of the loading graphic*/
     margin-left: -50px; /*Half of the width of the loading graphic*/
 }
-/* 
-@media (max-width: 770px) {
-    .editInvoiceData {
-        width: 100%;
-    }
-}
-@media (max-width: 770px) {
-    .editInvoiceButton {
-        width: 100%;
-    }
-}
-@media (min-width: 768px) {
-    .editInvoiceData {
-        width: 75%;
-    }
-}
-@media (min-width: 768px) {
-    .editInvoiceButton {
-        width: 25%;
-    }
-} */

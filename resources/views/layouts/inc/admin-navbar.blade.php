@@ -1,4 +1,4 @@
-<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+<nav class="sb-topnav navbar navbar-expand navbar-light bg-light">
     <img class="img-team" src="{{ URL('images/Invoices-logo.png')}}" style="width: 60px; padding:10px" />
     <!-- Navbar Brand-->
     <a class="navbar-brand" style=width:165px href="index.html">Invoicing App</a>
@@ -7,20 +7,13 @@
         <i class="fas fa-bars"></i>
     </button>
     <!-- Navbar Search-->
-    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-        <div class="input-group">
-            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
-                aria-describedby="btnNavbarSearch" />
-            <button class="btn btn-primary" id="btnNavbarSearch" type="button">
-                <i class="fas fa-search"></i>
-            </button>
-        </div>
-    </form>
+    <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+
+    </div>
     <!-- Navbar-->
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <li>
                     <a class="dropdown-item">
@@ -43,22 +36,22 @@
 </nav>
 
 <script>
-$("#logout").on("click", function() {
-    console.log('logout');
-    axios.post(apiUrl + '/api/logout', {})
-        .then(function(response) {
-            console.log('then', response);
-            let data = response.data;
-            console.log('then data', data);
+    $("#logout").on("click", function() {
+        console.log('logout');
+        axios.post(apiUrl + '/api/logout', {})
+            .then(function(response) {
+                console.log('then', response);
+                let data = response.data;
+                console.log('then data', data);
 
-            if (data.success) {
-                localStorage.removeItem('token');
-                // localStorage.userdata = JSON.parse(data.user);
-                window.location.replace(apiUrl + '/auth/login');
-            }
-        })
-        .catch(function(error) {
-            console.log('catch', error);
-        });
-})
+                if (data.success) {
+                    localStorage.removeItem('token');
+                    // localStorage.userdata = JSON.parse(data.user);
+                    window.location.replace(apiUrl + '/auth/login');
+                }
+            })
+            .catch(function(error) {
+                console.log('catch', error);
+            });
+    })
 </script>

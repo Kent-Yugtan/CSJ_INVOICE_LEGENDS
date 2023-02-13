@@ -4,7 +4,7 @@
     <h1 class=" mt-0">Active Profile</h1>
     <ol class="breadcrumb mb-3"></ol>
     <div class="row">
-        <div class="col-5 px-2">
+        <div class="col-lg-5 px-2">
             <div class="card shadow p-2 mb-5 bg-white rounded" style="width: 100%; height:100%">
                 <div class="card-header">Active Information</div>
                 <div class="row px-4 pb-4">
@@ -167,7 +167,7 @@
             </div>
         </div>
 
-        <div class="col-7 px-1">
+        <div class="col-lg-7 px-1">
             <div class="row">
                 <div class="col">
                     <div class="card shadow p-2 mb-5 bg-white rounded" style="width: 100%; height:100%">
