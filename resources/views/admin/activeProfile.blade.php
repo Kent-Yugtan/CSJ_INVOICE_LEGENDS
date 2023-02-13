@@ -314,7 +314,7 @@
                                             <input id="profile_id" name="profile_id" type="text" hidden>
                                             <!-- <label class="formGroupExampleInput2">Invoice #</label> -->
 
-                                            <div class="col-12 mb-3">
+                                            <div class="col-4 mb-3">
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class=" form-group">
@@ -481,7 +481,7 @@
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <div class="pb-3">
-                                                    <button type="submit" id="save" class="btn btn-secondary w-100" style="color:White; background-color:#CF8029;">Save</button>
+                                                    <button type="buttono" id="save" class="btn btn-secondary w-100" style="color:White; background-color:#CF8029;">Save</button>
                                                 </div>
                                             </div>
 
@@ -722,7 +722,10 @@
         </div>
     </div>
 
-
+    <!-- LOADER SPINNER -->
+    <div class="spanner">
+        <div class="loader"></div>
+    </div>
 
     <script src="{{ asset('/assets/js/fileupload.js') }}"></script>
 
@@ -739,13 +742,37 @@
         // INVOICE SEARCH AND DISPLAY
         $(document).ready(function() {
             // REFRESH WHEN THIS PAGE IS LOAD
-            if (window.performance && window.performance.navigation.type == window.performance.navigation
-                .TYPE_BACK_FORWARD) {
-                window.location.reload();
-            };
-            show_data();
-            show_edit()
-            show_profileDeductionType_data();
+            $(window).on('load', function() {
+                $("div.spanner").addClass("show");
+                // $("div.overlay").addClass("show");
+
+                setTimeout(function() {
+                    $("div.spanner").removeClass("show");
+                    // $("div.overlay").removeClass("show");
+                    show_data();
+                    show_edit()
+                    show_profileDeductionType_data();
+                }, 2000)
+            })
+            let toast1 = $('.toast1');
+            toast1.toast({
+                delay: 3000,
+                animation: true,
+
+            });
+
+            $('.close').on('click', function(e) {
+                e.preventDefault();
+                toast1.toast('hide');
+            });
+            $("#error_msg").hide();
+            $("#success_msg").hide();
+
+            // if (window.performance && window.performance.navigation.type == window.performance.navigation
+            //     .TYPE_BACK_FORWARD) {
+            //     window.location.reload();
+            // };
+
 
             $('#edit_profile').on('click', function(e) {
                 $('#file').prop('disabled', false);
@@ -814,16 +841,16 @@
                     let data = response.data;
                     console.log("DATA", data);
                     if (data.success) {
+                        $('#invoice_status').modal('hide');
+                        $("div.spanner").addClass("show");
 
+                        setTimeout(function() {
+                            $("div.spanner").removeClass("show");
+                            toast1.toast('show');
+                        }, 2000);
                         $('.toast1 .toast-title').html('Update Status');
                         $('.toast1 .toast-body').html(response.data.message);
-
-                        toast1.toast('show');
-                        setTimeout(function() {
-                            $('#invoice_status').modal('hide');
-                        }, 1500);
-                        $("#update").attr("data-bs-dismiss", "modal");
-
+                        // show_data();
                     }
                 }).catch(function(error) {
                     if (error.response.data.errors) {
@@ -863,6 +890,11 @@
                             // console.log("SUCCESS");
                             // console.log("GENERAL", data.data.email);
                             // console.log("PROFILE SHOW EDIT", data.data.profile);
+                            if (data.data.profile.profile_status === "Active") {
+                                $('#profile_status').prop('checked', true);
+                            } else {
+                                $('#profile_status').prop('checked', false);
+                            }
                             $('#profile_id_show').val(data.data.profile.id);
                             $('#first_name').val(data.data.first_name);
                             $('#last_name').val(data.data.last_name);
@@ -1054,19 +1086,7 @@
                 }
             }
 
-            let toast1 = $('.toast1');
-            toast1.toast({
-                delay: 3000,
-                animation: true,
 
-            });
-
-            $('.close').on('click', function(e) {
-                e.preventDefault();
-                toast1.toast('hide');
-            });
-            $("#error_msg").hide();
-            $("#success_msg").hide();
 
             $('#ProfileUpdate').submit(function(e) {
                 e.preventDefault();
@@ -1622,19 +1642,31 @@
 
             // CHECK IF THE USER HAVE THE PROFILE
             $("#exampleModal").on('hide.bs.modal', function() {
-                window.location.reload();
-                // show_data();
+                // window.location.reload();
+                // // show_data();
+                $("div.spanner").addClass("show");
+                setTimeout(function() {
+                    $("div.spanner").removeClass("show");
+                    show_data();
+                }, 2000)
+
+                $('#exampleModal input').val('');
+                $('#show_deduction_items').empty();
+                $('textarea').val('');
             });
 
-            $("#modal-create-deduction").on('hide.bs.modal', function() {
-                window.location.reload()
-            });
-
-
+            // $("#modal-create-deduction").on('hide.bs.modal', function() {
+            //     window.location.reload()
+            // });
 
             $("#invoice_status").on('hide.bs.modal', function() {
-                window.location.reload();
-                // show_data();
+                // window.location.reload();
+                $("div.spanner").addClass("show");
+
+                setTimeout(function() {
+                    $("div.spanner").removeClass("show");
+                    show_data();
+                }, 2000)
             });
 
             $("#button-addon2").click(function(e) {
@@ -1706,10 +1738,8 @@
                     });
             });
 
-            $('#invoice_items').on('submit', function(e) {
+            $('#invoice_items').submit(function(e) {
                 e.preventDefault();
-                let toast1 = $('.toast1');
-
 
                 // CONDITION IF THERE IS BLANK ROW
                 $('#show_items .row1').each(function() {
@@ -1803,13 +1833,13 @@
                     // invoice_no: invoice_no,
                     due_date: due_date,
                     description: invoice_description,
-                    peso_rate: peso_rate,
-                    sub_total: invoice_subtotal,
-                    converted_amount: invoice_converted_amount,
+                    peso_rate: peso_rate ? peso_rate : 0,
+                    sub_total: invoice_subtotal ? invoice_subtotal : 0,
+                    converted_amount: invoice_converted_amount ? invoice_converted_amount : 0,
                     discount_type: invoice_discount_type,
                     discount_amount: invoice_discount_amount ? invoice_discount_amount : 0,
                     discount_total: invoice_discount_total ? invoice_discount_total : 0,
-                    grand_total_amount: invoice_total_amount,
+                    grand_total_amount: invoice_total_amount ? invoice_total_amount : 0,
                     notes: invoice_notes,
                     invoiceItem,
                     Deductions,
@@ -1823,15 +1853,22 @@
                     let data = response.data;
                     if (data.success) {
                         console.log("SUCCES", data.success);
+                        $('#exampleModal').modal('hide');
+                        $("div.spanner").addClass("show");
+
+                        setTimeout(function() {
+                            $("div.spanner").removeClass("show");
+                            toast1.toast('show');
+                            show_data();
+                        }, 2000)
                         $('.toast1 .toast-title').html('Create Invoices');
                         $('.toast1 .toast-body').html(response.data.message);
 
-                        toast1.toast('show');
-                        setTimeout(function() {
-                            $('#exampleModal').modal('hide');
-                        }, 1500);
-                        $("#save").attr("data-bs-dismiss", "modal");
-                        // show_data();
+                        $('#exampleModal input').val('');
+                        $('#show_deduction_items').empty();
+                        $('textarea').val('');
+
+
                     }
                 }).catch(function(error) {
                     if (error.response.data.errors) {

@@ -7,6 +7,8 @@
     <h1 class="mt-4">Dashboard</h1>
     <ol class="breadcrumb mb-4"></ol>
 
+
+
     <div class="row">
         <div class="col-xl-3 col-md-6">
             <div class="card-hover card shadow p-2 mb-4 bg-white rounded" style="max-width: 40rem;">
@@ -176,4 +178,23 @@
             </div>
         </div>
     </div>
-    @endsection
+</div>
+
+<!-- LOADER SPINNER -->
+<div class="spanner">
+    <div class="loader"></div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(window).on('load', function() {
+            $("div.spanner").addClass("show");
+
+            setTimeout(function() {
+                $("div.spanner").removeClass("show");
+            }, 2000)
+        })
+    })
+</script>
+@endsection

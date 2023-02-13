@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content-dashboard')
-<div class="container-fluid px-4">
+<div class="container-fluid px-4" id="loader_load">
     <h1 class="mt-4">Active Profiles</h1>
     <ol class="breadcrumb mb-4"></ol>
 
@@ -52,7 +52,7 @@
             </div>
 
             <div class="col-4">
-                <button class="btn w-100" style="color:white; background-color: #CF8029;width:30%" id="button-submit">Search</button>
+                <button type="button" class="btn w-100" style="color:white; background-color: #CF8029;width:30%" id="button-submit">Search</button>
             </div>
         </div>
 
@@ -67,7 +67,7 @@
                     Current Profile
                 </div>
                 <div id="tbl_user_wrapper" class="card-body table-responsive">
-                    <table style=" color: #A4A6B3 ; " class="table table-hover" id="tbl_user">
+                    <table style="color:#A4A6B3;" class="table table-hover" id="tbl_user">
                         <style>
                             .table-responsive {
                                 overflow-x: auto;
@@ -99,12 +99,23 @@
     </div>
 </div>
 
+<!-- LOADER SPINNER -->
+<div class="spanner">
+    <div class="loader"></div>
+</div>
 <script type="text/javascript">
     $(document).ready(function() {
 
-        show_data();
-        active_count_paid();
-        active_count_pending()
+        $(window).on('load', function() {
+            $("div.spanner").addClass("show");
+            setTimeout(function() {
+                $("div.spanner").removeClass("show");
+                active_count_paid();
+                active_count_pending()
+                show_data();
+            }, 2000)
+        })
+
 
         function active_count_paid() {
             axios.get(apiUrl + '/api/active_paid_invoice_count', {
@@ -137,11 +148,22 @@
             })
         }
 
-        $('#button-submit').on('click', function() {
-            let search = $('#search').val();
-            show_data({
-                search
-            });
+        $(document).on('click', '#button-submit', function(e) {
+            e.preventDefault();
+
+            document.getElementById("loader_load").scrollIntoView({
+                behavior: "smooth"
+            })
+            $("div.spanner").addClass("show");
+            setTimeout(function() {
+                $("div.spanner").removeClass("show");
+                let search = $('#search').val();
+                $('#tbl_user tbody').empty();
+                show_data({
+                    search
+                });
+            }, 2000)
+
         })
 
         // FUNCTIOIN FOR DATE DIFFERENCE
@@ -155,19 +177,12 @@
             return new Date(mdy[2], mdy[0] - 1, mdy[1]);
         }
 
-        // console.log("DATE",
-        //     datediff(parseDate('2/3/2023'), parseDate('2/4/2023'))
-        // );
-
         function show_data(filters) {
             let filter = {
                 page_size: 10,
                 page: 1,
                 ...filters,
             }
-
-            $('#tbl_user tbody').empty();
-
             axios
                 .get(`${apiUrl}/api/admin/show_data_active?${new URLSearchParams(filter)}`, {
                     headers: {
@@ -179,6 +194,7 @@
                     console.log('res123', res);
                     if (res.success) {
                         if (res.data.data.length > 0) {
+                            $('#tbl_user tbody').empty();
                             res.data.data.map((item) => {
                                 let tr = '<tr style="vertical-align:sub;">';
                                 if (item.file_path) {
@@ -225,8 +241,8 @@
                                         '" class="btn btn-outline-primary">View</a> </td>';
 
                                     tr += '</tr>';
-                                    $(
-                                        "#tbl_user tbody").append(tr);
+                                    $("#tbl_user tbody").append(tr);
+                                    return ''
 
                                 } else {
                                     let tr = '<tr style="vertical-align:sub;">';
@@ -255,8 +271,8 @@
 
                                     tr += '</tr>';
                                     $("#tbl_user tbody").append(tr);
+                                    return ''
                                 }
-                                return ''
                             })
 
                             $('#tbl_user_pagination').empty();

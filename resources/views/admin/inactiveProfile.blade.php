@@ -24,7 +24,7 @@
 
                         <div class="col pt-3">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="profile_status" name="profile_status" checked disabled="true">
+                                <input class="form-check-input" type="checkbox" id="profile_status" name="profile_status" disabled="true">
                                 <label class="form-check-label" for="status">
                                     Active
                                 </label>
@@ -692,9 +692,9 @@
                 .TYPE_BACK_FORWARD) {
                 window.location.reload();
             };
-            // show_data();
-            // show_edit()
-            // show_profileDeductionType_data();
+            show_data();
+            show_edit()
+            show_profileDeductionType_data();
 
             $('#edit_profile').on('click', function(e) {
                 $('#file').prop('disabled', false);
@@ -812,6 +812,11 @@
                             // console.log("SUCCESS");
                             // console.log("GENERAL", data.data.email);
                             // console.log("PROFILE SHOW EDIT", data.data.profile);
+                            if (data.data.profile.profile_status === "Active") {
+                                $('#profile_status').prop('checked', true);
+                            } else {
+                                $('#profile_status').prop('checked', false);
+                            }
                             $('#profile_id_show').val(data.data.profile.id);
                             $('#first_name').val(data.data.first_name);
                             $('#last_name').val(data.data.last_name);
@@ -865,7 +870,6 @@
             function show_data(filters) {
                 let url = window.location.pathname;
                 let urlSplit = url.split('/');
-
 
                 if (urlSplit.length === 5) {
                     // console.log("sddsadsa", urlSplit.length);
