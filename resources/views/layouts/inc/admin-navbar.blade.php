@@ -13,7 +13,8 @@
   </div>
   <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
     <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+      <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+        aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
         <li>
           <a class="dropdown-item">
@@ -21,20 +22,10 @@
         </li>
         <li><a class=" dropdown-item">Logged in as</a>
         </li>
-        <li>
-          <hr class="dropdown-divider" />
-        </li>
+
         <li>
           <a class=" dropdown-item fw-bold"> {{auth()->user()->first_name;}} {{auth()->user()->last_name;}}</a>
         </li>
-        <li>
-          <hr class="dropdown-divider" />
-        </li>
-        <li><a class=" dropdown-item" href="#!">Settings </a>
-        </li>
-        <li><a class="dropdown-item" href="{{url('settings/emailconfig')}}">Email Configuration</a></li>
-        <li>
-        <li><a class="dropdown-item" href="{{url('settings/invoiceconfig')}}">Invoice Configuration</a></li>
         <li>
           <hr class="dropdown-divider" />
         </li>
@@ -49,22 +40,22 @@
 </nav>
 
 <script>
-  $("#logout").on("click", function() {
-    console.log('logout');
-    axios.post(apiUrl + '/api/logout', {})
-      .then(function(response) {
-        console.log('then', response);
-        let data = response.data;
-        console.log('then data', data);
+$("#logout").on("click", function() {
+  console.log('logout');
+  axios.post(apiUrl + '/api/logout', {})
+    .then(function(response) {
+      console.log('then', response);
+      let data = response.data;
+      console.log('then data', data);
 
-        if (data.success) {
-          localStorage.removeItem('token');
-          // localStorage.userdata = JSON.parse(data.user);
-          window.location.replace(apiUrl + '/auth/login');
-        }
-      })
-      .catch(function(error) {
-        console.log('catch', error);
-      });
-  })
+      if (data.success) {
+        localStorage.removeItem('token');
+        // localStorage.userdata = JSON.parse(data.user);
+        window.location.replace(apiUrl + '/auth/login');
+      }
+    })
+    .catch(function(error) {
+      console.log('catch', error);
+    });
+})
 </script>

@@ -1,4 +1,4 @@
-<!-- @extends('layouts.master')
+@extends('layouts.master')
 @section('content-dashboard')
 <div class="container-fluid px-4" id="loader_load">
   <h1 class=" mt-4">Dashboard</h1>
@@ -79,109 +79,109 @@
                 <div class="col-xl-6">
                   <div class="mb-3">
                     <label mb-2 style="color: #A4A6B3;">Profile</label>
-                    <!-- <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Profile"> -->
-<select class="form-select" id="selectProfile">
-  <option value="" selected disabled>Select Profile</option>
-</select>
-</div>
-</div>
-<div class="col-xl-6">
-  <div class="mb-3">
-    <label mb-2 style="color: #A4A6B3;">Due Date</label>
-    <input id="due_date" name="due_date" data-date-format="MM DD YYYY" type="date" class="form-control">
-  </div>
-</div>
-</div>
-<div class="row">
-  <div class="col-xl-6">
-    <div class="mb-3">
-      <label mb-2 style="color: #A4A6B3;">Description</label>
-      <input type="text" class="form-control" id="description" placeholder="Description">
-    </div>
+                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Profile">
+                    <select class="form-select" id="selectProfile">
+                      <option value="" selected disabled>Select Profile</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-xl-6">
+                  <div class="mb-3">
+                    <label mb-2 style="color: #A4A6B3;">Due Date</label>
+                    <input id="due_date" name="due_date" data-date-format="MM DD YYYY" type="date" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6">
+                  <div class="mb-3">
+                    <label mb-2 style="color: #A4A6B3;">Description</label>
+                    <input type="text" class="form-control" id="description" placeholder="Description">
+                  </div>
 
-  </div>
-  <div class="col-xl-6">
-    <div class="mb-3">
-      <label mb-2 style="color: #A4A6B3; ">SubTotal($)</label>
-      <input type="text" class="form-control" id="sub_total" placeholder="SubTotal">
-    </div>
-  </div>
-</div>
+                </div>
+                <div class="col-xl-6">
+                  <div class="mb-3">
+                    <label mb-2 style="color: #A4A6B3; ">SubTotal($)</label>
+                    <input type="text" class="form-control" id="sub_total" placeholder="SubTotal">
+                  </div>
+                </div>
+              </div>
 
-<button type="submit" style="width:100%; height:50px;color:white; background-color: #CF8029;" class="btn" class="btn">Create Invoice</button>
-</form>
-</div>
-</div>
-</div>
-
-</div>
-
-<div class="row">
-  <div class="col-xl-6">
-    <div class="card mb-3" style="height:100%">
-      <div class="card-header">
-        <h5>
-          <i class="fa-solid fa-list"></i>
-          Pending Invoices
-        </h5>
+              <button type="submit" style="width:100%; height:50px;color:white; background-color: #CF8029;" class="btn" class="btn">Create Invoice</button>
+            </form>
+          </div>
+        </div>
       </div>
-      <div class="card-body table-responsive" id="pendingInvoices_card">
-        <!-- <div class="text-end">
+
+    </div>
+
+    <div class="row">
+      <div class="col-xl-6">
+        <div class="card mb-3" style="height:100%">
+          <div class="card-header">
+            <h5>
+              <i class="fa-solid fa-list"></i>
+              Pending Invoices
+            </h5>
+          </div>
+          <div class="card-body table-responsive" id="pendingInvoices_card">
+            <!-- <div class="text-end">
               <label mb-2 style="color: #A4A6B3;text-align: right;">View All</label>
             </div> -->
-        <table style="color: #A4A6B3;font-size: 14px;" class="table table-hover" id="pendingInvoices">
-          <thead>
-            <tr>
-              <th>Invoice #</th>
-              <th>Profile Name</th>
-              <th>Due Date</th>
-              <th class="text-center">View</th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
+            <table style="color: #A4A6B3;font-size: 14px;" class="table table-hover" id="pendingInvoices">
+              <thead>
+                <tr>
+                  <th>Invoice #</th>
+                  <th>Profile Name</th>
+                  <th>Due Date</th>
+                  <th class="text-center">View</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+          <div class="mx-3 table-responsive" style="display: flex; justify-content: space-between;">
+            <div class="page_showing" id="tbl_showing_pendingInvoice"></div>
+            <ul class="pagination" id="tbl_pagination_pendingInvoice"></ul>
+          </div>
+        </div>
       </div>
-      <div class="mx-3" style="display: flex; justify-content: space-between;">
-        <div class="page_showing" id="tbl_showing_pendingInvoice"></div>
-        <ul class="pagination" id="tbl_pagination_pendingInvoice"></ul>
-      </div>
-    </div>
-  </div>
 
-  <div class="col-xl-6">
-    <div class="card mb-3" style="height:100%">
-      <div class="card-header">
-        <h5>
-          <i class="fa-solid fa-list"></i>
-          Overdue Invoices
-        </h5>
-      </div>
-      <div class="card-body table-responsive" id="overdueInvoices_card">
-        <!-- <div class="text-end">
+      <div class="col-xl-6">
+        <div class="card mb-3" style="height:100%">
+          <div class="card-header">
+            <h5>
+              <i class="fa-solid fa-list"></i>
+              Overdue Invoices
+            </h5>
+          </div>
+          <div class="card-body table-responsive" id="overdueInvoices_card">
+            <!-- <div class="text-end">
               <label mb-2 style="color: #A4A6B3;text-align: right;">View All</label>
             </div> -->
-        <table style="color: #A4A6B3;font-size: 14px;" class="table table-hover" id="overdueInvoices">
-          <thead>
-            <tr>
-              <th>Invoice #</th>
-              <th>Profile Name</th>
-              <th>Due Date</th>
-              <th class="text-center">View</th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-      </div>
-      <div class="mx-3" style="display: flex; justify-content: space-between;">
-        <div class="page_showing" id="tbl_showing_overdueInvoice"></div>
-        <ul class="pagination" id="tbl_pagination_overdueInvoice"></ul>
+            <table style="color: #A4A6B3;font-size: 14px;" class="table table-hover" id="overdueInvoices">
+              <thead>
+                <tr>
+                  <th>Invoice #</th>
+                  <th>Profile Name</th>
+                  <th>Due Date</th>
+                  <th class="text-center">View</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+          <div class="mx-3" style="display: flex; justify-content: space-between;">
+            <div class="page_showing" id="tbl_showing_overdueInvoice"></div>
+            <ul class="pagination" id="tbl_pagination_overdueInvoice"></ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
-</div>
 </div>
 
 <div style="position:fixed;top:60px;right:20px;z-index:99999;justify-content:flex-end;display:flex;">
@@ -218,14 +218,14 @@
       $("div.spanner").addClass("show");
       setTimeout(function() {
         $("div.spanner").removeClass("show");
+        selectProfile();
+        pendingInvoices();
+        overdueInvoices();
+        active_count_paid();
+        active_count_pending();
+        active_count_overdue();
+        active_count_cancelled();
       }, 2000)
-      selectProfile();
-      pendingInvoices();
-      overdueInvoices();
-      active_count_paid();
-      active_count_pending();
-      active_count_overdue();
-      active_count_cancelled();
     })
 
 

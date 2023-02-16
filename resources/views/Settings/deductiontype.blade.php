@@ -1,10 +1,10 @@
 @extends('layouts.master')
 @section('content-dashboard')
-<div class="container-fluid px-4 pb-4">
-  <h1 class="mt-0">Deduction Types</h1>
+<div class="container-fluid px-4 pb-4" id="loader_load">
+  <h1 class="mt-0">Deductions</h1>
   <ol class="breadcrumb mb-3"></ol>
   <div class="row mt-5">
-    <div class="col-md-6 px-2">
+    <div class="col-md-8 px-2">
       <button class="btn w-50" style="color:white; background-color: #CF8029; margin-top:5px" data-bs-toggle="modal" data-bs-target="#addModal" type="submit" id="button-addon2">
         <i class="fa fa-plus pe-1"></i>
         Add Deduction Type
@@ -16,7 +16,7 @@
           </div>
         </div>
         <div class="col">
-          <button type="submit" class="btn w-100" style=" color:white; background-color: #CF8029;width:30%" id="button_search">Search</button>
+          <button type="button" class="btn w-100" style=" color:white; background-color: #CF8029;width:30%" id="button_search">Search</button>
         </div>
       </div>
 
@@ -31,10 +31,10 @@
             </thead>
             <tbody></tbody>
           </table>
-          <div style="display: flex; justify-content: space-between;">
-            <div class="page_showing" id="tbl_showing"></div>
-            <ul class="pagination" id="tbl_pagination"></ul>
-          </div>
+        </div>
+        <div class="mx-3 table-responsive" style="display: flex; justify-content: space-between;">
+          <div class="page_showing" id="tbl_showing"></div>
+          <ul class="pagination" id="tbl_pagination"></ul>
         </div>
       </div>
     </div>
@@ -64,7 +64,7 @@
                     <button type="button" class="btn btn-secondary w-100" style=" color:#CF8029; background-color:white; " data-bs-dismiss="modal">Close</button>
                   </div>
                   <div class="col">
-                    <button type="submit" class="btn btn-secondary w-100" style="color:White; background-color:#CF8029; " data-bs-dismiss="modal">Save</button>
+                    <button type="submit" class="btn btn-secondary w-100" style="color:White; background-color:#CF8029; ">Save</button>
                   </div>
                 </div>
               </div>
@@ -103,7 +103,7 @@
                     <button type="button" class="btn btn-secondary w-100" style=" color:#CF8029; background-color:white; " data-bs-dismiss="modal">Close</button>
                   </div>
                   <div class="col">
-                    <button type="submit" class="btn btn-secondary w-100" style="color:White; background-color:#CF8029; " data-bs-dismiss="modal">Update</button>
+                    <button type="submit" class="btn btn-secondary w-100" style="color:White; background-color:#CF8029; ">Update</button>
                   </div>
                 </div>
               </div>
@@ -132,15 +132,35 @@
     </div>
   </div>
 </div>
+
+<div class="spanner">
+  <div class="loader"></div>
+</div>
 <script type="text/javascript">
   $(document).ready(function() {
-    show_data();
+
+
+    $(window).on('load', function() {
+      $('div.spanner').addClass('show');
+      setTimeout(function() {
+        $('div.spanner').removeClass('show');
+        show_data();
+      }, 2000);
+    })
+
 
     $('#button_search').on('click', function() {
-      let search = $('#search').val();
-      show_data({
-        search
+      document.getElementById('loader_load').scrollIntoView({
+        behavior: "smooth"
       });
+      $('div.spanner').addClass('show');
+      setTimeout(function() {
+        $('div.spanner').removeClass('show');
+        let search = $('#search').val();
+        show_data({
+          search
+        });
+      }, 200);
     })
 
     let toast1 = $('.toast1');
@@ -159,7 +179,7 @@
 
     function show_data(filters) {
       let filter = {
-        page_size: 10,
+        page_size: 5,
         page: 1,
         ...filters,
       }
@@ -236,6 +256,27 @@
 
     }
 
+    $("#addModal").on('hide.bs.modal', function() {
+      // window.location.reload();
+      // // show_data();
+      $("div.spanner").addClass("show");
+      setTimeout(function() {
+        $("div.spanner").removeClass("show");
+        show_data();
+      }, 2000)
+    });
+
+    $("#editModal").on('hide.bs.modal', function() {
+      // window.location.reload();
+      // // show_data();
+      $("div.spanner").addClass("show");
+      setTimeout(function() {
+        $("div.spanner").removeClass("show");
+        show_data();
+      }, 2000)
+    });
+
+
     $('#deductiontype_store').submit(function(e) {
       e.preventDefault();
 
@@ -255,17 +296,23 @@
           },
         })
         .then(function(response) {
-          // console.log("then", response.data.success);
           let data = response.data;
           if (data.success) {
             // console.log('success', data.data.message);
+            $('#addModal').modal('hide');
+            document.getElementById('loader_load').scrollIntoView({
+              behavios: "smooth"
+            })
             $('#deduction_name').val('');
             $('#deduction_amount').val('');
-
-            $('.toast1 .toast-title').html('Deduction Types');
-            $('.toast1 .toast-body').html(response.data.message);
-            toast1.toast('show');
-            show_data();
+            $('div.spanner').addClass('show');
+            setTimeout(function() {
+              $('div.spanner').removeClass('show');
+              $('.toast1 .toast-title').html('Deduction Types');
+              $('.toast1 .toast-body').html(response.data.message);
+              toast1.toast('show');
+              show_data();
+            }, 2000)
           }
         })
         .catch(function(error) {
@@ -301,7 +348,7 @@
         })
         .then(function(response) {
           let data = response.data;
-          console.log("SUCCESS", data.data);
+          // console.log("SUCCESS", data.data);
           if (data.success) {
 
             $('#edit_deduction_name').val(data.data.deduction_name);
@@ -318,7 +365,6 @@
 
     $('#deductiontype_update').submit(function(e) {
       e.preventDefault();
-
       let deduction_id = $('#deduction_id').val();
       let deduction_name = $("#edit_deduction_name").val();
       let deduction_amount = $("#edit_deduction_amount").val();
@@ -339,14 +385,20 @@
           // console.log("then", response.data.success);
           let data = response.data;
           if (data.success) {
-
+            $('#editModal').modal('hide');
+            document.getElementById('loader_load').scrollIntoView({
+              behavios: "smooth"
+            })
             $('#edit_deduction_name').val('');
             $('#edit_deduction_amount').val('');
-
-            $('.toast1 .toast-title').html('Deduction Types');
-            $('.toast1 .toast-body').html(response.data.message);
-            toast1.toast('show');
-            show_data();
+            $('div.spanner').addClass('show');
+            setTimeout(function() {
+              $('div.spanner').removeClass('show');
+              $('.toast1 .toast-title').html('Deduction Types');
+              $('.toast1 .toast-body').html(response.data.message);
+              toast1.toast('show');
+              show_data();
+            }, 2000)
           }
         })
         .catch(function(error) {

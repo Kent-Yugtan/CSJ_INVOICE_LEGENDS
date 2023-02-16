@@ -6,184 +6,188 @@
   <div class="row px-4 pb-4">
     <div class="col-xl-8 px-2 editInvoiceData">
       <div class="card shadow px-5 p-2 bg-white rounded">
-        <div class="row">
-          <div class="col-md-12 pt-3 fw-bolder text-center">
-            <img style="width:50px; max-width:100%;" id="invoice_logo" src="">
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-sm-6 pt-5 fw-bolder">
-            <div id="fullname"></div>
-            <div class="pt-3" id="email"></div>
+        <div id="content">
+          <div class="row">
+            <div class="col-md-12 pt-3 fw-bolder text-center">
+              <img style="width:50px; max-width:100%;" id="invoice_logo" src="">
+            </div>
           </div>
 
-          <div class="col-sm-6 pt-5 fw-bolder text-md-end">
-            <h2> INVOICES </h2>
-            <div class="text-muted" id="invoice_no"></div>
-          </div>
-        </div>
+          <div class="row">
+            <div class="col-sm-6 pt-5 fw-bolder">
+              <div id="fullname"></div>
+              <div class="pt-3" id="email"></div>
+            </div>
 
-        <div class="row pt-3">
-          <div class="col-sm-6">
-            <div id="address"></div>
-            <div id="city-province"></div>
-            <div id="zip_code"></div>
-          </div>
-        </div>
-
-        <div class="row pt-3">
-          <div class="col-sm-6">
-            <span class="text-muted">Bill To:</span>
-          </div>
-          <div class="col-md-3 text-md-start">
-            <span class="text-muted">Date:</span>
-          </div>
-          <div class="col-md-3 text-md-end">
-            <div id="date_created"></div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-sm-6">
-            <div class="fw-bolder" id="invoice_title"></div>
-          </div>
-          <div class="col-sm-3 text-md-start">
-            <span class="text-muted">Due Date:</span>
-          </div>
-          <div class="col-sm-3 text-md-end">
-            <div id="show_due_date"></div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-sm-6 text-md-start">
-            <div id="bill_to_address"></div>
+            <div class="col-sm-6 pt-5 fw-bolder text-md-end">
+              <h2> INVOICES </h2>
+              <div class="text-muted" id="invoice_no"></div>
+            </div>
           </div>
 
-          <div class="col-sm-3 text-md-start">
-            <span class="text-muted">Invoice Status:</span>
+          <div class="row pt-3">
+            <div class="col-sm-6">
+              <div id="address"></div>
+              <div id="city-province"></div>
+              <div id="zip_code"></div>
+            </div>
           </div>
-          <div class="col-sm-3 text-md-end">
+
+          <div class="row pt-3">
+            <div class="col-sm-6">
+              <span class="text-muted">Bill To:</span>
+            </div>
+            <div class="col-md-3 text-md-start">
+              <span class="text-muted">Date:</span>
+            </div>
+            <div class="col-md-3 text-md-end">
+              <div id="date_created"></div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="fw-bolder" id="invoice_title"></div>
+            </div>
+            <div class="col-sm-3 text-md-start">
+              <span class="text-muted">Due Date:</span>
+            </div>
+            <div class="col-sm-3 text-md-end">
+              <div id="show_due_date"></div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6 text-md-start">
+              <div id="bill_to_address"></div>
+            </div>
+
+            <div class="col-sm-3 text-md-start">
+              <span class="text-muted">Invoice Status:</span>
+            </div>
+            <div class="col-sm-3 text-md-end">
+              <div id="invoice_status"></div>
+            </div>
+          </div>
+          <div class="col-sm-3 " style="text-align: right;">
             <div id="invoice_status"></div>
           </div>
-        </div>
-        <div class="col-sm-3 " style="text-align: right;">
-          <div id="invoice_status"></div>
-        </div>
 
 
-        <div class="row">
-          <div class="col-sm-6"></div>
-          <div class="col-sm-3 text-muted text-md-start" id="text_date_received">
-          </div>
-          <div class="col-sm-3 text-md-end" id="date_received">
-          </div>
-        </div>
-
-        <div class="row pt-3">
-          <div class="col-sm-6">
-            <div id="ship_to_address"></div>
-          </div>
-
-          <div class="col-sm-6">
-            <div class="rounded-3" style="height: 50px; background-color: #A4A6B3; display: flex; align-items: center;">
-              <div class="col-6 text-start">
-                <h5>
-                  <labe class="ms-3">Balance Due:</label>
-                </h5>
-              </div>
-              <div class="col-6 text-end">
-                <h5>
-                  <label class="me-3" id="balance_due"></label>
-                </h5>
-              </div>
+          <div class="row">
+            <div class="col-sm-6"></div>
+            <div class="col-sm-3 text-muted text-md-start" id="text_date_received">
             </div>
-          </div>
-        </div>
-
-        <div class="row pt-3">
-          <div class="col-12 table-responsive">
-            <table class="table" id="table_invoiceItems">
-              <thead class="thead-dark" style="border-radius: 5px; background-color: black; color: white;">
-                <tr>
-                  <th class="scope">Description</th>
-                  <th class="scope" style="text-align: end;">Quantity</th>
-                  <th class="scope" style="text-align: end;">Rate</th>
-                  <th class="scope" style="text-align: end;">Amount</th>
-                </tr>
-              </thead>
-              <tbody class="px-3">
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-5 col-sm-12">
-            <div class="row">
-              <div class="col-12 align-self-start">
-                <label class="fw-bold"> Description: </label>
-              </div>
-              <div class="col-12" id="view_invoice_description"></div>
+            <div class="col-sm-3 text-md-end" id="date_received">
             </div>
           </div>
 
-          <div class="col-md-7 col-sm-12">
-            <div class="row">
-              <div class="col-md-6 col-sm-6">
-                <label class="text-muted " style="text-align:right"> SubTotal: </label>
-              </div>
-              <div class="col mx-2 h6" id="sub_total" style="text-align:end"></div>
+          <div class="row pt-3">
+            <div class="col-sm-6">
+              <div id="ship_to_address"></div>
             </div>
 
-            <div class="row">
-              <div class="col-md-6 col-sm-12 h6">
-                <label class="text-muted"> Discount Type:</label><span class="text-muted" id="discountType"></span>
+            <div class="col-sm-6">
+              <div class="rounded-3"
+                style="height: 50px; background-color: #A4A6B3; display: flex; align-items: center;">
+                <div class="col-6 text-start">
+                  <h5>
+                    <labe class="ms-3">Balance Due:</label>
+                  </h5>
+                </div>
+                <div class="col-6 text-end">
+                  <h5>
+                    <label class="me-3" id="balance_due"></label>
+                  </h5>
+                </div>
               </div>
-              <div class="col mx-2 h6" id="discountAmount" style="text-align:end"></div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-6 col-sm-12">
-                <label class="text-muted"> Total:</label>
-              </div>
-              <div class="col mx-2 h6" id="total" style="text-align:end"></div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-6 col-sm-12">
-                <label class="text-muted">Converted Amount (PHP): </label>
-                <label class="text-muted" id="peso_rate"></label>
-              </div>
-
-              <div class="col mx-2 h6" id="convertedAmount" style="text-align:end"></div>
             </div>
           </div>
-        </div>
 
-        <div class="row title_deductions pt-3">
-        </div>
-
-        <div class="deductions">
-        </div>
-
-        <div class="row total_deductions" id="total_deductions">
-        </div>
-
-        <div class="row pt-3">
-          <div class="col-5 fw-bold">Notes:</div>
-          <div class="col">
-            <h5> GRAND TOTAL </h5>
+          <div class="row pt-3">
+            <div class="col-12 table-responsive">
+              <table class="table" id="table_invoiceItems">
+                <thead class="thead-dark" style="border-radius: 5px; background-color: black; color: white;">
+                  <tr>
+                    <th class="scope">Description</th>
+                    <th class="scope" style="text-align: end;">Quantity</th>
+                    <th class="scope" style="text-align: end;">Rate</th>
+                    <th class="scope" style="text-align: end;">Amount</th>
+                  </tr>
+                </thead>
+                <tbody class="px-3">
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
 
-        <div class="row pb-5">
-          <div class="col-5" id="notes"></div>
-          <div class="col">
-            <label class="text-muted">Total: </label>
+          <div class="row">
+            <div class="col-md-5 col-sm-12">
+              <div class="row">
+                <div class="col-12 align-self-start">
+                  <label class="fw-bold"> Description: </label>
+                </div>
+                <div class="col-12" id="view_invoice_description"></div>
+              </div>
+            </div>
+
+            <div class="col-md-7 col-sm-12">
+              <div class="row">
+                <div class="col-md-6 col-sm-6">
+                  <label class="text-muted " style="text-align:right"> SubTotal: </label>
+                </div>
+                <div class="col mx-2 h6" id="sub_total" style="text-align:end"></div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 col-sm-12 h6">
+                  <label class="text-muted"> Discount Type:</label><span class="text-muted" id="discountType"></span>
+                </div>
+                <div class="col mx-2 h6" id="discountAmount" style="text-align:end"></div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 col-sm-12">
+                  <label class="text-muted"> Total:</label>
+                </div>
+                <div class="col mx-2 h6" id="total" style="text-align:end"></div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 col-sm-12">
+                  <label class="text-muted">Converted Amount (PHP): </label>
+                  <label class="text-muted" id="peso_rate"></label>
+                </div>
+
+                <div class="col mx-2 h6" id="convertedAmount" style="text-align:end"></div>
+              </div>
+            </div>
           </div>
-          <div class="col mx-2 h6" id="grand_total_amount" style="text-align:end"></div>
+
+          <div class="row title_deductions pt-3">
+          </div>
+
+          <div class="deductions">
+          </div>
+
+          <div class="row total_deductions" id="total_deductions">
+          </div>
+
+          <div class="row pt-3">
+            <div class="col-5 fw-bold">Notes:</div>
+            <div class="col">
+              <h5> GRAND TOTAL </h5>
+            </div>
+          </div>
+
+          <div class="row pb-5">
+            <div class="col-5" id="notes"></div>
+            <div class="col">
+              <label class="text-muted">Total: </label>
+            </div>
+            <div class="col mx-2 h6" id="grand_total_amount" style="text-align:end"></div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -213,7 +217,7 @@
 
         <div class="row px-3 pt-5 pb-1">
           <div class="col-12 w-100">
-            <button type="button" class="btn btn-secondary w-100"
+            <button type="button" id="pdfDownload" class="btn btn-secondary w-100"
               style="color: White; background-color: #CF8029;">Download</button>
           </div>
         </div>
@@ -517,6 +521,7 @@
 <div class="spanner">
   <div class="loader"></div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
 
 <script type="text/javascript">
@@ -543,6 +548,7 @@ $(document).ready(function() {
     setTimeout(function() {
       $("div.spanner").removeClass("show");
       show_invoice();
+      show_invoice_config();
     }, 2000)
   })
 
@@ -566,146 +572,6 @@ $(document).ready(function() {
   $('#discount_amount').on('keyup', function() {
     subtotal();
   })
-
-
-  // FOR UPDATE
-  // $('#invoice_items').on('submit', function(e) {
-  //     e.preventDefault();
-  //     let toast1 = $('.toast1');
-
-  //     // CONDITION IF THERE IS BLANK ROW
-  //     $('#show_items .row1').each(function() {
-  //         let parent = $(this).closest('.row1');
-  //         let row_item = $(this).parent();
-  //         let item_rate = $(this).find('.rate').val();
-  //         let item_qty = $(this).find('.quantity').val();
-
-  //         if (item_rate == "" && item_qty == "") {
-
-  //             // console.log("row_item", parent);
-
-  //             if ($('#show_items > .row').length === 1) {
-  //                 $('#show_items > .row').find('.col-remove-item').removeClass(
-  //                         'd-none')
-  //                     .addClass(
-  //                         'd-none');
-  //             } else {
-  //                 $(parent).remove();
-  //             }
-  //         }
-  //         x--;
-  //     });
-
-  //     let profile_id = $('#profile_id').val();
-  //     // let invoice_no = $('#invoice_no').val();
-  //     // INVOICE TABLE
-  //     let invoice_description = $('#invoice_description').val();
-  //     let invoice_subtotal = $('#subtotal').val().replaceAll(',', '');
-  //     let invoice_converted_amount = $('#converted_amount').val().replaceAll(',', '');
-  //     let invoice_discount_type = $('#discount_type:checked').val();
-  //     let invoice_discount_amount = $('#discount_amount').val().replaceAll(',', '');
-  //     let invoice_discount_total = $('#discount_total').val().replaceAll(',', '');
-  //     let invoice_total_amount = $('#grand_total').val().replaceAll(',', '');
-  //     let invoice_notes = $('#notes').val();
-
-  //     // INVOICE ITEMS TABLE
-  //     let invoiceItem = [];
-  //     $('#show_items .row').each(function() {
-  //         let item_description = $(this).find('.item_description').val() ? $(this).find(
-  //             '.item_description').val() : "";
-  //         let item_rate = $(this).find('.rate').val().replaceAll(',', '') ? $(this).find(
-  //             '.rate').val().replaceAll(',', '') : 0;
-  //         let item_qty = $(this).find('.quantity').val() ? $(this)
-  //             .find('.quantity').val() : 0;
-  //         let item_total_amount = $(this).find('.amount').val().replaceAll(',', '') ? $(
-  //                 this).find('.amount')
-  //             .val().replaceAll(',', '') : 0;
-
-  //         invoiceItem.push({
-  //             item_description,
-  //             item_rate,
-  //             item_qty,
-  //             item_total_amount,
-  //         })
-  //     });
-
-  //     // DEDUCTIONS TABLE
-  //     let Deductions = [];
-  //     $('#show_deduction_items .row').each(function() {
-  //         let profile_deduction_type_id = $(this).find('.profile_deduction_type').val() ?
-  //             $(this)
-  //             .find(
-  //                 '.profile_deduction_type').val() : 0;
-  //         let deduction_amount = $(this).find('.deduction_amount').val().replaceAll(',',
-  //             '') ? $(this).find(
-  //             '.deduction_amount').val().replaceAll(',', '') : 0;
-
-  //         Deductions.push({
-  //             profile_deduction_type_id,
-  //             deduction_amount,
-  //         })
-
-  //     });
-
-  //     let data = {
-  //         profile_id: profile_id,
-  //         // invoice_no: invoice_no,
-  //         description: invoice_description,
-  //         sub_total: invoice_subtotal,
-  //         converted_amount: invoice_converted_amount,
-  //         discount_type: invoice_discount_type,
-  //         discount_amount: invoice_discount_amount,
-  //         discount_total: invoice_discount_total,
-  //         grand_total_amount: invoice_total_amount,
-  //         notes: invoice_notes,
-  //         invoiceItem,
-  //         Deductions,
-  //     }
-
-  //     console.log("Deductions", data);
-  //     axios.
-  //     post(apiUrl + "/api/createinvoice", data, {
-  //         headers: {
-  //             Authorization: token
-  //         },
-  //     }).then(function(response) {
-  //         let data = response.data;
-  //         if (data.success) {
-  //             console.log("SUCCES", data.success);
-  //             $('.toast1 .toast-title').html('Create Invoices');
-  //             $('.toast1 .toast-body').html(response.data.message);
-
-  //             toast1.toast('show');
-  //             setTimeout(function() {
-  //                 $('#exampleModal').modal('hide');
-  //             }, 1500);
-  //             $("#save").attr("data-bs-dismiss", "modal");
-  //         }
-  //     }).catch(function(error) {
-  //         if (error.response.data.errors) {
-  //             let errors = error.response.data.errors;
-  //             console.log("errors", errors);
-  //             let fieldnames = Object.keys(errors);
-
-  //             Object.values(errors).map((item, index) => {
-  //                 fieldname = fieldnames[0].split('_');
-  //                 fieldname.map((item2, index2) => {
-  //                     fieldname['key'] = capitalize(item2);
-  //                     return ""
-  //                 });
-  //                 fieldname = fieldname.join(" ");
-
-  //                 $('.toast1 .toast-title').html(fieldname);
-  //                 $('.toast1 .toast-body').html(Object.values(errors)[0].join(
-  //                     "\n\r"));
-  //             })
-  //             toast1.toast('show');
-  //         }
-  //     });
-
-  // });
-
-
 
   // CHECK IF THE USER HAVE THE PROFILE
   $("#exampleModal").on('hide.bs.modal', function() {
@@ -806,19 +672,6 @@ $(document).ready(function() {
     converted_amount = parseFloat(dollar_amount * peso_rate);
     $('#converted_amount').val(PHP(parseFloat(converted_amount)).format());
   }
-
-  // FUNCTION FOR DISPLAY RESULTS AND CONVERTED AMOUNT
-  // function displayResults(currency) {
-  //     let dollar_amount = $("#dollar_amount").val().replaceAll(',', '');
-  //     let peso_rate = 0;
-  //     let converted_amount = 0;
-  //     let fromRate = currency.rates['USD'];
-  //     let toRate = currency.rates['PHP'];
-  //     peso_rate = (toRate / fromRate);
-  //     converted_amount = ((toRate / fromRate) * dollar_amount);
-  //     $('#peso_rate').val(PHP(parseFloat(peso_rate)).format());
-  //     $('#converted_amount').val(PHP(parseFloat(converted_amount)).format());
-  // }
 
   $("#discount_amount").addClass('d-none');
   $("#discount_total").addClass('d-none');
@@ -1578,7 +1431,7 @@ $(document).ready(function() {
     }
 
   }
-  show_invoice_config();
+
 
   function show_invoice_config() {
 
@@ -1894,6 +1747,25 @@ $(document).ready(function() {
     if (typeof s !== 'string') return "";
     return s.charAt(0).toUpperCase() + s.slice(1);
   }
+  // CONVERT HTML TO PDF THROUGH SCREENSHOT
+  function pdfContent() {
+    window.jsPDF = window.jspdf.jsPDF;
+    // Capture the div element as a screenshot using html2canvas
+    html2canvas($('#content')[0]).then(function(canvas) {
+      // Create a new jsPDF instance
+      var pdf = new jsPDF('p', 'mm', 'a4');
+      // Add the screenshot to the PDF using the addImage method
+      // pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 10, 10, 190, 277);
+      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 10, 15, 190, 240);
+
+      // Save the PDF file
+      pdf.save('Invoice ' + $('#invoice_no').html() + '.pdf');
+    });
+  }
+  $('#pdfDownload').on('click', function(e) {
+    e.preventDefault();
+    pdfContent();
+  })
 })
 </script>
 @endsection

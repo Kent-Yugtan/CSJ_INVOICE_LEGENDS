@@ -63,11 +63,10 @@
             <tbody></tbody>
           </table>
 
-          <div style="display: flex; justify-content: space-between;">
-            <div class="page_showing" id="tbl_user_showing"></div>
-            <ul class="pagination" id="tbl_user_pagination"></ul>
-          </div>
-
+        </div>
+        <div class="mx-3 table-responsive" style="display: flex; justify-content: space-between;">
+          <div class="page_showing" id="tbl_user_showing"></div>
+          <ul class="pagination" id="tbl_user_pagination"></ul>
         </div>
       </div>
 
@@ -82,138 +81,91 @@
 </div>
 
 <script type="text/javascript">
-$(document).ready(function() {
+  $(document).ready(function() {
 
-  $(window).on('load', function() {
-    $("div.spanner").addClass("show");
-    setTimeout(function() {
-      $("div.spanner").removeClass("show");
-      inactive_count_paid();
-      inactive_count_pending();
-      show_data();
-    }, 2000)
-  })
-
-  function inactive_count_paid() {
-    axios.get(apiUrl + '/api/inactive_paid_invoice_count', {
-      headers: {
-        Authorization: token
-      },
-    }).then(function(response) {
-      let data = response.data
-      if (data.success) {
-        console.log("SUCCESS", data);
-        $('#paid_invoices').html(data.data.length ? data.data.length : 0)
-      }
-    }).catch(function(error) {
-      console.log("ERROR", error);
+    $(window).on('load', function() {
+      $("div.spanner").addClass("show");
+      setTimeout(function() {
+        $("div.spanner").removeClass("show");
+        inactive_count_paid();
+        inactive_count_pending();
+        show_data();
+      }, 2000)
     })
-  }
 
-  function inactive_count_pending() {
-    axios.get(apiUrl + '/api/inactive_pending_invoice_count', {
-      headers: {
-        Authorization: token,
-      },
-    }).then(function(response) {
-      let data = response.data
-      if (data.success) {
-        console.log("SUCCESS", data);
-        $('#pending_invoices').html(data.data.length ? data.data.length : 0);
-      }
-    }).catch(function(error) {
-      console.log("ERROR", error);
-    })
-  }
-
-  $('#button-submit').on('click', function(e) {
-    e.preventDefault();
-    document.getElementById("loader_load").scrollIntoView({
-      behavior: "smooth"
-    })
-    $("div.spanner").addClass("show");
-    setTimeout(function() {
-      let search = $('#search').val();
-      $('#tbl_user tbody').empty();
-      show_data({
-        search
-      });
-      $("div.spanner").removeClass("show");
-    }, 2000)
-
-
-  })
-
-  function show_data(filters) {
-    let filter = {
-      page_size: 50,
-      page: 1,
-      ...filters,
+    function inactive_count_paid() {
+      axios.get(apiUrl + '/api/inactive_paid_invoice_count', {
+        headers: {
+          Authorization: token
+        },
+      }).then(function(response) {
+        let data = response.data
+        if (data.success) {
+          console.log("SUCCESS", data);
+          $('#paid_invoices').html(data.data.length ? data.data.length : 0)
+        }
+      }).catch(function(error) {
+        console.log("ERROR", error);
+      })
     }
 
-    $('#tbl_user tbody').empty();
-
-    axios
-      .get(`${apiUrl}/api/admin/show_data_inactive?${new URLSearchParams(filter)}`, {
+    function inactive_count_pending() {
+      axios.get(apiUrl + '/api/inactive_pending_invoice_count', {
         headers: {
           Authorization: token,
         },
+      }).then(function(response) {
+        let data = response.data
+        if (data.success) {
+          console.log("SUCCESS", data);
+          $('#pending_invoices').html(data.data.length ? data.data.length : 0);
+        }
+      }).catch(function(error) {
+        console.log("ERROR", error);
       })
-      .then(function(res) {
-        res = res.data;
-        console.log('res', res);
-        if (res.success) {
-          if (res.data.data.length > 0) {
-            res.data.data.map((item) => {
-              let tr = '<tr>';
+    }
 
-              if (item.file_path) {
-                tr +=
-                  '<td>  <img style="width:40px;" class="rounded-pill" src ="' +
-                  item
-                  .file_path + '"> ' + item.full_name + ' </td>';
-              } else {
-                tr +=
-                  '<td>  <img style="width:40px;" class="rounded-pill" src ="/images/default.png"> ' +
-                  item.full_name + ' </td>';
-              }
+    $('#button-submit').on('click', function(e) {
+      e.preventDefault();
+      document.getElementById("loader_load").scrollIntoView({
+        behavior: "smooth"
+      })
+      $("div.spanner").addClass("show");
+      setTimeout(function() {
+        let search = $('#search').val();
+        $('#tbl_user tbody').empty();
+        show_data({
+          search
+        });
+        $("div.spanner").removeClass("show");
+      }, 2000)
 
-              tr += '<td>' + item.profile_status + '</td>';
-              tr += '<td>' + item.phone_number + '</td>';
-              tr += '<td>' + item.position + '</td>';
-              if (item.profile.invoice.length > 0) {
-                let latest_invoice = item.profile.invoice[item.profile.invoice
-                  .length - 1]
-                var date_1 = new Date(latest_invoice.created_at);
-                var todate1 = new Date(date_1).getDate();
-                var tomonth1 = new Date(date_1).getMonth() + 1;
-                var toyear1 = new Date(date_1).getFullYear();
-                var from = tomonth1 + '/' + todate1 + '/' + toyear1;
 
-                var date_2 = new Date();
-                var todate2 = new Date(date_2).getDate();
-                var tomonth2 = new Date(date_2).getMonth() + 1;
-                var toyear2 = new Date(date_2).getFullYear();
-                var to = tomonth2 + '/' + todate2 + '/' + toyear2;
+    })
 
-                var diff = date_2 - date_1;
-                diff = diff / (1000 * 3600 * 24);
-                // console.log("DIFF", Math.round(diff));
-                tr += '<td>' + Math.round(diff ? diff : 0) +
-                  ' Days ago</td>';
+    function show_data(filters) {
+      let filter = {
+        page_size: 50,
+        page: 1,
+        ...filters,
+      }
 
-                tr +=
-                  '<td  class="text-center"> <a href="' + apiUrl +
-                  '/admin/inactiveProfile/' +
-                  item.id + "/" + item.profile.id +
-                  '" class="btn btn-outline-primary">View</a> </td>';
+      $('#tbl_user tbody').empty();
 
-                tr += '</tr>';
-                $(
-                  "#tbl_user tbody").append(tr);
+      axios
+        .get(`${apiUrl}/api/admin/show_data_inactive?${new URLSearchParams(filter)}`, {
+          headers: {
+            Authorization: token,
+          },
+        })
+        .then(function(res) {
+          res = res.data;
+          console.log('res', res);
+          if (res.success) {
+            if (res.data.data.length > 0) {
+              res.data.data.map((item) => {
+                let tr = '<tr>';
 
-              } else {
-                let tr = '<tr style="vertical-align:sub;">';
                 if (item.file_path) {
                   tr +=
                     '<td>  <img style="width:40px;" class="rounded-pill" src ="' +
@@ -226,62 +178,109 @@ $(document).ready(function() {
                 }
 
                 tr += '<td>' + item.profile_status + '</td>';
-                tr += '<td>' + item
-                  .phone_number + '</td>';
+                tr += '<td>' + item.phone_number + '</td>';
                 tr += '<td>' + item.position + '</td>';
-                tr += '<td> No Latest Invoice</td>';
+                if (item.profile.invoice.length > 0) {
+                  let latest_invoice = item.profile.invoice[item.profile.invoice
+                    .length - 1]
+                  var date_1 = new Date(latest_invoice.created_at);
+                  var todate1 = new Date(date_1).getDate();
+                  var tomonth1 = new Date(date_1).getMonth() + 1;
+                  var toyear1 = new Date(date_1).getFullYear();
+                  var from = tomonth1 + '/' + todate1 + '/' + toyear1;
 
-                tr +=
-                  '<td  class="text-center"> <a href="' + apiUrl +
-                  '/admin/inactiveProfile/' +
-                  item.id + "/" + item.profile.id +
-                  '" class="btn btn-outline-primary">View</a> </td>';
+                  var date_2 = new Date();
+                  var todate2 = new Date(date_2).getDate();
+                  var tomonth2 = new Date(date_2).getMonth() + 1;
+                  var toyear2 = new Date(date_2).getFullYear();
+                  var to = tomonth2 + '/' + todate2 + '/' + toyear2;
 
-                tr += '</tr>';
-                $("#tbl_user tbody").append(tr);
-              }
-              return ''
-            })
+                  var diff = date_2 - date_1;
+                  diff = diff / (1000 * 3600 * 24);
+                  // console.log("DIFF", Math.round(diff));
+                  tr += '<td>' + Math.round(diff ? diff : 0) +
+                    ' Days ago</td>';
 
-            $('#tbl_user_pagination').empty();
-            res.data.links.map(item => {
-              let li =
-                `<li class="page-item cursor-pointer ${item.active ? 'active':''}"><a class="page-link" data-url="${item.url}">${item.label}</a></li>`
-              $('#tbl_user_pagination').append(li)
-              return ""
-            })
+                  tr +=
+                    '<td  class="text-center"> <a href="' + apiUrl +
+                    '/admin/inactiveProfile/' +
+                    item.id + "/" + item.profile.id +
+                    '" class="btn btn-outline-primary">View</a> </td>';
 
-            $("#tbl_user_pagination .page-item .page-link").on('click', function() {
-              let url = $(this).data('url')
-              $.urlParam = function(name) {
-                var results = new RegExp("[?&]" + name + "=([^&#]*)").exec(
-                  url
-                );
+                  tr += '</tr>';
+                  $(
+                    "#tbl_user tbody").append(tr);
 
-                return results !== null ? results[1] || 0 : false;
-              };
+                } else {
+                  let tr = '<tr style="vertical-align:sub;">';
+                  if (item.file_path) {
+                    tr +=
+                      '<td>  <img style="width:40px;" class="rounded-pill" src ="' +
+                      item
+                      .file_path + '"> ' + item.full_name + ' </td>';
+                  } else {
+                    tr +=
+                      '<td>  <img style="width:40px;" class="rounded-pill" src ="/images/default.png"> ' +
+                      item.full_name + ' </td>';
+                  }
 
-              let search = $('#search').val();
-              show_data({
-                search,
-                page: $.urlParam('page')
-              });
-            })
+                  tr += '<td>' + item.profile_status + '</td>';
+                  tr += '<td>' + item
+                    .phone_number + '</td>';
+                  tr += '<td>' + item.position + '</td>';
+                  tr += '<td> No Latest Invoice</td>';
 
-            let tbl_user_showing =
-              `Showing ${res.data.from} to ${res.data.to} of ${res.data.total} entries`;
-            $('#tbl_user_showing').html(tbl_user_showing);
-          } else {
-            $("#tbl_user tbody").append(
-              '<tr><td colspan="6" class="text-center">No data</td></tr>');
+                  tr +=
+                    '<td  class="text-center"> <a href="' + apiUrl +
+                    '/admin/inactiveProfile/' +
+                    item.id + "/" + item.profile.id +
+                    '" class="btn btn-outline-primary">View</a> </td>';
+
+                  tr += '</tr>';
+                  $("#tbl_user tbody").append(tr);
+                }
+                return ''
+              })
+
+              $('#tbl_user_pagination').empty();
+              res.data.links.map(item => {
+                let li =
+                  `<li class="page-item cursor-pointer ${item.active ? 'active':''}"><a class="page-link" data-url="${item.url}">${item.label}</a></li>`
+                $('#tbl_user_pagination').append(li)
+                return ""
+              })
+
+              $("#tbl_user_pagination .page-item .page-link").on('click', function() {
+                let url = $(this).data('url')
+                $.urlParam = function(name) {
+                  var results = new RegExp("[?&]" + name + "=([^&#]*)").exec(
+                    url
+                  );
+
+                  return results !== null ? results[1] || 0 : false;
+                };
+
+                let search = $('#search').val();
+                show_data({
+                  search,
+                  page: $.urlParam('page')
+                });
+              })
+
+              let tbl_user_showing =
+                `Showing ${res.data.from} to ${res.data.to} of ${res.data.total} entries`;
+              $('#tbl_user_showing').html(tbl_user_showing);
+            } else {
+              $("#tbl_user tbody").append(
+                '<tr><td colspan="6" class="text-center">No data</td></tr>');
+            }
           }
-        }
-      })
-      .catch(function(error) {
-        // console.log("catch error");
-      });
-  }
+        })
+        .catch(function(error) {
+          // console.log("catch error");
+        });
+    }
 
-});
+  });
 </script>
 @endsection
