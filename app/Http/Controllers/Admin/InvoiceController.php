@@ -216,25 +216,25 @@ class InvoiceController extends Controller
     $invoice_id = $request->invoice_id;
     $invoiceItems_id = $request->invoiceItems_id;
     if ($error === false) {
+      $incoming_data = $request->validate(
+        [
+
+          'profile_id' => 'required',
+          'due_date' => 'required',
+          'description' => 'required',
+          'sub_total' => 'required',
+          'peso_rate' => '',
+          'converted_amount' => '',
+          'discount_type' => '',
+          'discount_amount' => '',
+          'discount_total' => '',
+          'grand_total_amount' => '',
+          'notes' => '',
+
+        ]
+      );
       // STORE
       if ($profile_id) {
-        $incoming_data = $request->validate(
-          [
-
-            'profile_id' => '',
-            'due_date' => 'required',
-            'description' => 'required',
-            'sub_total' => 'required',
-            'peso_rate' => '',
-            'converted_amount' => '',
-            'discount_type' => '',
-            'discount_amount' => '',
-            'discount_total' => '',
-            'grand_total_amount' => '',
-            'notes' => '',
-
-          ]
-        );
         $incoming_data += [
           'invoice_status' => 'Pending',
           'invoice_no' => $this->generate_invoice(),
@@ -277,7 +277,6 @@ class InvoiceController extends Controller
         $invoice_data = Invoice::find($invoice_id);
         if ($invoiceItems_id) {
           $delete = InvoiceItems::where('id', $invoiceItems_id)->delete();
-
           return response()->json([
             'success' => true,
             'message' => "Invoice Items has been successfully removed.",
@@ -287,13 +286,14 @@ class InvoiceController extends Controller
         if ($invoice_data) {
           $incoming_data = $request->validate(
             [
+              'profile_id' => 'required',
               'sub_total' => 'required',
               'description' => 'required',
               'due_date' => 'required',
             ],
           );
           $incoming_data += [
-            'profile_id' => $invoice_data->profile_id,
+
             'peso_rate' => $request->peso_rate,
             'converted_amount' => $request->converted_amount,
             'discount_type' => $request->discount_type,
@@ -354,13 +354,13 @@ class InvoiceController extends Controller
         if ($invoice_data) {
           $incoming_data = $request->validate(
             [
+              'profile_id' => 'required',
               'sub_total' => 'required',
               'description' => 'required',
               'due_date' => 'required',
             ],
           );
           $incoming_data += [
-            'profile_id' => $invoice_data->profile_id,
             'peso_rate' => $request->peso_rate,
             'converted_amount' => $request->converted_amount,
             'discount_type' => $request->discount_type,

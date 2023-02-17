@@ -79,7 +79,6 @@
                 <div class="col-xl-6">
                   <div class="mb-3">
                     <label mb-2 style="color: #A4A6B3;">Profile</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Profile">
                     <select class="form-select" id="selectProfile">
                       <option value="" selected disabled>Select Profile</option>
                     </select>
@@ -307,29 +306,29 @@
       })
     }
     $("#tbl_pagination_pendingInvoice").on('click', '.page-item', function() {
-      document.getElementById("loader_load").scrollIntoView({
-        behavior: "smooth"
-      })
+      $('html,body').animate({
+        scrollTop: $('#loader_load').offset().top
+      }, 'slow');
 
       $("div.spanner").addClass("show");
       setTimeout(function() {
         $("div.spanner").removeClass("show");
-        document.getElementById("pendingInvoices_card").scrollIntoView({
-          behavior: "smooth"
-        })
+        $('html,body').animate({
+          scrollTop: $('#pendingInvoices_card').offset().top
+        }, 'slow');
       }, 1500);
     })
     $("#tbl_pagination_overdueInvoice").on('click', '.page-item', function() {
-      document.getElementById("loader_load").scrollIntoView({
-        behavior: "smooth"
-      })
+      $('html,body').animate({
+        scrollTop: $('#loader_load').offset().top
+      }, 'slow');
 
       $("div.spanner").addClass("show");
       setTimeout(function() {
         $("div.spanner").removeClass("show");
-        document.getElementById("overdueInvoices_card").scrollIntoView({
-          behavior: "smooth"
-        })
+        $('html,body').animate({
+          scrollTop: $('#overdueInvoices_card').offset().top
+        }, 'slow');
       }, 1500);
     })
 
@@ -664,9 +663,9 @@
         let data = response.data;
         if (data.success) {
           console.log("SUCCES", data.success);
-          document.getElementById("loader_load").scrollIntoView({
-            behavior: "smooth"
-          })
+          d$('html,body').animate({
+            scrollTop: $('#loader_load').offset().top
+          }, 'slow');
           $("div.spanner").addClass("show");
 
           setTimeout(function() {

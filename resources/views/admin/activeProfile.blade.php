@@ -313,8 +313,7 @@
                   <div class="card shadow p-2 mb-5 bg-white rounded">
 
                     <div class="row px-4 pb-4 pt-4" id="header">
-
-                      <input id="profile_id" name="profile_id" type="text" hidden>
+                      <input id="profile_id" type="text" hidden>
                       <!-- <label class="formGroupExampleInput2">Invoice #</label> -->
 
                       <div class="col-4 mb-3">
@@ -741,9 +740,10 @@
       // REFRESH WHEN THIS PAGE IS LOAD
 
       $(window).on('load', function() {
-        document.getElementById("loader_load").scrollIntoView({
-          behavior: "smooth"
-        })
+        $('html, body').animate({
+          scrollTop: $('#loader_load').offset().top
+        }, 'slow');
+
         $("div.spanner").addClass("show");
         setTimeout(function() {
           $("div.spanner").removeClass("show");
@@ -776,9 +776,10 @@
 
       $('#edit_profile').on('click', function(e) {
 
-        document.getElementById("loader_load").scrollIntoView({
-          behavior: "smooth"
-        })
+        $('html, body').animate({
+          scrollTop: $('#loader_load').offset().top
+        }, 'slow');
+
         $('div.spanner').addClass("show");
         setTimeout(function() {
           $('div.spanner').removeClass("show");
@@ -932,11 +933,8 @@
               } else {
                 $("#photo").attr("src", "/images/default.png");
               }
-
               // console.log('profile_deduction_types', data);
-
             }
-
           })
           .catch(function(error) {
             console.log("ERROR", error);
@@ -952,29 +950,32 @@
       })
 
       $("#tbl_pagination_invoice").on('click', '.page-item', function() {
-        document.getElementById("loader_load").scrollIntoView({
-          behavior: "smooth"
-        })
+        $('html,body').animate({
+          scrollTop: $('#loader_load').offset().top
+        }, 'slow');
+
         $("div.spanner").addClass("show");
         setTimeout(function() {
-          $("div.spanner").removeClass("show");
-          document.getElementById("pills-invoice").scrollIntoView({
-            behavior: "smooth"
-          })
+
+          $('html,body').animate({
+            scrollTop: $('#pills-invoice').offset().top
+          }, 'slow');
 
           show_data();
         }, 1500);
       })
       $("#tbl_pagination_deduction").on('click', '.page-item', function() {
-        document.getElementById("loader_load").scrollIntoView({
-          behavior: "smooth"
-        })
+        $('html,body').animate({
+          scrollTop: $('#loader_load').offset().top
+        }, 'slow');
         $("div.spanner").addClass("show");
         setTimeout(function() {
           $("div.spanner").removeClass("show");
-          document.getElementById("pills-deduction").scrollIntoView({
-            behavior: "smooth"
-          })
+
+          $('html,body').animate({
+            scrollTop: $('#pills-deduction').offset().top
+          }, 'slow');
+
 
           show_data();
         }, 1500);
@@ -1268,9 +1269,7 @@
                 $('.toast1 .toast-body').html(data.message);
 
 
-                document.getElementById("loader_load").scrollIntoView({
-                  behavior: "smooth"
-                })
+
                 $("div.spanner").addClass("show");
 
                 setTimeout(function() {

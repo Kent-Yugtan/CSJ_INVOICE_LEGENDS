@@ -324,24 +324,6 @@ class ProfileController extends Controller
     $data = User::with('profile')->select(
       [
         'users.*',
-        'profile_status',
-        'position',
-        'phone_number',
-        'address',
-        'province',
-        'city',
-        'zip_code',
-        'profile_status',
-        'acct_no',
-        'acct_name',
-        'bank_name',
-        'bank_location',
-        'gcash_no',
-        'date_hired',
-        'file_name',
-        'file_original_name',
-        'file_path',
-        'file_size',
         DB::raw("CONCAT(first_name, ' ', last_name) full_name")
       ],
     )->profile()->where('profile_status', 'Active')->get();

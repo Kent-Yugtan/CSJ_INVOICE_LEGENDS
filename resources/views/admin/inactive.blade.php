@@ -127,9 +127,9 @@
 
     $('#button-submit').on('click', function(e) {
       e.preventDefault();
-      document.getElementById("loader_load").scrollIntoView({
-        behavior: "smooth"
-      })
+      $('html,body').animate({
+        scrollTop: $('#loader_load').offset().top
+      }, 'slow');
       $("div.spanner").addClass("show");
       setTimeout(function() {
         let search = $('#search').val();

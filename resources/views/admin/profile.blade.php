@@ -230,6 +230,9 @@
 <script type="text/javascript">
 $(document).ready(function() {
   $(window).on('load', function() {
+    $('html,body').animate({
+      scrollTop: $('#loader_load').offset().top
+    }, 'slow');
     $("div.spanner").addClass("show");
     setTimeout(function() {
       $("div.spanner").removeClass("show");
@@ -257,9 +260,9 @@ $(document).ready(function() {
   $('#ProfileStore').submit(function(e) {
     e.preventDefault();
 
-    document.getElementById("loader_load").scrollIntoView({
-      behavior: "smooth"
-    })
+    $('html,body').animate({
+      scrollTop: $('#loader_load').offset().top
+    }, 'slow');
 
 
     let first_name = $("#first_name").val();

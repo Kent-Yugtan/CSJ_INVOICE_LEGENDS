@@ -150,9 +150,9 @@
 
 
     $('#button_search').on('click', function() {
-      document.getElementById('loader_load').scrollIntoView({
-        behavior: "smooth"
-      });
+      $('html,body').animate({
+        scrollTop: $('#loader_load').offset().top
+      }, 'slow');
       $('div.spanner').addClass('show');
       setTimeout(function() {
         $('div.spanner').removeClass('show');
@@ -206,10 +206,11 @@
                     }) +
                   '</td>';
                 tr +=
-
                   '<td style="width:45%;" class="text-center"> <button value=' +
                   item.id +
-                  ' class="editButton btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" >Edit</button> </td>';
+                  ' class="editButton btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" >Edit</button><button value=' +
+                  item.id +
+                  ' class="deleteButton btn btn-outline-danger ms-3" data-bs-toggle="modal" data-bs-target="#deleteButton" >Delete</button> </td>';
                 tr += '</tr>';
                 $("#table_deduction tbody").append(tr);
 
@@ -300,9 +301,9 @@
           if (data.success) {
             // console.log('success', data.data.message);
             $('#addModal').modal('hide');
-            document.getElementById('loader_load').scrollIntoView({
-              behavios: "smooth"
-            })
+            $('html,body').animate({
+              scrollTop: $('#loader_load').offset().top
+            }, 'slow');
             $('#deduction_name').val('');
             $('#deduction_amount').val('');
             $('div.spanner').addClass('show');
@@ -386,9 +387,9 @@
           let data = response.data;
           if (data.success) {
             $('#editModal').modal('hide');
-            document.getElementById('loader_load').scrollIntoView({
-              behavios: "smooth"
-            })
+            $('html,body').animate({
+              scrollTop: $('#loader_load').offset().top
+            }, 'slow');
             $('#edit_deduction_name').val('');
             $('#edit_deduction_amount').val('');
             $('div.spanner').addClass('show');
