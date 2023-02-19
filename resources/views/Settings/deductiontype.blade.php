@@ -137,6 +137,11 @@
   <div class="loader"></div>
 </div>
 <script type="text/javascript">
+  const PHP = value => currency(value, {
+    symbol: '',
+    decimal: '.',
+    separator: ','
+  });
   $(document).ready(function() {
 
 
@@ -235,11 +240,11 @@
                   return results !== null ? results[1] || 0 : false;
                 };
 
-                // let search = $('#search').val();
-                // show_data({
-                //   search,
-                //   page: $.urlParam('page')
-                // });
+                let search = $('#search').val();
+                show_data({
+                  search,
+                  page: $.urlParam('page')
+                });
               })
 
               let tbl_user_showing =
@@ -282,7 +287,7 @@
       e.preventDefault();
 
       let deduction_name = $("#deduction_name").val();
-      let deduction_amount = parseFloat($("#deduction_amount").val()).toFixed(2);
+      let deduction_amount = $("#deduction_amount").val();
 
       let data = {
         deduction_name: deduction_name,
@@ -334,6 +339,14 @@
             toast1.toast('show');
           }
         });
+    })
+
+    $('#deduction_amount').focusout(function() {
+      if ($(this).val().length > 0) {
+
+        let amount = $(this).val();
+        $('#deduction_amount').val(PHP(amount).format());
+      }
     })
 
     $(document).on('click', '.editButton', function(e) {
