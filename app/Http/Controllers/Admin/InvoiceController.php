@@ -595,7 +595,49 @@ class InvoiceController extends Controller
       ]);
     }
   }
-  public function search_current_invoice(Request $request)
+  public function search_statusInactive_invoice(Request $request)
+  {
+    $invoices = Invoice::with(['profile.user'])->where('status', 'Inactive');
+    if (isset($request->search)) {
+      $invoices = $invoices->where(
+        function ($q) use ($request) {
+          $q->orWhere('invoice_no', 'LIKE', '%' . $request->search . '%');
+          $q->orWhere('invoice_status', 'LIKE', '%' . $request->search . '%');
+          $q->orWhere('grand_total_amount', 'LIKE', '%' . $request->search . '%');
+        }
+      )->orwhereHas(
+        'profile.user',
+        function ($q) use ($request) {
+          $q->where(DB::raw("CONCAT(first_name, ' ', last_name)"), 'LIKE', '%' . $request->search . '%');
+          $q->Where('status', 'Inactive');
+        }
+      );
+    }
+
+    if (isset($request->filter_all_invoices)) {
+      if ($request->filter_all_invoices == 'All') {
+        $invoices = $invoices->where('invoice_status', '<>', '');
+      } else {
+        $invoices = $invoices->where('invoice_status', $request->filter_all_invoices);
+      }
+    }
+
+    $invoices = $invoices->orderBy("invoice_no", "desc");
+
+    if ($request->page_size) {
+      $invoices = $invoices->limit($request->page_size)
+        ->paginate($request->page_size, ['*'], 'page', $request->page)
+        ->toArray();
+    } else {
+      $invoices = $invoices->get();
+    }
+
+    return response()->json([
+      'success' => true,
+      'data' => $invoices,
+    ], 200);
+  }
+  public function search_statusActive_invoice(Request $request)
   {
     $invoices = Invoice::with(['profile.user'])->where('status', 'Active');
     if (isset($request->search)) {
@@ -610,6 +652,43 @@ class InvoiceController extends Controller
         function ($q) use ($request) {
           $q->where(DB::raw("CONCAT(first_name, ' ', last_name)"), 'LIKE', '%' . $request->search . '%');
           $q->Where('status', 'Active');
+        }
+      );
+    }
+
+    if (isset($request->filter_all_invoices)) {
+      if ($request->filter_all_invoices == 'All') {
+        $invoices = $invoices->where('invoice_status', '<>', '');
+      } else {
+        $invoices = $invoices->where('invoice_status', $request->filter_all_invoices);
+      }
+    }
+
+    $invoices = $invoices->orderBy("invoice_no", "desc");
+
+    if ($request->page_size) {
+      $invoices = $invoices->limit($request->page_size)
+        ->paginate($request->page_size, ['*'], 'page', $request->page)
+        ->toArray();
+    } else {
+      $invoices = $invoices->get();
+    }
+
+    return response()->json([
+      'success' => true,
+      'data' => $invoices,
+    ], 200);
+  }
+
+  public function show_statusInactiveinvoice(Request $request)
+  {
+
+    $invoices = Invoice::with('profile.user')->where('status', 'Inactive');
+    if (isset($request->search)) {
+      $invoices = $invoices->where(
+        function ($q) use ($request) {
+          $q->orWhere('invoice_no', 'LIKE', '%' . $request->search . '%');
+          $q->orWhere('invoice_status', 'LIKE', '%' . $request->search . '%');
         }
       );
     }
@@ -803,6 +882,7 @@ class InvoiceController extends Controller
       ], 200);
     }
   }
+
   public function active_overdue_invoice_count()
   {
     $data = Invoice::join('profiles', 'profiles.id', 'invoices.profile_id')
@@ -865,8 +945,6 @@ class InvoiceController extends Controller
     }
   }
 
-
-
   public function get_quickInvoice_PDT(Request $request)
   {
     $profile_id = $request->id;
@@ -885,5 +963,36 @@ class InvoiceController extends Controller
       'success' => true,
       'data' => $otherValues,
     ], 200);
+  }
+
+  public function statusInactive_paid_invoice_count()
+  {
+    $data = Invoice::join('profiles', 'profiles.id', 'invoices.profile_id')
+      ->where('profiles.profile_status', 'Active')
+      ->where('invoices.status', 'Inactive')
+      ->where('invoices.invoice_status', 'Paid')
+      ->get();
+    if ($data) {
+      return response()->json([
+        'success' => true,
+        'data' => $data,
+      ], 200);
+    }
+  }
+
+  public function statusInactive_pending_invoice_count()
+  {
+    $data = Invoice::join('profiles', 'profiles.id', 'invoices.profile_id')
+      ->where('profiles.profile_status', 'Active')
+      ->where('invoices.status', 'InactiveInactive')
+      ->where('invoices.invoice_status', 'Pending')
+      ->get();
+
+    if ($data) {
+      return response()->json([
+        'success' => true,
+        'data' => $data,
+      ], 200);
+    }
   }
 }

@@ -217,7 +217,7 @@ $(document).ready(function() {
     })
   }
 
-  function seach_current_invoice(filters) {
+  function search_statusActive_invoice(filters) {
     let page = $("#tbl_pagination_invoice .page-item.active .page-link").html();
     let filter = {
       page_size: 10,
@@ -228,7 +228,7 @@ $(document).ready(function() {
     }
     // console.log("page", page);
     $('#dataTable_invoice tbody').empty();
-    axios.get(`${apiUrl}/api/admin/search_current_invoice?${new URLSearchParams(filter)}`, {
+    axios.get(`${apiUrl}/api/admin/search_statusActive_invoice?${new URLSearchParams(filter)}`, {
       headers: {
         Authorization: token,
       },
@@ -381,7 +381,7 @@ $(document).ready(function() {
               scrollTop: $('#dataTable_invoice').offset().top
             }, 'slow');
             setTimeout(function() {
-              seach_current_invoice({
+              search_statusActive_invoice({
                 search: $('#search').val() ? $('#search').val() : '',
                 page: $.urlParam('page')
               });
@@ -695,7 +695,7 @@ $(document).ready(function() {
     setTimeout(function() {
       let search = $('#search').val();
       $('#tbl_user tbody').empty();
-      seach_current_invoice();
+      search_statusActive_invoice();
       $("div.spanner").removeClass("show");
     }, 2000)
 

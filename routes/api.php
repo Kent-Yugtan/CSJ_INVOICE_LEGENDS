@@ -72,20 +72,25 @@ Route::middleware(['auth:sanctum'])->group(function () {
   Route::get('admin/inactive_invoice', [InvoiceController::class, 'inactive_invoice']);
   Route::get('invoice/check_profile/{id}', [InvoiceController::class, 'check_profile']);
   Route::get('invoice/generate_invoice_number', [InvoiceController::class, 'generate_invoice']);
-  Route::get('admin/show_invoice', [InvoiceController::class, 'show_invoice']);
-  Route::get('admin/search_current_invoice', [InvoiceController::class, 'search_current_invoice']);
+  Route::get('admin/show_invoice', [InvoiceController::class, 'show_invoice']); // SHOW ACTIVE INVOICES
+  Route::get('admin/show_statusInactiveinvoice', [InvoiceController::class, 'show_statusInactiveinvoice']);
+  Route::get('admin/search_statusActive_invoice', [InvoiceController::class, 'search_statusActive_invoice']);
+  Route::get('admin/search_statusInactive_invoice', [InvoiceController::class, 'search_statusInactive_invoice']);
   Route::get('admin/editInvoice/{id}', [InvoiceController::class, 'editInvoice']);
   Route::get('getInvoiceStatus/{id}', [InvoiceController::class, 'getInvoiceStatus']);
   Route::get('admin/show_Profilededuction_Table_Active', [InvoiceController::class, 'show_Profilededuction_Table_Active']);
+  Route::get('active_overdue_invoice_count', [InvoiceController::class, 'active_overdue_invoice_count']);
   Route::get('active_paid_invoice_count', [InvoiceController::class, 'active_paid_invoice_count']);
   Route::get('active_pending_invoice_count', [InvoiceController::class, 'active_pending_invoice_count']);
-  Route::get('active_overdue_invoice_count', [InvoiceController::class, 'active_overdue_invoice_count']);
   Route::get('active_cancelled_invoice_count', [InvoiceController::class, 'active_cancelled_invoice_count']);
   Route::get('inactive_paid_invoice_count', [InvoiceController::class, 'inactive_paid_invoice_count']);
   Route::get('inactive_pending_invoice_count', [InvoiceController::class, 'inactive_pending_invoice_count']);
   Route::get('admin/show_pendingInvoices', [InvoiceController::class, 'show_pendingInvoices']);
   Route::get('admin/show_overdueInvoices', [InvoiceController::class, 'show_overdueInvoices']);
   Route::get('get_quickInvoice_PDT/{id}', [InvoiceController::class, 'get_quickInvoice_PDT']);
+
+  Route::get('statusInactive_paid_invoice_count', [InvoiceController::class, 'statusInactive_paid_invoice_count']);
+  Route::get('statusInactive_pending_invoice_count', [InvoiceController::class, 'statusInactive_pending_invoice_count']);
 
   // FOR EMAIL CONFIG TABLE
   Route::get('get_name', [EmailConfigController::class, 'get_name']);
