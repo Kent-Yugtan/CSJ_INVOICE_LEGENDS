@@ -235,11 +235,11 @@
                   return results !== null ? results[1] || 0 : false;
                 };
 
-                let search = $('#search').val();
-                show_data({
-                  search,
-                  page: $.urlParam('page')
-                });
+                // let search = $('#search').val();
+                // show_data({
+                //   search,
+                //   page: $.urlParam('page')
+                // });
               })
 
               let tbl_user_showing =
@@ -312,7 +312,7 @@
               $('.toast1 .toast-title').html('Deduction Types');
               $('.toast1 .toast-body').html(response.data.message);
               toast1.toast('show');
-              show_data();
+              // show_data();
             }, 2000)
           }
         })
