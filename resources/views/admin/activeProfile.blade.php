@@ -366,7 +366,7 @@
                         <div class="row">
                           <div class="col">
                             <div class=" form-group">
-                              <label class=" formGroupExampleInput2">Description</label>
+                              <label class="formGroupExampleInput2">Description</label>
                               <input id="invoice_description" name="invoice_description" type="text"
                                 class="form-control">
                             </div>
@@ -537,7 +537,7 @@
                       </div>
                       <div class="col-6 mb-3">
                         <div class="pb-3">
-                          <button type="button" id="save" class="btn btn-secondary w-100"
+                          <button type="submit" id="save" class="btn btn-secondary w-100"
                             style="color:White; background-color:#CF8029;">Save</button>
                         </div>
                       </div>
