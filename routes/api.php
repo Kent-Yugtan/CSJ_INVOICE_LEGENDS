@@ -65,6 +65,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
   Route::get('settings/show_emailedit/{id}', [EmailConfigController::class, 'show_edit']);
 
   //  GET INVOICES FUNCTIONS
+  Route::post('update_status_activeOrinactive', [InvoiceController::class, 'update_status_activeOrinactive']);
   Route::post('update_status', [InvoiceController::class, 'update_status']);
   Route::post('delete_invoice/{id}', [InvoiceController::class, 'destroy']);
   Route::get('admin/current_invoice', [InvoiceController::class, 'current_invoice']);
@@ -72,9 +73,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
   Route::get('invoice/check_profile/{id}', [InvoiceController::class, 'check_profile']);
   Route::get('invoice/generate_invoice_number', [InvoiceController::class, 'generate_invoice']);
   Route::get('admin/show_invoice', [InvoiceController::class, 'show_invoice']);
+  Route::get('admin/search_current_invoice', [InvoiceController::class, 'search_current_invoice']);
   Route::get('admin/editInvoice/{id}', [InvoiceController::class, 'editInvoice']);
   Route::get('getInvoiceStatus/{id}', [InvoiceController::class, 'getInvoiceStatus']);
-  Route::get('admin/show_Profilededuction_Table', [InvoiceController::class, 'show_Profilededuction_Table']);
+  Route::get('admin/show_Profilededuction_Table_Active', [InvoiceController::class, 'show_Profilededuction_Table_Active']);
   Route::get('active_paid_invoice_count', [InvoiceController::class, 'active_paid_invoice_count']);
   Route::get('active_pending_invoice_count', [InvoiceController::class, 'active_pending_invoice_count']);
   Route::get('active_overdue_invoice_count', [InvoiceController::class, 'active_overdue_invoice_count']);

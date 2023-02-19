@@ -74,7 +74,6 @@
   </div>
 </div>
 
-
 <!-- LOADER SPINNER -->
 <div class="spanner">
   <div class="loader"></div>

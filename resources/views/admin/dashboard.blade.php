@@ -562,7 +562,6 @@
       // console.log("converted_amount", converted_amount);
     }
 
-
     $('#selectProfile').on('change', function() {
       let profile_id = $('#selectProfile').val();
       console.log("PROFILE ID", profile_id);
@@ -574,10 +573,11 @@
         let data = response.data;
         if (data.success) {
           if (data.data.length > 0) {
+            console.log("SUCCESS", data);
             data.data.map((item) => {
-              let profile_deduction_type_id = item.id;
-              let deduction_amount = item.amount;
-              let sum = item.sum;
+              let profile_deduction_type_id = item.id ? item.id : '';
+              let deduction_amount = item.amount ? item.amount : '';
+              let sum = item.sum ? item.sum : '';
               Deductions.push({
                 profile_deduction_type_id,
                 deduction_amount,
@@ -593,8 +593,6 @@
               return remove;
             });
             sumObj = $(sum)['prop']('sum'); // get the value of {sum:6000}
-
-
           }
         }
       }).catch(function(error) {
@@ -625,7 +623,6 @@
 
       // remove the column name array object  AND DEDUCTIONS
 
-
       // INVOIE ITEMS
       let invoiceItem = [];
       let item_description = $('#description').val();
@@ -642,19 +639,20 @@
         item_qty,
         item_total_amount,
       })
-
       let data = {
         profile_id: profile_id,
         description: description,
-        sub_total: sub_total,
-        peso_rate: PHP(peso_rate ? peso_rate : 0).format(),
+        sub_total: sub_total ? sub_total : 0,
+        peso_rate: peso_rate ? peso_rate : 0,
         converted_amount: converted_amount ? converted_amount : 0,
         grand_total_amount: parseFloat(converted_amount - sumObj),
         due_date: due_date,
         invoiceItem,
         Deductions,
       };
-      // console.log("DATA", data);
+
+
+      console.log("DATA", data);
       axios.post(apiUrl + "/api/createinvoice", data, {
         headers: {
           Authorization: token,
@@ -663,7 +661,7 @@
         let data = response.data;
         if (data.success) {
           console.log("SUCCES", data.success);
-          d$('html,body').animate({
+          $('html,body').animate({
             scrollTop: $('#loader_load').offset().top
           }, 'slow');
           $("div.spanner").addClass("show");
@@ -679,6 +677,7 @@
 
         }
       }).catch(function(error) {
+        console.log("ERROR", error);
         if (error.response.data.errors) {
           let errors = error.response.data.errors;
           console.log("errors", errors);

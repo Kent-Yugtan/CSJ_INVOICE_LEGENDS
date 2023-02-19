@@ -27,6 +27,18 @@
 
           <div class="row pt-3">
             <div class="col-sm-6">
+
+            </div>
+            <div class="col-sm-3">
+              <span class="text-muted">Status:</span>
+            </div>
+            <div class="col-sm-3 text-md-end">
+              <div id="status"></div>
+            </div>
+          </div>
+
+          <div class="row pt-1">
+            <div class="col-sm-6">
               <div id="address"></div>
               <div id="city-province"></div>
               <div id="zip_code"></div>
@@ -87,7 +99,7 @@
               <div id="ship_to_address"></div>
             </div>
 
-            <div class="col-sm-6">
+            <div class="col-md-6 col-sm-12">
               <div class="rounded-3" style="height: 50px; background-color: #A4A6B3; display: flex; align-items: center;">
                 <div class="col-6 text-start">
                   <h5>
@@ -139,23 +151,23 @@
               </div>
 
               <div class="row">
-                <div class="col-md-6 col-sm-12 h6">
+                <div class="col-md-7 col-sm-7 h6">
                   <label class="text-muted"> Discount Type:</label><span class="text-muted" id="discountType"></span>
                 </div>
                 <div class="col mx-2 h6" id="discountAmount" style="text-align:end"></div>
               </div>
 
               <div class="row">
-                <div class="col-md-6 col-sm-12">
+                <div class="col-md-6 col-sm-6">
                   <label class="text-muted"> Total:</label>
                 </div>
                 <div class="col mx-2 h6" id="total" style="text-align:end"></div>
               </div>
 
               <div class="row">
-                <div class="col-md-6 col-sm-12">
-                  <label class="text-muted">Converted Amount (PHP): </label>
-                  <label class="text-muted" id="peso_rate"></label>
+                <div class="col-md-6 col-sm-6">
+                  <label class="text-muted">Converted Amount (PHP): <label class="text-muted" id="peso_rate"></label></label>
+
                 </div>
 
                 <div class="col mx-2 h6" id="convertedAmount" style="text-align:end"></div>
@@ -193,7 +205,18 @@
 
     <div class="col-xl-4 px-2 editInvoiceButton">
       <div class="card shadow bg-white rounded py-3">
+
+
         <div class="row px-3 py-1">
+          <div class="col-6">
+            <button type="button" id="active_button" class="btn btn-secondary w-100" style="color: White; background-color: #CF8029;">Active</button>
+          </div>
+          <div class="col-6">
+            <button type="button" id="inactive_button" class="btn btn-secondary w-100" style="color: White; background-color: CF8029;">Inactive</button>
+          </div>
+        </div>
+
+        <div class="row px-3 pt-3 pb-1">
           <div class="col-12 w-100">
             <button type="button" id="paid_button" class="btn btn-secondary w-100" style="color: White; background-color: green;">Paid Invoice</button>
           </div>
@@ -211,7 +234,7 @@
           </div>
         </div>
 
-        <div class="row px-3 pt-5 pb-1">
+        <div class="row px-3 pt-3 pb-1">
           <div class="col-12 w-100">
             <button type="button" id="pdfDownload" class="btn btn-secondary w-100" style="color: White; background-color: #CF8029;">Download</button>
           </div>
@@ -367,7 +390,7 @@
 
                     <div class="col-12 mb-3">
                       <div class="row">
-                        <div class="col">
+                        <div class="col-md-6 col-sm-12">
                           <h3> DEDUCTIONS </h3>
                         </div>
                       </div>
@@ -1196,6 +1219,15 @@
                 .last_name);
               $('#email').html(data.data.profile.user.email);
               $('#invoice_no').html("#" + data.data.invoice_no);
+              $('#status').html(data.data.status);
+              if (data.data.status === "Active") {
+                $('#active_button').prop('disabled', true);
+                $('#inactive_button').prop('disabled', false);
+              }
+              if (data.data.status === "Inactive") {
+                $('#active_button').prop('disabled', false);
+                $('#inactive_button').prop('disabled', true);
+              }
               $('#address').html(data.data.profile.address);
               $('#city-province').html(data.data.profile.city + ", " + data.data.profile
                 .province);
@@ -1268,11 +1300,7 @@
                 }));
 
                 if (data.data.discount_type === "Fixed") {
-                  $('#discountType').html(" " + data.data.discount_type + " (" +
-                    discount_amount.toLocaleString('en-US', {
-                      style: 'currency',
-                      currency: 'USD'
-                    }) + ")");
+                  $('#discountType').html(data.data.discount_type);
                   $('#discountAmount').html(discount_amount.toLocaleString('en-US', {
                     style: 'currency',
                     currency: 'USD'
@@ -1338,7 +1366,7 @@
 
                   let parent0 = $(this).closest('.row .title_deductions');
                   let div_rows0 = '';
-                  div_rows0 += '<div class="col-5"> </div>';
+                  div_rows0 += '<div class="col-md-5 col-sm-12"> </div>';
                   div_rows0 += '<div class="col">';
                   div_rows0 += '<h5> DEDUCTIONS </h5>';
                   div_rows0 += '</div>';
@@ -1353,7 +1381,7 @@
                     let parent = $(this).closest('.deductions');
                     let div_rows = '';
                     div_rows += '<div class="row">';
-                    div_rows += '<div class="col-5"></div>';
+                    div_rows += '<div class="col-md-5 col-sm-12"></div>';
                     div_rows += '<div class="col text-muted">' + item2.profile_deduction_types.deduction_type
                       .deduction_name + '</div>';
                     div_rows += '<div class="col mx-2 h6" style="text-align:end;color:red;">' + deduction_amount
@@ -1369,7 +1397,7 @@
 
                   let parent1 = $(this).closest('.row .total_deductions');
                   let div_rows1 = '';
-                  div_rows1 += '<div class="col-5"></div>';
+                  div_rows1 += '<div class="col-md-5 col-sm-12"></div>';
                   div_rows1 += '<div class="col fw-bold">Total Deductions</div>';
                   div_rows1 +=
                     '<div class="col mx-2 h6 fw-bold" style="text-align:end;color:red;">' +
@@ -1385,7 +1413,7 @@
                   let parent = $(this).closest('.row .deductions');
                   let div_rows = '';
 
-                  div_rows += '<div class="col-5"></div>';
+                  div_rows += '<div class="col-md-5 col-sm-12"></div>';
                   div_rows += '<div class="col"></div>';
                   div_rows +=
                     '<div class="col mx-2 h6" style="text-align:end;color:red;"></div>';
@@ -1546,6 +1574,131 @@
       })
     })
 
+    // ACTIVE BUTTON
+    $('#active_button').on('click', function(e) {
+      e.preventDefault();
+      let url = window.location.pathname
+      let urlSplit = url.split("/");
+      if (urlSplit.length === 4) {
+        let invoice_id = urlSplit[3];
+        let status = "Active";
+
+        let data = {
+          id: invoice_id,
+          status: status,
+        }
+
+        axios.post(apiUrl + '/api/update_status_activeOrinactive', data, {
+          headers: {
+            Authorization: token,
+          },
+        }).then(function(response) {
+          let data = response.data;
+          if (data.success) {
+
+            $("div.spanner").addClass("show");
+            setTimeout(function() {
+              $("div.spanner").removeClass("show");
+              toast1.toast('show');
+              $('.toast1 .toast-title').html('Successfully Updated');
+              $('.toast1 .toast-body').html(response.data.message);
+
+              $('#table_invoiceItems tbody').empty();
+              $('.row .title_deductions').empty();
+              $('.row .total_deductions').empty();
+              $('.row .deductions').empty();
+              $('#table_invoiceItems tbody').html(show_invoice());
+
+            }, 1500);
+          }
+        }).catch(function(error) {
+          if (error.response.data.errors) {
+            let errors = error.response.data.errors;
+            let fieldnames = Object.keys(errors);
+            Object.values(errors).map((item, index) => {
+              fieldname = fieldnames[0].split('_');
+              fieldname.map((item2, index2) => {
+                fieldname['key'] = capitalize(
+                  item2);
+                return ""
+              });
+              fieldname = fieldname.join(" ");
+              $('.toast1 .toast-title').html(fieldname);
+              $('.toast1 .toast-body').html(Object.values(
+                  errors)[0]
+                .join(
+                  "\n\r"));
+            })
+            toast1.toast('show');
+          }
+        })
+
+      }
+    });
+
+    // INACTIVE BUTTON
+    $('#inactive_button').on('click', function(e) {
+      e.preventDefault();
+      let url = window.location.pathname
+      let urlSplit = url.split("/");
+      if (urlSplit.length === 4) {
+        let invoice_id = urlSplit[3];
+        let status = "Inactive";
+
+        let data = {
+          id: invoice_id,
+          status: status,
+        }
+
+        axios.post(apiUrl + '/api/update_status_activeOrinactive', data, {
+          headers: {
+            Authorization: token,
+          },
+        }).then(function(response) {
+          let data = response.data;
+          if (data.success) {
+
+            $("div.spanner").addClass("show");
+            setTimeout(function() {
+              $("div.spanner").removeClass("show");
+              toast1.toast('show');
+              $('.toast1 .toast-title').html('Successfully Updated');
+              $('.toast1 .toast-body').html(response.data.message);
+
+              $('#table_invoiceItems tbody').empty();
+              $('.row .title_deductions').empty();
+              $('.row .total_deductions').empty();
+              $('.row .deductions').empty();
+              $('#table_invoiceItems tbody').html(show_invoice());
+
+            }, 1500);
+
+          }
+        }).catch(function(error) {
+          if (error.response.data.errors) {
+            let errors = error.response.data.errors;
+            let fieldnames = Object.keys(errors);
+            Object.values(errors).map((item, index) => {
+              fieldname = fieldnames[0].split('_');
+              fieldname.map((item2, index2) => {
+                fieldname['key'] = capitalize(
+                  item2);
+                return ""
+              });
+              fieldname = fieldname.join(" ");
+              $('.toast1 .toast-title').html(fieldname);
+              $('.toast1 .toast-body').html(Object.values(
+                  errors)[0]
+                .join(
+                  "\n\r"));
+            })
+            toast1.toast('show');
+          }
+        })
+
+      }
+    });
+
     // PAID BUTTON
     $('#paid_button').on('click', function(e) {
       e.preventDefault();
@@ -1574,9 +1727,15 @@
               toast1.toast('show');
               $('.toast1 .toast-title').html('Successfully Updated');
               $('.toast1 .toast-body').html(response.data.message);
-              show_invoice();
+
+              $('#table_invoiceItems tbody').empty();
+              $('.row .title_deductions').empty();
+              $('.row .total_deductions').empty();
+              $('.row .deductions').empty();
+              $('#table_invoiceItems tbody').html(show_invoice());
+
             }, 1500);
-            // window.location.reload();
+
           }
         }).catch(function(error) {
           if (error.response.data.errors) {
@@ -1603,6 +1762,7 @@
       }
     });
 
+    // CANCELLED BUTTON
     $('#cancelled_button').on('click', function(e) {
       e.preventDefault();
       console.log("CANCELLED");
@@ -1630,7 +1790,13 @@
               toast1.toast('show');
               $('.toast1 .toast-title').html('Successfully Updated');
               $('.toast1 .toast-body').html(response.data.message);
-              show_invoice();
+
+              $('#table_invoiceItems tbody').empty();
+              $('.row .title_deductions').empty();
+              $('.row .total_deductions').empty();
+              $('.row .deductions').empty();
+              $('#table_invoiceItems tbody').html(show_invoice());
+
             }, 1500);
 
           }
@@ -1685,6 +1851,13 @@
               toast1.toast('show');
               $('.toast1 .toast-title').html('Successfully Updated');
               $('.toast1 .toast-body').html(response.data.message);
+
+              $('#table_invoiceItems tbody').empty();
+              $('.row .title_deductions').empty();
+              $('.row .total_deductions').empty();
+              $('.row .deductions').empty();
+              $('#table_invoiceItems tbody').html(show_invoice());
+
             }, 3000)
 
             setTimeout(function() {
