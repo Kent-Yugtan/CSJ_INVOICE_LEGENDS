@@ -58,13 +58,13 @@
           </div>
 
           <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-6 col-lg-6">
               <div class="fw-bolder" id="invoice_title"></div>
             </div>
-            <div class="col-sm-3 text-md-start">
+            <div class="col-sm-3 col-lg-3 text-md-start">
               <span class="text-muted">Due Date:</span>
             </div>
-            <div class="col-sm-3 text-md-end">
+            <div class="col-sm-3 col-lg-3 text-md-end">
               <div id="show_due_date"></div>
             </div>
           </div>
@@ -81,9 +81,7 @@
               <div id="invoice_status"></div>
             </div>
           </div>
-          <div class="col-sm-3 " style="text-align: right;">
-            <div id="invoice_status"></div>
-          </div>
+
 
 
           <div class="row">
@@ -1226,7 +1224,6 @@ $(document).ready(function() {
     if (urlSplit.length == 4) {
       let invoice_id = urlSplit[3];
       // console.log("invoice_id", invoice_id);
-      apiUrl
       axios
         .get(apiUrl + '/api/admin/editInvoice/' + invoice_id, {
           headers: {
@@ -1490,19 +1487,17 @@ $(document).ready(function() {
       },
     }).then(function(response) {
       let data = response.data;
-      // console.log("DATA", data);
-
-      $("#invoice_logo").attr("src", data.data.invoice_logo);
-      if (data.data.invoice_logo) {
-        $('#invoice_logo').val(data.data.invoice_logo);
-        $('#invoice_title').html(data.data.invoice_title);
-        $('#bill_to_address').html(data.data.bill_to_address);
-        $('#ship_to_address').html(data.data.ship_to_address);
-
-      } else {
-        $("#invoice_logo").attr("src", "/images/default.png");
+      if (data.success) {
+        if (data.data.length > 0) {
+          data.data.map((item) => {
+            $("#invoice_logo").attr("src", item.invoice_logo);
+            // $('#invoice_logo').val(data.data.invoice_logo_name);
+            $('#invoice_title').html(item.invoice_title);
+            $('#bill_to_address').html(item.bill_to_address);
+            $('#ship_to_address').html(item.ship_to_address);
+          })
+        }
       }
-
     }).catch(function(error) {
       console.log("ERROR", error);
     });

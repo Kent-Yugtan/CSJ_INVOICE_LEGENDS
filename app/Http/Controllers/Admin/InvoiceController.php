@@ -12,6 +12,7 @@ use App\Models\ProfileDeductionTypes;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 
 class InvoiceController extends Controller
 {
@@ -167,6 +168,18 @@ class InvoiceController extends Controller
     return view('user.usereditInvoice');
   }
 
+  public function invoiceConfig()
+  {
+
+    $data = InvoiceConfig::orderBy('id', 'Desc')->first();
+
+    return response()->json([
+      'success' => true,
+      'data' => $data,
+
+    ]);
+  }
+
   public function editInvoice(Request $request)
   {
     $invoice_id = $request->id;
@@ -302,6 +315,21 @@ class InvoiceController extends Controller
         }
       }
     }
+  }
+  public function sendEmail1()
+  {
+    $data = Invoice::with(['profile.user', 'deductions.profile_deduction_types.deduction_type', 'invoice_items'])
+      ->orderBy('id', 'Desc')->first();
+    $data1 = InvoiceConfig::orderBy('id', 'Desc')->first();
+    return ['data' => $data, 'data1' => $data1];
+  }
+
+  public function SendInvoiceData()
+  {
+    $data = Invoice::with(['profile.user', 'deductions.profile_deduction_types.deduction_type', 'invoice_items'])
+      ->orderBy('id', 'Desc')->first();
+    $data1 = InvoiceConfig::orderBy('id', 'Desc')->first();
+    return view('emailConfig.sendEmail', ['data' => $data, 'data1' => $data1]);
   }
 
   public function create_invoice(Request $request)
@@ -519,7 +547,7 @@ class InvoiceController extends Controller
 
   public function get_invoice_config()
   {
-    $invoice_config = InvoiceConfig::orderBy('id', 'desc')->first();
+    $invoice_config = InvoiceConfig::latest()->get();
 
     return response()->json([
       'success' => true,

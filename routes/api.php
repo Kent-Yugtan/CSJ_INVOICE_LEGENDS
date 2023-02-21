@@ -30,6 +30,7 @@ Route::post('register', [AuthController::class, 'register']);
 Route::middleware(['auth:sanctum'])->group(function () {
   // Route::get('/auth/login',[MainController::class, 'login'])->name('auth.login');
   // Route::get('/auth/register',[MainController::class,'register'])->name('auth.register');
+  // Route::post('send', [InvoiceController::class, 'sendEmail'])->name('send.email');
 
   Route::post('logout', [AuthController::class, 'logout']);
 
@@ -77,7 +78,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
   Route::get('admin/show_statusInactiveinvoice', [InvoiceController::class, 'show_statusInactiveinvoice']); // SHOW INACTIVE INVOICES
   Route::get('admin/search_statusActive_invoice', [InvoiceController::class, 'search_statusActive_invoice']);
   Route::get('admin/search_statusInactive_invoice', [InvoiceController::class, 'search_statusInactive_invoice']);
-  Route::get('admin/editInvoice/{id}', [InvoiceController::class, 'editInvoice']);
+  Route::get('admin/editInvoice/{id}', [InvoiceController::class, 'editInvoice']); // EDIT INVOICE VIEW
+  Route::get('invoiceConfig', [InvoiceController::class, 'invoiceConfig']); // INVOICE CONFIGS DATA
   Route::get('getInvoiceStatus/{id}', [InvoiceController::class, 'getInvoiceStatus']);
   Route::get('admin/show_Profilededuction_Table_Active', [InvoiceController::class, 'show_Profilededuction_Table_Active']);
   Route::get('active_overdue_invoice_count', [InvoiceController::class, 'active_overdue_invoice_count']);
@@ -86,7 +88,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
   Route::get('active_cancelled_invoice_count', [InvoiceController::class, 'active_cancelled_invoice_count']);
   Route::get('inactive_paid_invoice_count', [InvoiceController::class, 'inactive_paid_invoice_count']);
   Route::get('inactive_pending_invoice_count', [InvoiceController::class, 'inactive_pending_invoice_count']);
-
 
   Route::get('admin/check_InactiveStatusInvoice', [InvoiceController::class, 'check_InactiveStatusInvoice']); // FOR INVOICE STATUS INACTIVE CHECK AND UPDATE
   Route::get('admin/check_pendingInvoicesStatus', [InvoiceController::class, 'check_pendingInvoicesStatus']); // FOR INVOICE STATUS ACTIVE CHECK AND UPDATE
