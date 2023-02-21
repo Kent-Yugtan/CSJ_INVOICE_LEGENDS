@@ -810,12 +810,20 @@
 
       setTimeout(function() {
         $("div.spanner").removeClass("show");
-        show_data();
-        show_edit()
+        check_InactivependingInvoicesStatus();
         show_profileDeductionType_Button();
         show_Profilededuction_Table_Active();
+        show_data();
+        show_edit();
       }, 2000)
+
     })
+    // setTimeout(function() {
+    //   $('#dataTable_invoice tbody').empty();
+    //   $('#dataTable_deduction tbody').empty();
+    //   show_data();
+    //   show_Profilededuction_Table_Active();
+    // }, 3500);
 
     let toast1 = $('.toast1');
     toast1.toast({
@@ -995,9 +1003,7 @@
             } else {
               $("#photo").attr("src", "/images/default.png");
             }
-
             // console.log('profile_deduction_types', data);
-
           }
 
         })
@@ -1105,53 +1111,6 @@
                   '</td>';
                 // console.log("due_date " + due_date + " date_now " + date_now);
 
-                if (item.invoice_status === "Pending") {
-                  if (due_date < date_now) {
-
-                    let invoice_id = item.id;
-                    let data = {
-                      id: invoice_id,
-                      invoice_status: "Overdue",
-                    }
-                    axios.post(apiUrl + '/api/update_status', data, {
-                      headers: {
-                        Authorization: token
-                      },
-                    }).then(function(response) {
-                      let data = response.data
-                      if (data.success) {
-                        console.log("SUCCESS Overdue", data);
-                      }
-                    }).catch(function(error) {
-                      console.log("ERROR", error);
-                    })
-                  }
-                }
-
-                if (item.invoice_status === "Cancelled") {
-
-                  if (due_date < date_now) {
-
-                    let invoice_id = item.id;
-                    let data = {
-                      id: invoice_id,
-                      invoice_status: "Cancelled",
-                    }
-                    axios.post(apiUrl + '/api/update_status', data, {
-                      headers: {
-                        Authorization: token
-                      },
-                    }).then(function(response) {
-                      let data = response.data
-                      if (data.success) {
-                        console.log("SUCCESS Cancelled", data);
-                      }
-                    }).catch(function(error) {
-                      console.log("ERROR", error);
-                    })
-                  }
-                }
-
                 if (item.invoice_status === "Cancelled") {
                   tr +=
                     '<td style="text-align:right;width:120px;"><button data-bs-toggle="modal" data-bs-target="#invoice_status" style="width:100%; height:20px; font-size:10px; padding: 0px;" type="button" id="get_invoiceStatus" class="get_invoiceStatus btn btn-info">' +
@@ -1235,12 +1194,89 @@
                 '<tr><td colspan="6" class="text-center">No data</td></tr>'
               );
             }
+
           }
         }).catch(function(error) {
           console.log("ERROR DISPLAY", error);
         });
       }
     }
+
+
+    // CHECK PENDING INVOICES
+    function check_InactivependingInvoicesStatus(filters) {
+      axios.get(`${apiUrl}/api/admin/check_InactivependingInvoicesStatus?${new URLSearchParams(filters)}`, {
+        headers: {
+          Authorization: token,
+        },
+      }).then(function(response) {
+        let data = response.data;
+        if (data.success) {
+
+          if (data.data.length > 0) {
+            data.data.map((item) => {
+              var date_now = (new Date()).toISOString().split('T')[0];
+
+              if (item.invoice_status === "Pending") {
+                if (item.due_date < date_now) {
+                  let invoice_id = item.id;
+                  let data = {
+                    id: invoice_id,
+                    invoice_status: "Overdue",
+                  }
+                  axios.post(apiUrl + '/api/update_status', data, {
+                    headers: {
+                      Authorization: token
+                    },
+                  }).then(function(response) {
+                    let data = response.data
+                    if (data.success) {
+                      console.log("SUCCESS Overdue", data);
+                    }
+                  }).catch(function(error) {
+                    console.log("ERROR", error);
+                  })
+                }
+              }
+
+              if (item.invoice_status === "Cancelled") {
+                if (item.due_date < date_now) {
+                  console.log("due_dateStatus", item.due_date);
+                  console.log("date_now", date_now);
+                  let invoice_id = item.id;
+                  let data = {
+                    id: invoice_id,
+                    invoice_status: "Cancelled",
+                  }
+                  axios.post(apiUrl + '/api/update_status', data, {
+                    headers: {
+                      Authorization: token
+                    },
+                  }).then(function(response) {
+                    let data = response.data
+                    if (data.success) {
+                      console.log("SUCCESS Cancelled", data);
+                    }
+                  }).catch(function(error) {
+                    console.log("ERROR", error);
+                  })
+                }
+              }
+            })
+            setTimeout(function() {
+              $('#dataTable_invoice tbody').empty();
+              $('#dataTable_deduction tbody').empty();
+              show_data();
+              show_Profilededuction_Table_Active();
+            }, 3500);
+          }
+        }
+      }).catch(function(error) {
+        console.log("ERROR", error);
+      })
+    }
+
+
 
     $('#ProfileUpdate').submit(function(e) {
       e.preventDefault();
@@ -2423,14 +2459,25 @@
 
     })
 
+    Tabs();
     // TABS SELECTOR WONT CHANGE IF REFRESH
-    $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
-      localStorage.setItem('activeTab', $(e.target).attr('href'));
-    });
-    var activeTab = localStorage.getItem('activeTab');
-    if (activeTab) {
-      $('#pills-tab a[href="' + activeTab + '"]').tab('show');
+    function Tabs() {
+      let url = window.location.pathname
+      let urlSplit = url.split('/');
+      if (urlSplit.length === 5) {
+        $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+          localStorage.setItem('activeTab', $(e.target).attr('href'));
+        });
+        var activeTab = localStorage.getItem('activeTab');
+        if (activeTab) {
+          $('#pills-tab a[href="' + activeTab + '"]').tab('show');
+        }
+      }
     }
+    $(window).on('beforeunload', function() {
+      // Save a timestamp in localStorage to detect page refresh
+      localStorage.removeItem('activeTab');
+    });
 
   });
   </script>

@@ -162,6 +162,7 @@
       $('div.spanner').addClass('show');
       setTimeout(function() {
         $('div.spanner').removeClass('show');
+        check_InactiveStatusInvoice();
         active_inactiveCount_paid();
         active_inactiveCount_pending();
         show_statusInactiveinvoice();
@@ -213,14 +214,86 @@
       })
     }
 
+    function check_InactiveStatusInvoice(filters) {
+      axios.get(`${apiUrl}/api/admin/check_InactiveStatusInvoice?${new URLSearchParams(filters)}`, {
+        headers: {
+          Authorization: token,
+        },
+      }).then(function(response) {
+        let data = response.data;
+        if (data.success) {
+          if (data.data.length > 0) {
+            data.data.map((item) => {
+              var date_now = (new Date()).toISOString().split('T')[0];
+
+              if (item.invoice_status === "Pending") {
+                if (item.due_date < date_now) {
+                  console.log("due_dateStatus", item.due_date);
+                  console.log("date_now", date_now);
+                  let invoice_id = item.id;
+                  let data = {
+                    id: invoice_id,
+                    invoice_status: "Overdue",
+                  }
+                  axios.post(apiUrl + '/api/update_status', data, {
+                    headers: {
+                      Authorization: token
+                    },
+                  }).then(function(response) {
+                    let data = response.data
+                    if (data.success) {
+                      console.log("SUCCESS Overdue", data);
+                    }
+                  }).catch(function(error) {
+                    console.log("ERROR", error);
+                  })
+                }
+              }
+
+              if (item.invoice_status === "Cancelled") {
+                if (item.due_date < date_now) {
+                  console.log("due_dateStatus", item.due_date);
+                  console.log("date_now", date_now);
+                  let invoice_id = item.id;
+                  let data = {
+                    id: invoice_id,
+                    invoice_status: "Cancelled",
+                  }
+                  axios.post(apiUrl + '/api/update_status', data, {
+                    headers: {
+                      Authorization: token
+                    },
+                  }).then(function(response) {
+                    let data = response.data
+                    if (data.success) {
+                      console.log("SUCCESS Cancelled", data);
+                    }
+                  }).catch(function(error) {
+                    console.log("ERROR", error);
+                  })
+                }
+              }
+
+            })
+            setTimeout(function() {
+              active_inactiveCount_paid();
+              active_inactiveCount_pending();
+              show_statusInactiveinvoice();
+            }, 3500);
+          }
+        }
+      }).catch(function(error) {
+        console.log("ERROR", error);
+      })
+    }
+
     function search_statusInactive_invoice(filters) {
       let page = $("#tbl_pagination_invoice .page-item.active .page-link").html();
       let filter = {
         page_size: 10,
         page: page ? page : 1,
         search: $('#search').val() ? $('#search').val() : '',
-        filter_all_invoices: $('#filter_invoices').val()
-
+        filter_all_invoices: $('#filter_invoices').val(),
       }
       // console.log("page", page);
       $('#dataTable_invoice tbody').empty();
@@ -374,7 +447,7 @@
                   false;
               };
               $('html,body').animate({
-                scrollTop: $('#dataTable_invoice').offset().top
+                scrollTop: $('#loader_load').offset().top
               }, 'slow');
               setTimeout(function() {
                 seach_current_invoice({
@@ -396,6 +469,8 @@
         console.log("ERROR DISPLAY", error);
       });
     }
+
+
 
     function show_statusInactiveinvoice(filters) {
       let page = $("#tbl_pagination_invoice .page-item.active .page-link").html();
@@ -557,7 +632,7 @@
                   false;
               };
               $('html,body').animate({
-                scrollTop: $('#dataTable_invoice').offset().top
+                scrollTop: $('#loader_load').offset().top
               }, 'slow');
               setTimeout(function() {
                 show_statusInactiveinvoice({
@@ -568,6 +643,9 @@
             let tbl_showing_invoice =
               `Showing ${data.data.from} to ${data.data.to} of ${data.data.total} entries`;
             $('#tbl_showing_invoice').html(tbl_showing_invoice);
+            // setTimeout(function() {
+            //   show_statusInactiveinvoice();
+            // }, 3500);
           } else {
             $("#dataTable_invoice tbody").append(
               '<tr><td colspan="8" class="text-center">No data</td></tr>'
@@ -582,14 +660,14 @@
     $('#filter_invoices').on('change', function() {
       let filter = $('#filter_invoices').val();
       $('html,body').animate({
-        scrollTop: $('#dataTable_invoice').offset().top
+        scrollTop: $('#loader_load').offset().top
       }, 'slow');
       $('div.spanner').addClass('show');
       setTimeout(function() {
         $('div.spanner').removeClass('show');
         show_statusInactiveinvoice(filter);
         $('html,body').animate({
-          scrollTop: $('#dataTable_invoice').offset().top
+          scrollTop: $('#loader_load').offset().top
         }, 'slow');
       }, 2000)
     })

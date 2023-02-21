@@ -12339,6 +12339,20 @@ body {
 .view-hover:hover {
     color: rgba(207, 128, 41, 1);
 }
+.view-hover-delete {
+    /* border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08), 0 0 6px rgba(0, 0, 0, 0.05);
+    transition: 0.3s transform cubic-bezier(0.155, 1.105, 0.295, 1.12),
+        0.3s box-shadow,
+        0.3s -webkit-transform cubic-bezier(0.155, 1.105, 0.295, 1.12);
+    padding: 14px 80px 18px 36px; */
+    text-decoration: none;
+    cursor: pointer;
+}
+.view-hover-delete:hover {
+    color: red;
+}
 
 /* SEARCH ICON IN SEARCH INPUT */
 
@@ -12809,3 +12823,12 @@ button.toast-close-button {
 .table th.fit {
     white-space: nowrap;
 }
+
+  .quantity::placeholder {
+    color: gray;
+    text-align: left;
+  }
+  .rate::placeholder {
+    color: gray;
+    text-align: left;
+  }

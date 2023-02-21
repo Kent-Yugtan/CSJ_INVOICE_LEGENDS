@@ -16,8 +16,7 @@
           Dashboard
         </a>
 
-        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
-          aria-expanded="false" aria-controls="collapseLayouts">
+        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
           <div class="sb-nav-link-icon">
             <i class="fas fa-users"></i>
           </div>
@@ -33,8 +32,7 @@
             <a class="nav-link" href="{{url('admin/inactive')}}">Inactive Profiles</a>
           </nav>
         </div>
-        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts2"
-          aria-expanded="false" aria-controls="collapseLayouts2">
+        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts2">
           <div class="sb-nav-link-icon">
             <i class="fas fa-users"></i>
           </div>
@@ -68,8 +66,7 @@
 
 
 
-        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts3"
-          aria-expanded="false" aria-controls="collapseLayouts3">
+        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts3">
           <div class="sb-nav-link-icon">
             <i class="fas fa-users"></i>
           </div>
@@ -81,7 +78,7 @@
         <div class="collapse" id="collapseLayouts3" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
           <nav class="sb-sidenav-menu-nested nav">
             <!-- <a class="nav-link" href="{{url('settings/deductiontype')}}"> Deductions Type</a> -->
-            <a class="nav-link" href="{{url('settings/emailconfig')}}">Email Configuration</a>
+            <!-- <a class="nav-link" href="{{url('settings/emailconfig')}}">Email Configuration</a> -->
             <a class="nav-link" href="{{url('settings/invoiceconfig')}}">Invoice Configuration</a>
           </nav>
         </div>

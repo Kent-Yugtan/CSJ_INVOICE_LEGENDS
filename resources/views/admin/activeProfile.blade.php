@@ -309,7 +309,7 @@
                               <th>Payment Status</th>
                               <th>Deduction Name</th>
                               <th class="text-center">Amount</th>
-                              <th>Date Created</th>
+                              <th class="text-center">Date Created</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -367,8 +367,8 @@
                           <div class="col">
                             <div class=" form-group">
                               <label class="formGroupExampleInput2">Description</label>
-                              <input id="invoice_description" name="invoice_description" type="text"
-                                class="form-control">
+                              <input id="invoice_description" placeholder="Description" name="invoice_description"
+                                type="text" class="form-control">
                             </div>
                           </div>
                         </div>
@@ -774,12 +774,21 @@
       $("div.spanner").addClass("show");
       setTimeout(function() {
         $("div.spanner").removeClass("show");
-        show_data();
-        show_edit()
+        check_ActivependingInvoices();
         show_profileDeductionType_Button();
         show_Profilededuction_Table_Active();
+        show_data();
+        show_edit()
       }, 2000)
+
     })
+
+    setTimeout(function() {
+      show_data();
+      $('#dataTable_invoice tbody').empty();
+      $('#dataTable_deduction tbody').empty();
+      show_Profilededuction_Table_Active();
+    }, 3500);
 
     let toast1 = $('.toast1');
     toast1.toast({
@@ -836,7 +845,6 @@
 
     // UPDATE INVOICE STATUS
 
-
     // SHOW CURRENT INVOICE STATUS
     $(document).on('click', '#dataTable_invoice #get_invoiceStatus', function(e) {
       e.preventDefault();
@@ -883,14 +891,15 @@
 
           setTimeout(function() {
             $("div.spanner").removeClass("show");
+            $('.toast1 .toast-title').html('Update Status');
+            $('.toast1 .toast-body').html(response.data.message);
+            // show_data();
+            $('#dataTable_deduction tbody').empty();
+            $('#dataTable_deduction tbody').html(
+              show_Profilededuction_Table_Active());
             toast1.toast('show');
           }, 2000);
-          $('.toast1 .toast-title').html('Update Status');
-          $('.toast1 .toast-body').html(response.data.message);
-          // show_data();
-          $('#dataTable_deduction tbody').empty();
-          $('#dataTable_deduction tbody').html(
-            show_Profilededuction_Table_Active());
+
         }
       }).catch(function(error) {
         if (error.response.data.errors) {
@@ -969,7 +978,7 @@
 
     $('#search_invoice').on('change', function() {
       $('html,body').animate({
-        scrollTop: $('#search_invoice').offset().top
+        scrollTop: $('#loader_load').offset().top
       }, 'slow');
       $("div.spanner").addClass("show");
       setTimeout(function() {
@@ -981,7 +990,7 @@
 
     $('#search_deduction').on('change', function() {
       $('html,body').animate({
-        scrollTop: $('#search_deduction').offset().top
+        scrollTop: $('#loader_load').offset().top
       }, 'slow');
       $("div.spanner").addClass("show");
       setTimeout(function() {
@@ -992,7 +1001,7 @@
 
     $("#tbl_pagination_invoice").on('click', '.page-item', function() {
       $('html,body').animate({
-        scrollTop: $('#pills-invoice').offset().top
+        scrollTop: $('#loader_load').offset().top
       }, 'slow');
 
       $("div.spanner").addClass("show");
@@ -1003,7 +1012,7 @@
 
     $("#tbl_pagination_deduction").on('click', '.page-item', function() {
       $('html,body').animate({
-        scrollTop: $('#pills-deduction').offset().top
+        scrollTop: $('#loader_load').offset().top
       }, 'slow');
       $("div.spanner").addClass("show");
       setTimeout(function() {
@@ -1013,7 +1022,7 @@
 
     $('#filter_all_invoices').on('change', function() {
       $('html,body').animate({
-        scrollTop: $('#filter_all_invoices').offset().top
+        scrollTop: $('#loader_load').offset().top
       }, 'slow');
       $("div.spanner").addClass("show");
       setTimeout(function() {
@@ -1021,6 +1030,76 @@
         show_data();
       }, 1500);
     });
+
+    // CHECK PENDING INVOICES
+    function check_ActivependingInvoices(filters) {
+      axios.get(`${apiUrl}/api/admin/check_ActivependingInvoices?${new URLSearchParams(filters)}`, {
+        headers: {
+          Authorization: token,
+        },
+      }).then(function(response) {
+        let data = response.data;
+        if (data.success) {
+
+          if (data.data.length > 0) {
+            data.data.map((item) => {
+              var date_now = (new Date()).toISOString().split('T')[0];
+
+              if (item.invoice_status === "Pending") {
+                if (item.due_date < date_now) {
+
+                  let invoice_id = item.id;
+                  let data = {
+                    id: invoice_id,
+                    invoice_status: "Overdue",
+                  }
+                  axios.post(apiUrl + '/api/update_status', data, {
+                    headers: {
+                      Authorization: token
+                    },
+                  }).then(function(response) {
+                    let data = response.data
+                    if (data.success) {
+                      console.log("SUCCESS Overdue", data);
+                    }
+                  }).catch(function(error) {
+                    console.log("ERROR", error);
+                  })
+                }
+              }
+
+              if (item.invoice_status === "Cancelled") {
+                if (item.due_date < date_now) {
+                  console.log("due_dateStatus", item.due_date);
+                  console.log("date_now", date_now);
+                  let invoice_id = item.id;
+                  let data = {
+                    id: invoice_id,
+                    invoice_status: "Cancelled",
+                  }
+                  axios.post(apiUrl + '/api/update_status', data, {
+                    headers: {
+                      Authorization: token
+                    },
+                  }).then(function(response) {
+                    let data = response.data
+                    if (data.success) {
+                      console.log("SUCCESS Cancelled", data);
+                    }
+                  }).catch(function(error) {
+                    console.log("ERROR", error);
+                  })
+                }
+              }
+
+            })
+
+          }
+        }
+      }).catch(function(error) {
+        console.log("ERROR", error);
+      })
+    }
 
     // SHOW DATA ON TABLE
     function show_data(filters) {
@@ -1069,52 +1148,6 @@
                   '</td>';
                 // console.log("due_date " + due_date + " date_now " + date_now);
 
-                if (item.invoice_status === "Pending") {
-                  if (due_date < date_now) {
-
-                    let invoice_id = item.id;
-                    let data = {
-                      id: invoice_id,
-                      invoice_status: "Overdue",
-                    }
-                    axios.post(apiUrl + '/api/update_status', data, {
-                      headers: {
-                        Authorization: token
-                      },
-                    }).then(function(response) {
-                      let data = response.data
-                      if (data.success) {
-                        console.log("SUCCESS Overdue", data);
-                      }
-                    }).catch(function(error) {
-                      console.log("ERROR", error);
-                    })
-                  }
-                }
-
-                if (item.invoice_status === "Cancelled") {
-
-                  if (due_date < date_now) {
-
-                    let invoice_id = item.id;
-                    let data = {
-                      id: invoice_id,
-                      invoice_status: "Cancelled",
-                    }
-                    axios.post(apiUrl + '/api/update_status', data, {
-                      headers: {
-                        Authorization: token
-                      },
-                    }).then(function(response) {
-                      let data = response.data
-                      if (data.success) {
-                        console.log("SUCCESS Cancelled", data);
-                      }
-                    }).catch(function(error) {
-                      console.log("ERROR", error);
-                    })
-                  }
-                }
 
                 if (item.invoice_status === "Cancelled") {
                   tr +=
@@ -1183,13 +1216,12 @@
                     .exec(
                       url
                     );
-                  console.log("results", results);
                   return results !== null ? results[1] || 0 :
                     false;
                 };
 
                 $('html,body').animate({
-                  scrollTop: $('#dataTable_invoice').offset().top
+                  scrollTop: $('#loader_load').offset().top
                 }, 'slow');
                 setTimeout(function() {
                   let search = $('#search_invoice').val();
@@ -1711,7 +1743,7 @@
       add_rows += '<div class="form-group">';
       add_rows += '<label class="formGroupExampleInput2">Item Desctiption</label>';
       add_rows +=
-        '<input type="text" name="item_description" id="item_description" class="form-control item_description" />';
+        '<input type="text" name="item_description" placeholder="Item Description" id="item_description" class="form-control item_description" />';
       add_rows += '</div>';
       add_rows += '</div>';
 
@@ -1719,7 +1751,7 @@
       add_rows += '<div class="form-group">';
       add_rows += '<label class="formGroupExampleInput2">Quantity</label>';
       add_rows +=
-        '<input type="text" step="any" maxlength="4" name="quantity" id="quantity" style="text-align:right;" class="form-control multi quantity" />';
+        '<input type="text" step="any" maxlength="4" placeholder="Quantity" name="quantity" id="quantity" style="text-align:right;" class="form-control multi quantity" />';
       add_rows += '</div>';
       add_rows += ' </div>';
 
@@ -1727,7 +1759,7 @@
       add_rows += '<div class="form-group">';
       add_rows += '<label class="formGroupExampleInput2" for="form3Example2">Rate</label>';
       add_rows +=
-        '<input type="text" step="any" name="rate" id="rate" style="text-align:right;" class="form-control multi rate" />';
+        '<input type="text" step="any" name="rate" placeholder="Rate" id="rate" style="text-align:right;" class="form-control multi rate" />';
       add_rows += '</div>';
       add_rows += '</div>';
 
@@ -1789,7 +1821,7 @@
 
     $("#modal-create-deduction").on('hide.bs.modal', function() {
       $('html,body').animate({
-        scrollTop: $('#tableDeleteProfileDeductioType').offset().top
+        scrollTop: $('#loader_load').offset().top
       }, 'slow');
       $("div.spanner").addClass("show");
 
@@ -1988,7 +2020,7 @@
         due_date: due_date,
         description: invoice_description,
         peso_rate: peso_rate ? peso_rate : 0,
-        sub_total: invoice_subtotal ? invoice_subtotal : 0,
+        sub_total: invoice_subtotal,
         converted_amount: invoice_converted_amount ? invoice_converted_amount : 0,
         discount_type: invoice_discount_type,
         discount_amount: invoice_discount_amount ? invoice_discount_amount : 0,
@@ -2253,7 +2285,7 @@
                   tr += '<td class="text-end">' + PHP(item
                       .amount)
                     .format() + '</td>';
-                  tr += '<td>' + mm + "-" +
+                  tr += '<td class="text-end">' + mm + "-" +
                     dd + "-" +
                     yy + '</td>';
 
@@ -2285,7 +2317,7 @@
                     };
 
                     $('html,body').animate({
-                      scrollTop: $('#dataTable_deduction').offset().top
+                      scrollTop: $('#loader_load').offset().top
                     }, 'slow');
                     setTimeout(function() {
                       show_Profilededuction_Table_Active({
@@ -2411,14 +2443,26 @@
 
     })
 
+
+    Tabs();
     // TABS SELECTOR WONT CHANGE IF REFRESH
-    $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
-      localStorage.setItem('activeTab', $(e.target).attr('href'));
-    });
-    var activeTab = localStorage.getItem('activeTab');
-    if (activeTab) {
-      $('#pills-tab a[href="' + activeTab + '"]').tab('show');
+    function Tabs() {
+      let url = window.location.pathname
+      let urlSplit = url.split('/');
+      if (urlSplit.length === 5) {
+        $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+          localStorage.setItem('activeTab', $(e.target).attr('href'));
+        });
+        var activeTab = localStorage.getItem('activeTab');
+        if (activeTab) {
+          $('#pills-tab a[href="' + activeTab + '"]').tab('show');
+        }
+      }
     }
+    $(window).on('beforeunload', function() {
+      // Save a timestamp in localStorage to detect page refresh
+      localStorage.removeItem('activeTab');
+    });
 
   });
   </script>

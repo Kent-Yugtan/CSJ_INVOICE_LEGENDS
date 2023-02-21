@@ -36,6 +36,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
   Route::resource('admin/dashboard', DashboardController::class);
 
   Route::post('createinvoice', [InvoiceController::class, 'create_invoice']);
+  Route::post('add_invoices', [InvoiceController::class, 'add_invoices']);
 
   // FOR PROFILE TABLE
   Route::resource('admin/profile', ProfileController::class);
@@ -73,7 +74,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
   Route::get('invoice/check_profile/{id}', [InvoiceController::class, 'check_profile']);
   Route::get('invoice/generate_invoice_number', [InvoiceController::class, 'generate_invoice']);
   Route::get('admin/show_invoice', [InvoiceController::class, 'show_invoice']); // SHOW ACTIVE INVOICES
-  Route::get('admin/show_statusInactiveinvoice', [InvoiceController::class, 'show_statusInactiveinvoice']);
+  Route::get('admin/show_statusInactiveinvoice', [InvoiceController::class, 'show_statusInactiveinvoice']); // SHOW INACTIVE INVOICES
   Route::get('admin/search_statusActive_invoice', [InvoiceController::class, 'search_statusActive_invoice']);
   Route::get('admin/search_statusInactive_invoice', [InvoiceController::class, 'search_statusInactive_invoice']);
   Route::get('admin/editInvoice/{id}', [InvoiceController::class, 'editInvoice']);
@@ -85,8 +86,17 @@ Route::middleware(['auth:sanctum'])->group(function () {
   Route::get('active_cancelled_invoice_count', [InvoiceController::class, 'active_cancelled_invoice_count']);
   Route::get('inactive_paid_invoice_count', [InvoiceController::class, 'inactive_paid_invoice_count']);
   Route::get('inactive_pending_invoice_count', [InvoiceController::class, 'inactive_pending_invoice_count']);
-  Route::get('admin/show_pendingInvoices', [InvoiceController::class, 'show_pendingInvoices']);
+
+
+  Route::get('admin/check_InactiveStatusInvoice', [InvoiceController::class, 'check_InactiveStatusInvoice']); // FOR INVOICE STATUS INACTIVE CHECK AND UPDATE
+  Route::get('admin/check_pendingInvoicesStatus', [InvoiceController::class, 'check_pendingInvoicesStatus']); // FOR INVOICE STATUS ACTIVE CHECK AND UPDATE
+
+  Route::get('admin/check_ActivependingInvoices', [InvoiceController::class, 'check_ActivependingInvoices']); // FOR ACTIVE PROFILE STATUS
+  Route::get('admin/check_InactivependingInvoices', [InvoiceController::class, 'check_InactivependingInvoices']); // FOR INACTIVE PROFILE STATUS
+  Route::get('admin/check_InactivependingInvoicesStatus', [InvoiceController::class, 'check_InactivependingInvoicesStatus']); // FOR INACTIVE PROFILE INVOICE STATUS
+  Route::get('admin/check_ActivependingInvoicesStatus', [InvoiceController::class, 'check_ActivependingInvoicesStatus']); // FOR ACTIVE INVOICE STATUS
   Route::get('admin/show_overdueInvoices', [InvoiceController::class, 'show_overdueInvoices']);
+  Route::get('admin/show_pendingInvoices', [InvoiceController::class, 'show_pendingInvoices']);
   Route::get('get_quickInvoice_PDT/{id}', [InvoiceController::class, 'get_quickInvoice_PDT']);
 
   Route::get('statusInactive_paid_invoice_count', [InvoiceController::class, 'statusInactive_paid_invoice_count']);
@@ -112,6 +122,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
   Route::get('show_invoiceConfig_data', [InvoiceConfigController::class, 'show_invoiceConfig_data']);
   Route::get('invoice_config/show_edit/{id}', [InvoiceConfigController::class, 'show_edit']);
   Route::get('get_invoice_config', [InvoiceController::class, 'get_invoice_config']);
+  Route::post('invoiceConfig_delete/{id}', [InvoiceConfigController::class, 'destroy']);
 });
 
 

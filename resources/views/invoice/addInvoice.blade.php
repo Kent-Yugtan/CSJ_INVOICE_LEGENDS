@@ -14,6 +14,7 @@
               <div class="row">
                 <div class="col">
                   <div class=" form-group">
+                    <input type="text" id="profileId" hidden>
                     <label class=" formGroupExampleInput2">Profile Name</label>
                     <select class="form-select" id="selectProfile">
                       <option value="" selected disabled>Select Profile</option>
@@ -39,7 +40,7 @@
                 <div class="col">
                   <div class=" form-group">
                     <label class="formGroupExampleInput2">Description</label>
-                    <input type="text" id="invoice_description" class="form-control">
+                    <input type="text" placeholder="Description" id="invoice_description" class="form-control">
                   </div>
                 </div>
               </div>
@@ -336,8 +337,9 @@
         let quantity = parent.find('.quantity').val();
         let rate = parent.find('.rate').val();
 
-        parent.find('.quantity').val(PHP(quantity).format());
-        parent.find('.rate').val(PHP(rate).format());
+
+        parent.find('.quantity').val(PHP(quantity ? quantity : '').format());
+        parent.find('.rate').val(PHP(rate ? rate : '').format());
       })
       DeductionItems_total();
     })
@@ -438,9 +440,6 @@
       $('#show_items .amount').each(function() {
         sum += Number($(this).val().replaceAll(',', ''));
       });
-      // $('#subtotal').val(parseFloat(sum).toFixed(2));
-      // $('#dollar_amount').val(parseFloat(sum).toFixed(2));
-
       $('#subtotal').val(PHP(parseFloat(sum)).format());
       $('#dollar_amount').val(PHP(parseFloat(sum)).format());
 
@@ -514,7 +513,7 @@
       add_rows += '<div class="form-group">';
       add_rows += '<label class="formGroupExampleInput2">Item Desctiption</label>';
       add_rows +=
-        '<input type="text" name="item_description" id="item_description" class="form-control item_description" />';
+        '<input type="text" name="item_description" placeholder="Item Description" id="item_description" class="form-control item_description" />';
       add_rows += '</div>';
       add_rows += '</div>';
 
@@ -522,7 +521,7 @@
       add_rows += '<div class="form-group">';
       add_rows += '<label class="formGroupExampleInput2">Quantity</label>';
       add_rows +=
-        '<input type="text" step="any" maxlength="4" name="quantity" id="quantity" style="text-align:right;" class="form-control multi quantity" />';
+        '<input type="text" step="any" maxlength="4" placeholder="Quantity" name="quantity" id="quantity" style="text-align:right;" class="form-control multi quantity" />';
       add_rows += '</div>';
       add_rows += ' </div>';
 
@@ -530,7 +529,7 @@
       add_rows += '<div class="form-group">';
       add_rows += '<label class="formGroupExampleInput2" for="form3Example2">Rate</label>';
       add_rows +=
-        '<input type="text" step="any" name="rate" id="rate" style="text-align:right;" class="form-control multi rate" />';
+        '<input type="text" step="any" name="rate" placeholder="Rate" id="rate" style="text-align:right;" class="form-control multi rate" />';
       add_rows += '</div>';
       add_rows += '</div>';
 
@@ -577,7 +576,6 @@
     // ADD INVOICE SUBMIT BUTTON
     $('#invoice_items').submit(function(e) {
       e.preventDefault();
-
       // CONDITION IF THERE IS BLANK ROW
       $('#show_items .row1').each(function() {
         let parent = $(this).closest('.row1');
@@ -602,7 +600,7 @@
         x--;
       });
 
-      let profile_id = $('#selectProfile').val();
+      let profile_id = $('#profileId').val();
       // let invoice_no = $('#invoice_no').val();
       // INVOICE TABLE
       let due_date = $('#due_date').val();
@@ -670,7 +668,7 @@
         due_date: due_date,
         description: invoice_description,
         peso_rate: peso_rate ? peso_rate : 0,
-        sub_total: invoice_subtotal ? invoice_subtotal : 0,
+        sub_total: invoice_subtotal,
         converted_amount: invoice_converted_amount ? invoice_converted_amount : 0,
         discount_type: invoice_discount_type,
         discount_amount: invoice_discount_amount ? invoice_discount_amount : 0,
@@ -681,29 +679,33 @@
         Deductions,
       }
 
-      axios.post(apiUrl + "/api/createinvoice", data, {
+      console.log("DATA", data);
+
+      axios.post(apiUrl + "/api/add_invoices", data, {
         headers: {
           Authorization: token
         },
       }).then(function(response) {
         let data = response.data;
         if (data.success) {
-          console.log("SUCCES", data.success);
-
+          // console.log("SUCCES", data.success);
           $('#exampleModal').modal('hide');
           $("div.spanner").addClass("show");
           setTimeout(function() {
             $("div.spanner").removeClass("show");
+            $('.toast1 .toast-title').html('Create Invoices');
+            $('.toast1 .toast-body').html(response.data.message);
+
+            $('#invoice_items input').val('');
+            $('#selectProfile').val('');
+            $('#show_deduction_items').empty();
+            $('textarea').val('');
+            $('#dataTable_deduction tbody').empty();
+            $('#show_items').empty();
+            display_item_rows();
+
             toast1.toast('show');
           }, 2000)
-          $('.toast1 .toast-title').html('Create Invoices');
-          $('.toast1 .toast-body').html(response.data.message);
-
-          $('#invoice_items input').val('');
-          $('#selectProfile').val('');
-          $('#show_deduction_items').empty();
-          $('textarea').val('');
-          $('#dataTable_deduction tbody').empty();
 
         }
       }).catch(function(error) {
@@ -775,8 +777,8 @@
 
           } else {
             let deduction_count = data.data.profile_deduction_types.length;
-            // console.log("profile_deduction_types", data);
-            // $("#profile_id").val(data.data.id);
+            console.log("profile_deduction_types", data);
+            $("#profileId").val(data.data.id);
 
             $('#show_deduction_items').empty();
             if (deduction_count > 0) {
@@ -819,8 +821,8 @@
 
             }
             getResults_Converted();
-            Additems_total();
-            subtotal();
+            // Additems_total();
+            // subtotal();
             DeductionItems_total();
           }
 
@@ -845,6 +847,10 @@
                 '</option>';
               $('#selectProfile').append(option);
             })
+          } else {
+            $("#selectProfile").append(
+              '<option class="text-center" disabled value="" >No Data</option>'
+            );
           }
         }
 

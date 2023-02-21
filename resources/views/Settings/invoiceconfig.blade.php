@@ -3,10 +3,9 @@
 <div class="container-fluid pt-0" id="loader_load">
   <h1 class="mt-0">Invoice Configuration</h1>
   <ol class="breadcrumb mb-3"></ol>
-
   <div class="row">
-    <div class="col-md-5 col-sm-12 px-2">
-      <div class="card shadow p-2 mb-5 bg-white rounded">
+    <div class="col-md-4 col-sm-12 px-2">
+      <div class="card shadow p-2 mb-5 bg-white rounded h-100">
         <div class="card-header">Create Invoice Configuration</div>
         <div class="row px-4 pb-4" id="header">
           <form name="invoiceconfigs_store" id="invoiceconfigs_store" method="post" action="javascript:void(0)" class="row g-3 needs-validation" novalidate>
@@ -50,24 +49,25 @@
     </div>
 
 
-    <div class="col-lg-7 px-2">
-      <div class="card shadow bg-white rounded">
+    <div class="col-lg-8 px-2">
+      <div class="card shadow bg-white rounded h-100">
         <div class="card-body table-responsive">
-          <div class="form-group row mt-3">
+
+          <!-- <div class="form-group row mt-3">
             <div class="col-lg-9">
               <input id="search" type="text" class="form-control" placeholder="Search">
             </div>
             <div class="col-lg-3">
               <button type="submit" class="btn btn-secondary w-100" style="color:white; background-color: #CF8029;width:30%" id="button_search">Search</button>
             </div>
-          </div>
+          </div> -->
           <div class="card-body table-responsive" id="tbl_invoiceConfig_wrapper">
             <table class="table table-hover table-responsive" id="table_invoiceconfig">
               <thead>
                 <th>Invoice Title</th>
                 <th>Invoice Email</th>
-                <th class="text-center">From</th>
-                <th class="text-center">To</th>
+                <th>From</th>
+                <th>To</th>
                 <th class="text-center">Action</th>
               </thead>
               <tbody></tbody>
@@ -160,6 +160,50 @@
 
   <div class="spanner">
     <div class="loader">
+    </div>
+  </div>
+
+  <!-- Modal FOR DELETE -->
+  <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Confirmation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <div class="row">
+            <div class="col">
+              <span>
+                <img class="img-team" src="{{ URL('images/Delete.png')}}" style="width: 50%; padding:10px" />
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <span>
+                <h3> Are you sure?</h3>
+              </span>
+            </div>
+          </div>
+          <div class="row pt-3 px-3">
+            <div class="col">
+              <span id="invoiceConfig_id" hidden></span>
+              <span class="text-muted"> Do you really want to delete these record? This process cannot be
+                undone.</span>
+            </div>
+          </div>
+
+          <div class="row pt-3 pb-3 px-3">
+            <div class="col-6">
+              <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Cancel</button>
+            </div>
+            <div class="col-6">
+              <button type="button" id="invoiceConfig_delete" class="btn btn-danger w-100">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -350,6 +394,9 @@
               $('div.spanner').removeClass('show');
               $('.toast1 .toast-title').html('Invoice Configuration');
               $('.toast1 .toast-body').html(response.data.message);
+
+              $('#invoiceconfigs_store input').val('');
+
               toast1.toast('show');
               show_data();
             }, 2000)
@@ -384,7 +431,6 @@
           page: 1,
           ...filters,
         }
-
         $('#table_invoiceconfig tbody').empty();
         axios.get(`${apiUrl}/api/show_invoiceConfig_data?${new URLSearchParams(filter)}`, {
           headers: {
@@ -393,8 +439,8 @@
         }).then(function(response) {
           let data = response.data
           if (data.success) {
+            console.log("SUCCESS", data);
             if (data.data.data.length > 0) {
-              $('#table_invoiceconfig tbody').empty();
               data.data.data.map((item) => {
                 let tr = '<tr style="vertical-align:sub;">';
 
@@ -403,8 +449,10 @@
                 tr += '<td>' + item.bill_to_address + '</td>';
                 tr += '<td>' + item.ship_to_address + '</td>';
                 tr +=
-                  '<td class="text-center"> <button value=' + item.id +
-                  ' class="editButton btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" >Edit</button> </td>';
+                  '<td class="text-center"><button value=' + item.id +
+                  ' class="editButton btn" data-bs-toggle="modal" data-bs-target="#editModal" > <i class="fa-solid fa-pen-to-square view-hover"></i></button> <button value = ' +
+                  item.id +
+                  ' class="deleteButton btn" data-bs-toggle="modal" data-bs-target="#deleteModal" ><i class="fa-solid fa-trash view-hover-delete"></i></button> </td>';
 
                 tr += '</tr>';
 
@@ -417,7 +465,6 @@
                   `<li class="page-item cursor-pointer ${item.active ? 'active':''}"><a class="page-link" data-url="${item.url}">${item.label}</a></li>`
                 $('#tbl_pagination').append(li)
                 return ""
-
               })
 
               $("#tbl_pagination .page-item .page-link").on('click', function() {
@@ -426,6 +473,7 @@
                   var results = new RegExp("[?&]" + name + "=([^&#]*)").exec(
                     url
                   );
+
                   return results !== null ? results[1] || 0 : false;
                 };
 
@@ -448,7 +496,7 @@
 
           }
         }).catch(function(error) {
-          console.log("catch error");
+          console.log("catch error", error);
         });
 
 
@@ -460,6 +508,54 @@
       }
 
 
+      $(document).on('click', '#tbl_invoiceConfig_wrapper .deleteButton', function(
+        e) {
+        e.preventDefault();
+        let row = $(this).closest("td");
+        let invoiceConfig_id = row.find(".deleteButton").val();
+        $("#invoiceConfig_id").html(invoiceConfig_id);
+        // console.log("delete", invoiceConfig_id);
+
+      })
+
+      $('#invoiceConfig_delete').on('click', function(e) {
+        e.preventDefault();
+
+        let invoiceConfig_id = $('#invoiceConfig_id').html();
+        axios.post(apiUrl + '/api/invoiceConfig_delete/' + invoiceConfig_id, {
+          headers: {
+            Authorization: token,
+          },
+        }).then(function(response) {
+          let data = response.data
+          if (data.success) {
+            $('#deleteModal').modal('hide');
+            $('html,body').animate({
+              scrollTop: $('#loader_load').offset().top
+            }, 'smooth');
+            $('div.spanner').addClass('show');
+            setTimeout(function() {
+              $('div.spanner').removeClass('show');
+              $('.toast1 .toast-title').html('Invoice Configuration');
+              $('.toast1 .toast-body').html(response.data.message);
+              toast1.toast('show');
+            }, 2000);
+          }
+        }).catch(function(error) {
+          console.log("ERROR", error);
+        });
+      });
+
+      $('#deleteModal').on('hide.bs.modal', function() {
+        $('html,body').animate({
+          scrollTop: $('#loader_load').offset().top
+        }, 'smooth');
+        $('div.spanner').addClass('show');
+        setTimeout(function() {
+          $('div.spanner').removeClass('show');
+          show_data();
+        }, 2000);
+      })
     })
   </script>
   @endsection

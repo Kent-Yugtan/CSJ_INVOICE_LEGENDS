@@ -236,12 +236,11 @@ class InvoiceController extends Controller
     ]);
   }
 
-  public function create_invoice(Request $request)
+  public function add_invoices(Request $request)
   {
     $error = false;
     $profile_id = $request->profile_id;
-    $invoice_id = $request->invoice_id;
-    $invoiceItems_id = $request->invoiceItems_id;
+
     if ($error === false) {
       $incoming_data = $request->validate(
         [
@@ -255,13 +254,82 @@ class InvoiceController extends Controller
           'discount_type' => '',
           'discount_amount' => '',
           'discount_total' => '',
-          'grand_total_amount' => '',
+          'grand_total_amount' => 'required',
           'notes' => '',
 
         ]
       );
+
+      if ($profile_id) {
+
+        $incoming_data += [
+          'invoice_status' => 'Pending',
+          'status' => 'Active',
+          'invoice_no' => $this->generate_invoice(),
+        ];
+        $store_data = Invoice::create($incoming_data);
+
+        if ($store_data) {
+
+          if ($request->invoiceItem) {
+            foreach ($request->invoiceItem as $key => $value) {
+              $datainvoiceitem = [
+                'item_description' => $value['item_description'],
+                'quantity' => $value['item_qty'],
+                'rate' => $value['item_rate'],
+                'total_amount' => $value['item_total_amount'],
+              ];
+              $store_data->invoice_items()->create($datainvoiceitem);
+            }
+          }
+
+          if ($request->Deductions) {
+            foreach ($request->Deductions as $key => $value) {
+              $dataDeductions = [
+                'profile_id' => $request->profile_id,
+                'profile_deduction_type_id' => $value['profile_deduction_type_id'],
+                'amount' => $value['deduction_amount'],
+              ];
+              $store_data->deductions()->create($dataDeductions);
+            }
+          }
+
+          return response()->json([
+            'success' => true,
+            'message' => "Invoice has been successfully added to the database.",
+            'data' => $store_data,
+          ], 200);
+        }
+      }
+    }
+  }
+
+  public function create_invoice(Request $request)
+  {
+    $error = false;
+    $profile_id = $request->profile_id;
+    $invoice_id = $request->invoice_id;
+    $invoiceItems_id = $request->invoiceItems_id;
+    if ($error === false) {
       // STORE
       if ($profile_id) {
+        $incoming_data = $request->validate(
+          [
+
+            'profile_id' => '',
+            'due_date' => 'required',
+            'description' => 'required',
+            'sub_total' => 'required',
+            'peso_rate' => '',
+            'converted_amount' => '',
+            'discount_type' => '',
+            'discount_amount' => '',
+            'discount_total' => '',
+            'grand_total_amount' => '',
+            'notes' => '',
+
+          ]
+        );
         $incoming_data += [
           'invoice_status' => 'Pending',
           'status' => 'Active',
@@ -315,7 +383,6 @@ class InvoiceController extends Controller
         if ($invoice_data) {
           $incoming_data = $request->validate(
             [
-              'profile_id' => 'required',
               'sub_total' => 'required',
               'description' => 'required',
               'due_date' => 'required',
@@ -385,7 +452,6 @@ class InvoiceController extends Controller
         if ($invoice_data) {
           $incoming_data = $request->validate(
             [
-              'profile_id' => 'required',
               'sub_total' => 'required',
               'description' => 'required',
               'due_date' => 'required',
@@ -639,7 +705,9 @@ class InvoiceController extends Controller
   }
   public function search_statusActive_invoice(Request $request)
   {
-    $invoices = Invoice::with(['profile.user'])->where('status', 'Active');
+    $invoices = Invoice::with(['profile.user', 'profile'])->whereHas('profile', function ($query) {
+      $query->Where('profile_status', 'Active');
+    });
     if (isset($request->search)) {
       $invoices = $invoices->where(
         function ($q) use ($request) {
@@ -647,13 +715,14 @@ class InvoiceController extends Controller
           $q->orWhere('invoice_status', 'LIKE', '%' . $request->search . '%');
           $q->orWhere('grand_total_amount', 'LIKE', '%' . $request->search . '%');
         }
-      )->orwhereHas(
+      )->where('status', 'Active')->orwhereHas(
         'profile.user',
         function ($q) use ($request) {
           $q->where(DB::raw("CONCAT(first_name, ' ', last_name)"), 'LIKE', '%' . $request->search . '%');
-          $q->Where('status', 'Active');
         }
-      );
+      )->whereHas('profile', function ($q) {
+        $q->where('profile_status', 'Active');
+      })->where('status', 'Active');
     }
 
     if (isset($request->filter_all_invoices)) {
@@ -677,6 +746,18 @@ class InvoiceController extends Controller
     return response()->json([
       'success' => true,
       'data' => $invoices,
+    ], 200);
+  }
+
+  public function check_InactiveStatusInvoice(Request $request)
+  {
+    $invoices = Invoice::with('profile.user')
+      ->where('invoice_status', 'Pending')
+      ->where('status', 'Inactive')
+      ->orderby('created_at', 'desc')->get();
+    return response()->json([
+      'success' => true,
+      'data' =>  $invoices,
     ], 200);
   }
 
@@ -759,7 +840,11 @@ class InvoiceController extends Controller
         'data' => $invoices,
       ], 200);
     } else {
-      $invoices = Invoice::with('profile.user')->where('status', 'Active');
+      $invoices = Invoice::with('profile.user', 'profile')
+        ->whereHas('profile', function ($query) {
+          $query->where('profile_status', 'Active');
+        })->where('status', 'Active');
+
       if (isset($request->search)) {
         $invoices = $invoices->where(
           function ($q) use ($request) {
@@ -794,13 +879,67 @@ class InvoiceController extends Controller
     }
   }
 
+  public function check_ActivependingInvoices(Request $request)
+  {
+    $invoices = Invoice::with('profile.user', 'profile')
+      ->whereHas('profile', function ($query) {
+        $query->where('profile_status', 'Active');
+      })->where('status', 'Active')
+      ->where('invoice_status', 'Pending')
+      ->orderby('created_at', 'desc')->get();
+    return response()->json([
+      'success' => true,
+      'data' =>  $invoices,
+    ], 200);
+  }
+
+  public function check_InactivependingInvoices(Request $request)
+  {
+    $invoices = Invoice::with('profile.user', 'profile')
+      ->whereHas('profile', function ($query) {
+        $query->where('profile_status', 'Inactive');
+      })->where('invoice_status', 'Pending')->orderby('created_at', 'desc')->get();
+    return response()->json([
+      'success' => true,
+      'data' =>  $invoices,
+    ], 200);
+  }
+
+
+  public function check_ActivependingInvoicesStatus(Request $request)
+  {
+    $invoices = Invoice::with('profile.user', 'profile')
+      ->whereHas('profile', function ($query) {
+        $query->where('profile_status', 'Active');
+      })->where('invoice_status', 'Pending')->orderby('created_at', 'desc')->get();
+    return response()->json([
+      'success' => true,
+      'data' =>  $invoices,
+    ], 200);
+  }
+
+  public function check_InactivependingInvoicesStatus(Request $request)
+  {
+    $invoices = Invoice::with('profile.user', 'profile')
+      ->whereHas('profile', function ($query) {
+        $query->where('profile_status', 'Inactive');
+      })->where('invoice_status', 'Pending')->orderby('created_at', 'desc')->get();
+
+    return response()->json([
+      'success' => true,
+      'data' =>  $invoices,
+    ], 200);
+  }
+
   public function show_pendingInvoices(Request $request)
   {
     // $findProfile = Profile::firstWhere('user_id', $request->user_id);
-
-    $invoices = Invoice::with('profile.user')->where('invoice_status', 'Pending');
-
-    $invoices = $invoices->orderby('created_at', 'desc');
+    $invoices = Invoice::with('profile', 'profile.user')
+      ->whereHas('profile', function ($query) {
+        $query->where('profiles.profile_status', 'Active');
+      })->where('status', 'Active')
+      ->where('invoice_status', 'Pending')
+      ->orderby('created_at', 'desc');
     if ($request->page_size) {
       $invoices = $invoices->limit($request->page_size)
         ->paginate($request->page_size, ['*'], 'page', $request->page)
@@ -818,12 +957,13 @@ class InvoiceController extends Controller
   {
     // $findProfile = Profile::firstWhere('user_id', $request->user_id);
 
-    $invoices = Invoice::with('profile.user')
-      ->where('profiles.profile_status', 'Active')
-      ->where('status', 'Active')
-      ->where('invoice_status', 'Overdue');
+    $invoices = Invoice::with('profile', 'profile.user')
+      ->whereHas('profile', function ($query) {
+        $query->where('profiles.profile_status', 'Active');
+      })->where('status', 'Active')
+      ->where('invoice_status', 'Overdue')
+      ->orderby('created_at', 'desc');
 
-    $invoices = $invoices->orderby('created_at', 'desc');
     if ($request->page_size) {
       $invoices = $invoices->limit($request->page_size)
         ->paginate($request->page_size, ['*'], 'page', $request->page)
@@ -854,10 +994,16 @@ class InvoiceController extends Controller
 
   public function active_paid_invoice_count()
   {
-    $data = Invoice::join('profiles', 'profiles.id', 'invoices.profile_id')
-      ->where('profiles.profile_status', 'Active')
-      ->where('invoices.status', 'Active')
-      ->where('invoices.invoice_status', 'Paid')
+    // $data = Invoice::join('profiles', 'profiles.id', 'invoices.profile_id')
+    //   ->where('profiles.profile_status', 'Active')
+    //   ->where('invoices.status', 'Active')
+    //   ->where('invoices.invoice_status', 'Paid')
+    //   ->get();
+    $data = Invoice::with('profile')
+      ->whereHas('profile', function ($query) {
+        $query->where('profile_status', 'Active');
+      })->where('status', 'Active')
+      ->where('invoice_status', 'Paid')
       ->get();
     if ($data) {
       return response()->json([
@@ -869,10 +1015,16 @@ class InvoiceController extends Controller
 
   public function active_pending_invoice_count()
   {
-    $data = Invoice::join('profiles', 'profiles.id', 'invoices.profile_id')
-      ->where('profiles.profile_status', 'Active')
-      ->where('invoices.status', 'Active')
-      ->where('invoices.invoice_status', 'Pending')
+    // $data = Invoice::join('profiles', 'profiles.id', 'invoices.profile_id')
+    //   ->where('profiles.profile_status', 'Active')
+    //   ->where('invoices.status', 'Active')
+    //   ->where('invoices.invoice_status', 'Pending')
+    //   ->get();
+    $data = Invoice::with('profile')
+      ->whereHas('profile', function ($query) {
+        $query->where('profile_status', 'Active');
+      })->where('status', 'Active')
+      ->where('invoice_status', 'Pending')
       ->get();
 
     if ($data) {
@@ -885,9 +1037,15 @@ class InvoiceController extends Controller
 
   public function active_overdue_invoice_count()
   {
-    $data = Invoice::join('profiles', 'profiles.id', 'invoices.profile_id')
-      ->where('profiles.profile_status', 'Active')
-      ->where('invoices.invoice_status', 'Overdue')
+    // $data = Invoice::join('profiles', 'profiles.id', 'invoices.profile_id')
+    //   ->where('profiles.profile_status', 'Active')
+    //   ->where('invoices.invoice_status', 'Overdue')
+    //   ->get();
+    $data = Invoice::with('profile')
+      ->whereHas('profile', function ($query) {
+        $query->where('profile_status', 'Active');
+      })->where('status', 'Active')
+      ->where('invoice_status', 'Overdue')
       ->get();
     if ($data) {
       return response()->json([
@@ -899,11 +1057,16 @@ class InvoiceController extends Controller
 
   public function active_cancelled_invoice_count()
   {
-    $data = Invoice::join('profiles', 'profiles.id', 'invoices.profile_id')
-      ->where('profiles.profile_status', 'Active')
-      ->where('invoices.invoice_status', 'Cancelled')
+    // $data = Invoice::join('profiles', 'profiles.id', 'invoices.profile_id')
+    //   ->where('profiles.profile_status', 'Active')
+    //   ->where('invoices.invoice_status', 'Cancelled')
+    //   ->get();
+    $data = Invoice::with('profile')
+      ->whereHas('profile', function ($query) {
+        $query->where('profile_status', 'Active');
+      })->where('status', 'Active')
+      ->where('invoice_status', 'Cancelled')
       ->get();
-
     if ($data) {
       return response()->json([
         'success' => true,
@@ -984,7 +1147,7 @@ class InvoiceController extends Controller
   {
     $data = Invoice::join('profiles', 'profiles.id', 'invoices.profile_id')
       ->where('profiles.profile_status', 'Active')
-      ->where('invoices.status', 'InactiveInactive')
+      ->where('invoices.status', 'Inactive')
       ->where('invoices.invoice_status', 'Pending')
       ->get();
 
