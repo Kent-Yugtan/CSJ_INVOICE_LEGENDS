@@ -85,7 +85,7 @@
         </div>
         <div class="mx-3 table-responsive" style="display: flex; justify-content: space-between;">
           <div class="page_showing" id="tbl_showing_invoice"></div>
-          <ul class="pagination" id="tbl_pagination_invoice"></ul>
+          <ul class="pagination pagination-sm" id="tbl_pagination_invoice"></ul>
         </div>
       </div>
     </div>
@@ -155,6 +155,7 @@
 </div>
 <script type="text/javascript">
   $(document).ready(function() {
+    check_InactiveStatusInvoice();
     $(window).on('load', function() {
       $('html,body').animate({
         scrollTop: $('#loader_load').offset().top
@@ -162,7 +163,6 @@
       $('div.spanner').addClass('show');
       setTimeout(function() {
         $('div.spanner').removeClass('show');
-        check_InactiveStatusInvoice();
         active_inactiveCount_paid();
         active_inactiveCount_pending();
         show_statusInactiveinvoice();
@@ -247,6 +247,9 @@
                   }).catch(function(error) {
                     console.log("ERROR", error);
                   })
+                  setTimeout(function() {
+                    window.location.reload
+                  }, 3500);
                 }
               }
 
@@ -275,11 +278,7 @@
               }
 
             })
-            setTimeout(function() {
-              active_inactiveCount_paid();
-              active_inactiveCount_pending();
-              show_statusInactiveinvoice();
-            }, 3500);
+
           }
         }
       }).catch(function(error) {

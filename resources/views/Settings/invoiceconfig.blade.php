@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content-dashboard')
-<div class="container-fluid pt-0" id="loader_load">
+<div class="container-fluid px-4" id="loader_load">
   <h1 class="mt-0">Invoice Configuration</h1>
   <ol class="breadcrumb mb-3"></ol>
   <div class="row">
@@ -73,10 +73,10 @@
               <tbody></tbody>
             </table>
           </div>
-          <div class="mx-3 table-responsive" style="display: flex; justify-content: space-between;">
-            <div class="page_showing" id="tbl_showing"></div>
-            <ul class="pagination" id="tbl_pagination"></ul>
-          </div>
+        </div>
+        <div class="mx-3 table-responsive" style="display: flex; justify-content: space-between;">
+          <div class="page_showing" id="tbl_showing"></div>
+          <ul class="pagination pagination-sm" id="tbl_pagination"></ul>
         </div>
       </div>
     </div>
@@ -450,9 +450,9 @@
                 tr += '<td>' + item.ship_to_address + '</td>';
                 tr +=
                   '<td class="text-center"><button value=' + item.id +
-                  ' class="editButton btn" data-bs-toggle="modal" data-bs-target="#editModal" > <i class="fa-solid fa-pen-to-square view-hover"></i></button> <button value = ' +
+                  ' class="editButton btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" > <i class="fa-solid fa-pen-to-square view-hover"></i></button> <button value = ' +
                   item.id +
-                  ' class="deleteButton btn" data-bs-toggle="modal" data-bs-target="#deleteModal" ><i class="fa-solid fa-trash view-hover-delete"></i></button> </td>';
+                  ' class="deleteButton btn btn-outline-danger mt-2" data-bs-toggle="modal" data-bs-target="#deleteModal" ><i class="fa-solid fa-trash view-hover-delete"></i></button> </td>';
 
                 tr += '</tr>';
 
@@ -515,7 +515,6 @@
         let invoiceConfig_id = row.find(".deleteButton").val();
         $("#invoiceConfig_id").html(invoiceConfig_id);
         // console.log("delete", invoiceConfig_id);
-
       })
 
       $('#invoiceConfig_delete').on('click', function(e) {

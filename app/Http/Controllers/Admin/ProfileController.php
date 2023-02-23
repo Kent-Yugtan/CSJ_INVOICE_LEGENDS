@@ -213,13 +213,15 @@ class ProfileController extends Controller
             if ($findProfileDeductionTypes) {
               $findProfileDeductionTypes->fill([
                 'deduction_type_id' => $q,
-                'amount' => $dataDeductionType->deduction_amount
+                'amount' => $dataDeductionType->deduction_amount,
+                'deduction_type_name' => $dataDeductionType->deduction_name,
               ])->save();
             } else {
               ProfileDeductionTypes::create([
                 'profile_id' => $findProfile->id,
                 'deduction_type_id' => $q,
-                'amount' => $dataDeductionType->deduction_amount
+                'amount' => $dataDeductionType->deduction_amount,
+                'deduction_type_name' => $dataDeductionType->deduction_name
               ]);
             }
           }

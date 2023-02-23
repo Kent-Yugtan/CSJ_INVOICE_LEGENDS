@@ -6,7 +6,7 @@
 
   <div class="row">
     <div class="col-12 col-md-6">
-      <div class="card-hover card shadow p-2 mb-4 bg-white rounded" style="width: 100%;">
+      <div class="card-hover card shadow p-2 mb-4 bg-white rounded">
         <div>
           <div class="row text-center py-3">
             <Label class="fs-1" id="paid_invoices">
@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="col-12 col-md-6">
-      <div class="card-hover card shadow p-2 mb-4 bg-white rounded" style="width: 100%;">
+      <div class="card-hover card shadow p-2 mb-4 bg-white rounded">
         <div>
           <div class="row text-center py-3">
             <Label class="fs-1" id="pending_invoices">
@@ -66,7 +66,7 @@
         </div>
         <div class="mx-3 table-responsive" style="display: flex; justify-content: space-between;">
           <div class="page_showing" id="tbl_user_showing"></div>
-          <ul class="pagination" id="tbl_user_pagination"></ul>
+          <ul class="pagination pagination-sm" id="tbl_user_pagination"></ul>
         </div>
       </div>
 

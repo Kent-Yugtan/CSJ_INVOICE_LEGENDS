@@ -10,17 +10,17 @@
 </head>
 
 <body>
-  <div class="container-fluid px-4" id="loader_load">
+  <div class="container-fluid px-4" id=" loader_load">
     <h1 class="mt-0"></h1>
     <ol class="breadcrumb mb-3"></ol>
     <div class="row px-4 pb-4">
       <div class="col-xl-12 px-2 editInvoiceData">
-        <!-- style="margin-left: 200px;margin-right: 200px;" -->
-        <div class="card shadow px-5 p-2 bg-white rounded">
+        <div class="card shadow px-5 p-2 bg-white rounded" style="margin-left: 200px;margin-right: 200px;">
           <div id="content">
             <div class="row">
               <div class="col-md-12 pt-3 fw-bolder text-center">
-                <img style="width:50px; max-width:100%;" id="invoice_logo" src={{url($data1->invoice_logo)}}>
+
+                <img style="width:50px; max-width:100%;" id="invoice_logo" src={{url($content[logo_src])}}>
               </div>
             </div>
 
@@ -50,7 +50,7 @@
 
             <div class="row pt-1">
               <div class="col-sm-6">
-                <div id="address">{{$data->profile->address}}</div>
+                <div id="address">{{$content['address']}}</div>
                 <div id="city-province">{{$data->profile->city}}, {{$data->profile->province}}</div>
                 <div id="zip_code">Philippines, {{$data->profile->zip_code}}</div>
               </div>
@@ -201,7 +201,7 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-md-7 col-sm-7">
+                  <div class="col-md-6 col-sm-6">
                     <label class="text-muted">Converted Amount (PHP): <label class="text-muted" id="peso_rate"></label>{{$data->peso_rate}} Rate</label>
                   </div>
                   <div class="col mx-2 h6" id="convertedAmount" style="text-align:end">

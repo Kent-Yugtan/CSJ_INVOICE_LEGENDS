@@ -144,7 +144,7 @@
           </div>
           <div class="mx-3 table-responsive" style="display: flex; justify-content: space-between;">
             <div class="page_showing" id="tbl_showing_pendingInvoice"></div>
-            <ul class="pagination" id="tbl_pagination_pendingInvoice"></ul>
+            <ul class="pagination pagination-sm" id="tbl_pagination_pendingInvoice"></ul>
           </div>
         </div>
       </div>
@@ -176,7 +176,7 @@
           </div>
           <div class="mx-3" style="display: flex; justify-content: space-between;">
             <div class="page_showing" id="tbl_showing_overdueInvoice"></div>
-            <ul class="pagination" id="tbl_pagination_overdueInvoice"></ul>
+            <ul class="pagination pagination-sm" id="tbl_pagination_overdueInvoice"></ul>
           </div>
         </div>
       </div>
@@ -214,12 +214,12 @@ const PHP = value => currency(value, {
   separator: ','
 });
 $(document).ready(function() {
+  check_ActivependingInvoices();
   $(window).on('load', function() {
     $("div.spanner").addClass("show");
 
     setTimeout(function() {
       $("div.spanner").removeClass("show");
-      check_ActivependingInvoices();
       selectProfile();
       pendingInvoices();
       overdueInvoices();
@@ -230,11 +230,6 @@ $(document).ready(function() {
     }, 2000);
 
   });
-
-  // setTimeout(function() {
-  //   // check_ActivependingInvoices();
-  // }, 3500);
-
 
   let toast1 = $('.toast1');
   toast1.toast({
@@ -352,7 +347,6 @@ $(document).ready(function() {
       let data = response.data;
       if (data.success) {
         if (data.data.length > 0) {
-
           data.data.map((item) => {
             var due_dateStatus = item.due_date;
             var date_now = (new Date()).toISOString().split('T')[0];
@@ -375,12 +369,12 @@ $(document).ready(function() {
                 }).catch(function(error) {
                   console.log("ERROR", error);
                 })
+                setTimeout(function() {
+                  window.location.reload
+                }, 3500)
               }
             }
           })
-          setTimeout(function() {
-            window.location.reload();;
-          }, 3500);
         }
       }
     }).catch(function(error) {
@@ -431,7 +425,7 @@ $(document).ready(function() {
               apiUrl +
               '/admin/editInvoice/' +
               item.id +
-              '" class="btn"><i class="fa-solid fa-magnifying-glass view-hover"></i> </a></td>';
+              '" class="btn btn-outline-primary"><i class="fa-solid fa-magnifying-glass view-hover"></i> </a></td>';
             tr += '</tr>';
 
             $('#pendingInvoices tbody').append(tr);
@@ -439,7 +433,9 @@ $(document).ready(function() {
           $('#tbl_pagination_pendingInvoice').empty();
           data.data.links.map(item => {
             let li =
-              `<li class="page-item cursor-pointer ${item.active ? 'active' : ''}"><a class="page-link" data-url="${item.url}">${item.label}</a></li>`
+              `<li class="page-item cursor-pointer ${item.active ? 'active' : ''}">
+                <a class="page-link" data-url="${item.url}">${item.label}</a>
+              </li>`
             $('#tbl_pagination_pendingInvoice').append(li)
             return ""
           })
@@ -513,7 +509,7 @@ $(document).ready(function() {
               apiUrl +
               '/admin/editInvoice/' +
               item.id +
-              '" class="btn"><i class="fa-solid fa-magnifying-glass view-hover"></i> </a></td>';
+              '" class="btn btn-outline-primary"><i class="fa-solid fa-magnifying-glass view-hover"></i> </a></td>';
             tr += '</tr>';
             $('#overdueInvoices tbody').append(tr);
           })

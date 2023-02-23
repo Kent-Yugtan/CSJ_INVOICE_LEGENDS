@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content-dashboard')
-<div class="container-fluid pt-0" id="loader_load">
+<div class="container-fluid px-4" id="loader_load">
   <h1 class="mt-0">Email Configuration</h1>
   <ol class="breadcrumb mb-3"></ol>
   <div class="row">
@@ -72,7 +72,7 @@
         </div>
         <div class="mx-3 table-responsive" style="display: flex; justify-content: space-between;">
           <div class="page_showing" id="tbl_showing"></div>
-          <ul class="pagination" id="tbl_pagination"></ul>
+          <ul class="pagination pagination-sm" id="tbl_pagination"></ul>
         </div>
       </div>
     </div>

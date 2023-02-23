@@ -13,6 +13,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
+use Carbon\Carbon as CarbonCarbon;
+
 
 class InvoiceController extends Controller
 {
@@ -315,14 +317,19 @@ class InvoiceController extends Controller
         }
       }
     }
+
+    // SEND EMAIL
+    // MAO NI ANG FUNCTION NGA TAWAGON SA BUTTON
+    // $this->sendEmail();
   }
-  public function sendEmail1()
-  {
-    $data = Invoice::with(['profile.user', 'deductions.profile_deduction_types.deduction_type', 'invoice_items'])
-      ->orderBy('id', 'Desc')->first();
-    $data1 = InvoiceConfig::orderBy('id', 'Desc')->first();
-    return ['data' => $data, 'data1' => $data1];
-  }
+  // FOR JSON FILE VIEWING
+  // public function sendEmail1()
+  // {
+  //   $data = Invoice::with(['profile.user', 'deductions.profile_deduction_types.deduction_type', 'invoice_items'])
+  //     ->orderBy('id', 'Desc')->first();
+  //   $data1 = InvoiceConfig::orderBy('id', 'Desc')->first();
+  //   return ['data' => $data, 'data1' => $data1];
+  // }
 
   public function SendInvoiceData()
   {
@@ -543,7 +550,12 @@ class InvoiceController extends Controller
         }
       }
     }
+
+    // SEND EMAIL
+    // MAO NI ANG FUNCTION NGA TAWAGON SA BUTTON
+    // $this->sendEmail();
   }
+
 
   public function get_invoice_config()
   {
@@ -1185,5 +1197,43 @@ class InvoiceController extends Controller
         'data' => $data,
       ], 200);
     }
+  }
+  public function sendEmail()
+  {
+    $data = Invoice::with(['profile.user', 'deductions.profile_deduction_types.deduction_type', 'invoice_items'])
+      ->orderBy('id', 'Desc')->first();
+    $data1 = InvoiceConfig::orderBy('id', 'Desc')->first();
+    $data_setup_email_template = [
+      'invoice_logo'           => $data1->invoice_logo,
+      'full_name'              => $data->profile->user->first_name . " " . $data->profile->user->last_name,
+      'user_email'             => $data->profile->user->email,
+      'invoice_no'             => $data->invoice_no,
+      'invoice_status'         => $data->status,
+      'address'                => $data->profile->address,
+      'city'                   => $data->profile->city,
+      'province'               => $data->profile->province,
+      'zip_code'               => $data->profile->zip_code,
+      'date_created'           => CarbonCarbon::parse($data->created_at)->isoFormat('MMMM DD YYYY'),
+      'invoice_title'          => $data1->invoice_title,
+      'due_date'               => CarbonCarbon::parse($data->due_date)->isoFormat('MMMM DD YYYY'),
+      'bill_to_address'        => $data1->bill_to_address,
+      'payment_status'         => $data->invoice_status,
+      'date_received'          => CarbonCarbon::parse($data->date_received)->isoFormat('MMMM DD YYYY'),
+      'ship_to_address'        => $data1->ship_to_address,
+      'balance_due'            => number_format($data->sub_total, 2),
+      'invoice_items'          => $data->invoice_items,
+      'invoice_description'    => $data->description,
+      'sub_total'              => number_format(($data->sub_total + $data->discount_total), 2),
+      'discount_type'          => $data->discount_type,
+      'discount_amount'        => number_format($data->discount_amount, 2),
+      'discount_total'         => number_format($data->discount_total, 2),
+      'peso_rate'              => number_format($data->peso_rate, 2),
+      'converted_amount'       => number_format($data->converted_amount, 2),
+      'deductions'             => $data->deductions,
+      'deductions_total'       => number_format($data->deductions->pluck('amount')->sum(), 2),
+      'notes'                  => $data->notes,
+      'grand_total_amount'     => number_format($data->grand_total_amount, 2),
+    ];
+    $this->setup_email_template($data_setup_email_template);
   }
 }

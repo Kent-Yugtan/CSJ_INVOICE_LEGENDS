@@ -120,10 +120,16 @@ class DeductionTypeController extends Controller
    * @param  \App\Models\DeductionType  $deductionType
    * @return \Illuminate\Http\Response
    */
-  public function destroy(DeductionType $deductionType)
+  public function destroy(Request $request)
   {
     //
-
+    $deductionType_id = $request->id;
+    $delete_data = DeductionType::where('id', $deductionType_id)->delete();
+    return response()->json([
+      'success' => true,
+      'message' => 'Data deleted successfully',
+      'data' => $delete_data,
+    ], 200);
   }
 
   public function view_deductiontype()

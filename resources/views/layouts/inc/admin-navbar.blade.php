@@ -27,6 +27,9 @@
           <a class=" dropdown-item fw-bold"> {{auth()->user()->first_name;}} {{auth()->user()->last_name;}}</a>
         </li>
         <li>
+          <a class=" dropdown-item"> {{auth()->user()->role;}}</a>
+        </li>
+        <li>
           <hr class="dropdown-divider" />
         </li>
         <li><a class="dropdown-item" id="logout">

@@ -79,7 +79,7 @@ Route::middleware(['AuthCheck'])->group(function () {
   // FOR SEND EMAIL
   Route::get('/sendEmail', [InvoiceController::class, 'SendInvoiceData']);
   // Route::get('/sendEmail', [InvoiceController::class, 'SendInvoiceConfigs']);
-  Route::get('/sendEmail1', [InvoiceController::class, 'sendEmail1']);
+  // Route::get('/sendEmail1', [InvoiceController::class, 'sendEmail1']);
 });
 
 Auth::routes();
