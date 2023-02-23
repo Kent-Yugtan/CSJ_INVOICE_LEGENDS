@@ -33,17 +33,7 @@ class UserSeeder extends Seeder
         );
 
 
-            User::create(
-                        [
-                'first_name' => 'Super',
-                'last_name' => 'User',
-                'email' => 'user@test.com',
-                'username' => 'user',
-                'role' => 'User',
-                'password' => bcrypt('user123'),
-                'remember_token' => Str::random(10), 
-                        ]
-            );
+        
             
         
    

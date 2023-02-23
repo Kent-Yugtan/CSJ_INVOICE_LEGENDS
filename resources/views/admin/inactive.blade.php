@@ -1,184 +1,285 @@
 @extends('layouts.master')
 @section('content-dashboard')
-@inject('invoice', 'App\Http\Controllers\Admin\InvoiceController')
-<div class="container-fluid px-4">
-    <h1 class="mt-4">Inactive Profiles</h1>
-    <ol class="breadcrumb mb-4"></ol>
+<div class="container-fluid px-4" id="loader_load">
+  <h1 class="mt-4">Inactive Profiles</h1>
+  <ol class="breadcrumb mb-4"></ol>
 
-    <div class="row">
-        <div class="col-12 col-md-6">
-            <div class="card-hover card shadow p-2 mb-4 bg-white rounded" style="width: 100%;">
-                <div>
-                    <div class="row text-center py-3">
-                        <Label class="fs-3">
-                            {{$invoice->count_paid() ? $invoice->count_paid() : 0 ;}}
-                        </Label>
-                    </div>
-                    <div class="card-body text-center py-1" style="border-bottom: none; color: #A4A6B3;">Paid</div>
-                </div>
-                <div class="d-flex align-items-center justify-content-between"></div>
-            </div>
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <div class="card-hover card shadow p-2 mb-4 bg-white rounded">
+        <div>
+          <div class="row text-center py-3">
+            <Label class="fs-1" id="paid_invoices">
+            </Label>
+          </div>
+          <div class="card-body text-center py-1" style="border-bottom: none; color: #A4A6B3;">Paid</div>
         </div>
-        <div class="col-12 col-md-6">
-            <div class="card-hover card shadow p-2 mb-4 bg-white rounded" style="width: 100%;">
-                <div>
-                    <div class="row text-center py-3">
-                        <Label class="fs-3">
-                            {{$invoice->count_pending() ? $invoice->count_pending() : 0;}}
-                        </Label>
-                    </div>
-                    <div class="card-body text-center py-1" style="border-bottom: none;color: #A4A6B3; ">Pending</div>
-                </div>
-                <div class="d-flex align-items-center justify-content-between"></div>
-            </div>
-        </div>
+        <div class="d-flex align-items-center justify-content-between"></div>
+      </div>
     </div>
-
-    <div class="row">
-        <div class="col ">
-            <div class="input-group ">
-                <input id="search" name="search" type="text" class="form-control form-check-inline"
-                    placeholder="Search">
-                <button class="btn" style=" color:white; background-color: #CF8029;width:30%"
-                    id="button-submit">Search</button>
-            </div>
-            </form>
+    <div class="col-12 col-md-6">
+      <div class="card-hover card shadow p-2 mb-4 bg-white rounded">
+        <div>
+          <div class="row text-center py-3">
+            <Label class="fs-1" id="pending_invoices">
+            </Label>
+          </div>
+          <div class="card-body text-center py-1" style="border-bottom: none;color: #A4A6B3; ">Pending</div>
         </div>
+        <div class="d-flex align-items-center justify-content-between"></div>
+      </div>
     </div>
+  </div>
 
-    <div class="row pt-3">
-        <div class="col">
-            <div class="card mb-5">
-                <div class="card-header">
-                    <i class="fas fa-table me-1"></i>
-                    Inactive Profile
-                </div>
-                <div id="tbl_user_wrapper" class="card-body table-responsive">
-                    <table style=" color: #A4A6B3; " class="table table-hover" id="tbl_user">
-                        <thead>
-                            <tr>
-                                <th>User</th>
-                                <th>Status</th>
-                                <th>Phone Number</th>
-                                <th>Position</th>
-                                <th>Latest Invoice</th>
-                                <th class="text-center">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+  <div class="row">
+    <div class="col ">
+      <div class="input-group ">
+        <input id="search" name="search" type="text" class="form-control form-check-inline" placeholder="Search">
+        <button class="btn" style=" color:white; background-color: #CF8029;width:30%" id="button-submit">Search</button>
+      </div>
+      </form>
+    </div>
+  </div>
 
-                    <div style="display: flex; justify-content: space-between;">
-                        <div class="page_showing" id="tbl_user_showing"></div>
-                        <ul class="pagination" id="tbl_user_pagination"></ul>
-                    </div>
-
-                </div>
-            </div>
+  <div class="row pt-3">
+    <div class="col">
+      <div class="card mb-5">
+        <div class="card-header">
+          <i class="fas fa-table me-1"></i>
+          Inactive Profile
+        </div>
+        <div id="tbl_user_wrapper" class="card-body table-responsive">
+          <table style=" color: #A4A6B3; " class="table table-hover" id="tbl_user">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Status</th>
+                <th>Phone Number</th>
+                <th>Position</th>
+                <th>Latest Invoice</th>
+                <th class="text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
 
         </div>
+        <div class="mx-3 table-responsive" style="display: flex; justify-content: space-between;">
+          <div class="page_showing" id="tbl_user_showing"></div>
+          <ul class="pagination pagination-sm" id="tbl_user_pagination"></ul>
+        </div>
+      </div>
+
     </div>
+  </div>
+</div>
+
+<!-- LOADER SPINNER -->
+<div class="spanner">
+  <div class="loader"></div>
 </div>
 
 <script type="text/javascript">
-$(document).ready(function() {
+  $(document).ready(function() {
 
-    show_data();
+    $(window).on('load', function() {
+      $("div.spanner").addClass("show");
+      setTimeout(function() {
+        $("div.spanner").removeClass("show");
+        inactive_count_paid();
+        inactive_count_pending();
+        show_data();
+      }, 2000)
+    })
 
-    $('#button-submit').on('click', function() {
+    function inactive_count_paid() {
+      axios.get(apiUrl + '/api/inactive_paid_invoice_count', {
+        headers: {
+          Authorization: token
+        },
+      }).then(function(response) {
+        let data = response.data
+        if (data.success) {
+          console.log("SUCCESS", data);
+          $('#paid_invoices').html(data.data.length ? data.data.length : 0)
+        }
+      }).catch(function(error) {
+        console.log("ERROR", error);
+      })
+    }
+
+    function inactive_count_pending() {
+      axios.get(apiUrl + '/api/inactive_pending_invoice_count', {
+        headers: {
+          Authorization: token,
+        },
+      }).then(function(response) {
+        let data = response.data
+        if (data.success) {
+          console.log("SUCCESS", data);
+          $('#pending_invoices').html(data.data.length ? data.data.length : 0);
+        }
+      }).catch(function(error) {
+        console.log("ERROR", error);
+      })
+    }
+
+    $('#button-submit').on('click', function(e) {
+      e.preventDefault();
+      $('html,body').animate({
+        scrollTop: $('#loader_load').offset().top
+      }, 'slow');
+      $("div.spanner").addClass("show");
+      setTimeout(function() {
         let search = $('#search').val();
+        $('#tbl_user tbody').empty();
         show_data({
-            search
+          search
         });
+        $("div.spanner").removeClass("show");
+      }, 2000)
+
+
     })
 
     function show_data(filters) {
-        let filter = {
-            page_size: 50,
-            page: 1,
-            ...filters,
-        }
+      let filter = {
+        page_size: 50,
+        page: 1,
+        ...filters,
+      }
 
-        $('#tbl_user tbody').empty();
+      $('#tbl_user tbody').empty();
 
-        axios
-            .get(`${apiUrl}/api/admin/current_show_data_inactive?${new URLSearchParams(filter)}`, {
-                headers: {
-                    Authorization: token,
-                },
-            })
-            .then(function(res) {
-                res = res.data;
-                console.log('res', res);
-                if (res.success) {
-                    if (res.data.data.length > 0) {
-                        res.data.data.map((item) => {
-                            let tr = '<tr>';
+      axios
+        .get(`${apiUrl}/api/admin/show_data_inactive?${new URLSearchParams(filter)}`, {
+          headers: {
+            Authorization: token,
+          },
+        })
+        .then(function(res) {
+          res = res.data;
+          console.log('res', res);
+          if (res.success) {
+            if (res.data.data.length > 0) {
+              res.data.data.map((item) => {
+                let tr = '<tr>';
 
-                            if (item.file_path) {
-                                tr +=
-                                    '<td>  <img style="width:40px;" class="rounded-pill" src ="' +
-                                    item
-                                    .file_path + '"> ' + item.full_name + ' </td>';
-                            } else {
-                                tr +=
-                                    '<td>  <img style="width:40px;" class="rounded-pill" src ="/images/default.png"> ' +
-                                    item.full_name + ' </td>';
-                            }
-
-                            tr += '<td>' + item.profile_status + '</td>';
-                            tr += '<td>' + item.phone_number + '</td>';
-                            tr += '<td>' + item.position + '</td>';
-                            tr += '<td> NOT YET </td>';
-                            tr +=
-                                '<td  class="text-center"> <a href="' + apiUrl +
-                                '/admin/editProfile/' +
-                                item.id + ' " class="btn btn-outline-primary">Edit</a> </td>';
-                            tr += '</tr>';
-                            $("#tbl_user tbody").append(tr);
-
-                            return ''
-                        })
-
-                        $('#tbl_user_pagination').empty();
-                        res.data.links.map(item => {
-                            let li =
-                                `<li class="page-item cursor-pointer ${item.active ? 'active':''}"><a class="page-link" data-url="${item.url}">${item.label}</a></li>`
-                            $('#tbl_user_pagination').append(li)
-                            return ""
-                        })
-
-                        $("#tbl_user_pagination .page-item .page-link").on('click', function() {
-                            let url = $(this).data('url')
-                            $.urlParam = function(name) {
-                                var results = new RegExp("[?&]" + name + "=([^&#]*)").exec(
-                                    url
-                                );
-
-                                return results !== null ? results[1] || 0 : false;
-                            };
-
-                            let search = $('#search').val();
-                            show_data({
-                                search,
-                                page: $.urlParam('page')
-                            });
-                        })
-
-                        let tbl_user_showing =
-                            `Showing ${res.data.from} to ${res.data.to} of ${res.data.total} entries`;
-                        $('#tbl_user_showing').html(tbl_user_showing);
-                    } else {
-                        $("#tbl_user tbody").append(
-                            '<tr><td colspan="6" class="text-center">No data</td></tr>');
-                    }
+                if (item.file_path) {
+                  tr +=
+                    '<td>  <img style="width:40px;" class="rounded-pill" src ="' +
+                    item
+                    .file_path + '"> ' + item.full_name + ' </td>';
+                } else {
+                  tr +=
+                    '<td>  <img style="width:40px;" class="rounded-pill" src ="/images/default.png"> ' +
+                    item.full_name + ' </td>';
                 }
-            })
-            .catch(function(error) {
-                // console.log("catch error");
-            });
+
+                tr += '<td>' + item.profile_status + '</td>';
+                tr += '<td>' + item.phone_number + '</td>';
+                tr += '<td>' + item.position + '</td>';
+                if (item.profile.invoice.length > 0) {
+                  let latest_invoice = item.profile.invoice[item.profile.invoice
+                    .length - 1]
+                  var date_1 = new Date(latest_invoice.created_at);
+                  var todate1 = new Date(date_1).getDate();
+                  var tomonth1 = new Date(date_1).getMonth() + 1;
+                  var toyear1 = new Date(date_1).getFullYear();
+                  var from = tomonth1 + '/' + todate1 + '/' + toyear1;
+
+                  var date_2 = new Date();
+                  var todate2 = new Date(date_2).getDate();
+                  var tomonth2 = new Date(date_2).getMonth() + 1;
+                  var toyear2 = new Date(date_2).getFullYear();
+                  var to = tomonth2 + '/' + todate2 + '/' + toyear2;
+
+                  var diff = date_2 - date_1;
+                  diff = diff / (1000 * 3600 * 24);
+                  // console.log("DIFF", Math.round(diff));
+                  tr += '<td>' + Math.round(diff ? diff : 0) +
+                    ' Days ago</td>';
+
+                  tr +=
+                    '<td  class="text-center"> <a href="' + apiUrl +
+                    '/admin/inactiveProfile/' +
+                    item.id + "/" + item.profile.id +
+                    '" class="btn btn-outline-primary">View</a> </td>';
+
+                  tr += '</tr>';
+                  $(
+                    "#tbl_user tbody").append(tr);
+
+                } else {
+                  let tr = '<tr style="vertical-align:sub;">';
+                  if (item.file_path) {
+                    tr +=
+                      '<td>  <img style="width:40px;" class="rounded-pill" src ="' +
+                      item
+                      .file_path + '"> ' + item.full_name + ' </td>';
+                  } else {
+                    tr +=
+                      '<td>  <img style="width:40px;" class="rounded-pill" src ="/images/default.png"> ' +
+                      item.full_name + ' </td>';
+                  }
+
+                  tr += '<td>' + item.profile_status + '</td>';
+                  tr += '<td>' + item
+                    .phone_number + '</td>';
+                  tr += '<td>' + item.position + '</td>';
+                  tr += '<td> No Latest Invoice</td>';
+
+                  tr +=
+                    '<td  class="text-center"> <a href="' + apiUrl +
+                    '/admin/inactiveProfile/' +
+                    item.id + "/" + item.profile.id +
+                    '" class="btn btn-outline-primary">View</a> </td>';
+
+                  tr += '</tr>';
+                  $("#tbl_user tbody").append(tr);
+                }
+                return ''
+              })
+
+              $('#tbl_user_pagination').empty();
+              res.data.links.map(item => {
+                let li =
+                  `<li class="page-item cursor-pointer ${item.active ? 'active':''}"><a class="page-link" data-url="${item.url}">${item.label}</a></li>`
+                $('#tbl_user_pagination').append(li)
+                return ""
+              })
+
+              $("#tbl_user_pagination .page-item .page-link").on('click', function() {
+                let url = $(this).data('url')
+                $.urlParam = function(name) {
+                  var results = new RegExp("[?&]" + name + "=([^&#]*)").exec(
+                    url
+                  );
+
+                  return results !== null ? results[1] || 0 : false;
+                };
+
+                let search = $('#search').val();
+                show_data({
+                  search,
+                  page: $.urlParam('page')
+                });
+              })
+
+              let tbl_user_showing =
+                `Showing ${res.data.from} to ${res.data.to} of ${res.data.total} entries`;
+              $('#tbl_user_showing').html(tbl_user_showing);
+            } else {
+              $("#tbl_user tbody").append(
+                '<tr><td colspan="6" class="text-center">No data</td></tr>');
+            }
+          }
+        })
+        .catch(function(error) {
+          // console.log("catch error");
+        });
     }
 
-});
+  });
 </script>
 @endsection
