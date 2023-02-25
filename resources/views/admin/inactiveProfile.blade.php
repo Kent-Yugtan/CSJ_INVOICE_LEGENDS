@@ -220,9 +220,14 @@
                       </tbody>
                     </table>
                   </div>
-                  <div class="mx-3 table-responsive" style="display: flex; justify-content: space-between;">
-                    <div class="page_showing" id="tbl_showing_invoice"></div>
-                    <ul class="pagination pagination-sm" id="tbl_pagination_invoice"></ul>
+                  <div class="row mx-3">
+                    <div class="col-xl-6">
+                      <div class="page_showing" id="tbl_showing_invoice"></div>
+                    </div>
+                    <div class="col-xl-6">
+                      <ul style="float:right" class="pagination pagination-sm flex-sm-wrap" id="tbl_pagination_invoice">
+                      </ul>
+                    </div>
                   </div>
                 </div>
                 <div class="tab-pane fade" id="pills-deduction" role="tabpanel" aria-labelledby="pills-deduction-tab">
@@ -248,7 +253,6 @@
                         <thead></thead>
                         <tbody>
                           <tr>
-
                           </tr>
                         </tbody>
                       </table>
@@ -261,9 +265,9 @@
                           <thead>
                             <tr>
                               <th>Invoice #</th>
-                              <th>Status</th>
+                              <th>Payment Status</th>
                               <th>Deduction Name</th>
-                              <th>Amount</th>
+                              <th class="text-center">Amount</th>
                               <th class="text-center">Date Created</th>
                               <!-- <th class="text-center" id="action1">Action</th> -->
 
@@ -273,9 +277,14 @@
                           </tbody>
                         </table>
                       </div>
-                      <div class="mx-3 table-responsive" style="display: flex; justify-content: space-between;">
-                        <div class="page_showing" id="tbl_showing_deduction"></div>
-                        <ul class="pagination pagination-sm" id="tbl_pagination_deduction"></ul>
+                      <div class="row mx-3">
+                        <div class="col-xl-6">
+                          <div class="page_showing" id="tbl_showing_deduction"></div>
+                        </div>
+                        <div class="col-xl-6">
+                          <ul style="float:right" class="pagination pagination-sm flex-sm-wrap" id="tbl_pagination_deduction">
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -944,12 +953,25 @@
 
       $('#search_invoice').on('change', function() {
         $('html,body').animate({
-          scrollTop: $('#dataTable_invoice').offset().top
+          scrollTop: $('#loader_load').offset().top
         }, 'slow');
         $("div.spanner").addClass("show");
         setTimeout(function() {
           $("div.spanner").removeClass("show");
+          $('#tbl_pagination_invoice').empty();
           show_data();
+        }, 1500);
+      })
+
+      $('#search_deduction').on('change', function() {
+        $('html,body').animate({
+          scrollTop: $('#loader_load').offset().top
+        }, 'slow');
+        $("div.spanner").addClass("show");
+        setTimeout(function() {
+          $("div.spanner").removeClass("show");
+          $('#tbl_pagination_deduction').empty();
+          show_Profilededuction_Table_Active();
         }, 1500);
       })
 
@@ -961,10 +983,8 @@
         setTimeout(function() {
           $("div.spanner").removeClass("show");
           $('html,body').animate({
-            scrollTop: $('#pills-invoice').offset().top
+            scrollTop: $('#loader_load').offset().top
           }, 'slow');
-
-          show_data();
         }, 1500);
       })
 
@@ -976,20 +996,19 @@
         setTimeout(function() {
           $("div.spanner").removeClass("show");
           $('html,body').animate({
-            scrollTop: $('#pills-deduction').offset().top
+            scrollTop: $('#loader_load').offset().top
           }, 'slow');
-
-          show_data();
         }, 1500);
       })
 
       $('#filter_all_invoices').on('change', function() {
         $('html,body').animate({
-          scrollTop: $('#dataTable_invoice').offset().top
+          scrollTop: $('#loader_load').offset().top
         }, 'slow');
         $("div.spanner").addClass("show");
         setTimeout(function() {
           $("div.spanner").removeClass("show");
+          $('#tbl_pagination_invoice').empty();
           show_data();
         }, 1500);
       });
@@ -1007,7 +1026,8 @@
             page: page ? page : 1,
             user_id: urlSplit[3],
             search: $('#search_invoice').val(),
-            filter_all_invoices: $('#filter_all_invoices').val()
+            filter_all_invoices: $('#filter_all_invoices').val(),
+            ...filters
 
           }
           // console.log("page", page);
@@ -1061,8 +1081,6 @@
                       item.invoice_status + '</button></td>';
                   }
 
-
-
                   tr += '<td style="text-align:center;">' + mm + '-' +
                     dd +
                     '-' +
@@ -1084,7 +1102,7 @@
                     apiUrl +
                     '/admin/editInvoice/' +
                     item.id +
-                    '" class="btn"><i class="fa-sharp fa-solid fa-eye view-hover"></i></a> </td>';
+                    '" class="btn btn-outline-primary"><i class="fa-sharp fa-solid fa-eye"></i></a> </td>';
                   tr += '</tr>';
                   $("#dataTable_invoice tbody").append(tr);
                   return ''
@@ -1112,9 +1130,20 @@
                       );
                     console.log("results", results);
                     return results !== null ? results[1] || 0 :
-                      false;
+                      0;
                   };
-                  // console.log("url", url);
+
+                  $('div.spanner').addClass("show");
+                  setTimeout(function() {
+                    $('div.spanner').removeClass("show");
+                    let search = $('#search_invoice').val();
+                    show_data({
+                      search: search,
+                      page: $.urlParam('page')
+                    });
+                  }, 1500)
+
+
                 })
                 let tbl_showing_invoice =
                   `Showing ${data.data.from} to ${data.data.to} of ${data.data.total} entries`;
@@ -2182,6 +2211,7 @@
             page: page ? page : 1,
             profile_id: urlSplit[4],
             search: $('#search_deduction').val(),
+            ...filters
           }
           // console.log("filter", filter);
 
@@ -2228,10 +2258,10 @@
                     tr += '<td class="text-start">' + item
                       .profile_deduction_types.deduction_type_name +
                       '</td>';
-                    tr += '<td class="text-start">' + PHP(item
+                    tr += '<td class="text-end">' + PHP(item
                         .amount)
                       .format() + '</td>';
-                    tr += '<td style="text-align:start;">' + mm + "-" +
+                    tr += '<td style="text-align:end;">' + mm + "-" +
                       dd + "-" +
                       yy + '</td>';
 
@@ -2258,14 +2288,12 @@
                           .exec(
                             url
                           );
-                        return results !== null ? results[1] || 0 :
-                          false;
+                        return results !== null ? results[1] || 0 : 0;
                       };
 
-                      $('html,body').animate({
-                        scrollTop: $('#dataTable_deduction').offset().top
-                      }, 'slow');
+                      $('div.spanner').addClass("show");
                       setTimeout(function() {
+                        $('div.spanner').removeClass("show");
                         show_Profilededuction_Table_Active({
                           search: $('#search_deduction').val(),
                           page: $.urlParam('page')

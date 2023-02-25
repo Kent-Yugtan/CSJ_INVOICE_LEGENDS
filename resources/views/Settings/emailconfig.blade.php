@@ -251,7 +251,7 @@
                     var results = new RegExp("[?&]" + name + "=([^&#]*)").exec(
                       url
                     );
-                    return results !== null ? results[1] || 0 : false;
+                    return results !== null ? results[1] || 0 : 0;
                   };
 
                   let search = $('#search').val();

@@ -125,11 +125,9 @@
               Pending Invoices
             </h5>
           </div>
-          <div class="card-body table-responsive">
-            <!-- <div class="text-end">
-              <label mb-2 style="color: #A4A6B3;text-align: right;">View All</label>
-            </div> -->
-            <table style="color: #A4A6B3;font-size: 14px;" class="table table-hover" id="pendingInvoices">
+          <div class="card-body ">
+            <table style="color: #A4A6B3;font-size: 14px;" class="table-responsive table table-hover"
+              id="pendingInvoices">
               <thead>
                 <tr>
                   <th>Invoice #</th>
@@ -142,9 +140,14 @@
               </tbody>
             </table>
           </div>
-          <div class="mx-3 table-responsive" style="display: flex; justify-content: space-between;">
-            <div class="page_showing" id="tbl_showing_pendingInvoice"></div>
-            <ul class="pagination pagination-sm" id="tbl_pagination_pendingInvoice"></ul>
+          <div class="row mx-3">
+            <div class="col-xl-6">
+              <div class="page_showing" id="tbl_showing_pendingInvoice"></div>
+            </div>
+            <div class="col-xl-6">
+              <ul style="float:right" class="pagination pagination-sm flex-sm-wrap" id="tbl_pagination_pendingInvoice">
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -157,11 +160,12 @@
               Overdue Invoices
             </h5>
           </div>
-          <div class="card-body table-responsive">
+          <div class="card-body">
             <!-- <div class="text-end">
               <label mb-2 style="color: #A4A6B3;text-align: right;">View All</label>
             </div> -->
-            <table style="color: #A4A6B3;font-size: 14px;" class="table table-hover" id="overdueInvoices">
+            <table style="color: #A4A6B3;font-size: 14px;" class="table table-hover table-responsive"
+              id="overdueInvoices">
               <thead>
                 <tr>
                   <th>Invoice #</th>
@@ -174,586 +178,604 @@
               </tbody>
             </table>
           </div>
-          <div class="mx-3" style="display: flex; justify-content: space-between;">
-            <div class="page_showing" id="tbl_showing_overdueInvoice"></div>
-            <ul class="pagination pagination-sm" id="tbl_pagination_overdueInvoice"></ul>
+          <div class="row mx-3">
+            <div class="col-xl-6">
+              <div class="page_showing" id="tbl_showing_overdueInvoice"></div>
+            </div>
+            <div class="col-xl-6">
+              <ul style="float:right" class=" pagination pagination-sm flex-sm-wrap" id="tbl_pagination_overdueInvoice">
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<div style="position:fixed;top:60px;right:20px;z-index:99999;justify-content:flex-end;display:flex;">
-  <div class="toast toast1 toast-bootstrap" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
-      <div><i class="fa fa-newspaper-o"> </i></div>
-      <div><strong class="mr-auto m-l-sm toast-title">Notification</strong></div>
-      <div>
-        <button type="button" class="ml-2 mb-1 close float-end" data-dismiss="toast" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+  <div style="position:fixed;top:60px;right:20px;z-index:99999;justify-content:flex-end;display:flex;">
+    <div class="toast toast1 toast-bootstrap" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <div><i class="fa fa-newspaper-o"> </i></div>
+        <div><strong class="mr-auto m-l-sm toast-title">Notification</strong></div>
+        <div>
+          <button type="button" class="ml-2 mb-1 close float-end" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+      <div class="toast-body">
+        Hello, you can push notifications to your visitors with this toast feature.
       </div>
     </div>
-    <div class="toast-body">
-      Hello, you can push notifications to your visitors with this toast feature.
-    </div>
   </div>
-</div>
 
-<!-- LOADER SPINNER -->
-<div class="spanner">
-  <div class="loader"></div>
-</div>
+  <!-- LOADER SPINNER -->
+  <div class="spanner">
+    <div class="loader"></div>
+  </div>
 
 
-<script type="text/javascript">
-const PHP = value => currency(value, {
-  symbol: '',
-  decimal: '.',
-  separator: ','
-});
-$(document).ready(function() {
-  check_ActivependingInvoices();
-  $(window).on('load', function() {
-    $("div.spanner").addClass("show");
-
-    setTimeout(function() {
-      $("div.spanner").removeClass("show");
-      selectProfile();
-      pendingInvoices();
-      overdueInvoices();
-      active_count_paid();
-      active_count_pending();
-      active_count_overdue();
-      active_count_cancelled();
-    }, 2000);
-
+  <script type="text/javascript">
+  const PHP = value => currency(value, {
+    symbol: '',
+    decimal: '.',
+    separator: ','
   });
+  $(document).ready(function() {
+    check_ActivependingInvoices();
+    $(window).on('load', function() {
+      $("div.spanner").addClass("show");
 
-  let toast1 = $('.toast1');
-  toast1.toast({
-    delay: 3000,
-    animation: true,
+      setTimeout(function() {
+        selectProfile();
+        pendingInvoices();
+        overdueInvoices();
+        active_count_paid();
+        active_count_pending();
+        active_count_overdue();
+        active_count_cancelled();
+        $("div.spanner").removeClass("show");
+      }, 2000);
 
-  });
+    });
 
-  $('.close').on('click', function(e) {
-    e.preventDefault();
-    toast1.toast('hide');
-  });
-  $("#error_msg").hide();
-  $("#success_msg").hide();
+    let toast1 = $('.toast1');
+    toast1.toast({
+      delay: 3000,
+      animation: true,
 
-  // COUNT PAID INVOICES
-  function active_count_paid() {
-    axios.get(apiUrl + '/api/active_paid_invoice_count', {
-      headers: {
-        Authorization: token,
-      },
-    }).then(function(response) {
-      let data = response.data
-      if (data.success) {
-        console.log("PAID", data);
-        $('#paid_invoices').html(data.data.length ? data.data.length : 0);
-      }
-    }).catch(function(error) {
-      console.log("ERROR", error);
-    })
-  }
+    });
 
-  // COUNT PENDING INVOICES
-  function active_count_pending() {
-    axios.get(apiUrl + '/api/active_pending_invoice_count', {
-      headers: {
-        Authorization: token,
-      },
-    }).then(function(response) {
-      let data = response.data
-      if (data.success) {
-        console.log("PENDING", data);
-        $('#pending_invoices').html(data.data.length ? data.data.length : 0);
-      }
-    }).catch(function(error) {
-      console.log("ERROR", error);
-    })
-  }
+    $('.close').on('click', function(e) {
+      e.preventDefault();
+      toast1.toast('hide');
+    });
+    $("#error_msg").hide();
+    $("#success_msg").hide();
 
-  // COUNT OVERDUE INVOICES
-  function active_count_overdue() {
-    axios.get(apiUrl + '/api/active_overdue_invoice_count', {
-      headers: {
-        Authorization: token,
-      },
-    }).then(function(response) {
-      let data = response.data
-      if (data.success) {
-        $('#overdue_invoices').html(data.data.length ? data.data.length : 0);
-      }
-    }).catch(function(error) {
-      console.log("ERROR", error);
-    })
-  }
+    // COUNT PAID INVOICES
+    function active_count_paid() {
+      axios.get(apiUrl + '/api/active_paid_invoice_count', {
+        headers: {
+          Authorization: token,
+        },
+      }).then(function(response) {
+        let data = response.data
+        if (data.success) {
+          console.log("PAID", data);
+          $('#paid_invoices').html(data.data.length ? data.data.length : 0);
+        }
+      }).catch(function(error) {
+        console.log("ERROR", error);
+      })
+    }
 
-  // COUNT CANCELLED INVOICES
-  function active_count_cancelled() {
-    axios.get(apiUrl + '/api/active_cancelled_invoice_count', {
-      headers: {
-        Authorization: token,
-      },
-    }).then(function(response) {
-      let data = response.data
-      if (data.success) {
-        $('#cancelled_invoices').html(data.data.length ? data.data.length : 0);
-      }
-    }).catch(function(error) {
-      console.log("ERROR", error);
-    })
-  }
-  $("#tbl_pagination_pendingInvoice").on('click', '.page-item', function() {
-    $('html,body').animate({
-      scrollTop: $('#loader_load').offset().top
-    }, 'slow');
+    // COUNT PENDING INVOICES
+    function active_count_pending() {
+      axios.get(apiUrl + '/api/active_pending_invoice_count', {
+        headers: {
+          Authorization: token,
+        },
+      }).then(function(response) {
+        let data = response.data
+        if (data.success) {
+          console.log("PENDING", data);
+          $('#pending_invoices').html(data.data.length ? data.data.length : 0);
+        }
+      }).catch(function(error) {
+        console.log("ERROR", error);
+      })
+    }
 
-    $("div.spanner").addClass("show");
-    setTimeout(function() {
-      $("div.spanner").removeClass("show");
+    // COUNT OVERDUE INVOICES
+    function active_count_overdue() {
+      axios.get(apiUrl + '/api/active_overdue_invoice_count', {
+        headers: {
+          Authorization: token,
+        },
+      }).then(function(response) {
+        let data = response.data
+        if (data.success) {
+          $('#overdue_invoices').html(data.data.length ? data.data.length : 0);
+        }
+      }).catch(function(error) {
+        console.log("ERROR", error);
+      })
+    }
+
+    // COUNT CANCELLED INVOICES
+    function active_count_cancelled() {
+      axios.get(apiUrl + '/api/active_cancelled_invoice_count', {
+        headers: {
+          Authorization: token,
+        },
+      }).then(function(response) {
+        let data = response.data
+        if (data.success) {
+          $('#cancelled_invoices').html(data.data.length ? data.data.length : 0);
+        }
+      }).catch(function(error) {
+        console.log("ERROR", error);
+      })
+    }
+
+    $("#tbl_pagination_pendingInvoice").on('click', '.page-item', function() {
       $('html,body').animate({
-        scrollTop: $('#pendingInvoices_card').offset().top
+        scrollTop: $('#loader_load').offset().top
       }, 'slow');
-    }, 1500);
-  })
-  $("#tbl_pagination_overdueInvoice").on('click', '.page-item', function() {
-    $('html,body').animate({
-      scrollTop: $('#loader_load').offset().top
-    }, 'slow');
 
-    $("div.spanner").addClass("show");
-    setTimeout(function() {
-      $("div.spanner").removeClass("show");
+      $("div.spanner").addClass("show");
+      setTimeout(function() {
+        $("div.spanner").removeClass("show");
+        $('html,body').animate({
+          scrollTop: $('#pendingInvoices_card').offset().top
+        }, 'slow');
+      }, 1500);
+    })
+
+    $("#tbl_pagination_overdueInvoice").on('click', '.page-item', function() {
       $('html,body').animate({
-        scrollTop: $('#overdueInvoices_card').offset().top
+        scrollTop: $('#loader_load').offset().top
       }, 'slow');
-    }, 1500);
-  })
 
-  // CHECK PENDING INVOICES
-  function check_ActivependingInvoices(filters) {
-    axios.get(`${apiUrl}/api/admin/check_ActivependingInvoices?${new URLSearchParams(filters)}`, {
-      headers: {
-        Authorization: token,
-      },
-    }).then(function(response) {
-      let data = response.data;
-      if (data.success) {
-        if (data.data.length > 0) {
-          data.data.map((item) => {
-            var due_dateStatus = item.due_date;
-            var date_now = (new Date()).toISOString().split('T')[0];
-            if (item.invoice_status === "Pending") {
-              if (due_dateStatus < date_now) {
-                let invoice_id = item.id;
-                let data = {
-                  id: invoice_id,
-                  invoice_status: "Overdue",
-                }
-                axios.post(apiUrl + '/api/update_status', data, {
-                  headers: {
-                    Authorization: token
-                  },
-                }).then(function(response) {
-                  let data = response.data
-                  if (data.success) {
-                    console.log("SUCCESS Overdue", data);
+      $("div.spanner").addClass("show");
+      setTimeout(function() {
+        $("div.spanner").removeClass("show");
+        $('html,body').animate({
+          scrollTop: $('#overdueInvoices_card').offset().top
+        }, 'slow');
+      }, 1500);
+    })
+
+    // CHECK PENDING INVOICES
+    function check_ActivependingInvoices(filters) {
+      axios.get(`${apiUrl}/api/admin/check_ActivependingInvoices?${new URLSearchParams(filters)}`, {
+        headers: {
+          Authorization: token,
+        },
+      }).then(function(response) {
+        let data = response.data;
+        if (data.success) {
+          if (data.data.length > 0) {
+            data.data.map((item) => {
+              var due_dateStatus = item.due_date;
+              var date_now = (new Date()).toISOString().split('T')[0];
+              if (item.invoice_status === "Pending") {
+                if (due_dateStatus < date_now) {
+                  let invoice_id = item.id;
+                  let data = {
+                    id: invoice_id,
+                    invoice_status: "Overdue",
                   }
-                }).catch(function(error) {
-                  console.log("ERROR", error);
-                })
-                setTimeout(function() {
-                  window.location.reload
-                }, 3500)
+                  axios.post(apiUrl + '/api/update_status', data, {
+                    headers: {
+                      Authorization: token
+                    },
+                  }).then(function(response) {
+                    let data = response.data
+                    if (data.success) {
+                      console.log("SUCCESS Overdue", data);
+                    }
+                  }).catch(function(error) {
+                    console.log("ERROR", error);
+                  })
+                  setTimeout(function() {
+                    window.location.reload
+                  }, 3500)
+                }
               }
-            }
-          })
+            })
+          }
         }
-      }
-    }).catch(function(error) {
-      console.log("ERROR", error);
-    })
-  }
-
-  // View Pending Invoices
-  function pendingInvoices(filters) {
-    let page = $("#tbl_pagination_pendingInvoice .page-item.active .page-link").html();
-    let filter = {
-      page_size: 5,
-      page: page ? page : 1,
-      ...filters,
+      }).catch(function(error) {
+        console.log("ERROR", error);
+      })
     }
-    $('#pendingInvoices tbody').empty();
 
-    axios.get(`${apiUrl}/api/admin/show_pendingInvoices?${new URLSearchParams(filter)}`, {
-      headers: {
-        Authorization: token,
-      },
-    }).then(function(response) {
-      let data = response.data;
-      if (data.success) {
-        console.log("PENDINGSUCCESS", data);
-        if (data.data.data.length > 0) {
-          data.data.data.map((item) => {
-            let due_date = new Date(item.due_date);
-            var mm = due_date.getMonth() + 1;
-            var dd = due_date.getDate();
-            var yy = due_date.getFullYear();
-
-            let tr = '<tr style="vertical-align: middle;">';
-            tr += '<td hidden>' + item.id + '</td>'
-            tr +=
-              '<td>' +
-              item.invoice_no +
-              '</td>';
-            tr +=
-              '<td>' +
-              item.profile.user.first_name + " " + item.profile.user.first_name + '</td>';
-            tr += '<td>' + mm + '-' +
-              dd +
-              '-' +
-              yy + '</td>';
-            tr +=
-              '<td style="text-align:center"><a href = "' +
-              apiUrl +
-              '/admin/editInvoice/' +
-              item.id +
-              '" class="btn btn-outline-primary"><i class="fa-solid fa-magnifying-glass view-hover"></i> </a></td>';
-            tr += '</tr>';
-
-            $('#pendingInvoices tbody').append(tr);
-          })
-          $('#tbl_pagination_pendingInvoice').empty();
-          data.data.links.map(item => {
-            let li =
-              `<li class="page-item cursor-pointer ${item.active ? 'active' : ''}">
-                <a class="page-link" data-url="${item.url}">${item.label}</a>
-              </li>`
-            $('#tbl_pagination_pendingInvoice').append(li)
-            return ""
-          })
-
-          $("#tbl_pagination_pendingInvoice .page-item .page-link").on('click', function() {
-            $("#tbl_pagination_pendingInvoice .page-item").removeClass(
-              'active');
-            let url = $(this).data('url')
-            $.urlParam = function(name) {
-              var results = new RegExp("[?&]" + name + "=([^&#]*)").exec(
-                url
-              );
-              return results !== null ? results[1] || 0 : false;
-            };
-            pendingInvoices({
-              page: $.urlParam('page')
-            });
-          })
-
-          let tbl_showing_pendingInvoice =
-            `Showing ${data.data.from} to ${data.data.to} of ${data.data.total} entries`;
-          $('#tbl_showing_pendingInvoice').html(tbl_showing_pendingInvoice);
-        } else {
-          $("#pendingInvoices tbody").append(
-            '<tr><td colspan="4" class="text-center">No data</td></tr>'
-          );
-        }
+    // View Pending Invoices
+    function pendingInvoices(filters) {
+      let page = $("#tbl_pagination_pendingInvoice .page-item.active .page-link").html();
+      let filter = {
+        page_size: 5,
+        page: page ? page : 1,
+        ...filters,
       }
-    }).catch(function(error) {
-      console.log("ERROR", error);
-    })
-  }
+      $('#pendingInvoices tbody').empty();
 
-  function overdueInvoices(filters) {
-    let page = $("#tbl_pagination_overdueInvoice .page-item.active .page-link").html();
-    let filter = {
-      page_size: 5,
-      page: page ? page : 1,
-      ...filters
-    }
-    $('#overdueInvoices tbody').empty();
+      axios.get(`${apiUrl}/api/admin/show_pendingInvoices?${new URLSearchParams(filter)}`, {
+        headers: {
+          Authorization: token,
+        },
+      }).then(function(response) {
+        let data = response.data;
+        if (data.success) {
+          console.log("PENDINGSUCCESS", data);
+          if (data.data.data.length > 0) {
+            data.data.data.map((item) => {
+              let due_date = new Date(item.due_date);
+              var mm = due_date.getMonth() + 1;
+              var dd = due_date.getDate();
+              var yy = due_date.getFullYear();
 
-    axios.get(`${apiUrl}/api/admin/show_overdueInvoices?${new URLSearchParams(filter)}`, {
-      headers: {
-        Authorization: token,
-      },
-    }).then(function(response) {
-      let data = response.data;
-      if (data.success) {
-        if (data.data.data.length > 0) {
-          data.data.data.map((item) => {
-            let due_date = new Date(item.due_date);
-            var mm = due_date.getMonth() + 1;
-            var dd = due_date.getDate();
-            var yy = due_date.getFullYear();
-            let tr = '<tr style="vertical-align: middle;">';
-            tr += '<td hidden>' + item.id + '</td>'
-            tr +=
-              '<td>' +
-              item.invoice_no +
-              '</td>';
-            tr +=
-              '<td>' +
-              item.profile.user.first_name + " " + item.profile.user.first_name + '</td>';
-            tr += '<td>' + mm + '-' +
-              dd +
-              '-' +
-              yy + '</td>';
-            tr +=
-              '<td style="text-align:center"><a href = "' +
-              apiUrl +
-              '/admin/editInvoice/' +
-              item.id +
-              '" class="btn btn-outline-primary"><i class="fa-solid fa-magnifying-glass view-hover"></i> </a></td>';
-            tr += '</tr>';
-            $('#overdueInvoices tbody').append(tr);
-          })
-          $('#tbl_pagination_overdueInvoice').empty();
-          data.data.links.map(item => {
-            let li =
-              `<li class="page-item cursor-pointer ${item.active ? 'active' : ''}"><a class="page-link view-hover" data-url="${item.url}">${item.label}</a></li>`
-            $('#tbl_pagination_overdueInvoice').append(li)
-            return ""
-          })
+              let tr = '<tr style="vertical-align: middle;">';
+              tr += '<td hidden>' + item.id + '</td>'
+              tr +=
+                '<td>' +
+                item.invoice_no +
+                '</td>';
+              tr +=
+                '<td>' +
+                item.profile.user.first_name + " " + item.profile.user.first_name + '</td>';
+              tr += '<td>' + mm + '-' +
+                dd +
+                '-' +
+                yy + '</td>';
+              tr +=
+                '<td style="text-align:center"><a href = "' +
+                apiUrl +
+                '/admin/editInvoice/' +
+                item.id +
+                '" class="btn btn-outline-primary"><i class="fa-solid fa-magnifying-glass view-hover"></i> </a></td>';
+              tr += '</tr>';
 
-          $("#tbl_pagination_overdueInvoice .page-item .page-link").on('click', function() {
-            $("#tbl_pagination_overdueInvoice .page-item").removeClass(
-              'active');
-            let url = $(this).data('url')
-            $.urlParam = function(name) {
-              var results = new RegExp("[?&]" + name + "=([^&#]*)").exec(
-                url
-              );
-              return results !== null ? results[1] || 0 : false;
-            };
-            overdueInvoices({
-              page: $.urlParam('page')
-            });
-          })
-
-          let tbl_showing_overdueInvoice =
-            `Showing ${data.data.from} to ${data.data.to} of ${data.data.total} entries`;
-          $('#tbl_showing_overdueInvoice').html(tbl_showing_overdueInvoice);
-        } else {
-          $("#overdueInvoices tbody").append(
-            '<tr><td colspan="4" class="text-center">No data</td></tr>'
-          );
-        }
-      }
-    }).catch(function(error) {
-      console.log("ERROR", error);
-    })
-  }
-
-
-  function selectProfile() {
-    axios.get(apiUrl + '/api/show_profile', {
-      headers: {
-        Authorization: token,
-      },
-    }).then(function(response) {
-      let data = response.data;
-      if (data.success) {
-        if (data.data.length > 0) {
-          // console.log("SUCCESS", data.data);
-          data.data.map((item) => {
-            let option = '';
-            option += '<option value=' + item.profile.id + ' >' + item.full_name + '</option>';
-            $('#selectProfile').append(option);
-          })
-        }
-      }
-
-    }).catch(function(error) {
-      console.log("ERROR", error);
-    })
-  }
-
-  let Deductions = [];
-  let dollar_rate = 0;
-  let peso_rate = 0;
-  let fromRate = 0;
-  let toRate = 0;
-  let converted_amount = 0;
-  let sumObj = 0;
-  //  For creating invoice codes
-  const api = "https://api.exchangerate-api.com/v4/latest/USD";
-
-  // FUNCTION FOR DISPLAY RESULTS AND CONVERTED AMOUNT
-  getResults_Converted();
-
-  function getResults_Converted() {
-    fetch(`${api}`)
-      .then(currency => {
-        return currency.json();
-      }).then(displayResults);
-  }
-
-
-  function displayResults(currency) {
-    fromRate = currency.rates['USD'];
-    toRate = currency.rates['PHP'];
-    peso_rate = (toRate / fromRate);
-    // converted_amount = ((toRate / fromRate) * sub_total);
-    // console.log("peso_rate", peso_rate);
-    // console.log("converted_amount", converted_amount);
-  }
-
-  $('#selectProfile').on('change', function() {
-    let profile_id = $('#selectProfile').val();
-    console.log("PROFILE ID", profile_id);
-    axios.get(apiUrl + '/api/get_quickInvoice_PDT/' + profile_id, {
-      headers: {
-        Authorization: token,
-      },
-    }).then(function(response) {
-      let data = response.data;
-      if (data.success) {
-        if (data.data.length > 0) {
-          console.log("SUCCESS", data);
-          data.data.map((item) => {
-            let profile_deduction_type_id = item.id ? item.id : '';
-            let deduction_amount = item.amount ? item.amount : '';
-            let sum = item.sum ? item.sum : '';
-            Deductions.push({
-              profile_deduction_type_id,
-              deduction_amount,
-              sum,
+              $('#pendingInvoices tbody').append(tr);
+            })
+            $('#tbl_pagination_pendingInvoice').empty();
+            data.data.links.map(item => {
+              let li =
+                `<li class="page-item cursor-pointer ${item.active ? 'active' : ''}">
+              <a class="page-link" data-url="${item.url}">${item.label}</a>
+            </li>`
+              $('#tbl_pagination_pendingInvoice').append(li)
+              return ""
             })
 
-          });
-          let sum = Deductions.map(function(item) {
-            var remove = {
-              sum: item.sum
-            };
-            delete item.sum;
-            return remove;
-          });
-          sumObj = $(sum)['prop']('sum'); // get the value of {sum:6000}
-        }
-      }
-    }).catch(function(error) {
-      console.log("ERROR", error);
-    })
-  })
+            $("#tbl_pagination_pendingInvoice .page-item .page-link").on('click', function() {
+              $("#tbl_pagination_pendingInvoice .page-item").removeClass(
+                'active');
+              let url = $(this).data('url')
+              $.urlParam = function(name) {
+                let results = new RegExp("[?&]" + name + "=([^&#]*)").exec(
+                  url
+                );
+                return results !== null ? results[1] || 0 : 0;
+              };
+              pendingInvoices({
+                page: $.urlParam('page')
+              });
+            })
 
-  $('#sub_total').focusout(function() {
-    if ($('#sub_total').val() == "") {
-      $('#discount_amount').val('0.00');
-    } else {
-      let sub_total = $('#sub_total').val();
-      $('#sub_total').val(PHP(sub_total).format());
+            let tbl_showing_pendingInvoice =
+              `Showing ${data.data.from} to ${data.data.to} of ${data.data.total} entries`;
+            $('#tbl_showing_pendingInvoice').html(tbl_showing_pendingInvoice);
+          } else {
+            $("#pendingInvoices tbody").append(
+              '<tr><td colspan="4" class="text-center">No data</td></tr>'
+            );
+          }
+        }
+      }).catch(function(error) {
+        console.log("ERROR", error);
+      })
+    }
+
+    function overdueInvoices(filters) {
+      let page = $("#tbl_pagination_overdueInvoice .page-item.active .page-link").html();
+      let filter = {
+        page_size: 5,
+        page: page ? page : 1,
+        ...filters
+      }
+      $('#overdueInvoices tbody').empty();
+
+      axios.get(`${apiUrl}/api/admin/show_overdueInvoices?${new URLSearchParams(filter)}`, {
+        headers: {
+          Authorization: token,
+        },
+      }).then(function(response) {
+        let data = response.data;
+        if (data.success) {
+          if (data.data.data.length > 0) {
+            data.data.data.map((item) => {
+              let due_date = new Date(item.due_date);
+              var mm = due_date.getMonth() + 1;
+              var dd = due_date.getDate();
+              var yy = due_date.getFullYear();
+              let tr = '<tr style="vertical-align: middle;">';
+              tr += '<td hidden>' + item.id + '</td>'
+              tr +=
+                '<td>' +
+                item.invoice_no +
+                '</td>';
+              tr +=
+                '<td>' +
+                item.profile.user.first_name + " " + item.profile.user.first_name + '</td>';
+              tr += '<td>' + mm + '-' +
+                dd +
+                '-' +
+                yy + '</td>';
+              tr +=
+                '<td style="text-align:center"><a href = "' +
+                apiUrl +
+                '/admin/editInvoice/' +
+                item.id +
+                '" class="btn btn-outline-primary"><i class="fa-solid fa-magnifying-glass view-hover"></i> </a></td>';
+              tr += '</tr>';
+              $('#overdueInvoices tbody').append(tr);
+            })
+            $('#tbl_pagination_overdueInvoice').empty();
+            data.data.links.map(item => {
+              let li =
+                `<li class="page-item cursor-pointer ${item.active ? 'active' : ''}"><a class="page-link view-hover" data-url="${item.url}">${item.label}</a></li>`
+              $('#tbl_pagination_overdueInvoice').append(li)
+              return ""
+            })
+
+            $("#tbl_pagination_overdueInvoice .page-item .page-link").on('click', function() {
+              $("#tbl_pagination_overdueInvoice .page-item").removeClass(
+                'active');
+              let url = $(this).data('url')
+              $.urlParam = function(name) {
+                var results = new RegExp("[?&]" + name + "=([^&#]*)").exec(
+                  url
+                );
+                return results !== null ? results[1] || 0 : 0;
+              };
+              overdueInvoices({
+                page: $.urlParam('page')
+              });
+            })
+
+            let tbl_showing_overdueInvoice =
+              `Showing ${data.data.from} to ${data.data.to} of ${data.data.total} entries`;
+            $('#tbl_showing_overdueInvoice').html(tbl_showing_overdueInvoice);
+          } else {
+            $("#overdueInvoices tbody").append(
+              '<tr><td colspan="4" class="text-center">No data</td></tr>'
+            );
+          }
+        }
+      }).catch(function(error) {
+        console.log("ERROR", error);
+      })
+    }
+
+
+    function selectProfile() {
+      axios.get(apiUrl + '/api/show_profile', {
+        headers: {
+          Authorization: token,
+        },
+      }).then(function(response) {
+        let data = response.data;
+        if (data.success) {
+          if (data.data.length > 0) {
+            // console.log("SUCCESS", data.data);
+            data.data.map((item) => {
+              let option = '';
+              option += '<option value=' + item.profile.id + ' >' + item.full_name + '</option>';
+              $('#selectProfile').append(option);
+            })
+          }
+        }
+
+      }).catch(function(error) {
+        console.log("ERROR", error);
+      })
+    }
+
+    let Deductions = [];
+    let dollar_rate = 0;
+    let peso_rate = 0;
+    let fromRate = 0;
+    let toRate = 0;
+    let converted_amount = 0;
+    let sumObj = 0;
+    //  For creating invoice codes
+    const api = "https://api.exchangerate-api.com/v4/latest/USD";
+
+    // FUNCTION FOR DISPLAY RESULTS AND CONVERTED AMOUNT
+    getResults_Converted();
+
+    function getResults_Converted() {
+      fetch(`${api}`)
+        .then(currency => {
+          return currency.json();
+        }).then(displayResults);
+    }
+
+
+    function displayResults(currency) {
+      fromRate = currency.rates['USD'];
+      toRate = currency.rates['PHP'];
+      peso_rate = (toRate / fromRate);
+      // converted_amount = ((toRate / fromRate) * sub_total);
+      // console.log("peso_rate", peso_rate);
+      // console.log("converted_amount", converted_amount);
+    }
+
+    $('#selectProfile').on('change', function() {
+      let profile_id = $('#selectProfile').val();
+      console.log("PROFILE ID", profile_id);
+      axios.get(apiUrl + '/api/get_quickInvoice_PDT/' + profile_id, {
+        headers: {
+          Authorization: token,
+        },
+      }).then(function(response) {
+        let data = response.data;
+        if (data.success) {
+          if (data.data.length > 0) {
+            console.log("SUCCESS", data);
+            data.data.map((item) => {
+              let profile_deduction_type_id = item.id ? item.id : '';
+              let deduction_amount = item.amount ? item.amount : '';
+              let sum = item.sum ? item.sum : '';
+              Deductions.push({
+                profile_deduction_type_id,
+                deduction_amount,
+                sum,
+              })
+
+            });
+            let sum = Deductions.map(function(item) {
+              var remove = {
+                sum: item.sum
+              };
+              delete item.sum;
+              return remove;
+            });
+            sumObj = $(sum)['prop']('sum'); // get the value of {sum:6000}
+          }
+        }
+      }).catch(function(error) {
+        console.log("ERROR", error);
+      })
+    })
+
+    $('#sub_total').focusout(function() {
+      if ($('#sub_total').val() == "") {
+        $('#discount_amount').val('0.00');
+      } else {
+        let sub_total = $('#sub_total').val();
+        $('#sub_total').val(PHP(sub_total).format());
+      }
+    })
+
+
+    $('#quick_invoice').submit(function(e) {
+      e.preventDefault();
+      $('div.spanner').addClass('show');
+      $('html,body').animate({
+        scrollTop: $('#loader_load').offset().top
+      }, 'smooth');
+
+      var start = performance.now(); // Get the current timestamp
+
+      let profile_id = $('#selectProfile').val();
+      let description = $('#description').val();
+      let sub_total = $('#sub_total').val().replaceAll(',', '');
+      let due_date = $('#due_date').val();
+
+      converted_amount = parseFloat(((toRate / fromRate) * sub_total));
+      converted_amount = PHP(converted_amount).format();
+      converted_amount = converted_amount.replaceAll(',', '');
+
+      // remove the column name array object  AND DEDUCTIONS
+      // INVOIE ITEMS
+      let invoiceItem = [];
+      let item_description = $('#description').val();
+      let item_qty = 1;
+      let item_rate = $('#sub_total').val().replaceAll(',', '') ? $('#sub_total').val().replaceAll(
+        ',', '') : 0;
+      let item_total_amount = $('#sub_total').val().replaceAll(',', '') ? $('#sub_total').val()
+        .replaceAll(
+          ',', '') : 0;
+
+      invoiceItem.push({
+        item_description,
+        item_rate,
+        item_qty,
+        item_total_amount,
+      })
+
+      let data = {
+        profile_id: profile_id,
+        description: description,
+        sub_total: sub_total,
+        peso_rate: peso_rate ? peso_rate : 0,
+        converted_amount: converted_amount ? converted_amount : 0,
+        grand_total_amount: parseFloat(converted_amount - sumObj),
+        due_date: due_date,
+        invoiceItem,
+        Deductions,
+      };
+
+      console.log("DATA", data);
+      axios.post(apiUrl + "/api/add_invoices", data, {
+        headers: {
+          Authorization: token,
+        },
+      }).then(function(response) {
+        let data = response.data;
+        if (data.success) {
+          console.log("SUCCES", data.success);
+          $('html,body').animate({
+            scrollTop: $('#loader_load').offset().top
+          }, 'slow');
+          $("div.spanner").addClass("show");
+
+          setTimeout(function() {
+            $("div.spanner").removeClass("show");
+            $('#selectProfile').val('');
+            $('#quick_invoice input').val('');
+            $('.toast1 .toast-title').html('Create Invoices');
+            $('.toast1 .toast-body').html(response.data.message);
+            active_count_paid();
+            active_count_pending();
+            active_count_overdue();
+            active_count_cancelled();
+            pendingInvoices();
+            overdueInvoices();
+            toast1.toast('show');
+          }, loadingTime)
+
+        }
+      }).catch(function(error) {
+        console.log("ERROR", error);
+        if (error.response.data.errors) {
+          let errors = error.response.data.errors;
+          console.log("errors", errors);
+          let fieldnames = Object.keys(errors);
+
+          Object.values(errors).map((item, index) => {
+            fieldname = fieldnames[0].split('_');
+            fieldname.map((item2, index2) => {
+              fieldname['key'] = capitalize(item2);
+              return ""
+            });
+            fieldname = fieldname.join(" ");
+
+            $('.toast1 .toast-title').html(fieldname);
+            $('.toast1 .toast-body').html(Object.values(errors)[
+              0].join(
+              "\n\r"));
+          })
+          setTimeout(function() {
+            $('div.spanner').removeClass('show');
+            toast1.toast('show');
+          }, loadingTime);
+        }
+      });
+      var end = performance.now(); // Get the timestamp after processing
+      var processingTime = end - start; // Calculate the processing time in milliseconds
+      var loadingTime = Math.ceil((processingTime * 1000) / 2);
+      console.log('Processing time: ' + loadingTime + 'ms');
+    })
+
+    function capitalize(s) {
+      if (typeof s !== 'string') return "";
+      return s.charAt(0).toUpperCase() + s.slice(1);
     }
   })
-
-
-  $('#quick_invoice').submit(function(e) {
-    e.preventDefault();
-    let profile_id = $('#selectProfile').val();
-    let description = $('#description').val();
-    let sub_total = $('#sub_total').val().replaceAll(',', '');
-    let due_date = $('#due_date').val();
-
-    converted_amount = parseFloat(((toRate / fromRate) * sub_total));
-    converted_amount = PHP(converted_amount).format();
-    converted_amount = converted_amount.replaceAll(',', '');
-
-    // remove the column name array object  AND DEDUCTIONS
-
-    // INVOIE ITEMS
-    let invoiceItem = [];
-    let item_description = $('#description').val();
-    let item_qty = 1;
-    let item_rate = $('#sub_total').val().replaceAll(',', '') ? $('#sub_total').val().replaceAll(
-      ',', '') : 0;
-    let item_total_amount = $('#sub_total').val().replaceAll(',', '') ? $('#sub_total').val()
-      .replaceAll(
-        ',', '') : 0;
-
-    invoiceItem.push({
-      item_description,
-      item_rate,
-      item_qty,
-      item_total_amount,
-    })
-    let data = {
-      profile_id: profile_id,
-      description: description,
-      sub_total: sub_total,
-      peso_rate: peso_rate ? peso_rate : 0,
-      converted_amount: converted_amount ? converted_amount : 0,
-      grand_total_amount: parseFloat(converted_amount - sumObj),
-      due_date: due_date,
-      invoiceItem,
-      Deductions,
-    };
-
-
-    console.log("DATA", data);
-    axios.post(apiUrl + "/api/add_invoices", data, {
-      headers: {
-        Authorization: token,
-      },
-    }).then(function(response) {
-      let data = response.data;
-      if (data.success) {
-        console.log("SUCCES", data.success);
-        $('html,body').animate({
-          scrollTop: $('#loader_load').offset().top
-        }, 'slow');
-        $("div.spanner").addClass("show");
-
-        setTimeout(function() {
-          $("div.spanner").removeClass("show");
-          $('#selectProfile').val('');
-          $('#quick_invoice input').val('');
-          $('.toast1 .toast-title').html('Create Invoices');
-          $('.toast1 .toast-body').html(response.data.message);
-          active_count_paid();
-          active_count_pending();
-          active_count_overdue();
-          active_count_cancelled();
-          pendingInvoices();
-          overdueInvoices();
-          toast1.toast('show');
-        }, 2000)
-
-
-      }
-    }).catch(function(error) {
-      console.log("ERROR", error);
-      if (error.response.data.errors) {
-        let errors = error.response.data.errors;
-        console.log("errors", errors);
-        let fieldnames = Object.keys(errors);
-
-        Object.values(errors).map((item, index) => {
-          fieldname = fieldnames[0].split('_');
-          fieldname.map((item2, index2) => {
-            fieldname['key'] = capitalize(item2);
-            return ""
-          });
-          fieldname = fieldname.join(" ");
-
-          $('.toast1 .toast-title').html(fieldname);
-          $('.toast1 .toast-body').html(Object.values(errors)[
-            0].join(
-            "\n\r"));
-        })
-        toast1.toast('show');
-      }
-    });
-  })
-
-  function capitalize(s) {
-    if (typeof s !== 'string') return "";
-    return s.charAt(0).toUpperCase() + s.slice(1);
-  }
-})
-</script>
-@endsection
+  </script>
+  @endsection

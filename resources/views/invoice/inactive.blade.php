@@ -83,9 +83,14 @@
             </tbody>
           </table>
         </div>
-        <div class="mx-3 table-responsive" style="display: flex; justify-content: space-between;">
-          <div class="page_showing" id="tbl_showing_invoice"></div>
-          <ul class="pagination pagination-sm" id="tbl_pagination_invoice"></ul>
+        <div class="row mx-3">
+          <div class="col-xl-6">
+            <div class="page_showing" id="tbl_showing_invoice"></div>
+          </div>
+          <div class="col-xl-6">
+            <ul style="float:right" class="pagination pagination-sm flex-sm-wrap" id="tbl_pagination_invoice">
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -416,7 +421,7 @@
                 apiUrl +
                 '/admin/editInvoice/' +
                 item.id +
-                '" class="btn"><i class="fa-sharp fa-solid fa-eye view-hover"></i></a> </td>';
+                '" class="btn btn-outline-primary"><i class="fa-sharp fa-solid fa-eye"></i></a> </td>';
               tr += '</tr>';
               $("#dataTable_invoice tbody").append(tr);
               return ''
@@ -601,7 +606,7 @@
                 apiUrl +
                 '/admin/editInvoice/' +
                 item.id +
-                '" class="btn"><i class="fa-sharp fa-solid fa-eye view-hover"></i></a> </td>';
+                '" class="btn btn-outline-primary"><i class="fa-sharp fa-solid fa-eye"></i></a> </td>';
               tr += '</tr>';
               $("#dataTable_invoice tbody").append(tr);
               return ''
@@ -664,7 +669,8 @@
       $('div.spanner').addClass('show');
       setTimeout(function() {
         $('div.spanner').removeClass('show');
-        show_statusInactiveinvoice(filter);
+        $('#tbl_pagination_invoice').empty();
+        show_statusInactiveinvoice();
         $('html,body').animate({
           scrollTop: $('#loader_load').offset().top
         }, 'slow');
@@ -706,6 +712,14 @@
     // POST INVOICE STATUS
     $('#update_invoice_status').submit(function(e) {
       e.preventDefault();
+
+      $('div.spanner').addClass('show');
+      $('html,body').animate({
+        scrollTop: $('#loader_load').offset().top
+      }, 'smooth');
+
+      var start = performance.now(); // Get the current timestamp
+      // Do your processing here
       let invoice_id = $('#updateStatus_invoiceNo').val();
       let invoice_status = $('#select_invoice_status').val();
 
@@ -727,11 +741,10 @@
           setTimeout(function() {
             $("div.spanner").removeClass("show");
             toast1.toast('show');
-          }, 2000);
+            $('.toast1 .toast-title').html('Update Status');
+            $('.toast1 .toast-body').html(response.data.message);
+          }, loadingTime);
 
-          $('.toast1 .toast-title').html('Update Status');
-          $('.toast1 .toast-body').html(response.data.message);
-          // show_statusInactiveinvoice();
 
         }
       }).catch(function(error) {
@@ -753,11 +766,17 @@
               0].join(
               "\n\r"));
           })
-          toast1.toast('show');
+          setTimeout(function() {
+            $('div.spanner').removeClass('show');
+            toast1.toast('show');
+          }, loadingTime);
         }
-      })
-
-    })
+      });
+      var end = performance.now(); // Get the timestamp after processing
+      var processingTime = end - start; // Calculate the processing time in milliseconds
+      var loadingTime = Math.ceil((processingTime * 1000) / 2);
+      console.log('Processing time: ' + loadingTime + 'ms');
+    });
 
     $('#button-submit').on('click', function(e) {
       e.preventDefault();
@@ -767,7 +786,8 @@
       $("div.spanner").addClass("show");
       setTimeout(function() {
         let search = $('#search').val();
-        $('#tbl_user tbody').empty();
+        $('#dataTable_invoice tbody').empty();
+        $('#tbl_pagination_invoice').empty();
         search_statusInactive_invoice();
         $("div.spanner").removeClass("show");
       }, 2000)

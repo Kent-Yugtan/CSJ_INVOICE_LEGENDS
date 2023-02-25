@@ -4,7 +4,7 @@
   <h1 class="mt-0">Deductions</h1>
   <ol class="breadcrumb mb-3"></ol>
   <div class="row mt-5">
-    <div class="col-md-8 px-2">
+    <div class="col-sm-8 px-2">
       <button class="btn w-50" style="color:white; background-color: #CF8029; margin-top:5px" data-bs-toggle="modal" data-bs-target="#addModal" type="submit" id="button-addon2">
         <i class="fa fa-plus pe-1"></i>
         Add Deduction Type
@@ -32,9 +32,14 @@
             <tbody></tbody>
           </table>
         </div>
-        <div class="mx-3 table-responsive" style="display: flex; justify-content: space-between;">
-          <div class="page_showing" id="tbl_showing"></div>
-          <ul class="pagination pagination-sm" id="tbl_pagination"></ul>
+        <div class="row mx-3">
+          <div class="col-xl-6">
+            <div class="page_showing" id="tbl_showing"></div>
+          </div>
+          <div class="col-xl-6">
+            <ul style="float:right" class="pagination pagination-sm flex-sm-wrap" id="tbl_pagination">
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -116,7 +121,7 @@
 </div>
 
 <!-- END MODAL EDIT -->
-<div style="position: fixed; top: 60px; right: 20px;">
+<div style="position: fixed; top: 60px; right: 20px; z-index:9999;">
   <div class="toast toast1 toast-bootstrap" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-header">
       <div><i class="fa fa-newspaper-o"> </i></div>
@@ -177,7 +182,7 @@
   </div>
 </div>
 
-<div class="spanner">
+<div class="spanner" style="z-index: 9999;">
   <div class="loader"></div>
 </div>
 <script type="text/javascript">
@@ -205,11 +210,9 @@
       $('div.spanner').addClass('show');
       setTimeout(function() {
         $('div.spanner').removeClass('show');
-        let search = $('#search').val();
-        show_data({
-          search
-        });
-      }, 200);
+        $('#tbl_pagination').empty();
+        show_data();
+      }, 1500);
     })
 
     let toast1 = $('.toast1');
@@ -230,6 +233,7 @@
       let filter = {
         page_size: 5,
         page: 1,
+        search: $('#search').val(),
         ...filters,
       }
       $('#table_deduction tbody').empty();
@@ -281,7 +285,7 @@
                     url
                   );
 
-                  return results !== null ? results[1] || 0 : false;
+                  return results !== null ? results[1] || 0 : 0;
                 };
 
                 let search = $('#search').val();
@@ -330,6 +334,14 @@
     $('#deductiontype_store').submit(function(e) {
       e.preventDefault();
 
+      $('div.spanner').addClass('show');
+      $('html,body').animate({
+        scrollTop: $('#loader_load').offset().top
+      }, 'smooth');
+
+      var start = performance.now(); // Get the current timestamp
+      // Do your processing here
+
       let deduction_name = $("#deduction_name").val();
       let deduction_amount = $("#deduction_amount").val();
 
@@ -353,16 +365,15 @@
             $('html,body').animate({
               scrollTop: $('#loader_load').offset().top
             }, 'slow');
-            $('#deduction_name').val('');
-            $('#deduction_amount').val('');
             $('div.spanner').addClass('show');
             setTimeout(function() {
               $('div.spanner').removeClass('show');
+              $('#deduction_name').val('');
+              $('#deduction_amount').val('');
               $('.toast1 .toast-title').html('Deduction Types');
               $('.toast1 .toast-body').html(response.data.message);
               toast1.toast('show');
-              // show_data();
-            }, 2000)
+            }, loadingTime)
           }
         })
         .catch(function(error) {
@@ -380,9 +391,17 @@
               $('.toast1 .toast-body').html(Object.values(errors)[0].join(
                 "\n\r"));
             })
-            toast1.toast('show');
+            setTimeout(function() {
+              $('div.spanner').removeClass('show');
+              toast1.toast('show');
+            }, loadingTime);
           }
         });
+
+      var end = performance.now(); // Get the timestamp after processing
+      var processingTime = end - start; // Calculate the processing time in milliseconds
+      var loadingTime = Math.ceil((processingTime * 1000) / 2);
+      console.log('Processing time: ' + loadingTime + 'ms');
     })
 
     $('#deduction_amount').focusout(function() {
