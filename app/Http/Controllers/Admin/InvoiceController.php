@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Deduction;
+use App\Models\EmailConfig;
 use App\Models\Invoice;
 use App\Models\InvoiceConfig;
 use App\Models\InvoiceItems;
@@ -1198,42 +1199,44 @@ class InvoiceController extends Controller
     $data = Invoice::with(['profile.user', 'deductions.profile_deduction_types.deduction_type', 'invoice_items'])
       ->where('id', $invoice_id)->first();
     $data1 = InvoiceConfig::orderBy('id', 'Desc')->first();
-    $data2 = User::where('Role', 'Admin')->orderBy('id', 'Desc')->first();
+    $data2 = EmailConfig::where('status', 'Active')->get();
     if ($data && $data1 && $data2) {
-      $data_setup_email_template = [
-        // 'invoice_logo'           => $data1->invoice_logo_name, // VARIABLE FOR UPLOADING INTO WEB
-        'invoice_logo'           => 'https://shamcey.5ppsite.com/logo.png', // DEFAULT FOR LOCAL
-        'full_name'              => $data->profile->user->first_name . " " . $data->profile->user->last_name,
-        'user_email'             => $data->profile->user->email,
-        'invoice_no'             => $data->invoice_no,
-        'invoice_status'         => $data->status,
-        'address'                => $data->profile->address,
-        'city'                   => $data->profile->city,
-        'province'               => $data->profile->province,
-        'zip_code'               => $data->profile->zip_code,
-        'date_created'           => CarbonCarbon::parse($data->created_at)->isoFormat('MMMM DD YYYY'),
-        'invoice_title'          => $data1->invoice_title,
-        'due_date'               => CarbonCarbon::parse($data->due_date)->isoFormat('MMMM DD YYYY'),
-        'bill_to_address'        => $data1->bill_to_address,
-        'payment_status'         => $data->invoice_status,
-        'date_received'          => CarbonCarbon::parse($data->date_received)->isoFormat('MMMM DD YYYY'),
-        'ship_to_address'        => $data1->ship_to_address,
-        'balance_due'            => number_format($data->sub_total, 2),
-        'invoice_items'          => $data->invoice_items,
-        'invoice_description'    => $data->description,
-        'sub_total'              => number_format(($data->sub_total + $data->discount_total), 2),
-        'discount_type'          => $data->discount_type,
-        'discount_amount'        => number_format($data->discount_amount, 2),
-        'discount_total'         => number_format($data->discount_total, 2),
-        'peso_rate'              => number_format($data->peso_rate, 2),
-        'converted_amount'       => number_format($data->converted_amount, 2),
-        'deductions'             => $data->deductions,
-        'deductions_total'       => number_format($data->deductions->pluck('amount')->sum(), 2),
-        'notes'                  => $data->notes,
-        'grand_total_amount'     => number_format($data->grand_total_amount, 2),
-        'admin_email'            => $data2->email,
-      ];
-      $this->setup_email_template_status_admin($data_setup_email_template);
+      foreach ($data2 as $send_admin) {
+        $data_setup_email_template = [
+          // 'invoice_logo'           => $data1->invoice_logo_name, // VARIABLE FOR UPLOADING INTO WEB
+          'invoice_logo'           => 'https://shamcey.5ppsite.com/logo.png', // DEFAULT FOR LOCAL
+          'full_name'              => $data->profile->user->first_name . " " . $data->profile->user->last_name,
+          'user_email'             => $data->profile->user->email,
+          'invoice_no'             => $data->invoice_no,
+          'invoice_status'         => $data->status,
+          'address'                => $data->profile->address,
+          'city'                   => $data->profile->city,
+          'province'               => $data->profile->province,
+          'zip_code'               => $data->profile->zip_code,
+          'date_created'           => CarbonCarbon::parse($data->created_at)->isoFormat('MMMM DD YYYY'),
+          'invoice_title'          => $data1->invoice_title,
+          'due_date'               => CarbonCarbon::parse($data->due_date)->isoFormat('MMMM DD YYYY'),
+          'bill_to_address'        => $data1->bill_to_address,
+          'payment_status'         => $data->invoice_status,
+          'date_received'          => CarbonCarbon::parse($data->date_received)->isoFormat('MMMM DD YYYY'),
+          'ship_to_address'        => $data1->ship_to_address,
+          'balance_due'            => number_format($data->sub_total, 2),
+          'invoice_items'          => $data->invoice_items,
+          'invoice_description'    => $data->description,
+          'sub_total'              => number_format(($data->sub_total + $data->discount_total), 2),
+          'discount_type'          => $data->discount_type,
+          'discount_amount'        => number_format($data->discount_amount, 2),
+          'discount_total'         => number_format($data->discount_total, 2),
+          'peso_rate'              => number_format($data->peso_rate, 2),
+          'converted_amount'       => number_format($data->converted_amount, 2),
+          'deductions'             => $data->deductions,
+          'deductions_total'       => number_format($data->deductions->pluck('amount')->sum(), 2),
+          'notes'                  => $data->notes,
+          'grand_total_amount'     => number_format($data->grand_total_amount, 2),
+          'admin_email'            => $send_admin->email_address,
+        ];
+        $this->setup_email_template_status_admin($data_setup_email_template);
+      }
       $dataObject = array_merge($data->toArray(), $data1->toArray(), $data2->toArray());
       return response()->json([
         'success' => true,
@@ -1299,44 +1302,46 @@ class InvoiceController extends Controller
     $data = Invoice::with(['profile.user', 'deductions.profile_deduction_types.deduction_type', 'invoice_items'])
       ->orderBy('id', 'Desc')->first();
     $data1 = InvoiceConfig::orderBy('id', 'Desc')->first();
-    $data2 = User::where('Role', 'Admin')->orderBy('id', 'Desc')->first();
+    $data2 = EmailConfig::where('status', 'Active')->get();
 
     if ($data && $data1 && $data2) {
+      foreach ($data2 as $send_admin) {
+        $data_setup_email_template = [
+          // 'invoice_logo'           => $data1->invoice_logo_name, // VARIABLE FOR UPLOADING INTO WEB
+          'invoice_logo'           => 'https://shamcey.5ppsite.com/logo.png', // DEFAULT FOR LOCAL
+          'full_name'              => $data->profile->user->first_name . " " . $data->profile->user->last_name,
+          'user_email'             => $data->profile->user->email,
+          'invoice_no'             => $data->invoice_no,
+          'invoice_status'         => $data->status,
+          'address'                => $data->profile->address,
+          'city'                   => $data->profile->city,
+          'province'               => $data->profile->province,
+          'zip_code'               => $data->profile->zip_code,
+          'date_created'           => CarbonCarbon::parse($data->created_at)->isoFormat('MMMM DD YYYY'),
+          'invoice_title'          => $data1->invoice_title,
+          'due_date'               => CarbonCarbon::parse($data->due_date)->isoFormat('MMMM DD YYYY'),
+          'bill_to_address'        => $data1->bill_to_address,
+          'payment_status'         => $data->invoice_status,
+          'date_received'          => CarbonCarbon::parse($data->date_received)->isoFormat('MMMM DD YYYY'),
+          'ship_to_address'        => $data1->ship_to_address,
+          'balance_due'            => number_format($data->sub_total, 2),
+          'invoice_items'          => $data->invoice_items,
+          'invoice_description'    => $data->description,
+          'sub_total'              => number_format(($data->sub_total + $data->discount_total), 2),
+          'discount_type'          => $data->discount_type,
+          'discount_amount'        => number_format($data->discount_amount, 2),
+          'discount_total'         => number_format($data->discount_total, 2),
+          'peso_rate'              => number_format($data->peso_rate, 2),
+          'converted_amount'       => number_format($data->converted_amount, 2),
+          'deductions'             => $data->deductions,
+          'deductions_total'       => number_format($data->deductions->pluck('amount')->sum(), 2),
+          'notes'                  => $data->notes,
+          'grand_total_amount'     => number_format($data->grand_total_amount, 2),
+          'admin_email'            => $send_admin->email_address,
+        ];
+        $this->setup_email_template_admin($data_setup_email_template);
+      }
 
-      $data_setup_email_template = [
-        // 'invoice_logo'           => $data1->invoice_logo_name, // VARIABLE FOR UPLOADING INTO WEB
-        'invoice_logo'           => 'https://shamcey.5ppsite.com/logo.png', // DEFAULT FOR LOCAL
-        'full_name'              => $data->profile->user->first_name . " " . $data->profile->user->last_name,
-        'user_email'             => $data->profile->user->email,
-        'invoice_no'             => $data->invoice_no,
-        'invoice_status'         => $data->status,
-        'address'                => $data->profile->address,
-        'city'                   => $data->profile->city,
-        'province'               => $data->profile->province,
-        'zip_code'               => $data->profile->zip_code,
-        'date_created'           => CarbonCarbon::parse($data->created_at)->isoFormat('MMMM DD YYYY'),
-        'invoice_title'          => $data1->invoice_title,
-        'due_date'               => CarbonCarbon::parse($data->due_date)->isoFormat('MMMM DD YYYY'),
-        'bill_to_address'        => $data1->bill_to_address,
-        'payment_status'         => $data->invoice_status,
-        'date_received'          => CarbonCarbon::parse($data->date_received)->isoFormat('MMMM DD YYYY'),
-        'ship_to_address'        => $data1->ship_to_address,
-        'balance_due'            => number_format($data->sub_total, 2),
-        'invoice_items'          => $data->invoice_items,
-        'invoice_description'    => $data->description,
-        'sub_total'              => number_format(($data->sub_total + $data->discount_total), 2),
-        'discount_type'          => $data->discount_type,
-        'discount_amount'        => number_format($data->discount_amount, 2),
-        'discount_total'         => number_format($data->discount_total, 2),
-        'peso_rate'              => number_format($data->peso_rate, 2),
-        'converted_amount'       => number_format($data->converted_amount, 2),
-        'deductions'             => $data->deductions,
-        'deductions_total'       => number_format($data->deductions->pluck('amount')->sum(), 2),
-        'notes'                  => $data->notes,
-        'grand_total_amount'     => number_format($data->grand_total_amount, 2),
-        'admin_email'            => $data2->email,
-      ];
-      $this->setup_email_template_admin($data_setup_email_template);
       $dataObject = array_merge($data->toArray(), $data1->toArray(), $data2->toArray());
 
       return response()->json([
