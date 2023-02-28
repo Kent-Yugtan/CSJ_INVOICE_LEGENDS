@@ -108,8 +108,8 @@ $(document).ready(function() {
         filename: 'CSV-' + new Date().toLocaleDateString(),
         text: "CSV",
         className: 'btn btn-primary w-5 mx-2',
-
-      }, {
+      },
+      {
         extend: 'excel',
         filename: 'Excel-' + new Date().toLocaleDateString(),
         text: "EXCEL",
@@ -128,10 +128,11 @@ $(document).ready(function() {
             var rowData = rows.eq(i).children('c');
             var columns = rowData.length;
             if (sums.length === 0) {
-              sums = new Array(columns).fill(0); // Initialize array with zeros
+              sums = new Array(columns).fill(
+                0); // Initialize array with zeros 
             } else if (sums.length !== columns) {
-              sums.length = columns; // Update length of sums array
-              sums.fill(0); // Reset all values to 0
+              sums.length =
+                columns; // Update length of sums array sums.fill(0); // Reset all values to 0 
             }
             rowData.each(function(cellIndex) {
               if (cellIndex >= 5 && cellIndex <= 8 && $(this).text()) {
@@ -139,24 +140,20 @@ $(document).ready(function() {
               }
             });
           }
-
-
           var sumsRow = '<row>';
-          sumsRow += '<c s="header" t="s"><v>TOTAL</v></c>';
-          sumsRow += '<c s="header" t="n"><v></v></c>';
-          sumsRow += '<c s="header" t="n"><v></v></c>';
-          sumsRow += '<c s="header" t="n"><v></v></c>';
-          sumsRow += '<c s="header" t="n"><v></v></c>';
+          sumsRow += '<c t="str"><v>Total:</v></c>';
+          sumsRow += '<c t="str"><v></v></c>';
+          sumsRow += '<c t="str"><v></v></c>';
+          sumsRow += '<c t="str"><v></v></c>';
+          sumsRow += '<c t="str"><v></v></c>';
           for (var j = 5; j <= 8; j++) {
-            sumsRow += '<c s="header" t="n" style="text-align:right;"><v>' + PHP(sums[j]).format() +
-              '</v></c>';
+            sumsRow += '<c t="n" style="text-align:right;"><v>' + PHP(sums[j]).format() + '</v></c>';
           }
-          sumsRow += '</row>';
+          sumsRow += '</row>'; // 
           $('sheetData', sheet).append(sumsRow);
-
+          // $('row:last-child', sheet).after(sumsRow);
         }
-      },
-      {
+      }, {
         extend: 'pdfHtml5',
         text: "PDF",
         filename: 'PDF-' + new Date().toLocaleDateString(),
@@ -212,8 +209,7 @@ $(document).ready(function() {
           doc.pageSize = 'A4'; // set orientation to landscape
 
         }
-      },
-      {
+      }, {
         extend: 'print',
         text: "PRINT",
         filename: 'Print-' + new Date().toLocaleDateString(),
