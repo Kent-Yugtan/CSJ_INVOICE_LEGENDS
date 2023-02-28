@@ -9,16 +9,17 @@
       <div class="col-lg-9 px-2">
         <div class="card shadow py-5 bg-white rounded">
           <div class="row px-4 pt-2" id="row-header">
+            <input type="text" id="profileId" hidden>
 
             <div class="col-6 mb-3">
               <div class="row">
                 <div class="col">
-                  <div class=" form-group">
-                    <input type="text" id="profileId" hidden>
-                    <label class=" formGroupExampleInput2">Profile Name</label>
-                    <select class="form-select" id="selectProfile">
+                  <div class="form-floating form-group">
+                    <select class="form-floating form-select" id="selectProfile">
                       <option value="" selected disabled>Select Profile</option>
                     </select>
+                    <label for="selectProfile" style="color: #A4A6B3;">Profile</label>
+
                   </div>
                 </div>
               </div>
@@ -27,9 +28,9 @@
             <div class="col-6 mb-3">
               <div class="row">
                 <div class="col">
-                  <div class=" form-group">
-                    <label class=" formGroupExampleInput2">Due Date</label>
+                  <div class="form-floating form-group">
                     <input id="due_date" name="due_date" type="date" class="form-control">
+                    <label for="due_date">Due Date</label>
                   </div>
                 </div>
               </div>
@@ -38,9 +39,9 @@
             <div class="col-12 mb-3">
               <div class="row">
                 <div class="col">
-                  <div class=" form-group">
-                    <label class="formGroupExampleInput2">Description</label>
+                  <div class="form-floating form-group">
                     <input type="text" placeholder="Description" id="invoice_description" class="form-control">
+                    <label for="invoice_description">Description</label>
                   </div>
                 </div>
               </div>
@@ -81,25 +82,24 @@
                       %
                     </label>
                     <!-- <input type="text" id="discount_type" class="form-control" /> -->
-
                   </div>
                 </div>
 
                 <div class="col">
-                  <div class="form-group">
-                    <label class="formGroupExampleInput2 label_discount_amount">Discount
-                      Amount ($)</label>
+                  <div class="form-floating form-group">
                     <input type="text" step="any" style="text-align:right;" name="discount_amount" id="discount_amount"
                       class="form-control" />
+                    <label for="discount_amount" class="label_discount_amount">Discount
+                      Amount ($)</label>
                   </div>
                 </div>
                 <div class="col">
-                  <div class="form-group">
-                    <label class="formGroupExampleInput2 label_discount_total">Discount
-                      Total ($)</label>
+                  <div class="form-floating form-group">
                     <input type="text" disabled style="text-align:right; border:0px;background-color:white;"
                       onkeypress="return onlyNumberKey(event)" name="discount_total" id="discount_total"
                       class="form-control" />
+                    <label for="discount_total" class="label_discount_total">Discount
+                      Total ($)</label>
                   </div>
                 </div>
               </div>
@@ -524,35 +524,34 @@ $(document).ready(function() {
     add_rows += '<div class="row row1">';
 
     add_rows += '<div class="col-md-4 mb-3">';
-    add_rows += '<div class="form-group">';
-    add_rows += '<label class="formGroupExampleInput2">Item Desctiption</label>';
+    add_rows += '<div class="form-floating form-group">';
     add_rows +=
       '<input type="text" name="item_description" placeholder="Item Description" id="item_description" class="form-control item_description" />';
+    add_rows += '<label for="item_description">Item Desctiption</label>';
     add_rows += '</div>';
     add_rows += '</div>';
 
     add_rows += '<div class="col-md-2 mb-3">';
-    add_rows += '<div class="form-group">';
-    add_rows += '<label class="formGroupExampleInput2">Quantity</label>';
+    add_rows += '<div class="form-floating form-group">';
     add_rows +=
       '<input type="text" step="any" maxlength="4" placeholder="Quantity" name="quantity" id="quantity" style="text-align:right;" class="form-control multi quantity" />';
+    add_rows += '<label for="quantity">Quantity</label>';
     add_rows += '</div>';
     add_rows += ' </div>';
 
     add_rows += '<div class="col-md-3 mb-3">';
-    add_rows += '<div class="form-group">';
-    add_rows += '<label class="formGroupExampleInput2" for="form3Example2">Rate</label>';
+    add_rows += '<div class="form-floating form-group">';
     add_rows +=
       '<input type="text" step="any" name="rate" placeholder="Rate" id="rate" style="text-align:right;" class="form-control multi rate" />';
+    add_rows += '<label for="rate">Rate</label>';
     add_rows += '</div>';
     add_rows += '</div>';
 
     add_rows += '<div class="col-md-2 mb-3">';
-    add_rows += '<div class="form-group">';
-    add_rows += '<label class="formGroupExampleInput2" for="form3Example2">Amount</label>';
-    // style="text-align:right;border:none;background-color:white"
+    add_rows += '<div class="form-floating form-group">';
     add_rows +=
       '<input type="text" style="text-align:right;border:none;background-color:white" disabled name="amount" id="amount" class="form-control amount" />';
+    add_rows += '<label for="amount">Amount</label>';
     add_rows += '</div>';
     add_rows += '</div>';
 
@@ -704,6 +703,10 @@ $(document).ready(function() {
     }
 
     console.log("DATA", data);
+    var end = performance.now(); // Get the timestamp after processing
+    var processingTime = end - start; // Calculate the processing time in milliseconds
+    var loadingTime = Math.ceil((processingTime * 1000) / 2);
+    console.log('Processing time: ' + loadingTime + 'ms');
 
     axios.post(apiUrl + "/api/add_invoices", data, {
       headers: {
@@ -731,9 +734,9 @@ $(document).ready(function() {
 
       }
     }).catch(function(error) {
+      console.log("errors", error);
       if (error.response.data.errors) {
         let errors = error.response.data.errors;
-        console.log("errors", errors);
         let fieldnames = Object.keys(errors);
 
         Object.values(errors).map((item, index) => {
@@ -755,10 +758,7 @@ $(document).ready(function() {
         }, loadingTime);
       }
     });
-    var end = performance.now(); // Get the timestamp after processing
-    var processingTime = end - start; // Calculate the processing time in milliseconds
-    var loadingTime = Math.ceil((processingTime * 1000) / 2);
-    console.log('Processing time: ' + loadingTime + 'ms');
+
   });
 
   $('#close_back').on('click', function(e) {
@@ -813,27 +813,25 @@ $(document).ready(function() {
               add_rows = '';
               add_rows += '<div class="row mb-3">';
               add_rows += '<div class="col-8">';
-              add_rows += '<div class="form-group w-100">';
-              add_rows +=
-                '<label class="formGroupExampleInput2">Deduction Type</label>';
-
+              add_rows += '<div class="form-floating form-group w-100">';
               add_rows +=
                 '<select class="form-control profile_deduction_type" id="profile_deduction_type" name="profile_deduction_type">';
               add_rows += '<option value=' + item.id +
                 '>' + item.deduction_type_name + '</option> ';
               add_rows += '</select>';
-
+              add_rows +=
+                '<label for="profile_deduction_type">Deduction Type</label>';
               add_rows += '</div>';
               add_rows += '</div>';
               add_rows += '<div class="col-4">';
-              add_rows += '<div class="form-group ">';
-              add_rows +=
-                '<label class="formGroupExampleInput2">Deduction Amount (Php)</label>';
+              add_rows += '<div class="form-floating form-group ">';
               add_rows +=
                 '<input type="text" value="' + PHP(item
                   .amount)
                 .format() +
                 '" style="text-align:right;" id="deduction_amount" name="deduction_amount" class="form-control multi2 deduction_amount" />';
+              add_rows +=
+                '<label class="deduction_amount">Deduction Amount (Php)</label>';
               add_rows += '</div>';
               add_rows += '</div>';
               add_rows += '</div>';

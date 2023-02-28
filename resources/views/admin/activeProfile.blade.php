@@ -4,7 +4,7 @@
   <h1 class=" mt-0">Active Profile</h1>
   <ol class="breadcrumb mb-3"></ol>
   <div class="row">
-    <div class="col-lg-5 px-2">
+    <div class="col-md-12 col-lg-12 col-xl-5 px-2">
       <div class="card shadow p-2 mb-5 bg-white rounded">
         <div class="card-header">Active Information</div>
         <div class="row px-4 pb-4">
@@ -32,40 +32,40 @@
                 </label>
               </div>
 
-              <div class="mb-3">
-                <label mb-2 style="color: #A4A6B3;">First Name</label>
+              <div class="form-floating mb-3">
                 <input id="first_name" name="first_name" type="text"
                   class="form-control @error('first_name') is-invalid @enderror " placeholder="First Name"
                   value="{{ old('first_name') }}" disabled="true">
+                <label for="first_name" style="color: #A4A6B3;">First Name</label>
               </div>
-              <div class="mb-3">
-                <label mb-2 style="color: #A4A6B3;">Last Name</label>
+              <div class="form-floating mb-3">
+
                 <input id="last_name" name="last_name" type="text"
                   class="form-control @error('last_name') is-invalid @enderror " placeholder="Last Name"
                   value="{{ old('last_name') }}" disabled="true">
+                <label for="last_name" style="color: #A4A6B3;">Last Name</label>
               </div>
             </div>
 
-            <div class="mb-3">
-              <label mb-2 style="color: #A4A6B3;">Email</label>
+            <div class="form-floating mb-3">
               <input id="email" name="email" type="email" class="form-control @error('email') is-invalid @enderror"
                 placeholder="Email" disabled="true">
+              <label for="email" style="color: #A4A6B3;">Email</label>
             </div>
-            <div class="mb-3">
-              <label mb-2 style="color: #A4A6B3;">Username</label>
+            <div class="form-floating mb-3">
               <input id="username" name="username" type="text"
                 class="form-control @error('username') is-invalid @enderror" placeholder="Username" disabled="true">
+              <label for="username" style="color: #A4A6B3;">Username</label>
             </div>
             <!--                         
-                        <div class="mb-3">
+                        <div class="form-floating mb-3">
                             <label mb-2 style="color: #A4A6B3;">Password</label>
                             <input id="password" name="password" type="text"
                                 class="form-control @error('password') is-invalid @enderror" placeholder="Password"
                             >
                         </div> -->
 
-            <div class="mb-3">
-              <label mb-2 style="color: #A4A6B3;">Position</label>
+            <div class="form-floating mb-3">
               <select class="form-select @error('position') is-invalid @enderror" id="position" name="position"
                 aria-label="Default select example" defaultValue="select" disabled="true">
                 <option selected disabled value="">Please Select Position</option>
@@ -75,56 +75,58 @@
                 <option value="Web Designer">Web Designer</option>
                 <option value="Tester">Tester</option>
               </select>
+              <label for="position" style="color: #A4A6B3;">Position</label>
             </div>
 
-            <div class="mb-3">
-              <label mb-2 style="color: #A4A6B3;">Phone Number</label>
+            <div class="form-floating mb-3">
               <input id="phone_number" name="phone_number" type="text"
                 class="form-control @error('phone_number') is-invalid @enderror" id="formGroupExampleInput2"
                 placeholder="Phone Number" disabled="true">
+              <label for="phone_number" style="color: #A4A6B3;">Phone Number</label>
+
             </div>
 
-            <div class="mb-3">
-              <label mb-2 style="color: #A4A6B3;">Address</label>
+            <div class="form-floating mb-3">
               <input id="address" name="address" type="text" class="form-control @error('address') is-invalid @enderror"
                 id="formGroupExampleInput2" placeholder="Address" disabled="true">
+              <label for="address" style="color: #A4A6B3;">Address</label>
             </div>
 
-            <div class="mb-3">
-              <label mb-2 style="color: #A4A6B3;">Province</label>
+            <div class="form-floating mb-3">
               <input id="province" name="province" type="text"
                 class="form-control @error('province') is-invalid @enderror" id="formGroupExampleInput2"
                 placeholder="Province" disabled="true">
+              <label for="province" style="color: #A4A6B3;">Province</label>
             </div>
 
-            <div class="mb-3">
-              <label mb-2 style="color: #A4A6B3;">City</label>
+            <div class="form-floating mb-3">
               <input id="city" name="city" type="text" class="form-control @error('city') is-invalid @enderror"
                 id="formGroupExampleInput2" placeholder="City" disabled="true">
+              <label for="city" style="color: #A4A6B3;">City</label>
             </div>
 
-            <div class="mb-3">
-              <label mb-2 style="color: #A4A6B3;">Zip Code</label>
+            <div class="form-floating mb-3">
               <input id="zip_code" name="zip_code" type="text"
                 class="form-control @error('zip_code') is-invalid @enderror" id="formGroupExampleInput2"
                 placeholder="Zip Code" disabled="true">
+              <label for="zip_code" style="color: #A4A6B3;">Zip Code</label>
             </div>
 
-            <div class="mb-3">
-              <label mb-2 style="color: #A4A6B3;">Account Number</label>
+            <div class="form-floating mb-3">
               <input id="acct_no" name="acct_no" type="text" class="form-control @error('acct_no') is-invalid @enderror"
                 id="formGroupExampleInput2" placeholder="Account Number" disabled="true">
+              <label for="acct_no" style="color: #A4A6B3;">Account Number</label>
             </div>
 
-            <div class="mb-3">
-              <label mb-2 style="color: #A4A6B3;">Account Name</label>
+            <div class="form-floating mb-3">
               <input id="acct_name" name="acct_name" type="text"
                 class="form-control @error('acct_name') is-invalid @enderror" id="formGroupExampleInput2"
                 placeholder="Account Name" disabled="true">
+              <label for="acct_name" style="color: #A4A6B3;">Account Name</label>
             </div>
 
-            <div class="mb-3">
-              <label mb-2 style="color: #A4A6B3;">Bank Name</label>
+            <div class="form-floating mb-3">
+
               <select class="form-select @error('bank_name') is-invalid @enderror" id="bank_name" name="bank_name"
                 aria-label="Default select example" disabled="true">
                 <option selected disabled value="">Please Select Bank Name</option>
@@ -158,27 +160,28 @@
                   (PBCOM)</option>
                 <option value="Maybank Philippines Inc.">Maybank Philippines Inc.</option>
               </select>
+              <label for="bank_name" style="color: #A4A6B3;">Bank Name</label>
             </div>
 
-            <div class="mb-3">
-              <label mb-2 style="color: #A4A6B3;">Bank Location</label>
+            <div class="form-floating mb-3">
               <input id="bank_location" name="bank_location" type="text"
                 class="form-control @error('bank_location') is-invalid @enderror" id="formGroupExampleInput2"
                 placeholder="Bank Address" disabled="true">
+              <label for="bank_location" style="color: #A4A6B3;">Bank Location</label>
             </div>
 
-            <div class="mb-3">
-              <label mb-2 style="color: #A4A6B3;">Gcash Number</label>
+            <div class="form-floating mb-3">
               <input id="gcash_no" name="gcash_no" type="text"
                 class="form-control @error('gcash_no') is-invalid @enderror" id="formGroupExampleInput2"
                 placeholder="Gcash Number" disabled="true">
+              <label for="gcash_no" style="color: #A4A6B3;">Gcash Number</label>
             </div>
 
-            <div class="mb-3">
-              <label mb-2 style="color: #A4A6B3;">Date Hired</label>
+            <div class="form-floating mb-3">
               <input id="date_hired" name="date_hired" type="date"
                 class="form-control @error('date_hired') is-invalid @enderror" id="formGroupExampleInput2"
                 placeholder="Date Hired" disabled="true">
+              <label for="date_hired" style="color: #A4A6B3;">Date Hired</label>
             </div>
 
             <div class="col mb-3">
@@ -196,7 +199,7 @@
       </div>
     </div>
 
-    <div class="col-lg-7 px-2">
+    <div class="col-md-12 col-lg-12 col-xl-7 px-2">
       <div class="card shadow p-2 mb-5 bg-white rounded">
         <!-- <div class="card-header">Profile Information</div> -->
         <ul class="nav nav-pills mb-3 " id="pills-tab" role="tablist">
@@ -360,9 +363,9 @@
                       <div class="col-4 mb-3">
                         <div class="row">
                           <div class="col">
-                            <div class=" form-group">
-                              <label class=" formGroupExampleInput2">Due Date</label>
+                            <div class="form-floating form-group">
                               <input id="due_date" name="due_date" type="date" class="form-control">
+                              <label for="due_date">Due Date</label>
                             </div>
                           </div>
                         </div>
@@ -371,10 +374,10 @@
                       <div class="col-12 mb-3">
                         <div class="row">
                           <div class="col">
-                            <div class=" form-group">
-                              <label class="formGroupExampleInput2">Description</label>
+                            <div class="form-floating form-group">
                               <input id="invoice_description" placeholder="Description" name="invoice_description"
                                 type="text" class="form-control">
+                              <label for="invoice_description">Description</label>
                             </div>
                           </div>
                         </div>
@@ -421,20 +424,20 @@
                           </div>
 
                           <div class="col">
-                            <div class="form-group">
-                              <label class="formGroupExampleInput2 label_discount_amount">Discount
-                                Amount ($)</label>
+                            <div class="form-floating form-group">
                               <input type="text" step="any" style="text-align:right;" name="discount_amount"
                                 id="discount_amount" class="form-control" />
+                              <label for="discount_amount" class="label_discount_amount">Discount
+                                Amount ($)</label>
                             </div>
                           </div>
                           <div class="col">
-                            <div class="form-group">
-                              <label class="formGroupExampleInput2 label_discount_total">Discount
-                                Total ($)</label>
+                            <div class="form-floating form-group">
                               <input type="text" disabled style="text-align:right; border:0px;background-color:white;"
                                 onkeypress="return onlyNumberKey(event)" name="discount_total" id="discount_total"
                                 class="form-control" />
+                              <label for="discount_total" class="label_discount_total">Discount
+                                Total ($)</label>
                             </div>
                           </div>
                         </div>
@@ -443,12 +446,12 @@
                       <div class="col-12 mb-3">
                         <div class="row">
                           <div class="col-12 my-3" style="justify-content:end;display:flex">
-                            <div class="form-group">
+                            <div class="form-floating form-group">
                               <!-- border-style:none -->
-                              <label>Subtotal ($): </label>
                               <input type="text"
                                 style="font-weight: bold;text-align:right;border:none;background-color:white"
                                 name="subtotal" id="subtotal" class="form-control no-outline subtotal" disabled>
+                              <label for="subtotal">Subtotal ($): </label>
                             </div>
                           </div>
                         </div>
@@ -457,33 +460,32 @@
                       <div class="col-12 mb-3">
                         <div class="row">
                           <div class="col">
-                            <div class="form-group">
-                              <label class="formGroupExampleInput2">Dollar Amount
-                                ($)</label>
+                            <div class="form-floating form-group">
                               <input type="text" id="dollar_amount"
                                 style="font-weight: bold;border:none; text-align:right;background-color:white"
                                 class="form-control dollar_amount" disabled />
-
+                              <label for="dollar_amount">Dollar Amount
+                                ($)</label>
                             </div>
                           </div>
 
                           <div class="col">
-                            <div class="form-group">
-                              <label class="formGroupExampleInput2">Peso Rate
-                                (Php)</label>
+                            <div class="form-floating form-group">
                               <input type="text"
                                 style="font-weight: bold;border:none; text-align:right;background-color:white"
                                 onkeypress="return onlyNumberKey(event)" id="peso_rate" class="form-control" disabled />
+                              <label for="peso_rate">Peso Rate
+                                (Php)</label>
                             </div>
                           </div>
                           <div class="col">
-                            <div class="form-group">
-                              <label class="formGroupExampleInput2" for="form3Example2">Converted
-                                Amount (Php)</label>
+                            <div class="form-floating form-group">
                               <input type="text"
                                 style="font-weight: bold;border:none; text-align:right;background-color:white"
                                 onkeypress="return onlyNumberKey(event)" id="converted_amount"
                                 class="form-control converted_amount" disabled />
+                              <label for="converted_amount">Converted
+                                Amount (Php)</label>
                             </div>
                           </div>
                         </div>
@@ -590,17 +592,16 @@
                 @csrf
                 <input type="text" id="createDeduction_profile_id" hidden>
 
-                <div class="form-group mt-3" id="select_deduction_name">
-                  <!-- <label for="formGroupExampleInput">Deduction Name</label>
-                                    <select class="createDeduction_deduction_name form-select" name="createDeduction_deduction_name" id="createDeduction_deduction_name">
-                                        <option selected disabled value="">Please Select Deductions</option>
-                                    </select> -->
+                <div class="form-floating form-group mt-3" id="select_deduction_name">
+
                 </div>
 
                 <div class="form-group">
-                  <label for="formGroupExampleInput">Amount</label>
-                  <input id="createDeduction_deduction_amount" name="createDeduction_deduction_amount" type="text"
-                    class="createDeduction_deduction_amount form-control" placeholder="Amount">
+                  <div class="form-floating">
+                    <input id=" createDeduction_deduction_amount" name="createDeduction_deduction_amount" type="text"
+                      class="createDeduction_deduction_amount form-control" placeholder="Amount">
+                    <label for="createDeduction_deduction_amount">Amount</label>
+                  </div>
 
                   <div class="row mt-3">
                     <div class="col">
@@ -634,16 +635,18 @@
                 @csrf
                 <input type="text" id="profileDeductionType_id" hidden>
 
-                <div class="form-group mt-3">
-                  <label for="formGroupExampleInput">Profile Deduction Name</label>
+                <div class="form-floating form-group mt-3">
                   <input type="text" id="edit_profileDeductionType_name" class="form-control">
+                  <label for="edit_profileDeductionType_name">Profile Deduction Name</label>
                 </div>
 
-                <div class="form-group">
-                  <label for="formGroupExampleInput">Amount</label>
-                  <input id="edit_profileDeductionType_amount" type="text" class="form-control" placeholder="Amount">
+                <div class="form-group pt-3">
+                  <div class="form-floating">
+                    <input id="edit_profileDeductionType_amount" type="text" class="form-control" placeholder="Amount">
+                    <label for="edit_profileDeductionType_amount">Amount</label>
+                  </div>
 
-                  <div class="row mt-3">
+                  <div class="row pt-3">
                     <div class="col">
                       <button type="button" class="btn btn-secondary w-100"
                         style=" color:#CF8029; background-color:white; " data-bs-dismiss="modal">Close</button>
@@ -675,8 +678,7 @@
               <form id="update_invoice_status">
                 @csrf
                 <input type="text" id="updateStatus_invoiceNo" hidden>
-                <div class="form-group mt-3">
-                  <label for="formGroupExampleInput">Status Name</label>
+                <div class="form-floating form-group mt-3">
                   <select class="form-select" id="select_invoice_status">
                     <option value="" Selected disabled>Please choose status</option>
                     <option value="Cancelled">Cancelled</option>
@@ -684,6 +686,7 @@
                     <option value="Paid">Paid</option>
                     <option value="Pending">Pending</option>
                   </select>
+                  <label for="select_invoice_status">Status</label>
                 </div>
 
 
@@ -1192,14 +1195,9 @@ $(document).ready(function() {
                   item.invoice_status + '</button></td>';
               }
 
-              tr += '<td>' + mm + '-' +
-                dd +
-                '-' +
-                yy + '</td>';
-              tr += '<td>' + mm2 + '-' +
-                dd2 +
-                '-' +
-                yy2 + '</td>';
+              tr += '<td>' + moment.utc(item.created_at).tz('America/New_York').format('MM/DD/YYYY') +
+                '</td>';
+              tr += '<td>' + moment(item.due_date).format('L') + '</td>';
               tr += '<td class=" text-end">' + Number(
                   parseFloat(item
                     .grand_total_amount).toFixed(2))
@@ -1756,37 +1754,36 @@ $(document).ready(function() {
     let wrapper = $('#show_items');
     add_rows = '';
     add_rows += '<div class="row row1">';
-
     add_rows += '<div class="col-md-4 mb-3">';
-    add_rows += '<div class="form-group">';
-    add_rows += '<label class="formGroupExampleInput2">Item Desctiption</label>';
+    add_rows += '<div class="form-floating form-group">';
     add_rows +=
       '<input type="text" name="item_description" placeholder="Item Description" id="item_description" class="form-control item_description" />';
+    add_rows += '<label for="item_description">Item Desctiption</label>';
     add_rows += '</div>';
     add_rows += '</div>';
 
     add_rows += '<div class="col-md-2 mb-3">';
-    add_rows += '<div class="form-group">';
-    add_rows += '<label class="formGroupExampleInput2">Quantity</label>';
+    add_rows += '<div class="form-floating form-group">';
     add_rows +=
       '<input type="text" step="any" maxlength="4" placeholder="Quantity" name="quantity" id="quantity" style="text-align:right;" class="form-control multi quantity" />';
+    add_rows += '<label for="quantity">Quantity</label>';
     add_rows += '</div>';
     add_rows += ' </div>';
 
     add_rows += '<div class="col-md-3 mb-3">';
-    add_rows += '<div class="form-group">';
-    add_rows += '<label class="formGroupExampleInput2" for="form3Example2">Rate</label>';
+    add_rows += '<div class="form-floating form-group">';
     add_rows +=
       '<input type="text" step="any" name="rate" placeholder="Rate" id="rate" style="text-align:right;" class="form-control multi rate" />';
+    add_rows += '<label for="rate">Rate</label>';
     add_rows += '</div>';
     add_rows += '</div>';
 
     add_rows += '<div class="col-md-2 mb-3">';
-    add_rows += '<div class="form-group">';
-    add_rows += '<label class="formGroupExampleInput2" for="form3Example2">Amount</label>';
+    add_rows += '<div class="form-floating form-group">';
     // style="text-align:right;border:none;background-color:white"
     add_rows +=
       '<input type="text" style="text-align:right;border:none;background-color:white" disabled name="amount" id="amount" class="form-control amount" />';
+    add_rows += '<label for="amount">Amount</label>';
     add_rows += '</div>';
     add_rows += '</div>';
 
@@ -1901,27 +1898,26 @@ $(document).ready(function() {
               add_rows = '';
               add_rows += '<div class="row mb-3">';
               add_rows += '<div class="col-8">';
-              add_rows += '<div class="form-group w-100">';
-              add_rows +=
-                '<label class="formGroupExampleInput2">Deduction Type</label>';
-
+              add_rows += '<div class="form-floating form-group w-100">';
               add_rows +=
                 '<select class="form-control profile_deduction_type" id="profile_deduction_type" name="profile_deduction_type">';
               add_rows += '<option value=' + item.id +
                 '>' + item.deduction_type_name + '</option> ';
+              add_rows +=
+                '<label for="profile_deduction_type">Deduction Type</label>';
               add_rows += '</select>';
 
               add_rows += '</div>';
               add_rows += '</div>';
               add_rows += '<div class="col-4">';
-              add_rows += '<div class="form-group ">';
-              add_rows +=
-                '<label class="formGroupExampleInput2">Deduction Amount (Php)</label>';
+              add_rows += '<div class="form-floating form-group ">';
               add_rows +=
                 '<input type="text" value="' + PHP(item
                   .amount)
                 .format() +
                 '" style="text-align:right;" id="deduction_amount" name="deduction_amount" class="form-control multi2 deduction_amount" />';
+              add_rows +=
+                '<label for="deduction_amount">Deduction Amount (Php)</label>';
               add_rows += '</div>';
               add_rows += '</div>';
               add_rows += '</div>';
@@ -2189,11 +2185,12 @@ $(document).ready(function() {
         if (data.success) {
           $('#select_deduction_name').empty();
           let option = '';
-          option += '<label>Deduction Name:</label>';
+
           option +=
-            '<select class="createDeduction_deduction_name form-select" id ="createDeduction_deduction_name">';
+            '<select class="createDeduction_deduction_name form-select" id="createDeduction_deduction_name">';
           option +=
             '<option selected disabled value = "" >Please Select Deductions</option>';
+
 
           if (data.data.length > 0) {
             data.data.filter(f => f.profile_deduction_types.length === 0)
@@ -2204,6 +2201,7 @@ $(document).ready(function() {
               })
           }
           option += '</select>';
+          option += '<label for="createDeduction_deduction_name">Deduction Name:</label>';
           $('#select_deduction_name').append(
             option);
         }
@@ -2311,9 +2309,8 @@ $(document).ready(function() {
                 tr += '<td class="text-end">' + PHP(item
                     .amount)
                   .format() + '</td>';
-                tr += '<td class="text-end">' + mm + "-" +
-                  dd + "-" +
-                  yy + '</td>';
+                tr += '<td class="text-end">' + moment.utc(item.created_at).tz('America/New_York').format(
+                  'MM/DD/YYYY'), +'</td>';
 
                 $("#dataTable_deduction tbody").append(tr);
                 return ''

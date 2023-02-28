@@ -133,6 +133,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
   Route::get('invoice_config/show_edit/{id}', [InvoiceConfigController::class, 'show_edit']);
   Route::get('get_invoice_config', [InvoiceController::class, 'get_invoice_config']);
   Route::post('invoiceConfig_delete/{id}', [InvoiceConfigController::class, 'destroy']);
+
+  // FOR REPORT
+  Route::get('reports/invoiceReport_load', [InvoiceController::class, 'invoiceReport_load']);
+  Route::get('reports/invoiceReport_click', [InvoiceController::class, 'invoiceReport_click']);
 });
 
 

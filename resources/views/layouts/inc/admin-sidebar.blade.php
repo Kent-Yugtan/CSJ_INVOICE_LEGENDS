@@ -34,7 +34,7 @@
         </div>
         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts2">
           <div class="sb-nav-link-icon">
-            <i class="fas fa-users"></i>
+            <i class="fas fa-file-invoice"></i>
           </div>
           Invoices
           <div class="sb-sidenav-collapse-arrow">
@@ -57,16 +57,30 @@
           Deductions
         </a>
 
-        <a class="nav-link" href="{{url('#')}}">
+        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts3">
           <div class="sb-nav-link-icon">
-            <i class="fa-solid fa-plus-minus"></i>
+            <i class="fas fa-table"></i>
           </div>
           Reports
+          <div class="sb-sidenav-collapse-arrow">
+            <i class="fas fa-angle-down"></i>
+          </div>
         </a>
+        <div class="collapse" id="collapseLayouts3" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+          <nav class="sb-sidenav-menu-nested nav">
+            <a class="nav-link" href="{{url('reports/invoice')}}">Invoice Reports</a>
+            <a class="nav-link" href="{{url('reports/deduction')}}">Deduction Reports</a>
+          </nav>
+        </div>
 
+        <!-- <a class="nav-link" href="{{url('reports/reports')}}">
+          <div class="sb-nav-link-icon">
+            <i class="fas fa-table"></i>
+          </div>
+          Reports
+        </a> -->
 
-
-        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts3">
+        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts4" aria-expanded="false" aria-controls="collapseLayouts4">
           <div class="sb-nav-link-icon">
             <i class="fas fa-users"></i>
           </div>
@@ -75,19 +89,15 @@
             <i class="fas fa-angle-down"></i>
           </div>
         </a>
-        <div class="collapse" id="collapseLayouts3" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+        <div class="collapse" id="collapseLayouts4" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
           <nav class="sb-sidenav-menu-nested nav">
             <!-- <a class="nav-link" href="{{url('settings/deductiontype')}}"> Deductions Type</a> -->
-            <!-- <a class="nav-link" href="{{url('settings/emailconfig')}}">Email Configuration</a> -->
+            <a class="nav-link" href="{{url('settings/emailconfig')}}">Email Configuration</a>
             <a class="nav-link" href="{{url('settings/invoiceconfig')}}">Invoice Configuration</a>
           </nav>
         </div>
         <hr>
       </div>
     </div>
-    <!-- <div class="sb-sidenav-footer">
-      <div class="small">Logged in as:</div>
-      {{auth()->user()->first_name;}} {{auth()->user()->last_name;}}
-    </div> -->
   </nav>
 </div>

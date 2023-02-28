@@ -111,8 +111,7 @@
             <form id="update_invoice_status">
               @csrf
               <input type="text" id="updateStatus_invoiceNo" hidden>
-              <div class="form-group mt-3">
-                <label for="formGroupExampleInput">Status Name</label>
+              <div class="form-floating form-group mt-3">
                 <select class="form-select" id="select_invoice_status">
                   <option value="" Selected disabled>Please choose status</option>
                   <option value="Cancelled">Cancelled</option>
@@ -120,6 +119,7 @@
                   <option value="Paid">Paid</option>
                   <option value="Pending">Pending</option>
                 </select>
+                <label for="select_invoice_status">Status</label>
               </div>
               <div class="row mt-3">
                 <div class="col">
