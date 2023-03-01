@@ -1413,8 +1413,6 @@ class InvoiceController extends Controller
       $q->select(DB::raw('SUM(amount) as total_deductions'), 'invoice_id')
         ->groupBy('invoice_id');
     }])
-      // ->whereBetween('created_at', [$from . ' 00:00:00', $to . ' 23:59:59'])
-      // // ->whereDate('created_at', $from)  // if you want to filter by a specific date only
       ->orderBy('id', 'Desc')
       ->get();
 
@@ -1449,6 +1447,68 @@ class InvoiceController extends Controller
         'success' => true,
         'data' => $invoices,
       ], 200);
+    }
+  }
+  public function deductionReport_load(Request $request)
+  {
+    // your other code here
+    $from = date('Y-m-d', strtotime($request->from));
+    $to = date('Y-m-d', strtotime($request->to));
+    $data = Invoice::with(['profile.user', 'deductions' => function ($q) {
+      $q->select(DB::raw('SUM(amount) as total_deductions'), 'invoice_id')
+        ->groupBy('invoice_id');
+    }])
+      ->orderBy('id', 'Desc')
+      ->get();
+
+
+    if ($data) {
+      return response()->json([
+        'success' => true,
+        'data' => $data,
+      ]);
+    }
+  }
+
+  public function deductionReport_click(Request $request)
+  {
+
+    $rules = $request->validate([
+      'fromDate' => 'required',
+      'toDate' => 'required',
+    ]);
+
+    if (isset($rules['fromDate']) && isset($rules['toDate'])) {
+      $startDate = Carbon::createFromFormat('Y-m-d', $rules['fromDate'])->startOfDay();
+      $endDate = Carbon::createFromFormat('Y-m-d', $rules['toDate'])->endOfDay();
+
+      $invoices = Invoice::with(['profile.user', 'deductions' => function ($q) {
+        $q->select(DB::raw('SUM(amount) as total_deductions'), 'invoice_id')
+          ->groupBy('invoice_id');
+      }])
+        ->whereBetween('created_at', [$startDate, $endDate]) // filter by date range
+        ->orderBy('id', 'desc')
+        ->get();
+      return response()->json([
+        'success' => true,
+        'data' => $invoices,
+      ], 200);
+    }
+  }
+
+  public function deductionDetails(Request $request)
+  {
+    $invoice_id = $request->id;
+    $data = Invoice::find($invoice_id)
+      ->deductions()
+      ->join('profile_deduction_types', 'profile_deduction_types.id', '=', 'deductions.profile_deduction_type_id')
+      ->select('profile_deduction_types.deduction_type_name', 'deductions.amount')
+      ->get();
+    if ($data) {
+      return response()->json([
+        'success' => true,
+        'data' => $data,
+      ]);
     }
   }
 }

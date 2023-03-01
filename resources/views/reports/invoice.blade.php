@@ -38,6 +38,22 @@
             <tbody>
 
             </tbody>
+            <tfoot>
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </tfoot>
           </table>
         </div>
       </div>
@@ -73,86 +89,118 @@ const PHP = value => currency(value, {
   decimal: '.',
   separator: ','
 });
+
 $(document).ready(function() {
-
-  // Define the sum() function
-  $.fn.dataTable.Api.register('sum()', function() {
-    return this.flatten().reduce(function(a, b) {
-      if (typeof a === 'string') {
-        a = a.replace(/[^\d.-]/g, '') * 1;
-      }
-      if (typeof b === 'string') {
-        b = b.replace(/[^\d.-]/g, '') * 1;
-      }
-      return a + b;
-    }, 0);
-  });
-
-
   var dataTable = $('#invoiceReports').DataTable({
-    dom: 'lBfrtip',
     "footerCallback": function(row, data, start, end, display) {
       var api = this.api();
-      $(api.column(2).footer()).html(api.column(2, {
-        page: 'current'
-      }).data().sum().toFixed(2));
-      $(api.column(3).footer()).html(api.column(3, {
-        page: 'current'
-      }).data().sum().toFixed(2));
-      $(api.column(4).footer()).html(api.column(4, {
-        page: 'current'
-      }).data().sum().toFixed(2));
+
+      // converting to interger to find total
+      var intVal = function(i) {
+        return typeof i === 'string' ?
+          i.replace(/[\$,]/g, '') * 1 :
+          typeof i === 'number' ?
+          i : 0;
+      };
+
+      // computing column Total of the current page only
+      var discountAmount = api
+        .column(6, {
+          page: 'current'
+        })
+        .data()
+        .reduce(function(a, b) {
+          return intVal(a) + intVal(b);
+        }, 0);
+
+      var deductionAmount = api
+        .column(7, {
+          page: 'current'
+        })
+        .data()
+        .reduce(function(a, b) {
+          return intVal(a) + intVal(b);
+        }, 0);
+
+      var grossAmount = api
+        .column(8, {
+          page: 'current'
+        })
+        .data()
+        .reduce(function(a, b) {
+          return intVal(a) + intVal(b);
+        }, 0);
+
+      var netAmount = api
+        .column(9, {
+          page: 'current'
+        })
+        .data()
+        .reduce(function(a, b) {
+          return intVal(a) + intVal(b);
+        }, 0);
+
+      // Update the footer with the calculated values
+      $(api.column(1).footer()).html('Total');
+      $(api.column(6).footer()).html(PHP(discountAmount).format());
+      $(api.column(7).footer()).html(PHP(deductionAmount).format());
+      $(api.column(8).footer()).html(PHP(grossAmount).format());
+      $(api.column(9).footer()).html(PHP(netAmount).format());
+
     },
+    dom: 'lBfrtip',
+    pagingType: 'full_numbers',
     buttons: [{
         extend: 'csvHtml5',
         filename: 'CSV-' + new Date().toLocaleDateString(),
         text: "CSV",
         className: 'btn btn-primary w-5 mx-2',
+        exportOptions: {
+          modifier: {
+            page: 'current',
+            search: 'applied'
+          },
+          columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        },
+        footer: true,
       },
       {
-        extend: 'excel',
+        extend: 'excelHtml5',
         filename: 'Excel-' + new Date().toLocaleDateString(),
         text: "EXCEL",
         className: 'btn btn-secondary w-5 mx-2',
         messageTop: 'Invoice Report',
         title: '',
+        exportOptions: {
+          modifier: {
+            page: 'current',
+            search: 'applied'
+          },
+          columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        },
+        footer: true,
         customize: function(xlsx) {
           var sheet = xlsx.xl.worksheets['sheet1.xml'];
-          var col1 = '';
+          var lastRow = $('row', sheet).last();
 
-          var rows = $('row', sheet);
-          var sums = [];
-
-          // Start iterating from the third row
-          for (var i = 2; i < rows.length; i++) {
-            var rowData = rows.eq(i).children('c');
-            var columns = rowData.length;
-            if (sums.length === 0) {
-              sums = new Array(columns).fill(
-                0); // Initialize array with zeros 
-            } else if (sums.length !== columns) {
-              sums.length =
-                columns; // Update length of sums array sums.fill(0); // Reset all values to 0 
+          lastRow.children('c').each(function(index) {
+            var cell = $(this);
+            if (index >= 1 && index <= 4) {
+              // Format columns 2-5 as currency and align right
+              var value = parseFloat(cell.text());
+              cell.attr('s', '5');
+              cell.attr('t', 'n');
+              var valueNode = cell.children('v');
+              valueNode.text(PHP(value).format());
+              valueNode[0].childNodes[0].nodeValue = PHP(value).format(); // Update existing cell value
+              cell.attr('s', '2'); // Align right
+              cell.attr('t', 'n');
             }
-            rowData.each(function(cellIndex) {
-              if (cellIndex >= 5 && cellIndex <= 8 && $(this).text()) {
-                sums[cellIndex] += parseFloat($(this).text());
-              }
-            });
-          }
-          var sumsRow = '<row>';
-          sumsRow += '<c t="str"><v>Total:</v></c>';
-          sumsRow += '<c t="str"><v></v></c>';
-          sumsRow += '<c t="str"><v></v></c>';
-          sumsRow += '<c t="str"><v></v></c>';
-          sumsRow += '<c t="str"><v></v></c>';
-          for (var j = 5; j <= 8; j++) {
-            sumsRow += '<c t="n" style="text-align:right;"><v>' + PHP(sums[j]).format() + '</v></c>';
-          }
-          sumsRow += '</row>'; // 
-          $('sheetData', sheet).append(sumsRow);
-          // $('row:last-child', sheet).after(sumsRow);
+          });
+
         }
+
+
       }, {
         extend: 'pdfHtml5',
         text: "PDF",
@@ -160,93 +208,53 @@ $(document).ready(function() {
         className: 'btn btn-success w-5 mx-2',
         title: 'Invoice Reports',
         footer: true,
+        exportOptions: {
+          modifier: {
+            order: 'index',
+            page: 'current',
+            search: 'applied'
+          },
+          columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        }, // export only current page
         customize: function(doc) {
-          var col1 = '';
+          //   var col1 = '';
           doc.content[1].table.body.forEach(function(row, rowIndex) {
             if (rowIndex > 0) { // Exclude first row
               row.forEach(function(cell, cellIndex) {
                 if (cellIndex >= 5 && cellIndex <= 8) { // Columns 5, 6, 7, 8
                   cell.alignment = 'right';
-
                 }
-
-
               });
             }
           });
-
-          var rows = doc.content[1].table.body;
-          var columns = rows[0].length;
-          var sums = new Array(columns).fill(0); // Initialize array with zeros
-          for (var i = 1; i < rows.length; i++) {
-            var rowData = rows[i];
-
-            for (var j = 0; j < rowData.length; j++) {
-              var colData = rowData[j];
-              // Do something with the column data, e.g. add to the sum
-              if (j >= 5 && j <= 8 && colData) {
-                sums[j] += parseFloat(colData.text.replaceAll(',', ''));
-              }
-            }
-          }
-          // Add the sums row to the table
-          var sumsRow = new Array(columns).fill("");
-          sumsRow[0] = {
-            text: "TOTAL",
-            bold: true
-          };
-          for (var j = 5; j <= 8; j++) {
-            sumsRow[j] = {
-              text: PHP(sums[j]).format(),
-              alignment: 'right',
-              bold: true
-            }; // Format the sum as a decimal number with two decimal places and align it to the right
-
-          }
-          rows.push(sumsRow);
-
           doc.pageOrientation = 'landscape';
           doc.pageSize = 'A4'; // set orientation to landscape
+        },
 
-        }
       }, {
         extend: 'print',
         text: "PRINT",
         filename: 'Print-' + new Date().toLocaleDateString(),
         className: 'btn btn-info w-5 mx-2',
-        customize: function(win) {
-          $(win.document.body).find('table').addClass('display').css('font-size', '12px');
-          $(win.document.body).find('tr:nth-child(odd) td').each(function(index) {
+        footer: true,
+        exportOptions: {
+          modifier: {
+            order: 'index',
+            page: 'current',
+            search: 'applied'
+          },
+          columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        }, // export only current page
+        autoPrint: false, // disable print dialog
+        customize: function(doc) {
+          $(doc.document.body).find('table').addClass('display').css('font-size', '12px');
+          $(doc.document.body).find('tr:nth-child(odd) td').each(function(index) {
             $(this).css('background-color', '#D0D0D0');
           });
-          $(win.document.body).find('h1').html('<h2> <center>Invoice Reports </h2 > ');
+          $(doc.document.body).find('h1').html('<h2> <center>Invoice Reports </h2 > ');
           var style = $('<style>@page {size: landscape;} </style>');
-          $(win.document.head).append(style);
+          $(doc.document.head).append(style);
 
-          var table = $(win.document.body).find('table').first();
-          var total1 = 0;
-          var total2 = 0;
-          var total3 = 0;
-          var total4 = 0;
-          table.find('tr').each(function() {
-            var row = $(this);
-            var col1 = parseFloat($('td', row).eq(5).text().replaceAll(',', ''));
-            var col2 = parseFloat($('td', row).eq(6).text().replaceAll(',', ''));
-            var col3 = parseFloat($('td', row).eq(7).text().replaceAll(',', ''));
-            var col4 = parseFloat($('td', row).eq(8).text().replaceAll(',', ''));
-
-            total1 += col1 ? col1 : 0;
-            total2 += col2 ? col2 : 0;
-            total3 += col3 ? col3 : 0;
-            total4 += col4 ? col4 : 0;
-          });
-          table.append(
-            '<tr><td></td><td></td><td></td><td></td><td class="fw-bold">Total:</td><td class="text-end fw-bold">' +
-            PHP(total1).format() +
-            '</td><td class="text-end fw-bold">' +
-            PHP(total2).format() + '</td><td class="text-end fw-bold">' + PHP(total3).format() +
-            '</td><td class="text-end fw-bold">' + PHP(total4).format() +
-            '</td><td></td><td></td></tr>');
         },
       }
     ],
@@ -255,13 +263,16 @@ $(document).ready(function() {
       $(row).find('td').css('vertical-align', 'middle');
     },
     "columns": [{
+        "title": "invoice_id"
+      },
+      {
         "title": "Invoice #"
       },
       {
-        "title": "Status"
+        "title": "Profile Name"
       },
       {
-        "title": "Profile Name"
+        "title": "Status"
       },
       {
         "title": "Position"
@@ -288,12 +299,20 @@ $(document).ready(function() {
         "title": "Due Date"
       }
     ],
+    order: [
+      [1, 'desc']
+    ],
     "columnDefs": [{
-        targets: [5, 6, 7, 8],
+        targets: 0,
+        visible: false,
+        searchable: false,
+      },
+      {
+        targets: [6, 7, 8, 9],
         className: 'text-end'
       },
       {
-        targets: [9, 10],
+        targets: [10, 11],
         className: 'text-center'
       },
     ],
@@ -380,9 +399,10 @@ $(document).ready(function() {
             }
 
             let newRow = table.row.add([
+              item.id,
               item.invoice_no,
-              item.invoice_status,
               item.profile.user.first_name + " " + item.profile.user.last_name,
+              item.invoice_status,
               item.profile.position,
               discountType,
               PHP(dollarAmountofDisountTotal).format(),
@@ -394,7 +414,7 @@ $(document).ready(function() {
               moment(item.due_date).format("L"),
             ]).draw().node();
             // add class to invoice status cell based on its value
-            let invoiceStatusCell = $(newRow).find("td:eq(1)");
+            let invoiceStatusCell = $(newRow).find("td:eq(2)");
             if (item.invoice_status == "Paid") {
               invoiceStatusCell.css("background-color", "green");
               invoiceStatusCell.css("color", "white");
@@ -464,9 +484,10 @@ $(document).ready(function() {
 
 
             let newRow = table.row.add([
+              item.id,
               item.invoice_no,
-              item.invoice_status,
               item.profile.user.first_name + " " + item.profile.user.last_name,
+              item.invoice_status,
               item.profile.position,
               discountType,
               PHP(dollarAmountofDisountTotal).format(),
@@ -478,7 +499,7 @@ $(document).ready(function() {
               moment(item.due_date).format("L"),
             ]).draw().node();
             // add class to invoice status cell based on its value
-            let invoiceStatusCell = $(newRow).find("td:eq(1)");
+            let invoiceStatusCell = $(newRow).find("td:eq(2)");
             if (item.invoice_status == "Paid") {
               invoiceStatusCell.css("background-color", "green");
               invoiceStatusCell.css("color", "white");

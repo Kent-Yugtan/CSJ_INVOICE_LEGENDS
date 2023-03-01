@@ -138,6 +138,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
   // FOR REPORT
   Route::get('reports/invoiceReport_load', [InvoiceController::class, 'invoiceReport_load']);
   Route::get('reports/invoiceReport_click', [InvoiceController::class, 'invoiceReport_click']);
+
+  Route::get('reports/deductionReport_load', [InvoiceController::class, 'deductionReport_load']);
+  Route::get('reports/deductionReport_click', [InvoiceController::class, 'deductionReport_click']);
+  Route::post('reports/deductionDetails/{id}', [InvoiceController::class, 'deductionDetails']);
 });
 
 
