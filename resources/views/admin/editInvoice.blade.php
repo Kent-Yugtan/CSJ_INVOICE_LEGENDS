@@ -285,9 +285,9 @@
                     <div class="col-4 mb-3">
                       <div class="row">
                         <div class="col">
-                          <div class=" form-group">
-                            <label class=" formGroupExampleInput2">Due Date</label>
+                          <div class="form-floating form-group">
                             <input id="due_date" name="due_date" type="date" class="form-control">
+                            <label for="due_date">Due Date</label>
                           </div>
                         </div>
                       </div>
@@ -296,9 +296,9 @@
                     <div class="col-12 mb-3">
                       <div class="row">
                         <div class="col">
-                          <div class=" form-group">
-                            <label class=" formGroupExampleInput2">Description</label>
+                          <div class="form-floating form-group">
                             <input id="invoice_description" name="invoice_description" type="text" class="form-control">
+                            <label for="invoice_description">Description</label>
                           </div>
                         </div>
                       </div>
@@ -345,20 +345,20 @@
                         </div>
 
                         <div class="col">
-                          <div class="form-group">
-                            <label class="formGroupExampleInput2 label_discount_amount">Discount
-                              Amount ($)</label>
+                          <div class="form-floating form-group">
                             <input type="text" step="any" style="text-align:right;" name="discount_amount"
                               id="discount_amount" class="form-control" />
+                            <label for="discount_amount label_discount_amount">Discount
+                              Amount ($)</label>
                           </div>
                         </div>
                         <div class="col">
-                          <div class="form-group">
-                            <label class="formGroupExampleInput2 label_discount_total">Discount
-                              Total ($)</label>
+                          <div class="form-floating form-group">
                             <input type="text" disabled style="text-align:right; border:0px;background-color:white;"
                               onkeypress="return onlyNumberKey(event)" name="discount_total" id="discount_total"
                               class="form-control" />
+                            <label for="discount_total label_discount_total">Discount
+                              Total ($)</label>
                           </div>
                         </div>
                       </div>
@@ -1084,54 +1084,57 @@ $(document).ready(function() {
               add_rows += '<div class="row row1">';
 
               add_rows += '<div class="col-md-4 mb-3">';
-              add_rows += '<div class="form-group">';
-              add_rows +=
-                '<label class="formGroupExampleInput2">Item Desctiption</label>';
+              add_rows += '<div class="form-floating form-group">';
+
               add_rows +=
                 '<input type="text" value="' + item.id +
                 '" name="item_id" id="item_id" class="form-control item_id" hidden/>';
               if (item.item_description) {
                 add_rows += '<input type="text" value="' + item.item_description +
                   '" name="item_description" id="item_description" class="form-control item_description" />';
+                add_rows +=
+                  '<label for="item_description">Item Desctiption</label>';
               } else {
                 add_rows +=
                   '<input type="text" value="N/A" name="item_description" id="item_description" class="form-control item_description" />';
+                add_rows +=
+                  '<label for="item_description">Item Desctiption</label>';
               }
               add_rows += '</div>';
               add_rows += '</div>';
 
               add_rows += '<div class="col-md-2 mb-3">';
-              add_rows += '<div class="form-group">';
-              add_rows +=
-                '<label class="formGroupExampleInput2">Quantity</label>';
+              add_rows += '<div class="form-floating form-group">';
+
               add_rows +=
                 '<input type="text" value=' + PHP(item.quantity)
                 .format() +
                 ' step="any" maxlength="4" name="quantity" id="quantity" style="text-align:right;" class="form-control multi quantity" />';
+              add_rows +=
+                '<label for="quantity">Quantity</label>';
               add_rows += '</div>';
               add_rows += ' </div>';
 
               add_rows += '<div class="col-md-3 mb-3">';
-              add_rows += '<div class="form-group">';
-              add_rows +=
-                '<label class="formGroupExampleInput2" for="form3Example2">Rate</label>';
+              add_rows += '<div class="form-floating form-group">';
               add_rows +=
                 '<input type="text" value=' + PHP(item.rate)
                 .format() +
                 ' step="any" name="rate" id="rate" style="text-align:right;" class="form-control multi rate" />';
+              add_rows +=
+                '<label for="rate" for="form3Example2">Rate</label>';
               add_rows += '</div>';
               add_rows += '</div>';
 
               add_rows += '<div class="col-md-2 mb-3">';
-              add_rows += '<div class="form-group">';
-              add_rows +=
-                '<label class="formGroupExampleInput2" for="form3Example2">Amount</label>';
-              // style="text-align:right;border:none;background-color:white"
+              add_rows += '<div class="form-floating form-group">';
               add_rows +=
                 '<input type="text" value=' + PHP(item
                   .total_amount)
                 .format() +
                 ' style="text-align:right;border:none;background-color:white" disabled name="amount" id="amount" class="form-control amount" />';
+              add_rows +=
+                '<label for="amount" for="form3Example2">Amount</label>';
               add_rows += '</div>';
               add_rows += '</div>';
 
@@ -1168,10 +1171,7 @@ $(document).ready(function() {
               add_rows = '';
               add_rows += '<div class="row mb-3">';
               add_rows += '<div class="col-8">';
-              add_rows += '<div class="form-group w-100">';
-              add_rows +=
-                '<label class="formGroupExampleInput2">Deduction Type</label>';
-
+              add_rows += '<div class="form-floating form-group w-100">';
               add_rows +=
                 '<input type="text" value=' + item2.id +
                 ' id="deduction_id" name="deduction_id" class="form-control deduction_id" hidden>'
@@ -1182,17 +1182,18 @@ $(document).ready(function() {
                 .profile_deduction_types.deduction_type
                 .deduction_name + '</option> ';
               add_rows += '</select>';
-
+              add_rows +=
+                '<label for="profile_deduction_type">Deduction Type</label>';
               add_rows += '</div>';
               add_rows += '</div>';
               add_rows += '<div class="col-4">';
-              add_rows += '<div class="form-group ">';
-              add_rows +=
-                '<label class="formGroupExampleInput2">Deduction Amount (Php)</label>';
+              add_rows += '<div class="form-floating form-group ">';
               add_rows +=
                 '<input type="text" value="' + PHP(item2.amount)
                 .format() +
                 '" style="text-align:right;" id="deduction_amount" name="deduction_amount" class="form-control multi2 deduction_amount" />';
+              add_rows +=
+                '<label for="deduction_amount">Deduction Amount (Php)</label>';
               add_rows += '</div>';
               add_rows += '</div>';
               add_rows += '</div>';

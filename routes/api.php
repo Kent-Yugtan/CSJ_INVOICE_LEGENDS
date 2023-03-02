@@ -145,7 +145,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 
-// //TESTING EMAIL 
+//TESTING EMAIL 
 // Route::get('testEmail', function () {
 //   $data = Invoice::with(['profile.user', 'deductions.profile_deduction_types.deduction_type', 'invoice_items'])
 //     ->orderBy('id', 'Desc')->first();

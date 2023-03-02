@@ -69,6 +69,12 @@
             </div>
 
             <div class="form-floating mb-3">
+              <input name="phone_number" id="phone_number" type="text" class="form-control" placeholder="Phone Number">
+              <span id="error_address" class="text-danger"></span>
+              <label for="phone_number" style="color: #A4A6B3;">Phone Number</label>
+            </div>
+
+            <div class="form-floating mb-3">
               <input name="address" id="address" type="text" class="form-control @error('address') is-invalid @enderror"
                 placeholder="Address">
               <span id="error_address" class="text-danger"></span>
@@ -233,7 +239,7 @@ $(document).ready(function() {
     $("div.spanner").addClass("show");
     setTimeout(function() {
       $("div.spanner").removeClass("show");
-    }, 2000)
+    }, 1500)
   })
   let toast1 = $('.toast1');
   toast1.toast({

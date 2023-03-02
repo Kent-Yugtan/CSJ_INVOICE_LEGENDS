@@ -219,12 +219,14 @@
           <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-invoice" role="tabpanel"
               aria-labelledby="pills-invoice-tab">
-              <div class="col w-100">
-                <div class="input-group">
+              <div class="row">
+                <div class="col-4">
                   <button style="color:white; background-color: #CF8029;" data-bs-toggle="modal"
                     data-bs-target="#exampleModal" type="submit" id="button-addon2" name="button-addon2"
-                    class="btn form-check-inline pe-3 "><i class="fa fa-plus pe-1"></i>Add
+                    class="btn form-check-inline pe-3 w-100 "><i class="fa fa-plus pe-1"></i>Add
                     Invoice</button>
+                </div>
+                <div class="col-4">
                   <select class="form-check-inline form-select" id="filter_all_invoices">
                     <!-- <option selected value="" disabled>Filter</option> -->
                     <option value="All">All</option>
@@ -233,35 +235,38 @@
                     <option value="Pending">Pending</option>
                     <option value="Overdue">Overdue</option>
                   </select>
+                </div>
+                <div class="col-4">
+
                   <div class="form-group has-search">
                     <span class="fa fa-search form-control-feedback"></span>
                     <input type="text" class="form-control" id="search_invoice" placeholder="Search">
                   </div>
                 </div>
-              </div>
-              <div class="card-body table-responsive">
-                <table style=" color: #A4A6B3;font-size: 14px;" class="table table-hover" id="dataTable_invoice">
-                  <thead>
-                    <tr>
-                      <th>Invoice #</th>
-                      <th>Payment Status</th>
-                      <th>Date Created</th>
-                      <th>Due Date</th>
-                      <th>Total Amount</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
-              </div>
-              <div class="row mx-3">
-                <div class="col-xl-6">
-                  <div class="page_showing" id="tbl_showing_invoice"></div>
+                <div class="card-body table-responsive">
+                  <table style=" color: #A4A6B3;font-size: 14px;" class="table table-hover" id="dataTable_invoice">
+                    <thead>
+                      <tr>
+                        <th>Invoice #</th>
+                        <th>Payment Status</th>
+                        <th>Date Created</th>
+                        <th>Due Date</th>
+                        <th>Total Amount</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
                 </div>
-                <div class="col-xl-6">
-                  <ul style="float:right" class="pagination pagination-sm flex-sm-wrap" id="tbl_pagination_invoice">
-                  </ul>
+                <div class="row mx-3">
+                  <div class="col-xl-6">
+                    <div class="page_showing" id="tbl_showing_invoice"></div>
+                  </div>
+                  <div class="col-xl-6">
+                    <ul style="float:right" class="pagination pagination-sm flex-sm-wrap" id="tbl_pagination_invoice">
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
@@ -540,7 +545,7 @@
                       <div class="col-6 mb-3">
                         <div class="pb-3">
                           <button type="button" class="btn btn-secondary w-100"
-                            style=" color:#CF8029; background-color:white; " data-bs-dismiss="modal">Close</button>
+                            style="color:#CF8029; background-color:white; " data-bs-dismiss="modal">Close</button>
                         </div>
                       </div>
                       <div class="col-6 mb-3">
@@ -586,19 +591,17 @@
         <div class="modal-content ">
           <div class="modal-body ">
             <div class="row">
-              <h5> Create Deduction </h5>
+              <h5> Add Deduction </h5>
               <form id="deductiontype_store" method="POST" action="javascript:void(0)" class="row g-3 needs-validation"
                 novalidate>
                 @csrf
                 <input type="text" id="createDeduction_profile_id" hidden>
-
                 <div class="form-floating form-group mt-3" id="select_deduction_name">
-
                 </div>
 
                 <div class="form-group">
                   <div class="form-floating">
-                    <input id=" createDeduction_deduction_amount" name="createDeduction_deduction_amount" type="text"
+                    <input id="createDeduction_deduction_amount" name="createDeduction_deduction_amount" type="text"
                       class="createDeduction_deduction_amount form-control" placeholder="Amount">
                     <label for="createDeduction_deduction_amount">Amount</label>
                   </div>
@@ -735,7 +738,7 @@
           </div>
           <div class="row pt-3 px-3">
             <div class="col">
-              <span id="profilededuction_id" hidden></span>
+              <span id="profilededuction_id"></span>
               <span class="text-muted"> Do you really want to delete these record? This process cannot be
                 undone.</span>
             </div>
@@ -787,7 +790,7 @@ $(document).ready(function() {
       show_Profilededuction_Table_Active();
       show_data();
       show_edit()
-    }, 2000)
+    }, 1500)
 
   })
 
@@ -841,7 +844,7 @@ $(document).ready(function() {
       $("#bank_location").prop('disabled', false);
       $("#gcash_no").prop('disabled', false);
       $("#date_hired").prop('disabled', false);
-    }, 2000);
+    }, 1500);
   })
 
   // UPDATE INVOICE STATUS
@@ -1398,6 +1401,128 @@ $(document).ready(function() {
 
   })
 
+  $(document).on('click', '#tableDeleteProfileDeductioType .deleteProfileDeduction', function(
+    e) {
+    e.preventDefault();
+    let row = $(this).closest("td");
+    let profileDeductionType_id = row.find(".editProfileDeduction").val();
+    $("#profilededuction_id").html(profileDeductionType_id);
+    // console.log("delete", profileDeductionType_id);
+
+  })
+
+  // SHOW EDIT PROFILE DEDUCTION TYPE
+  $(document).on('click', '#tableDeleteProfileDeductioType .editProfileDeduction', function(
+    e) {
+    e.preventDefault();
+    $('#profileDeductionType_id').val($(this).val());
+    let profileDeductionType_id = $('#profileDeductionType_id').val();
+    console.log("EDIT FOR UPATE", profileDeductionType_id);
+
+    axios.post(apiUrl + '/api/showProfileDeductionTypes/' +
+      profileDeductionType_id, {
+        headers: {
+          Authorization: token
+        },
+      }).then(function(response) {
+      let data = response.data;
+
+      $('#edit_profileDeductionType_name').val(data.data.deduction_type_name);
+      $('#edit_profileDeductionType_amount').val(PHP(data.data.amount).format());
+
+    }).catch(function(error) {
+      console.log("ERROR", error);
+    })
+  })
+
+
+  $('.select2-multiple').select2({
+    placeholder: "Select",
+    // allowClear: true
+  });
+
+  //  For creating invoice codes
+  const api = "https://api.exchangerate-api.com/v4/latest/USD";
+
+  display_item_rows();
+
+  $("#discount_amount").addClass('d-none');
+  $("#discount_total").addClass('d-none');
+  $(
+    ".label_discount_amount").addClass('d-none');
+  $(".label_discount_total").addClass('d-none');
+
+  $('input[type=radio][id=discount_type]').change(function() {
+    console.log("DISCOUNT TYPE", $(this).val());
+    if (subtotal == 0) {
+      $("#discount_amount").addClass('d-none');
+      $("#discount_total").addClass('d-none');
+      $(".label_discount_amount").addClass('d-none');
+      $(".label_discount_total").addClass('d-none');
+    } else {
+      if ($(this).val() === 'Fixed') {
+        //write your logic here
+        // console.log("FIXED");
+        $("#discount_amount").removeClass('d-none');
+        $("#discount_total").removeClass('d-none');
+        $(".label_discount_amount").removeClass('d-none');
+        $(".label_discount_total").removeClass('d-none');
+
+        $('#discount_amount').val('0.00');
+        $('#discount_total').val('0.00');
+
+      } else if ($(this).val() === 'Percentage') {
+        //write your logic here
+        // console.log("PERCENTAGE");
+        $("#discount_amount").removeClass('d-none');
+        $("#discount_total").removeClass('d-none');
+        $(".label_discount_amount").removeClass('d-none');
+        $(".label_discount_total").removeClass('d-none');
+
+        $('#discount_amount').val('0.00');
+        $('#discount_total').val('0.00');
+      }
+    }
+    subtotal();
+    Additems_total();
+  })
+
+  $('#discount_amount').on('keyup', function() {
+    subtotal();
+  })
+
+  function subtotal() {
+    let discount_type = $("input[id='discount_type']:checked").val();
+    let discount_amount = $('#discount_amount').val();
+    let discount_total = $('#discount_total').val();
+    let subtotal = $('#subtotal').val();
+    var sum = 0;
+
+    $('#show_items .amount').each(function() {
+      sum += Number($(this).val().replaceAll(',', ''));
+    });
+
+    if (discount_type == 'Fixed') {
+      $('#discount_total').val(PHP(parseFloat(discount_amount ? discount_amount : 0) * 1).format());
+      let sub_total = (sum - $('#discount_total').val().replaceAll(',', ''));
+      $('#subtotal').val(PHP(sub_total).format());
+
+      let dollar_amount = $('#subtotal').val();
+      $('#dollar_amount').val(PHP(dollar_amount).format());
+      DeductionItems_total()
+    } else if (discount_type == 'Percentage') {
+
+      let percentage = parseFloat(((discount_amount ? discount_amount : 0) / 100) * sum);
+      $('#discount_total').val(PHP(percentage).format());
+      let sub_total = (parseFloat(sum) - parseFloat(percentage));
+      $('#subtotal').val(PHP(sub_total).format());
+      $('#dollar_amount').val(PHP(sub_total).format());
+      DeductionItems_total()
+    }
+    getResults_Converted();
+
+  }
+
   $('#profilededuction_delete').on('click', function(e) {
     e.preventDefault();
 
@@ -1457,129 +1582,6 @@ $(document).ready(function() {
       }
     })
   });
-
-  $(document).on('click', '#tableDeleteProfileDeductioType .deleteProfileDeduction', function(
-    e) {
-    e.preventDefault();
-    let row = $(this).closest("td");
-    let profileDeductionType_id = row.find(".editProfileDeduction").val();
-    $("#profilededuction_id").html(profileDeductionType_id);
-    // console.log("delete", profileDeductionType_id);
-
-  })
-
-  // SHOW EDIT PROFILE DEDUCTION TYPE
-  $(document).on('click', '#tableDeleteProfileDeductioType .editProfileDeduction', function(
-    e) {
-    e.preventDefault();
-    $('#profileDeductionType_id').val($(this).val());
-    let profileDeductionType_id = $('#profileDeductionType_id').val();
-    console.log("EDIT FOR UPATE", profileDeductionType_id);
-
-    axios.post(apiUrl + '/api/showProfileDeductionTypes/' +
-      profileDeductionType_id, {
-        headers: {
-          Authorization: token
-        },
-      }).then(function(response) {
-      let data = response.data;
-
-      $('#edit_profileDeductionType_name').val(data.data.deduction_type_name);
-      $('#edit_profileDeductionType_amount').val(data.data.amount);
-
-    }).catch(function(error) {
-      console.log("ERROR", error);
-    })
-  })
-
-
-  $('.select2-multiple').select2({
-    placeholder: "Select",
-    // allowClear: true
-  });
-
-  //  For creating invoice codes
-  const api = "https://api.exchangerate-api.com/v4/latest/USD";
-
-  display_item_rows();
-
-  $("#discount_amount").addClass('d-none');
-  $("#discount_total").addClass('d-none');
-  $(
-    ".label_discount_amount").addClass('d-none');
-  $(".label_discount_total").addClass('d-none');
-
-  $('input[type=radio][id=discount_type]').change(function() {
-
-    if (subtotal == 0) {
-      $("#discount_amount").addClass('d-none');
-      $("#discount_total").addClass('d-none');
-      $(".label_discount_amount").addClass('d-none');
-      $(".label_discount_total").addClass('d-none');
-    } else {
-      if (this.value == 'Fixed') {
-        //write your logic here
-        // console.log("FIXED");
-        $("#discount_amount").removeClass('d-none');
-        $("#discount_total").removeClass('d-none');
-        $(".label_discount_amount").removeClass('d-none');
-        $(".label_discount_total").removeClass('d-none');
-
-        $('#discount_amount').val('0.00');
-        $('#discount_total').val('0.00');
-
-      } else if (this.value == 'Percentage') {
-        //write your logic here
-        // console.log("PERCENTAGE");
-        $("#discount_amount").removeClass('d-none');
-        $("#discount_total").removeClass('d-none');
-        $(".label_discount_amount").removeClass('d-none');
-        $(".label_discount_total").removeClass('d-none');
-
-        $('#discount_amount').val('0.00');
-        $('#discount_total').val('0.00');
-      }
-    }
-    subtotal();
-    Additems_total();
-  })
-
-  $('#discount_amount').on('keyup', function() {
-    subtotal();
-  })
-
-  function subtotal() {
-    let discount_type = $("input[id='discount_type']:checked").val();
-    let discount_amount = $('#discount_amount').val();
-    let discount_total = $('#discount_total').val();
-    let subtotal = $('#subtotal').val();
-    var sum = 0;
-
-    $('#show_items .amount').each(function() {
-      sum += Number($(this).val().replaceAll(',', ''));
-    });
-
-    if (discount_type == 'Fixed') {
-      $('#discount_total').val(PHP(parseFloat(discount_amount ? discount_amount : 0) * 1).format());
-      let sub_total = (sum - $('#discount_total').val().replaceAll(',', ''));
-      $('#subtotal').val(PHP(sub_total).format());
-
-      let dollar_amount = $('#subtotal').val();
-      $('#dollar_amount').val(PHP(dollar_amount).format());
-      DeductionItems_total()
-    } else if (discount_type == 'Percentage') {
-
-      let percentage = parseFloat(((discount_amount ? discount_amount : 0) / 100) * sum);
-      $('#discount_total').val(PHP(percentage).format());
-      let sub_total = (parseFloat(sum) - parseFloat(percentage));
-      $('#subtotal').val(PHP(sub_total).format());
-      $('#dollar_amount').val(PHP(sub_total).format());
-      DeductionItems_total()
-    }
-    getResults_Converted();
-
-  }
-
   // FUNCTION FOR DISPLAY RESULTS AND CONVERTED AMOUNT
   function getResults_Converted() {
     fetch(`${api}`)
@@ -1826,10 +1828,10 @@ $(document).ready(function() {
     $("div.spanner").addClass("show");
     setTimeout(function() {
       $("div.spanner").removeClass("show");
+      $('#invoice_items').trigger('reset'); // reset the form
       show_data();
     }, 2000)
 
-    $('#exampleModal input').val('');
     $('#show_deduction_items').empty();
     $('textarea').val('');
   });
@@ -1903,9 +1905,9 @@ $(document).ready(function() {
                 '<select class="form-control profile_deduction_type" id="profile_deduction_type" name="profile_deduction_type">';
               add_rows += '<option value=' + item.id +
                 '>' + item.deduction_type_name + '</option> ';
+              add_rows += '</select>';
               add_rows +=
                 '<label for="profile_deduction_type">Deduction Type</label>';
-              add_rows += '</select>';
 
               add_rows += '</div>';
               add_rows += '</div>';
@@ -2064,7 +2066,7 @@ $(document).ready(function() {
           $("div.spanner").removeClass("show");
           $('.toast1 .toast-title').html('Create Invoices');
           $('.toast1 .toast-body').html(response.data.message);
-          $('#exampleModal input').val('');
+          $('#invoice_items').trigger('reset'); // reset the form
           $('#show_deduction_items').empty();
           $('textarea').val('');
           $('#dataTable_deduction tbody').empty();
@@ -2116,7 +2118,7 @@ $(document).ready(function() {
 
     let profile_id = $("#createDeduction_profile_id").val();
     let deduction_type_id = $("#createDeduction_deduction_name").val();
-    let amount = $("#createDeduction_deduction_amount").val();
+    let amount = $("#createDeduction_deduction_amount").val().replaceAll(',', '');
 
     let data = {
       profile_id: profile_id,
@@ -2227,11 +2229,11 @@ $(document).ready(function() {
         },
       }).then(function(response) {
         let data = response.data;
-        // console.log("SUCCESS", data);
+        console.log("SUCCESS", data);
         if (data.success) {
           {
-            $('#createDeduction_deduction_amount').val(data.data
-              .deduction_amount);
+            $('#createDeduction_deduction_amount').val(PHP(data.data
+              .deduction_amount).format());
           }
         }
       }).catch(function(error) {
@@ -2273,7 +2275,7 @@ $(document).ready(function() {
         .then(function(response) {
           data = response.data;
           if (data.success) {
-            console.log("SUCCESS", data);
+            console.log("PROFILE DEDUCTION SUCCESS", data);
             if (data.data.data.length > 0) {
               data.data.data.map((item) => {
                 let newdate = new Date(item.created_at);
@@ -2283,7 +2285,6 @@ $(document).ready(function() {
 
                 let tr = '<tr style="vertical-align: middle;">';
 
-                tr += '<td hidden>' + item.invoice.id + '</td>';
                 tr += '<td>' + item.invoice.invoice_no + '</td>';
                 if (item.invoice.invoice_status == "Cancelled") {
                   tr +=
@@ -2311,6 +2312,8 @@ $(document).ready(function() {
                   .format() + '</td>';
                 tr += '<td class="text-end">' + moment.utc(item.created_at).tz('America/New_York').format(
                   'MM/DD/YYYY'), +'</td>';
+
+                tr += '</tr>';
 
                 $("#dataTable_deduction tbody").append(tr);
                 return ''
@@ -2364,9 +2367,54 @@ $(document).ready(function() {
         });
     }
   }
+
+  $(document).on('click', '#dataTable_deduction .deleteButton', function(
+    e) {
+    e.preventDefault();
+    let row = $(this).closest("td");
+    let deleteProfileDeductionType_id = row.find(".deleteButton").val();
+    $("#deleteProfileDeductionType_id").html(deleteProfileDeductionType_id);
+    console.log("deleteProfileDeductionType_id", deleteProfileDeductionType_id);
+  })
+
+  $('#deleteProfileDeductionTypeButton').on('click', function(e) {
+    e.preventDefault();
+
+    let deductionType_id = $('#deductionType_id').html();
+    axios.post(apiUrl + '/api/deleteDeductionType/' + deductionType_id, {
+      headers: {
+        Authorization: token,
+      },
+    }).then(function(response) {
+      let data = response.data
+      if (data.success) {
+        $('#deleteModal').modal('hide');
+        $('html,body').animate({
+          scrollTop: $('#loader_load').offset().top
+        }, 'smooth');
+        $('div.spanner').addClass('show');
+        setTimeout(function() {
+          $('div.spanner').removeClass('show');
+          $('.toast1 .toast-title').html('Invoice Configuration');
+          $('.toast1 .toast-body').html(response.data.message);
+          toast1.toast('show');
+          show_data();
+        }, 2000);
+      }
+    }).catch(function(error) {
+      console.log("ERROR", error);
+    });
+  });
+
+
   $("#createDeduction_deduction_amount").focusout(function() {
     let amount = $(this).val();
     $('#createDeduction_deduction_amount').val(PHP(amount).format());
+  });
+
+  $("#edit_profileDeductionType_amount").focusout(function() {
+    let amount = $(this).val();
+    $('#edit_profileDeductionType_amount').val(PHP(amount).format());
   });
 
   // SHOW DEDUCTIONS DATA IN TABLE
@@ -2418,11 +2466,11 @@ $(document).ready(function() {
     console.log("UPDATE");
     let profileDeductionType_id = $('#profileDeductionType_id').val();
     let profileDeductionType_name = $('#edit_profileDeductionType_name').val();
-    let profileDeductionType_amount = $('#edit_profileDeductionType_amount').val();
+    let profileDeductionType_amount = $('#edit_profileDeductionType_amount').val().replaceAll(',', '');
 
     let data = {
       id: profileDeductionType_id,
-      amount: parseFloat(profileDeductionType_amount).toFixed(2),
+      amount: profileDeductionType_amount,
       deduction_type_name: profileDeductionType_name
     };
     axios.post(apiUrl + '/api/editProfileDeductionTypes', data, {
@@ -2470,7 +2518,6 @@ $(document).ready(function() {
     })
 
   })
-
 
   Tabs();
   // TABS SELECTOR WONT CHANGE IF REFRESH
