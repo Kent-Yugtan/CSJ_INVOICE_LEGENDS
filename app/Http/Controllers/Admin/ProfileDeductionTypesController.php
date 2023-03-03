@@ -119,7 +119,7 @@ class ProfileDeductionTypesController extends Controller
 
     $profileDeductionType_id = $request->id;
     if ($profileDeductionType_id) {
-
+      // THIS QUERY CAN DELETE DEDUCTIONS AND UPDATE THE DELETED AMOUNT TO THE INVOICE
       $data = ProfileDeductionTypes::with('deductions')->find($profileDeductionType_id);
       if ($data) {
         $last_data = $data;
@@ -131,7 +131,8 @@ class ProfileDeductionTypesController extends Controller
             'message' => 'Data deleted successfully',
             'data' => $delete_data,
           ];
-        } else {
+        }
+        else {
           if ($deductions) {
             if ($data->delete()) {
               if ($deductions[0]->invoice_id) {
@@ -168,6 +169,7 @@ class ProfileDeductionTypesController extends Controller
         }
         return response()->json($ret, 200);
       } else {
+
         $delete_data = ProfileDeductionTypes::where('id', $profileDeductionType_id)->delete();
         return response()->json([
           'success' => true,

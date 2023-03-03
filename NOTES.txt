@@ -1,0 +1,17 @@
+Completed
+Page -> deductions functions(CRUD) and Design
+Dashboard -> Done Reviewing
+Profile -> Add Profile -> Design
+Current Profile -> Design
+Inactive Profile -> Design
+
+
+On Going
+
+
+
+
+
+
+
+

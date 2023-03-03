@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Deduction;
+use App\Models\EmailConfig;
 use App\Models\Invoice;
 use App\Models\InvoiceConfig;
 use App\Models\InvoiceItems;
@@ -12,9 +13,9 @@ use App\Models\ProfileDeductionTypes;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\View;
 use Carbon\Carbon as CarbonCarbon;
-
+use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class InvoiceController extends Controller
 {
@@ -112,11 +113,6 @@ class InvoiceController extends Controller
     }
   }
 
-  // public function add_invoice()
-  // {
-  //     return view('invoice.add');
-  // }
-
   // CHECK PROFILE
   public function check_profile(Request $request)
   {
@@ -136,6 +132,15 @@ class InvoiceController extends Controller
         'data' => $check_profile,
       ], 200);
     }
+  }
+
+  public function reports_invoice()
+  {
+    return view('reports.invoice');
+  }
+  public function reports_deduction()
+  {
+    return view('reports.deduction');
   }
 
   public function current()
@@ -236,6 +241,8 @@ class InvoiceController extends Controller
         'invoice_status' => $request->invoice_status,
         'date_received' => $date,
       ])->save();
+      $this->sendEmail_status_admin($invoice_id);
+      $this->sendEmail_status_profile($invoice_id);
     } else {
       $data->fill([
         'id' => $invoice_id,
@@ -244,9 +251,10 @@ class InvoiceController extends Controller
       ])->save();
     }
 
+
     return response()->json([
       'success' => true,
-      'message' => "Invoice status has been successfully updated.",
+      'message' => "Invoice status has been successfully sent to your email and successfully updated to the database.",
       'data' => $data,
     ]);
   }
@@ -259,7 +267,6 @@ class InvoiceController extends Controller
     if ($error === false) {
       $incoming_data = $request->validate(
         [
-
           'profile_id' => 'required',
           'due_date' => 'required',
           'description' => 'required',
@@ -269,9 +276,8 @@ class InvoiceController extends Controller
           'discount_type' => '',
           'discount_amount' => '',
           'discount_total' => '',
-          'grand_total_amount' => 'required',
+          'grand_total_amount' => '',
           'notes' => '',
-
         ]
       );
 
@@ -308,35 +314,31 @@ class InvoiceController extends Controller
               $store_data->deductions()->create($dataDeductions);
             }
           }
-
-          return response()->json([
-            'success' => true,
-            'message' => "Invoice has been successfully added to the database.",
-            'data' => $store_data,
-          ], 200);
+          //  SEND EMAIL
+          // MAO NI ANG FUNCTION NGA TAWAGON SA BUTTON
+          // $this->sendEmail_admin();
+          // $this->sendEmail_profile();
+          // return response()->json(
+          //   [
+          //     'success' => true,
+          //     'message' => "Invoice has been successfully sent to your email and successfully added to the database.",
+          //     'data' => $store_data,
+          //   ],
+          //   200
+          // );
         }
       }
+      $this->sendEmail_admin();
+      $this->sendEmail_profile();
+      return response()->json(
+        [
+          'success' => true,
+          'message' => "Invoice has been successfully sent to your email and successfully added to the database.",
+          'data' => $store_data,
+        ],
+        200
+      );
     }
-
-    // SEND EMAIL
-    // MAO NI ANG FUNCTION NGA TAWAGON SA BUTTON
-    // $this->sendEmail();
-  }
-  // FOR JSON FILE VIEWING
-  // public function sendEmail1()
-  // {
-  //   $data = Invoice::with(['profile.user', 'deductions.profile_deduction_types.deduction_type', 'invoice_items'])
-  //     ->orderBy('id', 'Desc')->first();
-  //   $data1 = InvoiceConfig::orderBy('id', 'Desc')->first();
-  //   return ['data' => $data, 'data1' => $data1];
-  // }
-
-  public function SendInvoiceData()
-  {
-    $data = Invoice::with(['profile.user', 'deductions.profile_deduction_types.deduction_type', 'invoice_items'])
-      ->orderBy('id', 'Desc')->first();
-    $data1 = InvoiceConfig::orderBy('id', 'Desc')->first();
-    return view('emailConfig.sendEmail', ['data' => $data, 'data1' => $data1]);
   }
 
   public function create_invoice(Request $request)
@@ -345,6 +347,7 @@ class InvoiceController extends Controller
     $profile_id = $request->profile_id;
     $invoice_id = $request->invoice_id;
     $invoiceItems_id = $request->invoiceItems_id;
+    $profileDeduction_id = $request->profileDeduction_id;
     if ($error === false) {
       // STORE
       if ($profile_id) {
@@ -373,7 +376,6 @@ class InvoiceController extends Controller
         $store_data = Invoice::create($incoming_data);
 
         if ($store_data) {
-
           if ($request->invoiceItem) {
             foreach ($request->invoiceItem as $key => $value) {
               $datainvoiceitem = [
@@ -396,15 +398,18 @@ class InvoiceController extends Controller
               $store_data->deductions()->create($dataDeductions);
             }
           }
-
-          return response()->json([
-            'success' => true,
-            'message' => "Invoice has been successfully added to the database.",
-            'data' => $store_data,
-          ], 200);
         }
+        // SEND EMAIL
+        // MAO NI ANG FUNCTION NGA TAWAGON SA BUTTON
+        $this->sendEmail_admin();
+        $this->sendEmail_profile();
+        return response()->json([
+          'success' => true,
+          'message' => "Invoice has been successfully sent to your email and successfully added to the database.",
+          'data' => $store_data,
+        ], 200);
       }
-      // UPDATE
+      // UPDATE REMOVED INVOICE ITEMS
       if ($invoiceItems_id && $invoice_id) {
         $invoice_data = Invoice::find($invoice_id);
         if ($invoiceItems_id) {
@@ -474,6 +479,59 @@ class InvoiceController extends Controller
             }
           }
 
+
+          return response()->json([
+            'success' => true,
+            'message' => "Invoice has been successfully updated to the database.",
+            'data' => $invoice_update_data,
+          ], 200);
+        }
+      }
+      // UPDATE REMOVED PROFILE DEDUCTIONS ITEMS
+      if ($profileDeduction_id && $invoice_id) {
+        $invoice_data = Invoice::find($invoice_id);
+        if ($profileDeduction_id) {
+          $delete = Deduction::where('id', $profileDeduction_id)->delete();
+          return response()->json([
+            'success' => true,
+            'message' => "Deduction has been successfully removed.",
+            'data' =>  $delete,
+          ], 200);
+        }
+        if ($invoice_data) {
+          $incoming_data = $request->validate(
+            [
+              'sub_total' => 'required',
+              'description' => 'required',
+              'due_date' => 'required',
+            ],
+          );
+          $incoming_data += [
+            'peso_rate' => $request->peso_rate,
+            'converted_amount' => $request->converted_amount,
+            'discount_type' => $request->discount_type,
+            'discount_amount' => $request->discount_amount,
+            'discount_total' => $request->discount_total,
+            'grand_total_amount' => $request->grand_total_amount,
+            'notes' => $request->notes,
+            'invoice_status' => 'Pending',
+            'status' => 'Active'
+          ];
+
+          $invoice_update_data = $invoice_data->fill($incoming_data)->save();
+
+          if ($request->Deductions) {
+            foreach ($request->Deductions as $key => $value) {
+              $find_deductions = Deduction::find($value['deduction_id']);
+              if ($find_deductions) {
+                $find_deductions->fill([
+                  'amount' => $value['deduction_amount'],
+                ])->save();
+              }
+            }
+          }
+
+
           return response()->json([
             'success' => true,
             'message' => "Invoice has been successfully updated to the database.",
@@ -542,6 +600,7 @@ class InvoiceController extends Controller
               }
             }
           }
+
           return response()->json([
             'success' => true,
             'message' => "Invoice has been successfully updated to the database.",
@@ -550,10 +609,6 @@ class InvoiceController extends Controller
         }
       }
     }
-
-    // SEND EMAIL
-    // MAO NI ANG FUNCTION NGA TAWAGON SA BUTTON
-    // $this->sendEmail();
   }
 
 
@@ -656,20 +711,22 @@ class InvoiceController extends Controller
     $profile_id = $request->profile_id;
     if ($profile_id) {
 
-      $deductions = Deduction::with(['invoice', 'profile_deduction_types.deduction_type'])
-        ->where('profile_id', $request->profile_id)->whereHas('invoice', function ($query) {
+      $deductions = Deduction::with(['invoice', 'profile_deduction_types'])
+        ->where('profile_id', $profile_id)->whereHas('invoice', function ($query) {
           $query->where('status', 'Active');
         });
 
-
       if (isset($request->search)) {
-
-        $deductions = $deductions->whereHas('invoice', function ($q) use ($request) {
-          $q->where('invoice_no', 'LIKE', '%' . $request->search . '%');
-          $q->orWhere('invoice_status', 'LIKE', '%' . $request->search . '%');
-        })->orWhere('amount', 'LIKE', '%' . $request->search . '%')
-          ->orWhereHas('profile_deduction_types.deduction_type', function ($query) use ($request) {
-            $query->where('deduction_name', 'LIKE', '%' . $request->search . '%');
+        $deductions = $deductions
+          ->where('profile_id', $request->profile_id)
+          ->where('amount', 'LIKE', '%' . $request->search . '%')
+          ->orwhereHas('invoice', function ($q) use ($request) {
+            $q->where('profile_id', $request->profile_id);
+            $q->where('invoice_no', 'LIKE', '%' . $request->search . '%');
+            $q->orwhere('invoice_status', 'LIKE', '%' . $request->search . '%');
+          })->orWhereHas('profile_deduction_types', function ($qq) use ($request) {
+            $qq->where('profile_id', $request->profile_id);
+            $qq->where('deduction_type_name', 'LIKE', '%' .  $request->search . '%');
           });
       }
 
@@ -1198,42 +1255,345 @@ class InvoiceController extends Controller
       ], 200);
     }
   }
-  public function sendEmail()
+
+  // SEND EMAIL FOR STATUS PAID ADMIN
+  public function sendEmail_status_admin($invoice_id)
+  {
+    $data = Invoice::with(['profile.user', 'deductions.profile_deduction_types.deduction_type', 'invoice_items'])
+      ->where('id', $invoice_id)->first();
+    $data1 = InvoiceConfig::orderBy('id', 'Desc')->first();
+    $data2 = EmailConfig::where('status', 'Active')->get();
+    if ($data && $data1 && $data2) {
+      foreach ($data2 as $send_admin) {
+        $data_setup_email_template = [
+          // 'invoice_logo'           => $data1->invoice_logo_name, // VARIABLE FOR UPLOADING INTO WEB
+          'invoice_logo'           => 'https://shamcey.5ppsite.com/logo.png', // DEFAULT FOR LOCAL
+          'full_name'              => $data->profile->user->first_name . " " . $data->profile->user->last_name,
+          'user_email'             => $data->profile->user->email,
+          'invoice_no'             => $data->invoice_no,
+          'invoice_status'         => $data->status,
+          'address'                => $data->profile->address,
+          'city'                   => $data->profile->city,
+          'province'               => $data->profile->province,
+          'zip_code'               => $data->profile->zip_code,
+          'date_created'           => CarbonCarbon::parse($data->created_at)->isoFormat('MMMM DD YYYY'),
+          'invoice_title'          => $data1->invoice_title,
+          'due_date'               => CarbonCarbon::parse($data->due_date)->isoFormat('MMMM DD YYYY'),
+          'bill_to_address'        => $data1->bill_to_address,
+          'payment_status'         => $data->invoice_status,
+          'date_received'          => CarbonCarbon::parse($data->date_received)->isoFormat('MMMM DD YYYY'),
+          'ship_to_address'        => $data1->ship_to_address,
+          'balance_due'            => number_format($data->sub_total, 2),
+          'invoice_items'          => $data->invoice_items,
+          'invoice_description'    => $data->description,
+          'sub_total'              => number_format(($data->sub_total + $data->discount_total), 2),
+          'discount_type'          => $data->discount_type,
+          'discount_amount'        => number_format($data->discount_amount, 2),
+          'discount_total'         => number_format($data->discount_total, 2),
+          'peso_rate'              => number_format($data->peso_rate, 2),
+          'converted_amount'       => number_format($data->converted_amount, 2),
+          'deductions'             => $data->deductions,
+          'deductions_total'       => number_format($data->deductions->pluck('amount')->sum(), 2),
+          'notes'                  => $data->notes,
+          'grand_total_amount'     => number_format($data->grand_total_amount, 2),
+          'admin_email'            => $send_admin->email_address,
+        ];
+        $this->setup_email_template_status_admin($data_setup_email_template);
+      }
+      $dataObject = array_merge($data->toArray(), $data1->toArray(), $data2->toArray());
+      return response()->json([
+        'success' => true,
+        'Message' => 'Please configure the email settings.',
+        'data' => $dataObject,
+      ]);
+    }
+  }
+  // SEND EMAIL FOR STATUS PAID PROFILE
+  public function sendEmail_status_profile($invoice_id)
+  {
+    $data = Invoice::with(['profile.user', 'deductions.profile_deduction_types.deduction_type', 'invoice_items'])
+      ->where('id', $invoice_id)->first();
+    $data1 = InvoiceConfig::orderBy('id', 'Desc')->first();
+    if ($data && $data1) {
+
+      $data_setup_email_template = [
+        // 'invoice_logo'           => $data1->invoice_logo_name, // VARIABLE FOR UPLOADING INTO WEB
+        'invoice_logo'           => 'https://shamcey.5ppsite.com/logo.png', // DEFAULT FOR LOCAL
+        'full_name'              => $data->profile->user->first_name . " " . $data->profile->user->last_name,
+        'user_email'             => $data->profile->user->email,
+        'invoice_no'             => $data->invoice_no,
+        'invoice_status'         => $data->status,
+        'address'                => $data->profile->address,
+        'city'                   => $data->profile->city,
+        'province'               => $data->profile->province,
+        'zip_code'               => $data->profile->zip_code,
+        'date_created'           => CarbonCarbon::parse($data->created_at)->isoFormat('MMMM DD YYYY'),
+        'invoice_title'          => $data1->invoice_title,
+        'due_date'               => CarbonCarbon::parse($data->due_date)->isoFormat('MMMM DD YYYY'),
+        'bill_to_address'        => $data1->bill_to_address,
+        'payment_status'         => $data->invoice_status,
+        'date_received'          => CarbonCarbon::parse($data->date_received)->isoFormat('MMMM DD YYYY'),
+        'ship_to_address'        => $data1->ship_to_address,
+        'balance_due'            => number_format($data->sub_total, 2),
+        'invoice_items'          => $data->invoice_items,
+        'invoice_description'    => $data->description,
+        'sub_total'              => number_format(($data->sub_total + $data->discount_total), 2),
+        'discount_type'          => $data->discount_type,
+        'discount_amount'        => number_format($data->discount_amount, 2),
+        'discount_total'         => number_format($data->discount_total, 2),
+        'peso_rate'              => number_format($data->peso_rate, 2),
+        'converted_amount'       => number_format($data->converted_amount, 2),
+        'deductions'             => $data->deductions,
+        'deductions_total'       => number_format($data->deductions->pluck('amount')->sum(), 2),
+        'notes'                  => $data->notes,
+        'grand_total_amount'     => number_format($data->grand_total_amount, 2),
+
+      ];
+      $this->setup_email_template_status_profile($data_setup_email_template);
+      $dataObject = array_merge($data->toArray(), $data1->toArray());
+      return response()->json([
+        'success' => true,
+        'Message' => 'Please configure the email settings.',
+        'data' => $dataObject,
+      ]);
+    }
+  }
+
+  // SEND EMAIL FOR ADMIN
+  public function sendEmail_admin()
   {
     $data = Invoice::with(['profile.user', 'deductions.profile_deduction_types.deduction_type', 'invoice_items'])
       ->orderBy('id', 'Desc')->first();
     $data1 = InvoiceConfig::orderBy('id', 'Desc')->first();
-    $data_setup_email_template = [
-      'invoice_logo'           => $data1->invoice_logo,
-      'full_name'              => $data->profile->user->first_name . " " . $data->profile->user->last_name,
-      'user_email'             => $data->profile->user->email,
-      'invoice_no'             => $data->invoice_no,
-      'invoice_status'         => $data->status,
-      'address'                => $data->profile->address,
-      'city'                   => $data->profile->city,
-      'province'               => $data->profile->province,
-      'zip_code'               => $data->profile->zip_code,
-      'date_created'           => CarbonCarbon::parse($data->created_at)->isoFormat('MMMM DD YYYY'),
-      'invoice_title'          => $data1->invoice_title,
-      'due_date'               => CarbonCarbon::parse($data->due_date)->isoFormat('MMMM DD YYYY'),
-      'bill_to_address'        => $data1->bill_to_address,
-      'payment_status'         => $data->invoice_status,
-      'date_received'          => CarbonCarbon::parse($data->date_received)->isoFormat('MMMM DD YYYY'),
-      'ship_to_address'        => $data1->ship_to_address,
-      'balance_due'            => number_format($data->sub_total, 2),
-      'invoice_items'          => $data->invoice_items,
-      'invoice_description'    => $data->description,
-      'sub_total'              => number_format(($data->sub_total + $data->discount_total), 2),
-      'discount_type'          => $data->discount_type,
-      'discount_amount'        => number_format($data->discount_amount, 2),
-      'discount_total'         => number_format($data->discount_total, 2),
-      'peso_rate'              => number_format($data->peso_rate, 2),
-      'converted_amount'       => number_format($data->converted_amount, 2),
-      'deductions'             => $data->deductions,
-      'deductions_total'       => number_format($data->deductions->pluck('amount')->sum(), 2),
-      'notes'                  => $data->notes,
-      'grand_total_amount'     => number_format($data->grand_total_amount, 2),
-    ];
-    $this->setup_email_template($data_setup_email_template);
+    $data2 = EmailConfig::where('status', 'Active')->get();
+
+    if ($data && $data1 && $data2) {
+      foreach ($data2 as $send_admin) {
+        $data_setup_email_template = [
+          // 'invoice_logo'           => $data1->invoice_logo_name, // VARIABLE FOR UPLOADING INTO WEB
+          'invoice_logo'           => 'https://shamcey.5ppsite.com/logo.png', // DEFAULT FOR LOCAL
+          'full_name'              => $data->profile->user->first_name . " " . $data->profile->user->last_name,
+          'user_email'             => $data->profile->user->email,
+          'invoice_no'             => $data->invoice_no,
+          'invoice_status'         => $data->status,
+          'address'                => $data->profile->address,
+          'city'                   => $data->profile->city,
+          'province'               => $data->profile->province,
+          'zip_code'               => $data->profile->zip_code,
+          'date_created'           => CarbonCarbon::parse($data->created_at)->isoFormat('MMMM DD YYYY'),
+          'invoice_title'          => $data1->invoice_title,
+          'due_date'               => CarbonCarbon::parse($data->due_date)->isoFormat('MMMM DD YYYY'),
+          'bill_to_address'        => $data1->bill_to_address,
+          'payment_status'         => $data->invoice_status,
+          'date_received'          => CarbonCarbon::parse($data->date_received)->isoFormat('MMMM DD YYYY'),
+          'ship_to_address'        => $data1->ship_to_address,
+          'balance_due'            => number_format($data->sub_total, 2),
+          'invoice_items'          => $data->invoice_items,
+          'invoice_description'    => $data->description,
+          'sub_total'              => number_format(($data->sub_total + $data->discount_total), 2),
+          'discount_type'          => $data->discount_type,
+          'discount_amount'        => number_format($data->discount_amount, 2),
+          'discount_total'         => number_format($data->discount_total, 2),
+          'peso_rate'              => number_format($data->peso_rate, 2),
+          'converted_amount'       => number_format($data->converted_amount, 2),
+          'deductions'             => $data->deductions,
+          'deductions_total'       => number_format($data->deductions->pluck('amount')->sum(), 2),
+          'notes'                  => $data->notes,
+          'grand_total_amount'     => number_format($data->grand_total_amount, 2),
+          'admin_email'            => $send_admin->email_address,
+        ];
+        $this->setup_email_template_admin($data_setup_email_template);
+      }
+
+      $dataObject = array_merge($data->toArray(), $data1->toArray(), $data2->toArray());
+
+      return response()->json([
+        'success' => true,
+        'Message' => 'Please configure the email settings.',
+        'data' => $dataObject,
+      ]);
+    }
+  }
+
+  // SEND EMAIL FOR PROFILE
+  public function sendEmail_profile()
+  {
+    $data = Invoice::with(['profile.user', 'deductions.profile_deduction_types.deduction_type', 'invoice_items'])
+      ->orderBy('id', 'Desc')->first();
+    $data1 = InvoiceConfig::orderBy('id', 'Desc')->first();
+
+    if ($data && $data1) {
+
+      $data_setup_email_template = [
+        // 'invoice_logo'           => $data1->invoice_logo_name, // VARIABLE FOR UPLOADING INTO WEB
+        'invoice_logo'           => 'https://shamcey.5ppsite.com/logo.png', // DEFAULT FOR LOCAL
+        'full_name'              => $data->profile->user->first_name . " " . $data->profile->user->last_name,
+        'user_email'             => $data->profile->user->email,
+        'invoice_no'             => $data->invoice_no,
+        'invoice_status'         => $data->status,
+        'address'                => $data->profile->address,
+        'city'                   => $data->profile->city,
+        'province'               => $data->profile->province,
+        'zip_code'               => $data->profile->zip_code,
+        'date_created'           => CarbonCarbon::parse($data->created_at)->isoFormat('MMMM DD YYYY'),
+        'invoice_title'          => $data1->invoice_title,
+        'due_date'               => CarbonCarbon::parse($data->due_date)->isoFormat('MMMM DD YYYY'),
+        'bill_to_address'        => $data1->bill_to_address,
+        'payment_status'         => $data->invoice_status,
+        'date_received'          => CarbonCarbon::parse($data->date_received)->isoFormat('MMMM DD YYYY'),
+        'ship_to_address'        => $data1->ship_to_address,
+        'balance_due'            => number_format($data->sub_total, 2),
+        'invoice_items'          => $data->invoice_items,
+        'invoice_description'    => $data->description,
+        'sub_total'              => number_format(($data->sub_total + $data->discount_total), 2),
+        'discount_type'          => $data->discount_type,
+        'discount_amount'        => number_format($data->discount_amount, 2),
+        'discount_total'         => number_format($data->discount_total, 2),
+        'peso_rate'              => number_format($data->peso_rate, 2),
+        'converted_amount'       => number_format($data->converted_amount, 2),
+        'deductions'             => $data->deductions,
+        'deductions_total'       => number_format($data->deductions->pluck('amount')->sum(), 2),
+        'notes'                  => $data->notes,
+        'grand_total_amount'     => number_format($data->grand_total_amount, 2),
+      ];
+
+      $this->setup_email_template_profile($data_setup_email_template);
+      $dataObject = array_merge($data->toArray(), $data1->toArray());
+      return response()->json([
+        'success' => true,
+        'Message' => 'Please configure the email settings.',
+        'data' => $dataObject,
+      ]);
+    }
+  }
+
+  public function invoiceReport_load(Request $request)
+  {
+    // your other code here
+    $from = date('Y-m-d', strtotime($request->from));
+    $to = date('Y-m-d', strtotime($request->to));
+    $data = Invoice::with(['profile.user', 'deductions' => function ($q) {
+      $q->select(DB::raw('SUM(amount) as total_deductions'), 'invoice_id')
+        ->groupBy('invoice_id');
+    }])
+      ->orderBy('id', 'Desc')
+      ->get();
+
+    if ($data) {
+      return response()->json([
+        'success' => true,
+        'data' => $data,
+      ]);
+    }
+  }
+
+  public function invoiceReport_click(Request $request)
+  {
+
+    $rules = $request->validate([
+      'fromDate' => 'required',
+      'toDate' => 'required',
+    ]);
+
+    if (isset($rules['fromDate']) && isset($rules['toDate'])) {
+      $startDate = Carbon::createFromFormat('Y-m-d', $rules['fromDate'])->startOfDay();
+      $endDate = Carbon::createFromFormat('Y-m-d', $rules['toDate'])->endOfDay();
+
+      $invoices = Invoice::with(['profile.user', 'deductions' => function ($q) {
+        $q->select(DB::raw('SUM(amount) as total_deductions'), 'invoice_id')
+          ->groupBy('invoice_id');
+      }])
+        ->whereBetween('created_at', [$startDate, $endDate]) // filter by date range
+        ->orderBy('id', 'desc')
+        ->get();
+      return response()->json([
+        'success' => true,
+        'data' => $invoices,
+      ], 200);
+    }
+  }
+  public function deductionReport_load(Request $request)
+  {
+    // your other code here
+    $from = date('Y-m-d', strtotime($request->from));
+    $to = date('Y-m-d', strtotime($request->to));
+    $data = Invoice::with(['profile.user', 'deductions' => function ($q) {
+      $q->select(DB::raw('SUM(amount) as total_deductions'), 'invoice_id')
+        ->groupBy('invoice_id');
+    }])
+      ->orderBy('id', 'Desc')
+      ->get();
+
+
+    if ($data) {
+      return response()->json([
+        'success' => true,
+        'data' => $data,
+      ]);
+    }
+  }
+
+  public function deductionReport_click(Request $request)
+  {
+
+    $rules = $request->validate([
+      'fromDate' => 'required',
+      'toDate' => 'required',
+    ]);
+
+    if (isset($rules['fromDate']) && isset($rules['toDate'])) {
+      $startDate = Carbon::createFromFormat('Y-m-d', $rules['fromDate'])->startOfDay();
+      $endDate = Carbon::createFromFormat('Y-m-d', $rules['toDate'])->endOfDay();
+
+      $invoices = Invoice::with(['profile.user', 'deductions' => function ($q) {
+        $q->select(DB::raw('SUM(amount) as total_deductions'), 'invoice_id')
+          ->groupBy('invoice_id');
+      }])
+        ->whereBetween('created_at', [$startDate, $endDate]) // filter by date range
+        ->orderBy('id', 'desc')
+        ->get();
+      return response()->json([
+        'success' => true,
+        'data' => $invoices,
+      ], 200);
+    }
+  }
+
+  public function deductionDetails(Request $request)
+  {
+    $invoice_id = $request->id;
+    $data = Invoice::find($invoice_id)
+      ->deductions()
+      ->join('profile_deduction_types', 'profile_deduction_types.id', '=', 'deductions.profile_deduction_type_id')
+      ->select('profile_deduction_types.deduction_type_name', 'deductions.amount')
+      ->get();
+    if ($data) {
+      return response()->json([
+        'success' => true,
+        'data' => $data,
+      ]);
+    }
   }
 }
+
+
+// SEND EMAIL
+  // MAO NI ANG FUNCTION NGA TAWAGON SA BUTTON
+  // $this->sendEmail();
+
+  // FOR JSON FILE VIEWING
+  // public function sendEmail1()
+  // {
+  //   $data = Invoice::with(['profile.user', 'deductions.profile_deduction_types.deduction_type', 'invoice_items'])
+  //     ->orderBy('id', 'Desc')->first();
+  //   $data1 = InvoiceConfig::orderBy('id', 'Desc')->first();
+  //   return ['data' => $data, 'data1' => $data1];
+  // }
+
+  // public function SendInvoiceData()
+  // {
+  //   $data = Invoice::with(['profile.user', 'deductions.profile_deduction_types.deduction_type', 'invoice_items'])
+  //     ->orderBy('id', 'Desc')->first();
+  //   $data1 = InvoiceConfig::orderBy('id', 'Desc')->first();
+  //   return view('emailConfig.sendEmail', ['data' => $data, 'data1' => $data1]);
+  // }

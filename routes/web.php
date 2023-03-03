@@ -76,10 +76,9 @@ Route::middleware(['AuthCheck'])->group(function () {
   Route::get('/user/inactive', [ProfileController::class, 'userinactive']);
   Route::get('/user/editInvoice/', [InvoiceController::class, 'useredit_invoice']);
 
-  // FOR SEND EMAIL
-  Route::get('/sendEmail', [InvoiceController::class, 'SendInvoiceData']);
-  // Route::get('/sendEmail', [InvoiceController::class, 'SendInvoiceConfigs']);
-  // Route::get('/sendEmail1', [InvoiceController::class, 'sendEmail1']);
+  // FOR REPORTS
+  Route::get('/reports/invoice', [InvoiceController::class, 'reports_invoice']);
+  Route::get('/reports/deduction', [InvoiceController::class, 'reports_deduction']);
 });
 
 Auth::routes();

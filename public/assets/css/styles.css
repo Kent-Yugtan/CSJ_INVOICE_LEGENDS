@@ -5987,6 +5987,8 @@ fieldset:disabled .btn {
 }
 .modal.show .modal-dialog {
     transform: none;
+    position: relative;
+    top: 20px;
 }
 .modal.modal-static .modal-dialog {
     transform: scale(1.02);
@@ -7469,6 +7471,10 @@ fieldset:disabled .btn {
 
 .border-5 {
     border-width: 5px !important;
+}
+
+.w-5 {
+    width: 10% !important;
 }
 
 .w-25 {
@@ -12723,8 +12729,8 @@ button.toast-close-button {
     height: 100%;
     color: #fff;
     transform: translateY(-50%);
-    z-index: 1000;
     visibility: hidden;
+    z-index: 9999;
 }
 
 .overlay {
@@ -12749,7 +12755,7 @@ button.toast-close-button {
 .loader {
     color: #a66620;
     font-size: 20px;
-    left: 57%;
+    left: 50%;
     margin: 250px auto;
     position: fixed;
     text-indent: -9999em;
@@ -12824,11 +12830,11 @@ button.toast-close-button {
     white-space: nowrap;
 }
 
-  .quantity::placeholder {
+.quantity::placeholder {
     color: gray;
     text-align: left;
-  }
-  .rate::placeholder {
+}
+.rate::placeholder {
     color: gray;
     text-align: left;
-  }
+}

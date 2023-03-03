@@ -99,7 +99,8 @@ class EmailConfigController extends Controller
         $incoming_data = $request->validate([
           'fullname' => 'required|unique:email_configs',
           'email_address' => 'email|required|unique:email_configs',
-          'title' => '',
+          'title' => 'required',
+          'status' => 'required',
         ]);
 
         $store_data = EmailConfig::create($incoming_data);
@@ -112,7 +113,7 @@ class EmailConfigController extends Controller
         $data = EmailConfig::find($emailconfig_id);
         if ($data->fullname != $request->fullname) {
           $request->validate([
-            'fullname' => 'required|unique:email_configs',
+            'fullname' => 'required',
           ]);
         }
 
@@ -122,11 +123,13 @@ class EmailConfigController extends Controller
           ]);
         }
 
+
         $store_data = EmailConfig::where('id', $emailconfig_id)->update(
           [
             'fullname' => $request->fullname,
             'email_address' => $request->email_address,
             'title' => $request->title,
+            'status' => $request->status,
           ]
         );
         return response()->json([

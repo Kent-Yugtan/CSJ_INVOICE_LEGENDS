@@ -32,26 +32,10 @@
   </div>
 
   <div class="row">
-    <div class="input-group has-search">
-      <div class="col-4">
-        <div class="form-group form-check-inline has-search" style="width:90%">
-          <span class=" fa fa-search form-control-feedback"></span>
-          <input id="search" name="search" type="text" class="form-control form-check-inline" placeholder="Search">
-        </div>
-      </div>
-
-      <div class="col-4">
-        <div class="form-group form-check-inline has-search" style="width:90%">
-          <select class="form-select form-check-inline" id="filter">
-            <option value="All">All</option>
-            <option value="Asc">Ascending</option>
-            <option value="Desc">Descending</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="col-4">
-        <button type="button" class="btn w-100" style="color:white; background-color: #CF8029;width:30%" id="button-submit">Search</button>
+    <div class="col ">
+      <div class="input-group ">
+        <input id="search" name="search" type="text" class="form-control form-check-inline" placeholder="Search">
+        <button class="btn" style=" color:white; background-color: #CF8029;width:30%" id="button-submit">Search</button>
       </div>
     </div>
   </div>
@@ -78,9 +62,14 @@
             <tbody></tbody>
           </table>
         </div>
-        <div class="mx-3 table-responsive" style="display: flex; justify-content: space-between;">
-          <div class="page_showing" id="tbl_user_showing"></div>
-          <ul class="pagination pagination-sm" id="tbl_user_pagination"></ul>
+        <div class="row mx-3">
+          <div class="col-xl-6">
+            <div class="page_showing" id="tbl_user_showing"></div>
+          </div>
+          <div class="col-xl-6">
+            <ul style="justify-content: end;" class="pagination pagination-sm flex-sm-wrap" id="tbl_user_pagination">
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -106,6 +95,20 @@
         active_count_pending()
         show_data();
       }, 2000)
+    })
+
+    $("#tbl_user_pagination").on('click', '.page-item', function() {
+      $('html,body').animate({
+        scrollTop: $('#loader_load').offset().top
+      }, 'slow');
+
+      $("div.spanner").addClass("show");
+      setTimeout(function() {
+        $("div.spanner").removeClass("show");
+        $('html,body').animate({
+          scrollTop: $('#tbl_user_pagination').offset().top
+        }, 'slow');
+      }, 1500);
     })
 
 
@@ -148,10 +151,8 @@
       $("div.spanner").addClass("show");
       setTimeout(function() {
         let search = $('#search').val();
-        $('#tbl_user tbody').empty();
-        show_data({
-          search
-        });
+        $('#tbl_user_pagination').empty();
+        show_data();
         $("div.spanner").removeClass("show");
       }, 2000)
 
@@ -169,9 +170,11 @@
     }
 
     function show_data(filters) {
+      let page = $("#tbl_user_pagination .page-item.active .page-link").html();
       let filter = {
-        page_size: 10,
-        page: 1,
+        page_size: 5,
+        page: page ? page : 1,
+        search: $('#search').val(),
         ...filters,
       }
       axios
@@ -184,8 +187,8 @@
           res = res.data;
           console.log('res123', res);
           if (res.success) {
+            $('#tbl_user tbody').empty();
             if (res.data.data.length > 0) {
-              $('#tbl_user tbody').empty();
               res.data.data.map((item) => {
                 let tr = '<tr style="vertical-align:sub;">';
                 if (item.file_path) {
@@ -200,8 +203,7 @@
                 }
 
                 tr += '<td>' + item.profile_status + '</td>';
-                tr += '<td>' + item
-                  .phone_number + '</td>';
+                tr += '<td>' + item.phone_number + '</td>';
                 tr += '<td>' + item.position + '</td>';
 
                 if (item.profile.invoice.length > 0) {
@@ -281,9 +283,14 @@
                     .exec(
                       url
                     );
-
-                  return results !== null ? results[1] || 0 : false;
+                  return results !== null ? results[1] || 0 : 0;
                 };
+
+                let search = $('#search').val();
+                show_data({
+                  search: search,
+                  page: $.urlParam('page')
+                });
               })
               let tbl_user_showing =
                 `Showing ${res.data.from} to ${res.data.to} of ${res.data.total} entries`;
