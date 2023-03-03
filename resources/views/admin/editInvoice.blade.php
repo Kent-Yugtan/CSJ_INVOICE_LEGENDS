@@ -94,7 +94,7 @@
 
           <div class="row pt-3">
             <div class="col-sm-6">
-              <div id="ship_to_address"></div>
+              <!-- <div id="ship_to_address"></div> -->
             </div>
 
             <div class="col-md-6 col-sm-12">
@@ -827,7 +827,6 @@ $(document).ready(function() {
   // }
 
 
-
   // FUNCTION CLICK FOR REMOVING INVOICE ITEMS ROWS
   $(document).on('click', '.remove_items', function(e) {
     e.preventDefault();
@@ -912,7 +911,6 @@ $(document).ready(function() {
       Deductions,
     }
 
-
     console.log("data removed", data);
     axios.post(apiUrl + '/api/createinvoice/', data, {
       headers: {
@@ -926,7 +924,6 @@ $(document).ready(function() {
         $('.toast1 .toast-body').html(response.data.message);
         toast1.toast('show');
 
-
         if ($('#show_items > .row').length === 1) {
           $('#show_items > .row').find('.col-remove-item').removeClass('d-none')
             .addClass(
@@ -934,10 +931,10 @@ $(document).ready(function() {
         }
 
         setTimeout(function() {
-          $('#updateModal').modal('hide');
+          // $('#updateModal').modal('hide');
         }, 2000);
         // getResults_Converted();
-        $("#update").attr("data-bs-dismiss", "modal");
+        // $("#update").attr("data-bs-dismiss", "modal");
       }
     }).catch(function(error) {
       if (error.response.data.errors) {
@@ -960,9 +957,142 @@ $(document).ready(function() {
         toast1.toast('show');
       }
     })
-
-
   });
+
+  // FUNCTION CLICK FOR REMOVING INVOICE DEDUCTIONS ROWS
+  $(document).on('click', '.remove_deductions', function(e) {
+    e.preventDefault();
+    let parent = $(this).closest('.row');
+    let profileDeduction_id = parent.find('.deduction_id').val();
+    let row_item = $(this).parent().parent().parent();
+    $(row_item).remove();
+
+
+    console.log("profileDeduction_id", profileDeduction_id);
+    // getResults_Converted();
+    Additems_total();
+    subtotal();
+    DeductionItems_total();
+    x--;
+
+    let due_date = $('#due_date').val();
+    let invoice_id = $('#update_invoice_id').val();
+    let invoice_description = $('#invoice_description').val();
+    let invoice_subtotal = $('#subtotal').val().replaceAll(',', '');
+    let peso_rate = $('#edit_peso_rate').val().replaceAll(',', '')
+    let invoice_converted_amount = $('#converted_amount').val().replaceAll(',', '');
+    let invoice_discount_type = $('#discount_type:checked').val();
+    let invoice_discount_amount = $('#discount_amount').val().replaceAll(',', '');
+    let invoice_discount_total = $('#discount_total').val().replaceAll(',', '');
+    let invoice_total_amount = $('#grand_total').val().replaceAll(',', '');
+    let invoice_notes = $('textarea#notes').val();
+
+    let invoiceItem = [];
+    $('#show_items .row').each(function() {
+      let item_invoice_id = $(this).find('.item_id').val();
+      let item_description = $(this).find('.item_description').val() ? $(this).find(
+        '.item_description').val() : "";
+      let item_rate = $(this).find('.rate').val().replaceAll(',', '') ? $(this).find(
+        '.rate').val().replaceAll(',', '') : 0;
+      let item_qty = $(this).find('.quantity').val() ? $(this)
+        .find('.quantity').val() : 0;
+      let item_total_amount = $(this).find('.amount').val().replaceAll(',', '') ? $(
+          this).find('.amount')
+        .val().replaceAll(',', '') : 0;
+
+      invoiceItem.push({
+        item_invoice_id,
+        item_description,
+        item_rate,
+        item_qty,
+        item_total_amount,
+      })
+    });
+
+    // DEDUCTIONS TABLE
+    let Deductions = [];
+    $('#show_deduction_items .row').each(function() {
+      let deduction_id = $(this).find('.deduction_id').val();
+      let profile_deduction_type_id = $(this).find('.profile_deduction_type').val() ?
+        $(this)
+        .find(
+          '.profile_deduction_type').val() : 0;
+      let deduction_amount = $(this).find('.deduction_amount').val().replaceAll(',',
+        '') ? $(this).find(
+        '.deduction_amount').val().replaceAll(',', '') : 0;
+
+      Deductions.push({
+        deduction_id,
+        profile_deduction_type_id,
+        deduction_amount,
+      })
+    });
+    let data = {
+      due_date: due_date,
+      invoice_id: invoice_id,
+      description: invoice_description,
+      sub_total: invoice_subtotal ? invoice_subtotal : 0,
+      peso_rate: peso_rate,
+      converted_amount: invoice_converted_amount,
+      discount_type: invoice_discount_type,
+      discount_amount: invoice_discount_amount,
+      discount_total: invoice_discount_total,
+      grand_total_amount: invoice_total_amount,
+      notes: invoice_notes,
+      profileDeduction_id: profileDeduction_id,
+      invoiceItem,
+      Deductions,
+    }
+
+    console.log("deduction removed", data);
+    axios.post(apiUrl + '/api/createinvoice/', data, {
+      headers: {
+        Authorization: token,
+      },
+    }).then(function(response) {
+      let data = response.data
+      if (data.success) {
+
+        $('.toast1 .toast-title').html('Delete Invoice Items');
+        $('.toast1 .toast-body').html(response.data.message);
+        toast1.toast('show');
+
+        if ($('#show_items > .row').length === 1) {
+          $('#show_items > .row').find('.col-remove-item').removeClass('d-none')
+            .addClass(
+              'd-none');
+        }
+
+        setTimeout(function() {
+          // $('#updateModal').modal('hide');
+        }, 2000);
+        // getResults_Converted();
+        // $("#update").attr("data-bs-dismiss", "modal");
+      }
+    }).catch(function(error) {
+      if (error.response.data.errors) {
+        let errors = error.response.data.errors;
+        let fieldnames = Object.keys(errors);
+        Object.values(errors).map((item, index) => {
+          fieldname = fieldnames[0].split('_');
+          fieldname.map((item2, index2) => {
+            fieldname['key'] = capitalize(
+              item2);
+            return ""
+          });
+          fieldname = fieldname.join(" ");
+          $('.toast1 .toast-title').html(fieldname);
+          $('.toast1 .toast-body').html(Object.values(
+              errors)[0]
+            .join(
+              "\n\r"));
+        })
+        toast1.toast('show');
+      }
+    })
+  });
+
+
 
   // BUTTON for ADD ITEMS ROWS
   $("#add_item").click(function(e) {
@@ -1170,7 +1300,8 @@ $(document).ready(function() {
               let wrapper = $('#show_deduction_items');
               add_rows = '';
               add_rows += '<div class="row mb-3">';
-              add_rows += '<div class="col-8">';
+
+              add_rows += '<div class="col-7">';
               add_rows += '<div class="form-floating form-group w-100">';
               add_rows +=
                 '<input type="text" value=' + item2.id +
@@ -1186,6 +1317,7 @@ $(document).ready(function() {
                 '<label for="profile_deduction_type">Deduction Type</label>';
               add_rows += '</div>';
               add_rows += '</div>';
+
               add_rows += '<div class="col-4">';
               add_rows += '<div class="form-floating form-group ">';
               add_rows +=
@@ -1194,6 +1326,13 @@ $(document).ready(function() {
                 '" style="text-align:right;" id="deduction_amount" name="deduction_amount" class="form-control multi2 deduction_amount" />';
               add_rows +=
                 '<label for="deduction_amount">Deduction Amount (Php)</label>';
+              add_rows += '</div>';
+              add_rows += '</div>';
+
+              add_rows += '<div class="col-1 col-remove-deductions">';
+              add_rows += '<div class="form-group">';
+              add_rows +=
+                '<button type="button" class="btn remove_deductions" style="display: flex;justify-content: center;margin-top:25px"><i class="fa fa-trash pe-1" style="color:red"></i></button>';
               add_rows += '</div>';
               add_rows += '</div>';
               add_rows += '</div>';
@@ -1486,7 +1625,6 @@ $(document).ready(function() {
 
 
   function show_invoice_config() {
-
     axios.get(apiUrl + '/api/get_invoice_config', {
       headers: {
         Authorization: token,
@@ -1510,9 +1648,7 @@ $(document).ready(function() {
   }
 
   $('#submit_update_invoice').submit(function(e) {
-    // $('#update').on('click', function(e) {
     e.preventDefault();
-    console.log("asd");
 
     // let profile_id = $('#update_profile_id').val();
     let due_date = $('#due_date').val();
@@ -1598,9 +1734,9 @@ $(document).ready(function() {
 
         toast1.toast('show');
         setTimeout(function() {
-          $('#updateModal').modal('hide');
+          // $('#updateModal').modal('hide');
         }, 2000);
-        $("#update").attr("data-bs-dismiss", "modal");
+        // $("#update").attr("data-bs-dismiss", "modal");
       }
     }).catch(function(error) {
       if (error.response.data.errors) {
@@ -1896,7 +2032,6 @@ $(document).ready(function() {
 
   //DELETE INVOICE
   $('#invoice_delete').on('click', function(e) {
-
     let url = window.location.pathname;
     let urlSplit = url.split("/")
     if (urlSplit.length === 4) {

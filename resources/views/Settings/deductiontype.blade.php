@@ -58,8 +58,8 @@
   </div>
 </div>
 <!-- START MODAL ADD -->
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
+<div class="modal fade" id="addModal" data-bs-backdrop="static" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-dialog">
       <div class="modal-content ">
@@ -98,8 +98,8 @@
 <!-- END MODAL ADD -->
 
 <!-- START MODAL EDIT -->
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
+<div class="modal fade" id="editModal" data-bs-backdrop="static" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-dialog">
       <div class="modal-content ">
@@ -353,15 +353,6 @@ $(document).ready(function() {
 
   $('#deductiontype_store').submit(function(e) {
     e.preventDefault();
-
-    $('div.spanner').addClass('show');
-    $('html,body').animate({
-      scrollTop: $('#loader_load').offset().top
-    }, 'smooth');
-
-    var start = performance.now(); // Get the current timestamp
-    // Do your processing here
-
     let deduction_name = $("#deduction_name").val();
     let deduction_amount = $("#deduction_amount").val().replaceAll(',', '');
 
@@ -369,8 +360,6 @@ $(document).ready(function() {
       deduction_name: deduction_name,
       deduction_amount: deduction_amount,
     };
-    console.log("DATA", data);
-
     axios
       .post(apiUrl + "/api/savedeductiontype", data, {
         headers: {
@@ -380,11 +369,11 @@ $(document).ready(function() {
       .then(function(response) {
         let data = response.data;
         if (data.success) {
-          // console.log('success', data.data.message);
+          console.log('success', data.data.message);
           $('#addModal').modal('hide');
           $('html,body').animate({
             scrollTop: $('#loader_load').offset().top
-          }, 'slow');
+          }, 'smooth');
           $('div.spanner').addClass('show');
           setTimeout(function() {
             $('div.spanner').removeClass('show');
@@ -393,10 +382,11 @@ $(document).ready(function() {
             $('.toast1 .toast-title').html('Deduction Types');
             $('.toast1 .toast-body').html(response.data.message);
             toast1.toast('show');
-          }, loadingTime)
+          }, 1500)
         }
       })
       .catch(function(error) {
+        console.log("ERROR", error);
         if (error.response.data.errors) {
           let errors = error.response.data.errors;
           let fieldnames = Object.keys(errors);
@@ -414,14 +404,11 @@ $(document).ready(function() {
           setTimeout(function() {
             $('div.spanner').removeClass('show');
             toast1.toast('show');
-          }, loadingTime);
+          }, 1500);
         }
       });
 
-    var end = performance.now(); // Get the timestamp after processing
-    var processingTime = end - start; // Calculate the processing time in milliseconds
-    var loadingTime = Math.ceil((processingTime * 1000) / 2);
-    console.log('Processing time: ' + loadingTime + 'ms');
+
   })
 
   $('#deduction_amount').focusout(function() {

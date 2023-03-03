@@ -314,22 +314,30 @@ class InvoiceController extends Controller
               $store_data->deductions()->create($dataDeductions);
             }
           }
-          $this->sendEmail_admin();
-          $this->sendEmail_profile();
-
-          return response()->json(
-            [
-              'success' => true,
-              'message' => "Invoice has been successfully sent to your email and successfully added to the database.",
-              'data' => $store_data,
-            ],
-            200
-          );
           //  SEND EMAIL
           // MAO NI ANG FUNCTION NGA TAWAGON SA BUTTON
-
+          // $this->sendEmail_admin();
+          // $this->sendEmail_profile();
+          // return response()->json(
+          //   [
+          //     'success' => true,
+          //     'message' => "Invoice has been successfully sent to your email and successfully added to the database.",
+          //     'data' => $store_data,
+          //   ],
+          //   200
+          // );
         }
       }
+      $this->sendEmail_admin();
+      $this->sendEmail_profile();
+      return response()->json(
+        [
+          'success' => true,
+          'message' => "Invoice has been successfully sent to your email and successfully added to the database.",
+          'data' => $store_data,
+        ],
+        200
+      );
     }
   }
 
@@ -339,6 +347,7 @@ class InvoiceController extends Controller
     $profile_id = $request->profile_id;
     $invoice_id = $request->invoice_id;
     $invoiceItems_id = $request->invoiceItems_id;
+    $profileDeduction_id = $request->profileDeduction_id;
     if ($error === false) {
       // STORE
       if ($profile_id) {
@@ -400,7 +409,7 @@ class InvoiceController extends Controller
           'data' => $store_data,
         ], 200);
       }
-      // UPDATE
+      // UPDATE REMOVED INVOICE ITEMS
       if ($invoiceItems_id && $invoice_id) {
         $invoice_data = Invoice::find($invoice_id);
         if ($invoiceItems_id) {
@@ -470,6 +479,59 @@ class InvoiceController extends Controller
             }
           }
 
+
+          return response()->json([
+            'success' => true,
+            'message' => "Invoice has been successfully updated to the database.",
+            'data' => $invoice_update_data,
+          ], 200);
+        }
+      }
+      // UPDATE REMOVED PROFILE DEDUCTIONS ITEMS
+      if ($profileDeduction_id && $invoice_id) {
+        $invoice_data = Invoice::find($invoice_id);
+        if ($profileDeduction_id) {
+          $delete = Deduction::where('id', $profileDeduction_id)->delete();
+          return response()->json([
+            'success' => true,
+            'message' => "Deduction has been successfully removed.",
+            'data' =>  $delete,
+          ], 200);
+        }
+        if ($invoice_data) {
+          $incoming_data = $request->validate(
+            [
+              'sub_total' => 'required',
+              'description' => 'required',
+              'due_date' => 'required',
+            ],
+          );
+          $incoming_data += [
+            'peso_rate' => $request->peso_rate,
+            'converted_amount' => $request->converted_amount,
+            'discount_type' => $request->discount_type,
+            'discount_amount' => $request->discount_amount,
+            'discount_total' => $request->discount_total,
+            'grand_total_amount' => $request->grand_total_amount,
+            'notes' => $request->notes,
+            'invoice_status' => 'Pending',
+            'status' => 'Active'
+          ];
+
+          $invoice_update_data = $invoice_data->fill($incoming_data)->save();
+
+          if ($request->Deductions) {
+            foreach ($request->Deductions as $key => $value) {
+              $find_deductions = Deduction::find($value['deduction_id']);
+              if ($find_deductions) {
+                $find_deductions->fill([
+                  'amount' => $value['deduction_amount'],
+                ])->save();
+              }
+            }
+          }
+
+
           return response()->json([
             'success' => true,
             'message' => "Invoice has been successfully updated to the database.",
@@ -538,6 +600,7 @@ class InvoiceController extends Controller
               }
             }
           }
+
           return response()->json([
             'success' => true,
             'message' => "Invoice has been successfully updated to the database.",

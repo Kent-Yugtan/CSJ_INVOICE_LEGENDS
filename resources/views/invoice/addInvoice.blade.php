@@ -497,12 +497,24 @@ $(document).ready(function() {
     let row_item = $(this).parent().parent().parent();
     $(row_item).remove();
 
-
     if ($('#show_items > .row').length === 1) {
       $('#show_items > .row').find('.col-remove-item').removeClass('d-none')
         .addClass(
           'd-none');
     }
+    getResults_Converted();
+    Additems_total();
+    subtotal();
+    DeductionItems_total();
+    x--;
+  });
+
+  // FUNCTION CLICK FOR REMOVING INVOICE DEDUCTIONS ROWS
+  $(document).on('click', '.remove_deductions', function(e) {
+    e.preventDefault();
+    let parent = $(this).closest('.row');
+    let row_item = $(this).parent().parent().parent();
+    $(row_item).remove();
     getResults_Converted();
     Additems_total();
     subtotal();
@@ -812,7 +824,7 @@ $(document).ready(function() {
             data.data.profile_deduction_types.map((item) => {
               add_rows = '';
               add_rows += '<div class="row mb-3">';
-              add_rows += '<div class="col-8">';
+              add_rows += '<div class="col-7">';
               add_rows += '<div class="form-floating form-group w-100">';
               add_rows +=
                 '<select class="form-control profile_deduction_type" id="profile_deduction_type" name="profile_deduction_type">';
@@ -834,6 +846,15 @@ $(document).ready(function() {
                 '<label class="deduction_amount">Deduction Amount (Php)</label>';
               add_rows += '</div>';
               add_rows += '</div>';
+
+              add_rows += '<div class="col-md-1 col-remove-item">';
+              add_rows += '<div class="form-group">';
+              add_rows += '</br>';
+              add_rows +=
+                '<button class="btn remove_items" style="display: flex;justify-content: center;"><i class="fa fa-trash pe-1" style="color:red"></i></button>';
+              add_rows += '</div>';
+              add_rows += '</div>';
+
               add_rows += '</div>';
 
               $('#show_deduction_items').append(add_rows);

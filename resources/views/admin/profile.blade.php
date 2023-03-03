@@ -176,8 +176,8 @@
             </div>
 
             <div class="form-floating mb-3">
-              <select class="form-select select2-multiple" name="deduction_types[]" multiple="multiple"
-                id="select2Multiple">
+              <select class="form-select" multiple="multiple" id="select2Multiple">
+                <label for="select2Multiple" style="color: #A4A6B3;">Deductions</label>
               </select>
             </div>
 
@@ -429,8 +429,11 @@ $(document).ready(function() {
   }
   show_deduction();
 
-  $('.select2-multiple').select2({
-    placeholder: "Select",
+  $('#select2Multiple').select2({
+    theme: 'bootstrap-5',
+    containerCssClass: "select2--small",
+    dropdownCssClass: "select2--small",
+    placeholder: "Select Deductions",
     // allowClear: true
   });
 

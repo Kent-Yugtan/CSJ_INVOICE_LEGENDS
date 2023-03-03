@@ -193,7 +193,6 @@
               <button type="submit" style="width:100%; height:50px;color:white; background-color: #CF8029;"
                 class="btn ">Update Profile</button>
             </div>
-
           </form>
         </div>
       </div>
@@ -227,6 +226,7 @@
                     Invoice</button>
                 </div>
                 <div class="col-4">
+
                   <select class="form-check-inline form-select" id="filter_all_invoices">
                     <!-- <option selected value="" disabled>Filter</option> -->
                     <option value="All">All</option>
@@ -236,23 +236,24 @@
                     <option value="Overdue">Overdue</option>
                   </select>
                 </div>
-                <div class="col-4">
 
+                <div class="col-4">
                   <div class="form-group has-search">
                     <span class="fa fa-search form-control-feedback"></span>
                     <input type="text" class="form-control" id="search_invoice" placeholder="Search">
                   </div>
                 </div>
+
                 <div class="card-body table-responsive">
-                  <table style=" color: #A4A6B3;font-size: 14px;" class="table table-hover" id="dataTable_invoice">
+                  <table style="color: #A4A6B3;font-size: 14px;" class="table table-hover" id="dataTable_invoice">
                     <thead>
                       <tr>
                         <th>Invoice #</th>
                         <th>Payment Status</th>
                         <th>Date Created</th>
                         <th>Due Date</th>
-                        <th>Total Amount</th>
-                        <th>Action</th>
+                        <th class="text-center">Total Amount</th>
+                        <th class="text-center">Action</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -281,13 +282,6 @@
                     Add Deduction
                   </button>
 
-                  <!-- <select class="form-check-inline form-select" id="filter_all_deductions">
-                                                <option selected value="" disabled>Filter</option>
-                                                <option value="All">All</option>
-                                                <option value="Cancelled">Cancelled</option>
-                                                <option value="Paid">Paid</option>
-                                                <option value="Pending">Pending</option>
-                                                </select> -->
                 </div>
                 <div class="col-6">
                   <div class="form-group has-search">
@@ -299,16 +293,11 @@
               </div>
               <div class="row">
                 <div class="col-12 pt-3">
-                  <table class="table-responsive" id="tableDeleteProfileDeductioType">
-                    <thead></thead>
-                    <tbody>
-                      <tr>
-
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div id="deductionButton" style="word-wrap: break-word;">
+                  </div>
                 </div>
               </div>
+
               <div class="row">
                 <div class="col-12">
                   <div class="card-body table-responsive px-4">
@@ -319,7 +308,7 @@
                           <th>Payment Status</th>
                           <th>Deduction Name</th>
                           <th class="text-center">Amount</th>
-                          <th class="text-center">Date Created</th>
+                          <th class="text-end">Date Created</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -346,7 +335,8 @@
     </div>
   </div>
   <!-- START CREATE INVOICE MODAL -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="exampleModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg" style="width:100%;">
       <div class=" modal-content">
         <div class="modal-header">
@@ -509,23 +499,14 @@
 
                       <div class="col-12 mb-3">
                         <div class="row">
-                          <div class="col-8"></div>
-                          <div class="col-4 text-center mb-3">
-                            <h4> Grand Total </h4>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="col-12 mb-3">
-                        <div class="row">
-                          <div class="col-8" style="text-align:right;">
-                            <label style="vertical-align: -webkit-baseline-middle">Total
+                          <div class="col-7" style="text-align:right;">
+                            <label style="vertical-align: -webkit-baseline-middle" class="fw-bold">Grand Total
                               (Php):
                               <label>
                           </div>
                           <div class="col-4 mb-3" style="justify-content:end;display:flex">
                             <!-- border-style:none -->
-                            <input type="text" id="grand_total" class="form-control no-outline"
+                            <input type="text" id="grand_total" class="form-control no-outline fw-bold"
                               style="text-align:right;border:0;background-color:white;" disabled>
                           </div>
                         </div>
@@ -537,7 +518,6 @@
                             <label for="floatingTextarea">Notes</label>
                             <textarea class="form-control" placeholder="Leave a notes here" id="notes"
                               name="notes"></textarea>
-
                           </div>
                         </div>
                       </div>
@@ -584,8 +564,8 @@
   </div>
 
   <!-- START MODAL ADD -->
-  <div class="modal fade" id="modal-create-deduction" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+  <div class="modal fade" id="modal-create-deduction" data-bs-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-dialog">
         <div class="modal-content ">
@@ -626,8 +606,8 @@
   </div>
 
   <!-- START MODAL PROFILE DEDUCTION TYPE EDIT -->
-  <div class="modal fade" id="ProfileDeductioneditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+  <div class="modal fade" id="ProfileDeductioneditModal" data-bs-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-dialog">
         <div class="modal-content ">
@@ -670,8 +650,8 @@
   <!-- START MODAL DEDUCTION EDIT -->
 
   <!-- START MODAL UPDATE INVOICE STATUS -->
-  <div class="modal fade" id="invoice_status" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+  <div class="modal fade" id="invoice_status" data-bs-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-dialog">
         <div class="modal-content ">
@@ -738,7 +718,7 @@
           </div>
           <div class="row pt-3 px-3">
             <div class="col">
-              <span id="profilededuction_id"></span>
+              <span id="profilededuction_id hidden"></span>
               <span class="text-muted"> Do you really want to delete these record? This process cannot be
                 undone.</span>
             </div>
@@ -1198,7 +1178,8 @@ $(document).ready(function() {
                   item.invoice_status + '</button></td>';
               }
 
-              tr += '<td>' + moment.utc(item.created_at).tz('America/New_York').format('MM/DD/YYYY') +
+              tr += '<td>' + moment.utc(item.created_at).tz('America/New_York')
+                .format('MM/DD/YYYY') +
                 '</td>';
               tr += '<td>' + moment(item.due_date).format('L') + '</td>';
               tr += '<td class=" text-end">' + Number(
@@ -1210,7 +1191,7 @@ $(document).ready(function() {
                   }) +
                 '</td>';
               tr +=
-                '<td> <a href="' +
+                '<td class="text-center"> <a href="' +
                 apiUrl +
                 '/admin/editInvoice/' +
                 item.id +
@@ -1401,7 +1382,7 @@ $(document).ready(function() {
 
   })
 
-  $(document).on('click', '#tableDeleteProfileDeductioType .deleteProfileDeduction', function(
+  $(document).on('click', '#deductionButton .deleteProfileDeduction', function(
     e) {
     e.preventDefault();
     let row = $(this).closest("td");
@@ -1412,12 +1393,11 @@ $(document).ready(function() {
   })
 
   // SHOW EDIT PROFILE DEDUCTION TYPE
-  $(document).on('click', '#tableDeleteProfileDeductioType .editProfileDeduction', function(
+  $(document).on('click', '#deductionButton .editProfileDeduction', function(
     e) {
     e.preventDefault();
     $('#profileDeductionType_id').val($(this).val());
     let profileDeductionType_id = $('#profileDeductionType_id').val();
-    console.log("EDIT FOR UPATE", profileDeductionType_id);
 
     axios.post(apiUrl + '/api/showProfileDeductionTypes/' +
       profileDeductionType_id, {
@@ -1426,6 +1406,7 @@ $(document).ready(function() {
         },
       }).then(function(response) {
       let data = response.data;
+      console.log("EDIT FOR UPATE", profileDeductionType_id);
 
       $('#edit_profileDeductionType_name').val(data.data.deduction_type_name);
       $('#edit_profileDeductionType_amount').val(PHP(data.data.amount).format());
@@ -1546,8 +1527,8 @@ $(document).ready(function() {
           $('.toast1 .toast-body').html(data.message);
 
           // PROFILE DEDUCTION BUTTON
-          $('#tableDeleteProfileDeductioType tbody tr').empty();
-          $('#tableDeleteProfileDeductioType tbody tr').html(
+          $('#deductionButton').empty();
+          $('#deductionButton').html(
             show_profileDeductionType_Button());
           // PROFILE DEDUCTION TABLE
           $('#dataTable_deduction tbody').empty();
@@ -1729,14 +1710,27 @@ $(document).ready(function() {
     let parent = $(this).closest('.row');
     let sub_total = parent.find('.subtotal').val();
     let row_item = $(this).parent().parent().parent();
+    console.log("row_item", row_item);
     $(row_item).remove();
-
 
     if ($('#show_items > .row').length === 1) {
       $('#show_items > .row').find('.col-remove-item').removeClass('d-none')
         .addClass(
           'd-none');
     }
+    getResults_Converted();
+    Additems_total();
+    subtotal();
+    DeductionItems_total();
+    x--;
+  });
+
+  // FUNCTION CLICK FOR REMOVING INVOICE DEDUCTIONS ROWS
+  $(document).on('click', '.remove_deductions', function(e) {
+    e.preventDefault();
+    let parent = $(this).closest('.row');
+    let row_item = $(this).parent().parent().parent();
+    $(row_item).remove();
     getResults_Converted();
     Additems_total();
     subtotal();
@@ -1844,8 +1838,8 @@ $(document).ready(function() {
 
     setTimeout(function() {
       $("div.spanner").removeClass("show");
-      $('#tableDeleteProfileDeductioType tbody tr').empty();
-      $('#tableDeleteProfileDeductioType tbody tr').html(
+      $('#deductionButton').empty();
+      $('#deductionButton').html(
         show_profileDeductionType_Button());
     }, 2000)
   });
@@ -1899,7 +1893,7 @@ $(document).ready(function() {
               let wrapper = $('#show_deduction_items');
               add_rows = '';
               add_rows += '<div class="row mb-3">';
-              add_rows += '<div class="col-8">';
+              add_rows += '<div class="col-7">';
               add_rows += '<div class="form-floating form-group w-100">';
               add_rows +=
                 '<select class="form-control profile_deduction_type" id="profile_deduction_type" name="profile_deduction_type">';
@@ -1908,9 +1902,9 @@ $(document).ready(function() {
               add_rows += '</select>';
               add_rows +=
                 '<label for="profile_deduction_type">Deduction Type</label>';
+              add_rows += '</div>';
+              add_rows += '</div>';
 
-              add_rows += '</div>';
-              add_rows += '</div>';
               add_rows += '<div class="col-4">';
               add_rows += '<div class="form-floating form-group ">';
               add_rows +=
@@ -1922,6 +1916,15 @@ $(document).ready(function() {
                 '<label for="deduction_amount">Deduction Amount (Php)</label>';
               add_rows += '</div>';
               add_rows += '</div>';
+
+              add_rows += '<div class="col-1 col-remove-deductions">';
+              add_rows += '<div class="form-group">';
+              add_rows +=
+                '<button type="button" class="btn remove_deductions" style="display: flex;justify-content: center;margin-top:25px"><i class="fa fa-trash pe-1" style="color:red"></i></button>';
+              add_rows += '</div>';
+              add_rows += '</div>';
+
+
               add_rows += '</div>';
 
               $(wrapper).append(add_rows);
@@ -1929,10 +1932,8 @@ $(document).ready(function() {
             })
             $('.whole_row').removeClass('d-none');
             $('#profile_id').val(data.data.id);
-
           }
         }
-
       }).catch(function(error) {
         console.log("error", error);
       });
@@ -1940,16 +1941,13 @@ $(document).ready(function() {
 
   $('#invoice_items').submit(function(e) {
     e.preventDefault();
-
     $('div.spanner').addClass('show');
     $('html,body').animate({
       scrollTop: $('#loader_load').offset().top
     }, 'smooth');
-
     var start = performance.now(); // Get the current timestamp
+
     // Do your processing here
-
-
     // CONDITION IF THERE IS BLANK ROW
     $('#show_items .row1').each(function() {
       let parent = $(this).closest('.row1');
@@ -2031,7 +2029,6 @@ $(document).ready(function() {
         profile_deduction_type_id,
         deduction_amount,
       })
-
     });
 
     let data = {
@@ -2187,7 +2184,6 @@ $(document).ready(function() {
         if (data.success) {
           $('#select_deduction_name').empty();
           let option = '';
-
           option +=
             '<select class="createDeduction_deduction_name form-select" id="createDeduction_deduction_name">';
           option +=
@@ -2310,7 +2306,8 @@ $(document).ready(function() {
                 tr += '<td class="text-end">' + PHP(item
                     .amount)
                   .format() + '</td>';
-                tr += '<td class="text-end">' + moment.utc(item.created_at).tz('America/New_York').format(
+                tr += '<td class="text-end">' + moment.utc(item.created_at).tz(
+                  'America/New_York').format(
                   'MM/DD/YYYY'), +'</td>';
 
                 tr += '</tr>';
@@ -2425,7 +2422,7 @@ $(document).ready(function() {
     if (urlSplit.length === 5) {
       let profile_id = urlSplit[4];
       // console.log("profile_id", profile_id);
-      $("#tableDeleteProfileDeductioType tbody tr").empty();
+      $("#deductionButton").empty();
       axios.get(apiUrl + '/api/settings/show_profileDeductionType_Button/' + profile_id, {
           headers: {
             Authorization: token,
@@ -2433,22 +2430,21 @@ $(document).ready(function() {
         })
         .then(function(response) {
           let data = response.data;
-          // console.log("show_profileDeductionType_Button", data);
+          console.log("show_profileDeductionType_Button", data);
           if (data.success) {
             if (data.data.profile_deduction_types.length > 0) {
               data.data.profile_deduction_types.map((item) => {
-                let td = '<td>';
+                let label = '<label>';
 
-                td +=
-                  "<button type='button' data-bs-toggle='modal' data-bs-target='#ProfileDeductioneditModal' id='editProfileDeduction' class='editProfileDeduction btn btn-primary my-1 mx-1' value=" +
+                label +=
+                  "<button type='button' data-bs-toggle='modal' style='width:200px;' data-bs-target='#ProfileDeductioneditModal' id='editProfileDeduction' class='editProfileDeduction btn btn-primary my-2 mx-2' value=" +
                   item.id + ">" + item.deduction_type_name +
-                  "</button><button type='button' data-bs-toggle='modal' data-bs-target='#deleteModal' class='deleteProfileDeduction profile-close' aria-hidden='true'><span style='color:black;' value=" +
-                  item.id +
-                  ">&times;</span></button>";
-                td += '</td>';
-                $("#tableDeleteProfileDeductioType tbody tr")
-                  .append(
-                    td);
+                  "</button>";
+                // <button type='button' data-bs-toggle='modal' data-bs-target='#deleteModal' class='deleteProfileDeduction profile-close' aria-hidden='true'><span style='color:black;' value=" +
+                // item.id +
+                // ">&times;</span></button>";
+                label += '</label>';
+                $("#deductionButton").append(label);
                 return '';
               })
             }
@@ -2466,7 +2462,8 @@ $(document).ready(function() {
     console.log("UPDATE");
     let profileDeductionType_id = $('#profileDeductionType_id').val();
     let profileDeductionType_name = $('#edit_profileDeductionType_name').val();
-    let profileDeductionType_amount = $('#edit_profileDeductionType_amount').val().replaceAll(',', '');
+    let profileDeductionType_amount = $('#edit_profileDeductionType_amount').val().replaceAll(',',
+      '');
 
     let data = {
       id: profileDeductionType_id,
