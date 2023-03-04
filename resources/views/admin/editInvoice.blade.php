@@ -2099,22 +2099,28 @@ $(document).ready(function() {
   // CONVERT HTML TO PDF THROUGH SCREENSHOT
   function pdfContent() {
     window.jsPDF = window.jspdf.jsPDF;
+    var scaleFactor = 3;
     // Capture the div element as a screenshot using html2canvas
-    html2canvas($('#content')[0]).then(function(canvas) {
+    html2canvas($('#content')[0], {
+      scale: scaleFactor
+    }).then(function(canvas) {
       // Create a new jsPDF instance
       var pdf = new jsPDF('p', 'mm', 'a4');
       // Add the screenshot to the PDF using the addImage method
       // pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 10, 10, 190, 277);
-      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 10, 15, 190, 240);
+      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 10, 10, 190, 277);
 
       // Save the PDF file
       pdf.save('Invoice ' + $('#invoice_no').html() + '.pdf');
     });
   }
+
+
   $('#pdfDownload').on('click', function(e) {
     e.preventDefault();
     pdfContent();
   })
 })
 </script>
+
 @endsection

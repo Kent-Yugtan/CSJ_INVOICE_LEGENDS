@@ -758,7 +758,7 @@ const PHP = value => currency(value, {
 // INVOICE SEARCH AND DISPLAY
 $(document).ready(function() {
   // REFRESH WHEN THIS PAGE IS LOAD
-  check_ActivependingInvoices();
+  show_data();
   $(window).on('load', function() {
     $("div.spanner").addClass("show");
     $('html, body').animate({
@@ -766,9 +766,9 @@ $(document).ready(function() {
     }, 'slow');
     setTimeout(function() {
       $("div.spanner").removeClass("show");
+      check_ActivependingInvoices();
       show_profileDeductionType_Button();
       show_Profilededuction_Table_Active();
-      show_data();
       show_edit()
     }, 1500)
 
@@ -1043,14 +1043,15 @@ $(document).ready(function() {
     }).then(function(response) {
       let data = response.data;
       if (data.success) {
-
         if (data.data.length > 0) {
           data.data.map((item) => {
-            var date_now = (new Date()).toISOString().split('T')[0];
+            var today = new Date();
+            var due_dateStatus = item.due_date;
+            formatDue_date = moment(due_dateStatus).format('L');
+            formatDate_now = moment(today).format('L');
 
             if (item.invoice_status === "Pending") {
-              if (item.due_date < date_now) {
-
+              if (formatDue_date < formatDate_now) {
                 let invoice_id = item.id;
                 let data = {
                   id: invoice_id,
@@ -1064,13 +1065,11 @@ $(document).ready(function() {
                   let data = response.data
                   if (data.success) {
                     console.log("SUCCESS Overdue", data);
+                    window.location.reload();
                   }
                 }).catch(function(error) {
                   console.log("ERROR", error);
                 })
-                setTimeout(function() {
-                  window.location.reload
-                }, 3500);
               }
             }
 
@@ -1095,9 +1094,6 @@ $(document).ready(function() {
                 }).catch(function(error) {
                   console.log("ERROR", error);
                 })
-                setTimeout(function() {
-                  window.location.reload
-                }, 3500);
               }
             }
 
