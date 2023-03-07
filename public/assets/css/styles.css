@@ -12838,3 +12838,7 @@ button.toast-close-button {
     color: gray;
     text-align: left;
 }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+}

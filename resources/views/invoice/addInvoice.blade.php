@@ -29,7 +29,8 @@
               <div class="row">
                 <div class="col">
                   <div class="form-floating form-group">
-                    <input id="due_date" name="due_date" type="date" class="form-control">
+                    <input type="text" placeholder="Due Date" id="due_date" onfocus="(this.type='date')"
+                      onblur="(this.type='text')" name="due_date" class="form-control">
                     <label for="due_date">Due Date</label>
                   </div>
                 </div>
@@ -67,7 +68,7 @@
 
             <div class="col-12 mb-3">
               <div class="row">
-                <div class="col" style="display: flex;flex-direction: column-reverse;align-items: center;">
+                <div class="col" style="display: flex;align-items: start;">
                   <div class="form-group">
                     <label class="formGroupExampleInput2">Discount
                       Type</label>
@@ -154,7 +155,7 @@
             <div class="col-12 mb-3">
               <div class="row">
                 <div class="col">
-                  <h3> DEDUCTIONS </h3>
+                  <h4> Deductions </h4>
                 </div>
               </div>
             </div>
@@ -164,17 +165,8 @@
 
             <div class="col-12 mb-3">
               <div class="row">
-                <div class="col-8"></div>
-                <div class="col-4 text-center mb-3">
-                  <h4> Grand Total </h4>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-12 mb-3">
-              <div class="row">
-                <div class="col-8" style="text-align:right;">
-                  <label class="fw-bold" style="vertical-align: -webkit-baseline-middle">Total
+                <div class="col-7" style="text-align:right;">
+                  <label style="vertical-align: -webkit-baseline-middle" class="fw-bold">Grand Total
                     (Php):
                     <label>
                 </div>
@@ -264,10 +256,30 @@ $(document).ready(function() {
     $('div.spanner').addClass('show');
     setTimeout(function() {
       $('div.spanner').removeClass('show');
+      due_date();
       display_item_rows();
       selectProfile();
     }, 2000)
   })
+
+  function due_date() {
+    // START OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
+    // Get the input field
+    var due_date = $("#due_date");
+    // Set the datepicker options
+    due_date.datepicker({
+      dateFormat: "yy/mm/dd",
+      onSelect: function(dateText, inst) {
+        // Update the input value with the selected date
+        due_date.val(dateText);
+      }
+    });
+    // Set the input value to the current system date in the specified format
+    var currentDate = $.datepicker.formatDate("yy/mm/dd", new Date());
+    due_date.val(currentDate);
+    // END OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
+
+  }
 
   let toast1 = $('.toast1');
   toast1.toast({
@@ -328,6 +340,21 @@ $(document).ready(function() {
     subtotal();
   })
 
+  // FUNCTION FOR KEYUP CLASS DEDUCTIONS FOR DEDUCTIONS
+  $('#show_deduction_items').on("keyup", ".multi2", function() {
+    DeductionItems_total();
+  });
+
+  $('#show_deduction_items').focusout('.multi2', function() {
+    let deduction_sum = 0;
+    $('#show_deduction_items .deduction_amount').each(function() {
+      let parent = $(this).closest('.row');
+      let deduction_amount = parent.find('.deduction_amount').val();
+      parent.find('.deduction_amount').val(PHP(deduction_amount)
+        .format());
+    })
+  })
+
   $('#discount_amount').focusout(function() {
     if ($('#discount_amount').val() == "") {
       $('#discount_amount').val('0.00');
@@ -335,7 +362,8 @@ $(document).ready(function() {
       let discount_type = $("input[id='discount_type']:checked").val();
       if (discount_type == 'Percentage') {
         let discount_amount = $('#discount_amount').val();
-        $('#discount_amount').val(parseInt(discount_amount));
+        let newDiscount_amount = discount_amount.replace(/[^\d.]/g, ''); // Remove non-numeric characters
+        $('#discount_amount').val(newDiscount_amount);
       } else {
         let discount_amount = $('#discount_amount').val();
         $('#discount_amount').val(PHP(discount_amount).format());
@@ -351,9 +379,8 @@ $(document).ready(function() {
       let quantity = parent.find('.quantity').val();
       let rate = parent.find('.rate').val();
 
-
-      parent.find('.quantity').val(PHP(quantity ? quantity : '').format());
-      parent.find('.rate').val(PHP(rate ? rate : '').format());
+      parent.find('.quantity').val(PHP(quantity).format());
+      parent.find('.rate').val(PHP(rate).format());
     })
     DeductionItems_total();
   })
@@ -361,25 +388,28 @@ $(document).ready(function() {
   function subtotal() {
     let discount_type = $("input[id='discount_type']:checked").val();
     let discount_amount = $('#discount_amount').val();
+    let newDiscount_amount = discount_amount.replace(/[^\d.]/g, ''); // Remove non-numeric characters
     let discount_total = $('#discount_total').val();
     let subtotal = $('#subtotal').val();
     var sum = 0;
 
     $('#show_items .amount').each(function() {
-      sum += Number($(this).val().replaceAll(',', ''));
+      sum += Number($(this).val().replace(/[^\d.]/g, ''));
     });
 
     if (discount_type == 'Fixed') {
-      $('#discount_total').val(PHP(parseFloat(discount_amount ? discount_amount : 0) * 1).format());
-      let sub_total = (sum - $('#discount_total').val().replaceAll(',', ''));
-      $('#subtotal').val(PHP(sub_total).format());
+      $('#discount_total').val(PHP(parseFloat(newDiscount_amount * 1) ? parseFloat(newDiscount_amount * 1) : 0)
+        .format());
 
+      let sub_total = (sum - $('#discount_total').val().replace(/[^\d.]/g, ''));
+      $('#subtotal').val(PHP(sub_total).format());
       let dollar_amount = $('#subtotal').val();
       $('#dollar_amount').val(PHP(dollar_amount).format());
       DeductionItems_total()
+
     } else if (discount_type == 'Percentage') {
 
-      let percentage = parseFloat(((discount_amount ? discount_amount : 0) / 100) * sum);
+      let percentage = parseFloat(((newDiscount_amount ? newDiscount_amount : 0) / 100) * sum);
       $('#discount_total').val(PHP(percentage).format());
       let sub_total = (parseFloat(sum) - parseFloat(percentage));
       $('#subtotal').val(PHP(sub_total).format());
@@ -387,7 +417,6 @@ $(document).ready(function() {
       DeductionItems_total()
     }
     getResults_Converted();
-
   }
 
   // FUNCTION FOR DISPLAY RESULTS AND CONVERTED AMOUNT
@@ -414,35 +443,20 @@ $(document).ready(function() {
     //     2));
   }
 
-  // FUNCTION FOR KEYUP CLASS DEDUCTIONS FOR DEDUCTIONS
-  $('#show_deduction_items').on("keyup", ".multi2", function() {
-    let grand_total = 0;
-    let parent = $(this).closest('.row');
-    let deduction_amount = parent.find('.deduction_amount').val() ? parent
-      .find(
-        '.deduction_amount')
-      .val() : 0;
-    // grand_total = parseFloat($('#converted_amount').val().replaceAll(',', '')) - parseFloat(
-    // deduction_amount.replaceAll(',', ''));
-    // $('#grand_total').val(PHP(grand_total).format());
-    DeductionItems_total();
 
-  });
 
   // FUNCTION FOR KEYUP CLASS MULTI INPUTS FOR ADD ITEMS
   $('#show_items').on("keyup", ".multi", function() {
     let sub_total = 0;
     let parent = $(this).closest('.row');
-    let quantity = parent.find('.quantity').val().replaceAll(',', '') ? parent.find(
-        '.quantity')
-      .val().replaceAll(',', '') : 0;
-    let rate = parent.find('.rate').val().replaceAll(',', '') ? parent.find('.rate')
-      .val()
-      .replaceAll(',', '') : 0;
-    sub_total = parseFloat(quantity * rate);
+    let quantity = parent.find('.quantity').val().replaceAll(',', '');
+    let rate = parent.find('.rate').val().replaceAll(',', '');
+    let newQuantity = quantity.replace(/[^\d.]/g, '');
+    let newRate = rate.replace(/[^\d.]/g, '');
 
+    sub_total = parseFloat(newQuantity * newRate);
     parent.find('.amount').val(PHP(sub_total).format());
-    getResults_Converted();
+    // getResults_Converted();
     Additems_total();
     subtotal();
   });
@@ -452,10 +466,12 @@ $(document).ready(function() {
     var sum = 0;
     let converted_amount = 0;
     $('#show_items .amount').each(function() {
-      sum += Number($(this).val().replaceAll(',', ''));
+      sum += Number($(this).val().replace(/[^\d.]/g, ''));
     });
+
     $('#subtotal').val(PHP(parseFloat(sum)).format());
     $('#dollar_amount').val(PHP(parseFloat(sum)).format());
+
 
   }
 
@@ -469,11 +485,11 @@ $(document).ready(function() {
     let grand_total = 0;
 
     $('#show_deduction_items .deduction_amount').each(function() {
-      deduction_sum += Number($(this).val().replaceAll(',', ''));
+      deduction_sum += Number($(this).val().replace(/[^\d.]/g, ''));
     })
 
     $('#show_items .amount').each(function() {
-      converted_amount += Number($(this).val().replaceAll(',', ''));
+      converted_amount += Number($(this).val().replace(/[^\d.]/g, ''));
     });
 
     peso_rate = $('#peso_rate').val().replaceAll(',', '') ? $('#peso_rate').val()
@@ -484,7 +500,8 @@ $(document).ready(function() {
       .val()
       .replaceAll(',', '') : 0;
     converted_amount_input = parseFloat(dollar_amount * peso_rate);
-    grand_total = parseFloat(converted_amount_input - deduction_sum);
+    grand_total =
+      parseFloat(converted_amount_input - deduction_sum);
     $('#grand_total').val(PHP(grand_total).format());
     // console.log("grand_total", grand_total);
   }
@@ -679,23 +696,15 @@ $(document).ready(function() {
     // DEDUCTIONS TABLE
     let Deductions = [];
     $('#show_deduction_items .row').each(function() {
-      let profile_deduction_type_id = $(this).find(
-          '.profile_deduction_type')
-        .val() ?
-        $(this)
-        .find(
-          '.profile_deduction_type').val() : 0;
-      let deduction_amount = $(this).find('.deduction_amount').val()
-        .replaceAll(
-          ',',
-          '') ? $(this).find(
-          '.deduction_amount').val().replaceAll(',', '') : 0;
+      let profile_deduction_type_id = $(this).find('.profile_deduction_type_id').val();
+      let deduction_type_name = $(this).find('.deduction_type_name').val();
+      let deduction_amount = $(this).find('.deduction_amount').val().replaceAll(',', '');
 
       Deductions.push({
         profile_deduction_type_id,
+        deduction_type_name,
         deduction_amount,
       })
-
     });
 
     let data = {
@@ -720,7 +729,7 @@ $(document).ready(function() {
     var loadingTime = Math.ceil((processingTime * 1000) / 2);
     console.log('Processing time: ' + loadingTime + 'ms');
 
-    axios.post(apiUrl + "/api/add_invoices", data, {
+    axios.post(apiUrl + "/api/createinvoice", data, {
       headers: {
         Authorization: token
       },
@@ -799,7 +808,7 @@ $(document).ready(function() {
 
   $("#selectProfile").on('change', function() {
     let id = $('#selectProfile').val(); //USER ID ang g.kuha
-
+    $('#show_deduction_items').empty();
     axios
       .get(apiUrl + '/api/invoice/check_profile/' + id, {
         headers: {
@@ -807,34 +816,29 @@ $(document).ready(function() {
         },
       }).then(function(response) {
         let data = response.data;
-        if (!data.success) {
-
-          $('.whole_row').addClass('d-none');
-          $('.toast1 .toast-title').html('Invoices');
-          $('.toast1 .toast-body').html(data.message);
-          toast1.toast('show');
-
-        } else {
+        if (data.success) {
           let deduction_count = data.data.profile_deduction_types.length;
           console.log("profile_deduction_types", data);
           $("#profileId").val(data.data.id);
 
-          $('#show_deduction_items').empty();
           if (deduction_count > 0) {
             data.data.profile_deduction_types.map((item) => {
               add_rows = '';
               add_rows += '<div class="row mb-3">';
               add_rows += '<div class="col-7">';
               add_rows += '<div class="form-floating form-group w-100">';
+              add_rows += '<input type="text" class="profile_deduction_type_id" value=' + item.id +
+                ' hidden>';
               add_rows +=
-                '<select class="form-control profile_deduction_type" id="profile_deduction_type" name="profile_deduction_type">';
-              add_rows += '<option value=' + item.id +
+                '<select class="form-control deduction_type_name" id="deduction_type_name" name="deduction_type_name">';
+              add_rows += '<option value=' + item.deduction_type_name +
                 '>' + item.deduction_type_name + '</option> ';
               add_rows += '</select>';
               add_rows +=
-                '<label for="profile_deduction_type">Deduction Type</label>';
+                '<label for="deduction_type_name">Deduction Type</label>';
               add_rows += '</div>';
               add_rows += '</div>';
+
               add_rows += '<div class="col-4">';
               add_rows += '<div class="form-floating form-group ">';
               add_rows +=
@@ -843,30 +847,30 @@ $(document).ready(function() {
                 .format() +
                 '" style="text-align:right;" id="deduction_amount" name="deduction_amount" class="form-control multi2 deduction_amount" />';
               add_rows +=
-                '<label class="deduction_amount">Deduction Amount (Php)</label>';
+                '<label for="deduction_amount">Deduction Amount (Php)</label>';
               add_rows += '</div>';
               add_rows += '</div>';
 
-              add_rows += '<div class="col-md-1 col-remove-item">';
+              add_rows += '<div class="col-1 col-remove-deductions">';
               add_rows += '<div class="form-group">';
-              add_rows += '</br>';
               add_rows +=
-                '<button class="btn remove_items" style="display: flex;justify-content: center;"><i class="fa fa-trash pe-1" style="color:red"></i></button>';
+                '<button type="button" class="btn remove_deductions" style="display: flex;justify-content: center;margin-top:25px"><i class="fa fa-trash pe-1" style="color:red"></i></button>';
               add_rows += '</div>';
               add_rows += '</div>';
+
 
               add_rows += '</div>';
 
               $('#show_deduction_items').append(add_rows);
               return '';
             })
-            $('.whole_row').removeClass('d-none');
+
             $('#profile_id').val(data.data.id);
 
+            // getResults_Converted();
+            // Additems_total();
+            // subtotal();
           }
-          getResults_Converted();
-          // Additems_total();
-          // subtotal();
           DeductionItems_total();
         }
 

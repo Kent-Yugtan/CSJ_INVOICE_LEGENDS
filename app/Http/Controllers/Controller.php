@@ -82,6 +82,7 @@ class Controller extends BaseController
     $deductions_total = !empty($data['deductions_total']) ? $data['deductions_total'] : "";
     $notes = !empty($data['notes']) ? $data['notes'] : "";
     $grand_total_amount = !empty($data['grand_total_amount']) ? $data['grand_total_amount'] : "";
+    $quick_invoice = !empty($data['quick_invoice']) ? $data['quick_invoice'] : "";
 
     $to_name = !empty($data['full_name']) ? $data['full_name'] : "";
     $to_email = !empty($data['admin_email']) ? $data['admin_email'] : "";
@@ -133,6 +134,7 @@ class Controller extends BaseController
           'deductions_total'    => $deductions_total,
           'notes'               => $notes,
           'grand_total_amount'  => $grand_total_amount,
+          'quick_invoice'       => $quick_invoice,
 
         ],
       ]
@@ -172,6 +174,7 @@ class Controller extends BaseController
     $deductions_total = !empty($data['deductions_total']) ? $data['deductions_total'] : "";
     $notes = !empty($data['notes']) ? $data['notes'] : "";
     $grand_total_amount = !empty($data['grand_total_amount']) ? $data['grand_total_amount'] : "";
+    $quick_invoice = !empty($data['quick_invoice']) ? $data['quick_invoice'] : "";
 
     $to_name = !empty($data['full_name']) ? $data['full_name'] : "";
     $to_email = !empty($data['user_email']) ? $data['user_email'] : "";
@@ -223,6 +226,7 @@ class Controller extends BaseController
           'deductions_total'    => $deductions_total,
           'notes'               => $notes,
           'grand_total_amount'  => $grand_total_amount,
+          'quick_invoice'       => $quick_invoice,
 
         ],
       ]
@@ -262,6 +266,7 @@ class Controller extends BaseController
     $deductions_total = !empty($data['deductions_total']) ? $data['deductions_total'] : "";
     $notes = !empty($data['notes']) ? $data['notes'] : "";
     $grand_total_amount = !empty($data['grand_total_amount']) ? $data['grand_total_amount'] : "";
+    $quick_invoice = !empty($data['quick_invoice']) ? $data['quick_invoice'] : "";
 
     $to_name = !empty($data['full_name']) ? $data['full_name'] : "";
     $to_email = !empty($data['admin_email']) ? $data['admin_email'] : "";
@@ -313,6 +318,7 @@ class Controller extends BaseController
           'deductions_total'    => $deductions_total,
           'notes'               => $notes,
           'grand_total_amount'  => $grand_total_amount,
+          'quick_invoice'       => $quick_invoice,
 
         ],
       ]
@@ -352,6 +358,7 @@ class Controller extends BaseController
     $deductions_total = !empty($data['deductions_total']) ? $data['deductions_total'] : "";
     $notes = !empty($data['notes']) ? $data['notes'] : "";
     $grand_total_amount = !empty($data['grand_total_amount']) ? $data['grand_total_amount'] : "";
+    $quick_invoice = !empty($data['quick_invoice']) ? $data['quick_invoice'] : "";
 
     $to_name = !empty($data['full_name']) ? $data['full_name'] : "";
     $to_email = !empty($data['user_email']) ? $data['user_email'] : "";
@@ -403,6 +410,7 @@ class Controller extends BaseController
           'deductions_total'    => $deductions_total,
           'notes'               => $notes,
           'grand_total_amount'  => $grand_total_amount,
+          'quick_invoice'       => $quick_invoice,
 
         ],
       ]

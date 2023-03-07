@@ -58,8 +58,6 @@
     font-size: 1.1rem;
   }
 
-
-
   .email-body .body-table table .total {
     background-color: hsla(4, 67%, 52%, 0.12);
     border-radius: 8px;
@@ -75,7 +73,7 @@
 
   .email-body .body-table table th,
   .email-body .body-table table td {
-    padding: 5px;
+    padding: 3px;
     /* border: 1px solid #006; */
     /* TABLE TD BORDER */
   }
@@ -153,10 +151,10 @@
         <div class="body-table">
           <table style="table-layout: fixed; width: 100%">
             <tr class="item">
-              <th colspan="2" style="word-wrap: break-word">{{$content['full_name']}}</th>
+              <th colspan="2" style="word-wrap: break-word;vertical-align: bottom;">{{$content['full_name']}}</th>
               <th></th>
-              <th>
-                <h2 style="text-align: end;">INVOICE</h2>
+              <th style="vertical-align: bottom;">
+                <h1 style="text-align: end;vertical-align: bottom;"><strong>INVOICE</strong></h1>
               </th>
             </tr>
             <tbody>
@@ -178,11 +176,10 @@
                 <td></td>
               </tr>
 
-              <tr style="padding-top:20px">
-                <td style="text-align:left;">Bill To:</td>
-                <td></td>
-                <td>Date:</td>
-                <td style="text-align: end;">{{$content['date_created']}}</td>
+              <tr>
+                <td style="text-align:left;padding-top:15px" colspan="2">Bill To:</td>
+                <td style="padding-top:15px">Date:</td>
+                <td style="text-align: end;padding-top:15px">{{$content['date_created']}}</td>
               </tr>
 
               <tr>
@@ -237,10 +234,10 @@
           <br>
           <table class="table2" style="table-layout: fixed; width: 100%">
             <tr style="background-color:darkgrey;">
-              <th class="left-radius">Description</th>
-              <th style="text-align: end;">Quantity</th>
-              <th style="text-align: end;">Rate</th>
-              <th class="right-radius" style="text-align: end;">Amount</th>
+              <th style="width: 295px;" class="left-radius">Description</th>
+              <th style="width: 100px;text-align: end;">Quantity</th>
+              <th style="width: 100px;text-align: end;">Rate</th>
+              <th class="right-radius" style="width: 100px;text-align: end;">Amount</th>
             </tr>
             <tbody>
               @foreach($content['invoice_items'] as $items)
@@ -258,7 +255,10 @@
             <tbody>
               <tr>
                 <td class="scope">
+                  @if($content['quick_invoice'] == 0)
                   <strong>Description:</strong>
+                  @endif
+
                 </td>
                 <td class=" scope" style="text-align:start;"><strong>SubTotal:</strong></td>
                 <td class="scope" style="text-align:end;"><strong>${{$content['sub_total']}}</strong> </td>
@@ -266,20 +266,24 @@
 
               <tr>
                 <td class="scope" style="word-wrap: break-word;width:50%;vertical-align:top;" rowspan="3">
+                  @if($content['quick_invoice'] == 0)
                   {{$content['invoice_description']}}
+                  @endif
                 </td>
-                <td class=" scope" style="text-align:start;"> Discount Type:
+                @if($content['discount_type'])
+                <td class="scope" style="text-align:start;"> Discount Type:
                   @if($content['discount_type'] === "Fixed")
                   <span class="text-muted" id="discountType">
-                    Fixed
+                    Fxd
                   </span>
                   @else
                   <span class="text-muted" id="discountAmount">
-                    Percentage ({{$content['discount_amount']}}%)
+                    Pct. ({{$content['discount_amount']}}%)
                   </span>
                   @endif
                 </td>
                 <td class="scope" style="text-align:end;"> ${{$content['discount_total']}}</td>
+                @endif
               </tr>
 
               <tr>
@@ -288,14 +292,14 @@
               </tr>
 
               <tr>
-                <td>Converted Amount (PHP): ₱{{$content['peso_rate']}} Rate</td>
+                <td><strong>Converted Amount: ₱{{$content['peso_rate']}}</strong></td>
                 <td style="text-align: end;"><strong>₱{{$content['converted_amount']}}</strong></td>
               </tr>
 
               @if(!empty($content['deductions']))
               <tr>
-                <td></td>
-                <td style="text-align:start;" colspan="2"><strong>Deductions</strong></td>
+                <td style="padding-top:15px"></td>
+                <td style="text-align:start;padding-top:15px" colspan="2"><strong>Deductions</strong></td>
               </tr>
 
               @php
@@ -322,11 +326,11 @@
 
               @endif
               <tr>
-                <td></td>
-                <td>
+                <td style="padding-top:15px"></td>
+                <td style="padding-top:15px">
                   <strong>Grand Total:</strong>
                 </td>
-                <td style="text-align: end;"><strong>₱{{$content['grand_total_amount']}}</strong></td>
+                <td style="text-align: end;padding-top:15px"><strong>₱{{$content['grand_total_amount']}}</strong></td>
               </tr>
               <tr>
                 <td style="text-align:start" colspan="3"><strong>Notes:</strong></td>

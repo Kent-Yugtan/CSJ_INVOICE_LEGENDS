@@ -72,11 +72,11 @@
               <tr>
                 <th class="fit">Invoice #</th>
                 <th class="fit">Profile Name</th>
-                <th class="fit">Payment Status</th>
-                <th class="fit">Date Created</th>
-                <th class="fit">Due Date</th>
-                <th class="fit">Status</th>
-                <th class="fit text-center">Total Amount</th>
+                <th class="fit text-center">Payment Status</th>
+                <th class="fit text-center">Invoice Status</th>
+                <th class="fit text-end">Total Amount</th>
+                <th class="fit text-end">Date Created</th>
+                <th class="fit text-end">Due Date</th>
                 <th class="text-center fit">Action</th>
               </tr>
             </thead>
@@ -342,17 +342,10 @@
                   item.invoice_status + '</button></td>';
               }
 
-              tr += '<td>' + mm + '-' +
-                dd +
-                '-' +
-                yy + '</td>';
-              tr += '<td>' + mm2 + '-' +
-                dd2 +
-                '-' +
-                yy2 + '</td>';
-              tr += '<td style="text-align:start;">' + item.status +
+              tr += '<td class="text-center">' + item.status +
                 '</td>';
-              tr += '<td style="text-align:right;">' + Number(
+
+              tr += '<td class="text-end">' + Number(
                   parseFloat(item
                     .grand_total_amount).toFixed(2))
                 .toLocaleString(
@@ -360,6 +353,12 @@
                     minimumFractionDigits: 2
                   }) +
                 '</td>';
+              tr += '<td class="text-end">' + moment.utc(item.created_at).tz(
+                'America/New_York').format(
+                'MM/DD/YYYY') + '</td>';
+              tr += '<td class="text-end">' + moment.utc(item.due_date).tz(
+                'America/New_York').format(
+                'MM/DD/YYYY') + '</td>';
 
               tr +=
                 '<td class="text-center"> <a href="' +
@@ -555,17 +554,9 @@
                   item.invoice_status + '</button></td>';
               }
 
-              tr += '<td>' + mm + '-' +
-                dd +
-                '-' +
-                yy + '</td>';
-              tr += '<td>' + mm2 + '-' +
-                dd2 +
-                '-' +
-                yy2 + '</td>';
-              tr += '<td style="text-align:start;">' + item.status +
-                '</td>';
-              tr += '<td style="text-align:right;">' + Number(
+              tr += '<td class="text-center">' + item.status +
+                '</td>'
+              tr += '<td class="text-end">' + Number(
                   parseFloat(item
                     .grand_total_amount).toFixed(2))
                 .toLocaleString(
@@ -573,6 +564,12 @@
                     minimumFractionDigits: 2
                   }) +
                 '</td>';
+              tr += '<td class="text-end">' + moment.utc(item.created_at).tz(
+                'America/New_York').format(
+                'MM/DD/YYYY') + '</td>';
+              tr += '<td class="text-end">' + moment.utc(item.due_date).tz(
+                'America/New_York').format(
+                'MM/DD/YYYY') + '</td>';
 
               tr +=
                 '<td class="text-center"> <a href="' +

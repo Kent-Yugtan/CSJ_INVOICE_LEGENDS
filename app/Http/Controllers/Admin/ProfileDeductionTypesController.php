@@ -120,63 +120,63 @@ class ProfileDeductionTypesController extends Controller
     $profileDeductionType_id = $request->id;
     if ($profileDeductionType_id) {
       // THIS QUERY CAN DELETE DEDUCTIONS AND UPDATE THE DELETED AMOUNT TO THE INVOICE
-      $data = ProfileDeductionTypes::with('deductions')->find($profileDeductionType_id);
-      if ($data) {
-        $last_data = $data;
-        $deductions = $last_data->deductions;
-        if (count($deductions) === 0) {
-          $delete_data = ProfileDeductionTypes::where('id', $profileDeductionType_id)->delete();
-          $ret = [
-            'success' => true,
-            'message' => 'Data deleted successfully',
-            'data' => $delete_data,
-          ];
-        }
-        else {
-          if ($deductions) {
-            if ($data->delete()) {
-              if ($deductions[0]->invoice_id) {
-                $invoice = Invoice::find($deductions[0]->invoice_id);
-                $grand_total_amount = $invoice->grand_total_amount + $deductions[0]->amount;
+      // $data = ProfileDeductionTypes::with('deductions')->find($profileDeductionType_id);
+      // if ($data) {
+      //   $last_data = $data;
+      //   $deductions = $last_data->deductions;
+      //   if (count($deductions) === 0) {
+      //     $delete_data = ProfileDeductionTypes::where('id', $profileDeductionType_id)->delete();
+      //     $ret = [
+      //       'success' => true,
+      //       'message' => 'Data deleted successfully',
+      //       'data' => $delete_data,
+      //     ];
+      //   }
+      //   else {
+      //     if ($deductions) {
+      //       if ($data->delete()) {
+      //         if ($deductions[0]->invoice_id) {
+      //           $invoice = Invoice::find($deductions[0]->invoice_id);
+      //           $grand_total_amount = $invoice->grand_total_amount + $deductions[0]->amount;
 
-                $invoice->fill(['grand_total_amount' => $grand_total_amount])->save();
+      //           $invoice->fill(['grand_total_amount' => $grand_total_amount])->save();
 
-                $ret = [
-                  'success' => true,
-                  'message' => 'Data deleted successfully',
-                  'data' => $invoice,
-                ];
-                $data->deductions()->delete();
-              } else {
-                $ret = [
-                  'success' => true,
-                  'message' => 'No invoice and deleted successfully',
-                ];
-                $data->deductions()->delete();
-              }
-            } else {
-              $ret = [
-                'success' => false,
-                'message' => 'Data not deleted'
-              ];
-            }
-          } else {
-            $ret = [
-              'success' => false,
-              'message' => 'Data not found'
-            ];
-          }
-        }
-        return response()->json($ret, 200);
-      } else {
+      //           $ret = [
+      //             'success' => true,
+      //             'message' => 'Data deleted successfully',
+      //             'data' => $invoice,
+      //           ];
+      //           $data->deductions()->delete();
+      //         } else {
+      //           $ret = [
+      //             'success' => true,
+      //             'message' => 'No invoice and deleted successfully',
+      //           ];
+      //           $data->deductions()->delete();
+      //         }
+      //       } else {
+      //         $ret = [
+      //           'success' => false,
+      //           'message' => 'Data not deleted'
+      //         ];
+      //       }
+      //     } else {
+      //       $ret = [
+      //         'success' => false,
+      //         'message' => 'Data not found'
+      //       ];
+      //     }
+      //   }
+      //   return response()->json($ret, 200);
+      // } else {
+      // }
 
-        $delete_data = ProfileDeductionTypes::where('id', $profileDeductionType_id)->delete();
-        return response()->json([
-          'success' => true,
-          'message' => 'Data deleted successfully',
-          'data' => $delete_data,
-        ], 200);
-      }
+      $delete_data = ProfileDeductionTypes::where('id', $profileDeductionType_id)->delete();
+      return response()->json([
+        'success' => true,
+        'message' => 'Profile deduction has been successfully deleted.',
+        'data' => $delete_data,
+      ], 200);
     }
   }
 

@@ -15,12 +15,12 @@
       <div class="card shadow p-2 mb-1 bg-white rounded" style="height:100%">
         <div class="input-group">
           <div class="form-floating me-3" style="width:23vh">
-            <input type="date" class="form-control" id="from" placeholder="Date Filter From">
+            <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="form-control" id="from" placeholder="Date Filter From">
             <label for="from">Date Filter From</label>
           </div>
 
           <div class="form-floating me-3" style="width:23vh">
-            <input type="date" class="form-control" id="to" placeholder="Date Filter To">
+            <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="form-control" id="to" placeholder="Date Filter To">
             <label for="to">Date Filter To</label>
           </div>
           <button typ="button" class="btn" style=" color:white; background-color: #CF8029;width:24vh" id="button-submit">Filter</button>
@@ -29,9 +29,9 @@
     </div>
 
     <div class="col-md-12 col-md-12 col-lg-12">
-      <div class="card shadow p-2 mb-1 bg-white rounded" style="height:100%">
-        <div class="card-body  table-responsive">
-          <table id="deductionReports" style="font-size: 14px;" class="table table-hover">
+      <div class="card shadow p-2 mb-1 bg-white rounded">
+        <div class="card-body ">
+          <table id="deductionReports" width="100%" style="font-size: 14px;" class="table table-hover table-responsive">
             <thead>
             </thead>
             <tbody>
@@ -88,8 +88,23 @@
   });
 
   $(document).ready(function() {
+    $(window).on('load', function() {
+      $('div.spanner').addClass('show');
 
+      $('html, body').animate({
+        scrollTop: $('#loader_load').offset.top
+      }, 'smooth');
+
+      setTimeout(function() {
+        $('div.spanner').removeClass('show');
+        show_data_load()
+        from();
+        to();
+      }, 2000);
+
+    })
     var dataTable = $('#deductionReports').DataTable({
+
       "footerCallback": function(row, data, start, end, display) {
         var api = this.api();
 
@@ -150,7 +165,7 @@
               page: 'current',
               search: 'applied'
             },
-            columns: [1, 2, 3, 4, 5, 6, 7, 8]
+            columns: [2, 3, 4, 6, 8]
           },
           footer: true,
         },
@@ -166,7 +181,7 @@
               page: 'current',
               search: 'applied'
             },
-            columns: [1, 2, 3, 4, 5, 6, 7, 8]
+            columns: [2, 3, 4, 6, 8]
           },
           footer: true,
           customize: function(xlsx) {
@@ -201,16 +216,22 @@
               page: 'current',
               search: 'applied'
             },
-            columns: [1, 2, 3, 4, 5, 6, 7, 8]
+            columns: [2, 3, 4, 6, 8],
+
           }, // export only current page
           customize: function(doc) {
             //   var col1 = '';
+            doc.content[1].table.widths = [100, 100, 100, 100, 100];
             doc.content[1].table.body.forEach(function(row, rowIndex) {
-              if (rowIndex > 0) { // Exclude first row
+              if (rowIndex >= 0) { // Exclude first row
                 row.forEach(function(cell, cellIndex) {
-                  if (cellIndex >= 3 && cellIndex <= 8) { // Columns 5, 6, 7, 8
+                  if (cellIndex >= 0 && cellIndex <= 2) {
+                    cell.alignment = 'left';
+                  }
+                  if (cellIndex >= 3 && cellIndex <= 4) {
                     cell.alignment = 'right';
                   }
+
                 });
               }
             });
@@ -230,7 +251,7 @@
               page: 'current',
               search: 'applied'
             },
-            columns: [2, 3, 4, 5, 6, 7, 8, 9]
+            columns: [2, 3, 4, 6, 8]
           }, // export only current page
           autoPrint: false, // disable print dialog
           customize: function(doc) {
@@ -288,7 +309,7 @@
         }
       ],
       "columnDefs": [{
-          targets: 1,
+          targets: [1, 5, 7, 9],
           visible: false,
           searchable: false,
         }, {
@@ -298,7 +319,7 @@
         {
           targets: [8, 9],
           className: 'text-end'
-        },
+        }
       ],
 
     });
@@ -355,28 +376,69 @@
               console.log("row.data()", data.data);
             }
             // })
+          } else {
+            let myArray = [];
+            let no_data = {
+              deduction_type_name: 'No Data',
+              amount: '',
+            }
+            myArray.push(no_data);
+            console.log("NO DATA", no_data);
+            if (row.child.isShown()) {
+              // This row is already open - close it
+              row.child.hide();
+              tr.removeClass('shown');
+            } else {
+              // Open this row
+              row.child(format(myArray)).show();
+              tr.addClass('shown');
+              console.log("row.data()", myArray);
+            }
           }
         }
-
       }).catch(function(error) {
         console.log("ERROR", error);
       })
 
     });
 
-    $(window).on('load', function() {
-      $('div.spanner').addClass('show');
 
-      $('html, body').animate({
-        scrollTop: $('#loader_load').offset.top
-      }, 'smooth');
+    function from() {
+      // START OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
+      // Get the input field
+      var dateInput = $("#from");
+      // Set the datepicker options
+      dateInput.datepicker({
+        dateFormat: "yy/mm/dd",
+        onSelect: function(dateText, inst) {
+          // Update the input value with the selected date
+          dateInput.val(dateText);
+        }
+      });
+      // Set the input value to the current system date in the specified format
+      // var currentDate = $.datepicker.formatDate("yy/mm/dd", new Date());
+      // dateInput.val(currentDate);
+      // END OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
+    }
 
-      setTimeout(function() {
-        $('div.spanner').removeClass('show');
-        show_data_load()
-      }, 2000);
+    function to() {
+      // START OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
+      // Get the input field
+      var dateInput = $("#to");
+      // Set the datepicker options
+      dateInput.datepicker({
+        dateFormat: "yy/mm/dd",
+        onSelect: function(dateText, inst) {
+          // Update the input value with the selected date
+          dateInput.val(dateText);
+        }
+      });
+      // Set the input value to the current system date in the specified format
+      // var currentDate = $.datepicker.formatDate("yy/mm/dd", new Date());
+      // dateInput.val(currentDate);
+      // END OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
+    }
 
-    })
 
     let toast1 = $('.toast1');
     toast1.toast({
@@ -459,13 +521,13 @@
               // add class to invoice status cell based on its value
               let invoiceStatusCell = $(newRow).find("td:eq(3)");
               if (item.invoice_status == "Paid") {
-                invoiceStatusCell.css("background-color", "green");
+                invoiceStatusCell.css("background-color", "#198754");
                 invoiceStatusCell.css("color", "white");
               } else if (item.invoice_status == "Pending") {
-                invoiceStatusCell.css("background-color", "yellow");
+                invoiceStatusCell.css("background-color", "#ffc107");
                 invoiceStatusCell.css("color", "black");
               } else {
-                invoiceStatusCell.css("background-color", "red");
+                invoiceStatusCell.css("background-color", "#198754");
                 invoiceStatusCell.css("color", "white");
               }
 

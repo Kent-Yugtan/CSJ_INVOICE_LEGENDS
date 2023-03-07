@@ -33,14 +33,14 @@
               <table style="color: #A4A6B3;" class="table " id="table_deduction">
                 <thead>
                   <th>Deduction Name</th>
-                  <th style="width:10%">Amount</th>
-                  <th class=" text-center">Action</th>
+                  <th class="text-end">Amount</th>
+                  <th class="text-center">Action</th>
 
                 </thead>
                 <tbody></tbody>
               </table>
             </div>
-            <div class="row mx-3">
+            <div class="row mx-2">
               <div class="col-xl-6">
                 <div class="page_showing" id="tbl_showing"></div>
               </div>

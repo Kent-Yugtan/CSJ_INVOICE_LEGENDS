@@ -186,7 +186,7 @@ Route::get('testEmail', function () {
       'deductions_total'       => number_format($data->deductions->pluck('amount')->sum(), 2),
       'notes'                  => $data->notes,
       'grand_total_amount'     => number_format($data->grand_total_amount, 2),
-      // 'admin_email'            => $email_admin->email_address,
+      'quick_invoice'          => $data->quick_invoice,
     ];
 
     // }
@@ -236,6 +236,7 @@ function setup_email_template($data)
   $deductions_total = !empty($data['deductions_total']) ? $data['deductions_total'] : "";
   $notes = !empty($data['notes']) ? $data['notes'] : "";
   $grand_total_amount = !empty($data['grand_total_amount']) ? $data['grand_total_amount'] : "";
+  $quick_invoice = !empty($data['quick_invoice']) ? $data['quick_invoice'] : "";
 
   $to_name = !empty($data['full_name']) ? $data['full_name'] : "";
   $to_email = !empty($data['admin_email']) ? $data['admin_email'] : "";
@@ -287,6 +288,7 @@ function setup_email_template($data)
         'deductions_total'    => $deductions_total,
         'notes'               => $notes,
         'grand_total_amount'  => $grand_total_amount,
+        'quick_invoice'       => $quick_invoice,
 
       ],
     ]

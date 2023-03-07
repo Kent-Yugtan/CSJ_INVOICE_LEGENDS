@@ -150,13 +150,14 @@
             </div>
 
             <div class="form-floating mb-3">
-              <input id="date_hired" name="date_hired" type="date" class="form-control @error('date_hired') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Date Hired" disabled="true">
+              <input id="date_hired" name="date_hired" type="text" onblur="(this.type='text')" onfocus="(this.type='date')" class="form-control @error('date_hired') is-invalid @enderror" placeholder="Date Hired" disabled="true">
               <label for="date_hired" style="color: #A4A6B3;">Date Hired</label>
             </div>
 
             <div class="col mb-3">
               <button type="button" id="edit_profile" style="width:100%; height:50px;color:white; background-color: #A4A6B3;" class="btn">Edit
                 Profile</button>
+              <button type="button" id="cancel_edit_profile" style="width:100%; height:50px;color:white; background-color: #A4A6B3;" class="btn">Cancel</button>
             </div>
             <div class="col mb-3">
               <button type="submit" style="width:100%; height:50px;color:white; background-color: #CF8029;" class="btn ">Update Profile</button>
@@ -183,13 +184,12 @@
         <div class="form-group has-search">
           <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-invoice" role="tabpanel" aria-labelledby="pills-invoice-tab">
-              <div class="row">
+              <div class="row mx-2">
                 <div class="col-4">
                   <button style="color:white; background-color: #CF8029;" data-bs-toggle="modal" data-bs-target="#exampleModal" type="submit" id="button-addon2" name="button-addon2" class="btn form-check-inline pe-3 w-100" disabled><i class="fa fa-plus pe-1"></i>Add
                     Invoice</button>
                 </div>
                 <div class="col-4">
-
                   <select class="form-check-inline form-select" id="filter_all_invoices">
                     <!-- <option selected value="" disabled>Filter</option> -->
                     <option value="All">All</option>
@@ -206,36 +206,42 @@
                     <input type="text" class="form-control" id="search_invoice" placeholder="Search">
                   </div>
                 </div>
+              </div>
 
-                <div class="card-body table-responsive">
-                  <table style="color: #A4A6B3;font-size: 14px;" class="table table-hover" id="dataTable_invoice">
-                    <thead>
-                      <tr>
-                        <th>Invoice #</th>
-                        <th>Payment Status</th>
-                        <th>Date Created</th>
-                        <th>Due Date</th>
-                        <th class="text-center">Total Amount</th>
-                        <th class="text-center">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="row mx-3">
-                  <div class="col-xl-6">
-                    <div class="page_showing" id="tbl_showing_invoice"></div>
-                  </div>
-                  <div class="col-xl-6">
-                    <ul style="float:right" class="pagination pagination-sm flex-sm-wrap" id="tbl_pagination_invoice">
-                    </ul>
+              <div class="row">
+                <div class="col-12">
+                  <div class="card-body table-responsive">
+                    <table style="color: #A4A6B3;font-size: 14px;" class="table table-hover" id="dataTable_invoice">
+                      <thead>
+                        <tr>
+                          <th>Invoice #</th>
+                          <th class="text-center">Payment Status</th>
+                          <th class="text-end">Total Amount</th>
+                          <th class="text-end">Date Created</th>
+                          <th class="text-end">Due Date</th>
+                          <th class="text-center">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
+
+              <div class="row mx-2">
+                <div class="col-xl-6">
+                  <div class="page_showing" id="tbl_showing_invoice"></div>
+                </div>
+                <div class="col-xl-6">
+                  <ul style="float:right" class="pagination pagination-sm flex-sm-wrap" id="tbl_pagination_invoice">
+                  </ul>
+                </div>
+              </div>
+
             </div>
             <div class="tab-pane fade" id="pills-deduction" role="tabpanel" aria-labelledby="pills-deduction-tab">
-              <div class="row">
+              <div class="row mx-2">
                 <div class="col-6">
                   <!-- <div class="input-group"> -->
                   <button type="button " id="submit-create-deduction" class="btn form-check-inline pe-3" data-bs-toggle="modal" data-bs-target="#modal-create-deduction" style="color:white; background-color: #CF8029;width:100%" disabled>
@@ -253,7 +259,7 @@
                 <!-- </div> -->
               </div>
               <div class="row">
-                <div class="col-12 pt-3">
+                <div class="col-12 pt-3 px-4">
                   <div id="deductionButton" style="word-wrap: break-word;">
                   </div>
                 </div>
@@ -266,9 +272,9 @@
                       <thead>
                         <tr>
                           <th>Invoice #</th>
-                          <th>Payment Status</th>
+                          <th class="text-center">Payment Status</th>
                           <th>Deduction Name</th>
-                          <th class="text-center">Amount</th>
+                          <th class="text-end">Amount</th>
                           <th class="text-end">Date Created</th>
                         </tr>
                       </thead>
@@ -276,7 +282,7 @@
                       </tbody>
                     </table>
                   </div>
-                  <div class="row mx-3">
+                  <div class="row mx-2">
                     <div class="col-xl-6">
                       <div class="page_showing" id="tbl_showing_deduction"></div>
                     </div>
@@ -699,7 +705,7 @@
   // INVOICE SEARCH AND DISPLAY
   $(document).ready(function() {
     // REFRESH WHEN THIS PAGE IS LOAD
-
+    $('#cancel_edit_profile').addClass('d-none');
     show_data();
     $(window).on('load', function() {
       $('html,body').animate({
@@ -709,13 +715,61 @@
 
       setTimeout(function() {
         $("div.spanner").removeClass("show");
+        date_hired();
+        due_date();
         check_InactivependingInvoicesStatus();
         show_profileDeductionType_Button();
         show_Profilededuction_Table_Active();
-
         show_edit();
       }, 2000)
 
+    })
+
+    function due_date() {
+      // START OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
+      // Get the input field
+      var due_date = $("#due_date");
+      // Set the datepicker options
+      due_date.datepicker({
+        dateFormat: "yy/mm/dd",
+        onSelect: function(dateText, inst) {
+          // Update the input value with the selected date
+          due_date.val(dateText);
+        }
+      });
+      // Set the input value to the current system date in the specified format
+      var currentDate = $.datepicker.formatDate("yy/mm/dd", new Date());
+      due_date.val(currentDate);
+      // END OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
+
+    }
+
+    function date_hired() {
+      // START OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
+      // Get the input field
+      var date_hired = $("#date_hired");
+      // Set the datepicker options
+      date_hired.datepicker({
+        dateFormat: "yy/mm/dd",
+        onSelect: function(dateText, inst) {
+          // Update the input value with the selected date
+          date_hired.val(dateText);
+        }
+      });
+      // Set the input value to the current system date in the specified format
+      var currentDate = $.datepicker.formatDate("yy/mm/dd", new Date());
+      date_hired.val(currentDate);
+      // END OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
+    }
+
+
+
+    $('#cancel_edit_profile').on('click', function(e) {
+      e.preventDefault();
+      $('#cancel_edit_profile').addClass('d-none');
+      $('#edit_profile').removeClass('d-none');
+      location.reload(true); // refresh the page
+      $(window).scrollTop(0); // scroll to the top
     })
 
 
@@ -740,10 +794,12 @@
 
 
     $('#edit_profile').on('click', function(e) {
-
-      $('html,body').animate({
+      e.preventDefault();
+      $('html, body').animate({
         scrollTop: $('#loader_load').offset().top
       }, 'slow');
+      $('#edit_profile').addClass('d-none');
+      $('#cancel_edit_profile').removeClass('d-none');
       $('div.spanner').addClass("show");
       setTimeout(function() {
         $('div.spanner').removeClass("show");
@@ -768,7 +824,7 @@
         $("#bank_location").prop('disabled', false);
         $("#gcash_no").prop('disabled', false);
         $("#date_hired").prop('disabled', false);
-      }, 2000);
+      }, 1500);
     })
 
     // UPDATE INVOICE STATUS
@@ -1036,9 +1092,6 @@
                     item.invoice_status + '</button></td>';
                 }
 
-                tr += '<td>' + moment.utc(item.created_at).tz('America/New_York')
-                  .format('MM/DD/YYYY') + '</td>';
-                tr += '<td>' + moment(item.due_date).format('L') + '</td>';
                 tr += '<td style="text-align:end;">' + Number(
                     parseFloat(item
                       .grand_total_amount).toFixed(2))
@@ -1047,6 +1100,9 @@
                       minimumFractionDigits: 2
                     }) +
                   '</td>';
+                tr += '<td  class="text-end">' + moment.utc(item.created_at).tz('America/New_York')
+                  .format('MM/DD/YYYY') + '</td>';
+                tr += '<td  class="text-end">' + moment(item.due_date).format('L') + '</td>';
                 tr +=
                   '<td class="text-center"> <a href="' +
                   apiUrl +
@@ -2208,15 +2264,14 @@
                       '<td style="text-align:right;"><button style="width:100%; height:20px; font-size:10px; padding: 0px;" type="button" class="btn btn-danger">Overdue</button></td>';
                   }
 
-                  tr += '<td class="text-start">' + item
-                    .profile_deduction_types.deduction_type_name +
+                  tr += '<td class="text-start">' + item.deduction_type_name +
                     '</td>';
                   tr += '<td class="text-end">' + PHP(item
                       .amount)
                     .format() + '</td>';
-                  tr += '<td style="text-align:end;">' + mm + "-" +
-                    dd + "-" +
-                    yy + '</td>';
+                  tr += '<td style="text-align:end;">' + moment.utc(item.created_at).tz(
+                    'America/New_York').format(
+                    'MM/DD/YYYY') + '</td>';
 
                   $("#dataTable_deduction tbody").append(tr);
                   return ''
@@ -2292,7 +2347,7 @@
                 data.data.profile_deduction_types.map((item) => {
                   let label = '<label>';
                   label +=
-                    "<button type='button' data-bs-toggle='modal' style='width:200px;' data-bs-target='#ProfileDeductioneditModal' id='editProfileDeduction' class='editProfileDeduction btn btn-primary my-2 mx-2' value=" +
+                    "<button type='button' data-bs-toggle='modal' style='width:150px;' data-bs-target='#ProfileDeductioneditModal' id='editProfileDeduction' class='editProfileDeduction btn btn-primary my-2 mx-2' value=" +
                     item.id + ">" + item.deduction_type_name +
                     "</button>";
                   // <button type='button' data-bs-toggle='modal' data-bs-target='#deleteModal' class='deleteProfileDeduction profile-close' aria-hidden='true'><span style='color:black;' value=" +
