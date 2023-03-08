@@ -2292,9 +2292,20 @@
       }).then(function(canvas) {
         // Create a new jsPDF instance
         var pdf = new jsPDF('p', 'mm', 'a4');
+
+        // Calculate the center of the page
+        var centerX = pdf.internal.pageSize.getWidth() / 2;
+        var centerY = pdf.internal.pageSize.getHeight() / 2;
+
+        // Calculate the position to add the image
+        var imageWidth = 150; // or canvas.width / scaleFactor;
+        var imageHeight = 190; // or canvas.height / scaleFactor;
+        var startX = centerX - (imageWidth / 2);
+        var startY = centerY - (imageHeight / 2);
+
         // Add the screenshot to the PDF using the addImage method
-        // pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 10, 10, 190, 277);
-        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 10, 10, 190, 190);
+        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', startX, 5, imageWidth, imageHeight);
+
 
         // Save the PDF file
         pdf.save('Invoice ' + $('#invoice_no').html() + '.pdf');

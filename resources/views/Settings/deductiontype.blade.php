@@ -3,13 +3,13 @@
 <div class="container-fluid px-4 pb-4" id="loader_load">
   <h1 class="mt-0">Deductions</h1>
   <ol class="breadcrumb mb-3"></ol>
-  <div class="row mt-5">
-    <div class="col-xs-5 col-sm-12 col-md-12 col-lg-6 px-2">
+  <div class="row">
 
-      <div class="row mt-3 ">
+    <div class="col-xs-5 col-sm-12 col-md-12 col-lg-6 px-2">
+      <div class="row">
         <div class="col-sm-12">
-          <button class="btn w-100" style="color:white; background-color: #CF8029; margin-top:5px"
-            data-bs-toggle="modal" data-bs-target="#addModal" type="submit" id="button-addon2">
+          <button class="btn w-100" style="color:white; background-color: #CF8029;" data-bs-toggle="modal"
+            data-bs-target="#addModal" type="submit" id="button-addon2">
             <i class="fa fa-plus pe-1"></i>
             Add Deduction Type
           </button>

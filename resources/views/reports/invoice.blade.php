@@ -457,12 +457,15 @@ $(document).ready(function() {
             let invoiceStatusCell = $(newRow).find("td:eq(2)");
             if (item.invoice_status == "Paid") {
               invoiceStatusCell.css("background-color", "#198754");
+              invoiceStatusCell.css("border-color", "#198754");
               invoiceStatusCell.css("color", "white");
             } else if (item.invoice_status == "Pending") {
               invoiceStatusCell.css("background-color", "#ffc107");
+              invoiceStatusCell.css("border-color", "#ffc107");
               invoiceStatusCell.css("color", "black");
             } else {
-              invoiceStatusCell.css("background-color", "#198754");
+              invoiceStatusCell.css("background-color", "#dc3545");
+              invoiceStatusCell.css("border-color", "#dc3545");
               invoiceStatusCell.css("color", "white");
             }
 

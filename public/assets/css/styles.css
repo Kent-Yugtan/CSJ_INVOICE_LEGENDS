@@ -11932,9 +11932,9 @@ body {
     height: 100vh;
     z-index: 1038;
 }
-.sb-nav-fixed #layoutSidenav #layoutSidenav_nav .sb-sidenav {
+/* .sb-nav-fixed #layoutSidenav #layoutSidenav_nav .sb-sidenav {
     padding-top: 56px;
-}
+} */
 .sb-nav-fixed #layoutSidenav #layoutSidenav_nav .sb-sidenav .sb-sidenav-menu {
     overflow-y: auto;
 }
@@ -12840,5 +12840,5 @@ button.toast-close-button {
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-  display: none;
+    display: none;
 }

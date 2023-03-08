@@ -10,7 +10,7 @@
         <form name="ProfileStore" id="ProfileStore" method="post" action="javascript:void(0)" class="row g-2 needs-validation" novalidate>
           <div class="row px-4 pt-3" id="header">
             @csrf
-            <div class="col-xl-5 mb-3">
+            <div class="col-xl-6 mb-3">
               <div class="profile-pic-div" style="position: relative; height:200px">
                 <img src="/images/default.png" id="photo">
                 <input name="file" type="file" id="file">
@@ -18,7 +18,7 @@
               </div>
             </div>
 
-            <div class="col-xl-7 pt-3 mb-3">
+            <div class="col-xl-6 pt-3 mb-3">
               <div class="form-check mb-3">
                 <input class="form-check-input" type="checkbox" id="profile_status" name="profile_status" checked>
                 <label class="form-check-label" for="status">
