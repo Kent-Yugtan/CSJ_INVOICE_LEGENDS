@@ -725,7 +725,7 @@
         show_profileDeductionType_Button();
         show_Profilededuction_Table_Active();
         show_edit();
-      }, 2000)
+      }, 1500)
 
     })
 
@@ -882,7 +882,7 @@
             $("div.spanner").removeClass("show");
 
             toast1.toast('show');
-          }, 2000);
+          }, 1500);
           $('.toast1 .toast-title').html('Update Status');
           $('.toast1 .toast-body').html(response.data.message);
           // show_data();
@@ -1355,7 +1355,7 @@
               setTimeout(function() {
                 $("div.spanner").removeClass("show");
                 location.href = apiUrl + "/admin/inactive"
-              }, 2000)
+              }, 1500)
 
               toast1.toast('show');
             }
@@ -1420,7 +1420,7 @@
             $('#dataTable_invoice tbody').html(
               show_data());
             toast1.toast('show');
-          }, 2000);
+          }, 1500);
         }
       }).catch(function(error) {
         console.log("ERROR", error);
@@ -1813,7 +1813,7 @@
       setTimeout(function() {
         $("div.spanner").removeClass("show");
         show_data();
-      }, 2000)
+      }, 1500)
 
       $('#exampleModal input').val('');
       $('#show_deduction_items').empty();
@@ -1828,14 +1828,14 @@
         $('#deductionButton').empty();
         $('#deductionButton').html(
           show_profileDeductionType_Button());
-      }, 2000)
+      }, 1500)
     });
 
     $("#ProfileDeductioneditModal").on('hide.bs.modal', function() {
       $("div.spanner").addClass("show");
       setTimeout(function() {
         $("div.spanner").removeClass("show");
-      }, 2000)
+      }, 1500)
     });
 
     $("#invoice_status").on('hide.bs.modal', function() {
@@ -1845,7 +1845,7 @@
       setTimeout(function() {
         $("div.spanner").removeClass("show");
         show_data();
-      }, 2000)
+      }, 1500)
     });
 
     $("#button-addon2").click(function(e) {
@@ -2042,7 +2042,7 @@
             toast1.toast('show');
 
 
-          }, 2000)
+          }, 1500)
           $('.toast1 .toast-title').html('Create Invoices');
           $('.toast1 .toast-body').html(response.data.message);
 
@@ -2111,7 +2111,7 @@
           setTimeout(function() {
             $("div.spanner").removeClass("show");
             toast1.toast('show');
-          }, 2000)
+          }, 1500)
           $('.toast1 .toast-title').html('Profile Deduction');
           $('.toast1 .toast-body').html(data.message);
 
@@ -2406,7 +2406,7 @@
               show_profileDeductionType_Button());
             show_Profilededuction_Table_Active();
             toast1.toast('show');
-          }, 2000)
+          }, 1500)
 
         }
       }).catch(function(error) {

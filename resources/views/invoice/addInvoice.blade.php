@@ -179,21 +179,26 @@
             </div>
 
             <div class="col-12 mb-3">
-              <div class="row">
-                <div class="col-12 form-control">
-                  <label for="floatingTextarea">Notes</label>
-                  <textarea class="form-control" placeholder="Leave a notes here" id="notes" name="notes"></textarea>
-                </div>
-              </div>
+              <label for="floatingTextarea">Notes</label>
+              <textarea class="form-control" placeholder="Leave a notes here" id="notes" name="notes"></textarea>
             </div>
 
-            <!-- CLOSING DIV -->
 
+          </div>
+          <div class="row px-4">
+            <div class="col-6">
+              <button type="submit" class="btn btn-secondary w-100"
+                style="color:White; background-color:#CF8029;">Save</button>
+            </div>
+            <div class="col-6 ">
+              <button type="button" id="close_back" class="btn btn-secondary w-100"
+                style=" color:#CF8029; background-color:white; ">Close</button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="col-lg-3">
+      <!-- <div class="col-lg-3">
         <div class="card shadow bg-white rounded">
           <div class="row py-3 mx-3">
             <div class="col">
@@ -208,7 +213,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </form>
 </div>
@@ -259,7 +264,7 @@ $(document).ready(function() {
       due_date();
       display_item_rows();
       selectProfile();
-    }, 2000)
+    }, 1500)
   })
 
   function due_date() {
@@ -512,18 +517,40 @@ $(document).ready(function() {
     let parent = $(this).closest('.row');
     let sub_total = parent.find('.subtotal').val();
     let row_item = $(this).parent().parent().parent();
-    $(row_item).remove();
-
-    if ($('#show_items > .row').length === 1) {
-      $('#show_items > .row').find('.col-remove-item').removeClass('d-none')
-        .addClass(
-          'd-none');
+    if (row_item) {
+      $.confirm({
+        icon: 'fa fa-warning',
+        draggable: false,
+        animation: 'news',
+        closeAnimation: 'news',
+        title: 'Are you sure?',
+        content: 'Do you really want to delete these record? This process cannot be undone.',
+        autoClose: 'Cancel|5000',
+        buttons: {
+          removeDeductions: {
+            btnClass: 'btn btn-danger',
+            text: 'Confirm',
+            action: function() {
+              $(row_item).remove();
+              if ($('#show_items > .row').length === 1) {
+                $('#show_items > .row').find('.col-remove-item').removeClass('d-none')
+                  .addClass(
+                    'd-none');
+              }
+              getResults_Converted();
+              Additems_total();
+              subtotal();
+              DeductionItems_total();
+              x--;
+            }
+          },
+          Cancel: function() {}
+        },
+        onClose: function() {
+          // before the modal is hidden.
+        },
+      });
     }
-    getResults_Converted();
-    Additems_total();
-    subtotal();
-    DeductionItems_total();
-    x--;
   });
 
   // FUNCTION CLICK FOR REMOVING INVOICE DEDUCTIONS ROWS
@@ -531,12 +558,36 @@ $(document).ready(function() {
     e.preventDefault();
     let parent = $(this).closest('.row');
     let row_item = $(this).parent().parent().parent();
-    $(row_item).remove();
-    getResults_Converted();
-    Additems_total();
-    subtotal();
-    DeductionItems_total();
-    x--;
+    if (row_item) {
+      $.confirm({
+        icon: 'fa fa-warning',
+        draggable: false,
+        animation: 'news',
+        closeAnimation: 'news',
+        title: 'Are you sure?',
+        content: 'Do you really want to delete these record? This process cannot be undone.',
+        autoClose: 'Cancel|5000',
+        buttons: {
+          removeDeductions: {
+            btnClass: 'btn btn-danger',
+            text: 'Confirm',
+            action: function() {
+              $(row_item).remove();
+              getResults_Converted();
+              Additems_total();
+              subtotal();
+              DeductionItems_total();
+              x--;
+            }
+          },
+          Cancel: function() {}
+        },
+        onClose: function() {
+          // before the modal is hidden.
+        },
+      })
+    }
+
   });
 
   // FUNCTION CLICK FOR DISPLAY INVOICE ITEM ROWS
@@ -547,63 +598,66 @@ $(document).ready(function() {
 
   // INITIALIZE DISPLAY ITEM ROWS
   function display_item_rows() {
-    let max_fields = 10;
-    let wrapper = $('#show_items');
-    add_rows = '';
-    add_rows += '<div class="row row1">';
+    let max_fields = 5;
+    if (x < max_fields) {
+      let wrapper = $('#show_items');
+      add_rows = '';
+      add_rows += '<div class="row row1">';
 
-    add_rows += '<div class="col-md-4 mb-3">';
-    add_rows += '<div class="form-floating form-group">';
-    add_rows +=
-      '<input type="text" name="item_description" placeholder="Item Description" id="item_description" class="form-control item_description" />';
-    add_rows += '<label for="item_description">Item Desctiption</label>';
-    add_rows += '</div>';
-    add_rows += '</div>';
+      add_rows += '<div class="col-md-4 mb-3">';
+      add_rows += '<div class="form-floating form-group">';
+      add_rows +=
+        '<input type="text" name="item_description" placeholder="Item Description" id="item_description" class="form-control item_description" />';
+      add_rows += '<label for="item_description">Item Desctiption</label>';
+      add_rows += '</div>';
+      add_rows += '</div>';
 
-    add_rows += '<div class="col-md-2 mb-3">';
-    add_rows += '<div class="form-floating form-group">';
-    add_rows +=
-      '<input type="text" step="any" maxlength="4" placeholder="Quantity" name="quantity" id="quantity" style="text-align:right;" class="form-control multi quantity" />';
-    add_rows += '<label for="quantity">Quantity</label>';
-    add_rows += '</div>';
-    add_rows += ' </div>';
+      add_rows += '<div class="col-md-2 mb-3">';
+      add_rows += '<div class="form-floating form-group">';
+      add_rows +=
+        '<input type="text" step="any" maxlength="4" placeholder="Quantity" name="quantity" id="quantity" style="text-align:right;" class="form-control multi quantity" />';
+      add_rows += '<label for="quantity">Quantity</label>';
+      add_rows += '</div>';
+      add_rows += ' </div>';
 
-    add_rows += '<div class="col-md-3 mb-3">';
-    add_rows += '<div class="form-floating form-group">';
-    add_rows +=
-      '<input type="text" step="any" name="rate" placeholder="Rate" id="rate" style="text-align:right;" class="form-control multi rate" />';
-    add_rows += '<label for="rate">Rate</label>';
-    add_rows += '</div>';
-    add_rows += '</div>';
+      add_rows += '<div class="col-md-3 mb-3">';
+      add_rows += '<div class="form-floating form-group">';
+      add_rows +=
+        '<input type="text" step="any" name="rate" placeholder="Rate" id="rate" style="text-align:right;" class="form-control multi rate" />';
+      add_rows += '<label for="rate">Rate</label>';
+      add_rows += '</div>';
+      add_rows += '</div>';
 
-    add_rows += '<div class="col-md-2 mb-3">';
-    add_rows += '<div class="form-floating form-group">';
-    add_rows +=
-      '<input type="text" style="text-align:right;border:none;background-color:white" disabled name="amount" id="amount" class="form-control amount" />';
-    add_rows += '<label for="amount">Amount</label>';
-    add_rows += '</div>';
-    add_rows += '</div>';
+      add_rows += '<div class="col-md-2 mb-3">';
+      add_rows += '<div class="form-floating form-group">';
+      add_rows +=
+        '<input type="text" style="text-align:right;border:none;background-color:white" disabled name="amount" id="amount" class="form-control amount" />';
+      add_rows += '<label for="amount">Amount</label>';
+      add_rows += '</div>';
+      add_rows += '</div>';
 
-    add_rows += '<div class="col-md-1 col-remove-item d-none">';
-    add_rows += '<div class="form-group">';
-    add_rows += '</br>';
-    add_rows +=
-      '<button class="btn remove_items" style="display: flex;justify-content: center;"><i class="fa fa-trash pe-1" style="color:red"></i></button>';
-    add_rows += '</div>';
-    add_rows += '</div>';
+      add_rows += '<div class="col-md-1 col-remove-item d-none">';
+      add_rows += '<div class="form-group">';
+      add_rows += '</br>';
+      add_rows +=
+        '<button class="btn remove_items" style="display: flex;justify-content: center;"><i class="fa fa-trash pe-1" style="color:red"></i></button>';
+      add_rows += '</div>';
+      add_rows += '</div>';
 
-    add_rows += '</div>'
+      add_rows += '</div>'
 
-    $(wrapper).append(add_rows);
+      $(wrapper).append(add_rows);
 
-    if ($('#show_items > .row').length > 1) {
-      $('#show_items > .row').each(function() {
-        $(this).find('.col-remove-item').removeClass('d-none');
-      })
-    } else {
-      $('#show_items > .row').find('.col-remove-item').removeClass('d-none').addClass(
-        'd-none');
+      if ($('#show_items > .row').length > 1) {
+        $('#show_items > .row').each(function() {
+          $(this).find('.col-remove-item').removeClass('d-none');
+        })
+      } else {
+        $('#show_items > .row').find('.col-remove-item').removeClass('d-none').addClass(
+          'd-none');
+      }
     }
+    x++;
   }
 
   // ONLY NUMBERS FOR NUMBER INPUTS
@@ -793,7 +847,7 @@ $(document).ready(function() {
       $('#show_deduction_items').empty();
       $('#dataTable_deduction tbody').empty();
       location.href = apiUrl + "/invoice/current"
-    }, 2000)
+    }, 1500)
   });
 
   function capitalize(s) {

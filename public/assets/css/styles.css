@@ -12842,3 +12842,7 @@ button.toast-close-button {
 input[type="date"]::-webkit-calendar-picker-indicator {
     display: none;
 }
+
+.jconfirm .jconfirm-box.jconfirm-animation-news{
+    transform: rotate(400deg) scale(0);
+}

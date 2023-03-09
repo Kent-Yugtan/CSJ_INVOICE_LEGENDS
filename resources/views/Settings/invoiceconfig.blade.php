@@ -227,7 +227,7 @@
       setTimeout(function() {
         $('div.spanner').removeClass('show');
         show_data();
-      }, 2000)
+      }, 1500)
     })
     let toast1 = $('.toast1');
 
@@ -239,7 +239,7 @@
       setTimeout(function() {
         $('div.spanner').removeClass('show');
         show_data();
-      }, 2000)
+      }, 1500)
     })
 
     $('#button_search').on('click', function() {
@@ -253,7 +253,7 @@
         show_data({
           search
         });
-      }, 2000)
+      }, 1500)
 
     })
     toast1.toast({
@@ -309,7 +309,7 @@
             $('.toast1 .toast-body').html(response.data.message);
             toast1.toast('show');
             // show_data();
-          }, 2000)
+          }, 1500)
         }
 
       }).catch(function(error) {
@@ -403,7 +403,7 @@
 
             toast1.toast('show');
             show_data();
-          }, 2000)
+          }, 1500)
         }
 
       }).catch(function(error) {
@@ -542,7 +542,7 @@
             $('.toast1 .toast-title').html('Invoice Configuration');
             $('.toast1 .toast-body').html(response.data.message);
             toast1.toast('show');
-          }, 2000);
+          }, 1500);
         }
       }).catch(function(error) {
         console.log("ERROR", error);
@@ -557,7 +557,7 @@
       setTimeout(function() {
         $('div.spanner').removeClass('show');
         show_data();
-      }, 2000);
+      }, 1500);
     })
   })
 </script>
