@@ -94,7 +94,7 @@
         active_count_paid();
         active_count_pending()
         show_data();
-      }, 2000)
+      }, 1500)
     })
 
     $("#tbl_user_pagination").on('click', '.page-item', function() {
@@ -154,7 +154,7 @@
         $('#tbl_user_pagination').empty();
         show_data();
         $("div.spanner").removeClass("show");
-      }, 2000)
+      }, 1500)
 
     })
 
