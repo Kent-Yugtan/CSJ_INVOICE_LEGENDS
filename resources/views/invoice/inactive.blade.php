@@ -72,11 +72,11 @@
               <tr>
                 <th class="fit">Invoice #</th>
                 <th class="fit">Profile Name</th>
-                <th class="fit">Payment Status</th>
-                <th class="fit">Date Created</th>
-                <th class="fit">Due Date</th>
-                <th class="fit">Status</th>
-                <th class="fit text-center">Total Amount</th>
+                <th class="fit text-center">Payment Status</th>
+                <th class="fit text-center">Invoice Status</th>
+                <th class="fit text-end">Total Amount</th>
+                <th class="fit text-end">Date Created</th>
+                <th class="fit text-end">Due Date</th>
                 <th class="text-center fit">Action</th>
               </tr>
             </thead>
@@ -99,8 +99,8 @@
 </div>
 
 <!-- START MODAL UPDATE INVOICE STATUS -->
-<div class="modal fade" id="invoice_status" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
+<div class="modal fade" id="invoice_status" data-bs-backdrop="static" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-dialog">
       <div class="modal-content ">
@@ -401,17 +401,9 @@ $(document).ready(function() {
                 item.invoice_status + '</button></td>';
             }
 
-            tr += '<td>' + mm + '-' +
-              dd +
-              '-' +
-              yy + '</td>';
-            tr += '<td>' + mm2 + '-' +
-              dd2 +
-              '-' +
-              yy2 + '</td>';
-            tr += '<td style="text-align:start;">' + item.status +
-              '</td>';
-            tr += '<td style="text-align:right;">' + Number(
+            tr += '<td class="text-center">' + item.status +
+              '</td>'
+            tr += '<td class="text-end">' + Number(
                 parseFloat(item
                   .grand_total_amount).toFixed(2))
               .toLocaleString(
@@ -419,6 +411,12 @@ $(document).ready(function() {
                   minimumFractionDigits: 2
                 }) +
               '</td>';
+            tr += '<td class="text-end">' + moment.utc(item.created_at).tz(
+              'America/New_York').format(
+              'MM/DD/YYYY') + '</td>';
+            tr += '<td class="text-end">' + moment.utc(item.due_date).tz(
+              'America/New_York').format(
+              'MM/DD/YYYY') + '</td>';
 
             tr +=
               '<td class="text-center"> <a href="' +
@@ -586,17 +584,9 @@ $(document).ready(function() {
                 item.invoice_status + '</button></td>';
             }
 
-            tr += '<td>' + mm + '-' +
-              dd +
-              '-' +
-              yy + '</td>';
-            tr += '<td>' + mm2 + '-' +
-              dd2 +
-              '-' +
-              yy2 + '</td>';
-            tr += '<td style="text-align:start;">' + item.status +
-              '</td>';
-            tr += '<td style="text-align:right;">' + Number(
+            tr += '<td class="text-center">' + item.status +
+              '</td>'
+            tr += '<td class="text-end">' + Number(
                 parseFloat(item
                   .grand_total_amount).toFixed(2))
               .toLocaleString(
@@ -604,6 +594,12 @@ $(document).ready(function() {
                   minimumFractionDigits: 2
                 }) +
               '</td>';
+            tr += '<td class="text-end">' + moment.utc(item.created_at).tz(
+              'America/New_York').format(
+              'MM/DD/YYYY') + '</td>';
+            tr += '<td class="text-end">' + moment.utc(item.due_date).tz(
+              'America/New_York').format(
+              'MM/DD/YYYY') + '</td>';
 
             tr +=
               '<td class="text-center"> <a href="' +
@@ -747,7 +743,7 @@ $(document).ready(function() {
           toast1.toast('show');
           $('.toast1 .toast-title').html('Update Status');
           $('.toast1 .toast-body').html(response.data.message);
-        }, loadingTime);
+        }, 1500);
 
 
       }
@@ -773,13 +769,10 @@ $(document).ready(function() {
         setTimeout(function() {
           $('div.spanner').removeClass('show');
           toast1.toast('show');
-        }, loadingTime);
+        }, 1500);
       }
     });
-    var end = performance.now(); // Get the timestamp after processing
-    var processingTime = end - start; // Calculate the processing time in milliseconds
-    var loadingTime = Math.ceil((processingTime * 1000) / 2);
-    console.log('Processing time: ' + loadingTime + 'ms');
+
   });
 
   $('#button-submit').on('click', function(e) {

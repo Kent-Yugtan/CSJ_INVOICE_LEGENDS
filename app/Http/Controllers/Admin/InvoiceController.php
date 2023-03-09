@@ -286,6 +286,7 @@ class InvoiceController extends Controller
         $incoming_data += [
           'invoice_status' => 'Pending',
           'status' => 'Active',
+          'quick_invoice' => '1',
           'invoice_no' => $this->generate_invoice(),
         ];
         $store_data = Invoice::create($incoming_data);
@@ -309,6 +310,7 @@ class InvoiceController extends Controller
               $dataDeductions = [
                 'profile_id' => $request->profile_id,
                 'profile_deduction_type_id' => $value['profile_deduction_type_id'],
+                'deduction_type_name' => $value['profile_deduction_type_name'],
                 'amount' => $value['deduction_amount'],
               ];
               $store_data->deductions()->create($dataDeductions);
@@ -348,6 +350,8 @@ class InvoiceController extends Controller
     $invoice_id = $request->invoice_id;
     $invoiceItems_id = $request->invoiceItems_id;
     $profileDeduction_id = $request->profileDeduction_id;
+    $invoiceItem = $request->invoiceItem;
+    $deductions = $request->Deductions;
     if ($error === false) {
       // STORE
       if ($profile_id) {
@@ -371,6 +375,7 @@ class InvoiceController extends Controller
         $incoming_data += [
           'invoice_status' => 'Pending',
           'status' => 'Active',
+          'quick_invoice' => '0',
           'invoice_no' => $this->generate_invoice(),
         ];
         $store_data = Invoice::create($incoming_data);
@@ -393,6 +398,7 @@ class InvoiceController extends Controller
               $dataDeductions = [
                 'profile_id' => $request->profile_id,
                 'profile_deduction_type_id' => $value['profile_deduction_type_id'],
+                'deduction_type_name' => $value['deduction_type_name'],
                 'amount' => $value['deduction_amount'],
               ];
               $store_data->deductions()->create($dataDeductions);
@@ -409,17 +415,25 @@ class InvoiceController extends Controller
           'data' => $store_data,
         ], 200);
       }
+
+      // DELETE INVOICE ITEMS DELETE WHEN CLICK SUBMIT
+      $invoiceItem_ids = [];
+      if ($invoice_id && $invoiceItem) {
+        foreach ($invoiceItem as $items) {
+          if (!empty($items['item_invoice_id'])) {
+            $invoiceItem_ids[] = $items['item_invoice_id'];
+          }
+        }
+      }
+      if (count($invoiceItem_ids) > 0) {
+        InvoiceItems::where('invoice_id', $invoice_id)->whereNotIn('id', $invoiceItem_ids)->delete();
+      } else {
+        InvoiceItems::where('invoice_id', $invoice_id)->delete();
+      }
+
       // UPDATE REMOVED INVOICE ITEMS
       if ($invoiceItems_id && $invoice_id) {
         $invoice_data = Invoice::find($invoice_id);
-        if ($invoiceItems_id) {
-          $delete = InvoiceItems::where('id', $invoiceItems_id)->delete();
-          return response()->json([
-            'success' => true,
-            'message' => "Invoice Items has been successfully removed.",
-            'data' =>  $delete,
-          ], 200);
-        }
         if ($invoice_data) {
           $incoming_data = $request->validate(
             [
@@ -479,7 +493,6 @@ class InvoiceController extends Controller
             }
           }
 
-
           return response()->json([
             'success' => true,
             'message' => "Invoice has been successfully updated to the database.",
@@ -487,17 +500,23 @@ class InvoiceController extends Controller
           ], 200);
         }
       }
+
+      // DELETE DEDUCTIONS DELETE WHEN CLICK SUBMIT
+      $deductions_ids = [];
+      if ($invoice_id && $deductions) {
+        foreach ($deductions as $deduction) {
+          $deductions_ids[] = $deduction['deduction_id'];
+        }
+      }
+      if (count($deductions_ids) > 0) {
+        Deduction::where('invoice_id', $invoice_id)->whereNotIn('id', $deductions_ids)->delete();
+      } else {
+        Deduction::where('invoice_id', $invoice_id)->delete();
+      }
+
       // UPDATE REMOVED PROFILE DEDUCTIONS ITEMS
       if ($profileDeduction_id && $invoice_id) {
         $invoice_data = Invoice::find($invoice_id);
-        if ($profileDeduction_id) {
-          $delete = Deduction::where('id', $profileDeduction_id)->delete();
-          return response()->json([
-            'success' => true,
-            'message' => "Deduction has been successfully removed.",
-            'data' =>  $delete,
-          ], 200);
-        }
         if ($invoice_data) {
           $incoming_data = $request->validate(
             [
@@ -530,7 +549,6 @@ class InvoiceController extends Controller
               }
             }
           }
-
 
           return response()->json([
             'success' => true,
@@ -711,7 +729,7 @@ class InvoiceController extends Controller
     $profile_id = $request->profile_id;
     if ($profile_id) {
 
-      $deductions = Deduction::with(['invoice', 'profile_deduction_types'])
+      $deductions = Deduction::with(['invoice'])
         ->where('profile_id', $profile_id)->whereHas('invoice', function ($query) {
           $query->where('status', 'Active');
         });
@@ -720,13 +738,11 @@ class InvoiceController extends Controller
         $deductions = $deductions
           ->where('profile_id', $request->profile_id)
           ->where('amount', 'LIKE', '%' . $request->search . '%')
+          ->orWhere('deduction_type_name', 'LIKE', '%' . $request->search . '%')
           ->orwhereHas('invoice', function ($q) use ($request) {
             $q->where('profile_id', $request->profile_id);
             $q->where('invoice_no', 'LIKE', '%' . $request->search . '%');
             $q->orwhere('invoice_status', 'LIKE', '%' . $request->search . '%');
-          })->orWhereHas('profile_deduction_types', function ($qq) use ($request) {
-            $qq->where('profile_id', $request->profile_id);
-            $qq->where('deduction_type_name', 'LIKE', '%' .  $request->search . '%');
           });
       }
 
@@ -810,6 +826,7 @@ class InvoiceController extends Controller
         function ($q) use ($request) {
           $q->orWhere('invoice_no', 'LIKE', '%' . $request->search . '%');
           $q->orWhere('invoice_status', 'LIKE', '%' . $request->search . '%');
+          $q->orWhere('status', 'LIKE', '%' . $request->search . '%');
           $q->orWhere('grand_total_amount', 'LIKE', '%' . $request->search . '%');
         }
       )->where('status', 'Active')->orwhereHas(
@@ -1208,13 +1225,14 @@ class InvoiceController extends Controller
   public function get_quickInvoice_PDT(Request $request)
   {
     $profile_id = $request->id;
-    $data = ProfileDeductionTypes::select('id', 'amount')->where('profile_id', $profile_id)->get();
+    $data = ProfileDeductionTypes::select('id', 'deduction_type_name', 'amount')->where('profile_id', $profile_id)->get();
     $sum = $data->sum('amount');
 
     $otherValues = [];
     foreach ($data as $item) {
       $otherValues[] = [
         'id' => $item->id,
+        'deduction_type_name' => $item->deduction_type_name,
         'amount' => $item->amount,
         'sum' => $sum,
       ];
@@ -1297,6 +1315,7 @@ class InvoiceController extends Controller
           'notes'                  => $data->notes,
           'grand_total_amount'     => number_format($data->grand_total_amount, 2),
           'admin_email'            => $send_admin->email_address,
+          'quick_invoice'          => $data->quick_invoice,
         ];
         $this->setup_email_template_status_admin($data_setup_email_template);
       }
@@ -1347,7 +1366,7 @@ class InvoiceController extends Controller
         'deductions_total'       => number_format($data->deductions->pluck('amount')->sum(), 2),
         'notes'                  => $data->notes,
         'grand_total_amount'     => number_format($data->grand_total_amount, 2),
-
+        'quick_invoice'          => $data->quick_invoice,
       ];
       $this->setup_email_template_status_profile($data_setup_email_template);
       $dataObject = array_merge($data->toArray(), $data1->toArray());
@@ -1401,6 +1420,7 @@ class InvoiceController extends Controller
           'notes'                  => $data->notes,
           'grand_total_amount'     => number_format($data->grand_total_amount, 2),
           'admin_email'            => $send_admin->email_address,
+          'quick_invoice'          => $data->quick_invoice,
         ];
         $this->setup_email_template_admin($data_setup_email_template);
       }
@@ -1455,6 +1475,7 @@ class InvoiceController extends Controller
         'deductions_total'       => number_format($data->deductions->pluck('amount')->sum(), 2),
         'notes'                  => $data->notes,
         'grand_total_amount'     => number_format($data->grand_total_amount, 2),
+        'quick_invoice'          => $data->quick_invoice,
       ];
 
       $this->setup_email_template_profile($data_setup_email_template);
@@ -1564,9 +1585,9 @@ class InvoiceController extends Controller
     $invoice_id = $request->id;
     $data = Invoice::find($invoice_id)
       ->deductions()
-      ->join('profile_deduction_types', 'profile_deduction_types.id', '=', 'deductions.profile_deduction_type_id')
-      ->select('profile_deduction_types.deduction_type_name', 'deductions.amount')
+      ->select('deductions.deduction_type_name', 'deductions.amount')
       ->get();
+    // ->join('profile_deduction_types', 'profile_deduction_types.id', '=', 'deductions.profile_deduction_type_id')
     if ($data) {
       return response()->json([
         'success' => true,

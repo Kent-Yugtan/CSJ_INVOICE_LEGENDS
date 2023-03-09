@@ -1,0 +1,55 @@
+Dashboard View
+Subtotal($) -> Subtotal ($) -> done
+Subtotal String to Float -> done
+Date -> format -> done
+
+Current Profile - Active Profile
+Active Infomation Label Placeholder -> done
+Edit Profile -> Hide Edit Profile Button , Show Cancel Button -> done
+yyyy-mm-dd date formats -> done
+
+Add Invoice on Active Profile
+yyyy-mm-dd date formats -> done
+Subtotal String to Float -> done
+Discount Type Label Move to Left -> done
+all number convert from string to float -> done
+
+Deduction Tab Profile Deductions on Active Profile
+Modal Delete Button - (done)
+
+Invoice View
+Invoices -> Invoice -> done
+Remove Logo -> done
+Profile Address Padding -> done
+Bill to Address Padding -> done
+Table Description Width Wider 385px -> done
+Discount Type remove if 0 -> done
+SubTotal -> Sub Total -> done
+Quick Add Description Only Populate in Item Description -> done
+
+Invoice View Add Confirmation
+add confimation on submit button -> done
+
+Add Invoice on Active Profile
+date format to yyyy/mm/dd -> done
+
+Add Profile
+adding margin on label -> done
+
+
+Reports
+Invoice Remove Position in Table Column -> done
+Deductions Remove Gross, Net Amount , Due Date -> done
+
+
+Invoive Configuration
+-> edit and update button -> done
+
+Email Configuration
+-> remove TO address -> done
+
+© 5Pints Productions 2023 -> done!
+
+APPLY THIS TO THE SEND EMAIL 
+laravel event listener should queue worker -> done!
+

@@ -73,11 +73,11 @@
               <tr>
                 <th class="fit">Invoice #</th>
                 <th class="fit">Profile Name</th>
-                <th class="fit">Payment Status</th>
-                <th class="fit">Date Created</th>
-                <th class="fit">Due Date</th>
-                <th class="fit">Status</th>
-                <th class="fit text-center">Total Amount</th>
+                <th class="fit text-center">Payment Status</th>
+                <th class="fit text-center">Invoice Status</th>
+                <th class="fit text-end">Total Amount</th>
+                <th class="fit text-end">Date Created</th>
+                <th class="fit text-end">Due Date</th>
                 <th class="text-center fit">Action</th>
               </tr>
             </thead>
@@ -100,8 +100,8 @@
 </div>
 
 <!-- START MODAL UPDATE INVOICE STATUS -->
-<div class="modal fade" id="invoice_status" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
+<div class="modal fade" id="invoice_status" data-bs-backdrop="static" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-dialog">
       <div class="modal-content ">
@@ -163,8 +163,7 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
-  check_pendingInvoicesStatus();
-
+  show_data();
   $(window).on('load', function() {
     $('html,body').animate({
       scrollTop: $('#loader_load').offset().top
@@ -174,7 +173,7 @@ $(document).ready(function() {
       $('div.spanner').removeClass('show');
       active_count_paid();
       active_count_pending();
-      show_data();
+      check_pendingInvoicesStatus();
     }, 2000)
   })
 
@@ -345,17 +344,10 @@ $(document).ready(function() {
                 item.invoice_status + '</button></td>';
             }
 
-            tr += '<td>' + mm + '-' +
-              dd +
-              '-' +
-              yy + '</td>';
-            tr += '<td>' + mm2 + '-' +
-              dd2 +
-              '-' +
-              yy2 + '</td>';
-            tr += '<td style="text-align:start;">' + item.status +
+            tr += '<td class="text-center">' + item.status +
               '</td>';
-            tr += '<td style="text-align:right;">' + Number(
+
+            tr += '<td class="text-end">' + Number(
                 parseFloat(item
                   .grand_total_amount).toFixed(2))
               .toLocaleString(
@@ -363,6 +355,12 @@ $(document).ready(function() {
                   minimumFractionDigits: 2
                 }) +
               '</td>';
+            tr += '<td class="text-end">' + moment.utc(item.created_at).tz(
+              'America/New_York').format(
+              'MM/DD/YYYY') + '</td>';
+            tr += '<td class="text-end">' + moment.utc(item.due_date).tz(
+              'America/New_York').format(
+              'MM/DD/YYYY') + '</td>';
 
             tr +=
               '<td class="text-center"> <a href="' +
@@ -435,10 +433,13 @@ $(document).ready(function() {
 
         if (data.data.length > 0) {
           data.data.map((item) => {
-            var date_now = (new Date()).toISOString().split('T')[0];
+            var due_dateStatus = item.due_date;
+            var today = new Date();
+            formatDue_date = moment(due_dateStatus).format('L');
+            formatDate_now = moment(today).format('L');
 
             if (item.invoice_status === "Pending") {
-              if (item.due_date < date_now) {
+              if (formatDue_date < formatDate_now) {
                 // console.log("due_dateStatus", item.due_date);
                 // console.log("date_now", date_now);
                 let invoice_id = item.id;
@@ -454,13 +455,11 @@ $(document).ready(function() {
                   let data = response.data
                   if (data.success) {
                     console.log("SUCCESS Overdue", data);
+                    window.location.reload
                   }
                 }).catch(function(error) {
                   console.log("ERROR", error);
                 })
-                setTimeout(function() {
-                  window.location.reload
-                }, 3500);
               }
             }
 
@@ -557,17 +556,9 @@ $(document).ready(function() {
                 item.invoice_status + '</button></td>';
             }
 
-            tr += '<td>' + mm + '-' +
-              dd +
-              '-' +
-              yy + '</td>';
-            tr += '<td>' + mm2 + '-' +
-              dd2 +
-              '-' +
-              yy2 + '</td>';
-            tr += '<td style="text-align:start;">' + item.status +
-              '</td>';
-            tr += '<td style="text-align:right;">' + Number(
+            tr += '<td class="text-center">' + item.status +
+              '</td>'
+            tr += '<td class="text-end">' + Number(
                 parseFloat(item
                   .grand_total_amount).toFixed(2))
               .toLocaleString(
@@ -575,6 +566,12 @@ $(document).ready(function() {
                   minimumFractionDigits: 2
                 }) +
               '</td>';
+            tr += '<td class="text-end">' + moment.utc(item.created_at).tz(
+              'America/New_York').format(
+              'MM/DD/YYYY') + '</td>';
+            tr += '<td class="text-end">' + moment.utc(item.due_date).tz(
+              'America/New_York').format(
+              'MM/DD/YYYY') + '</td>';
 
             tr +=
               '<td class="text-center"> <a href="' +
@@ -719,7 +716,7 @@ $(document).ready(function() {
           $('.toast1 .toast-title').html('Update Status');
           $('.toast1 .toast-body').html(response.data.message);
           toast1.toast('show');
-        }, loadingTime);
+        }, 1500);
 
 
       }
@@ -745,14 +742,9 @@ $(document).ready(function() {
         setTimeout(function() {
           $('div.spanner').removeClass('show');
           toast1.toast('show');
-        }, loadingTime);
+        }, 1500);
       }
     });
-    var end = performance.now(); // Get the timestamp after processing
-    var processingTime = end - start; // Calculate the processing time in milliseconds
-    var loadingTime = Math.ceil((processingTime * 1000) / 2);
-    console.log('Processing time: ' + loadingTime + 'ms');
-
   });
 
   $('#button-submit').on('click', function(e) {

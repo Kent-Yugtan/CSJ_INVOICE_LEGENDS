@@ -15,12 +15,13 @@
       <div class="card shadow p-2 mb-1 bg-white rounded" style="height:100%">
         <div class="input-group">
           <div class="form-floating me-3" style="width:23vh">
-            <input type="date" class="form-control" id="from" placeholder="Date Filter From">
+            <input type="text" onblur="(this.type='text')" class="form-control" id="from"
+              placeholder="Date Filter From">
             <label for="from">Date Filter From</label>
           </div>
 
           <div class="form-floating me-3" style="width:23vh">
-            <input type="date" class="form-control" id="to" placeholder="Date Filter To">
+            <input type="text" onblur="(this.type='text')" class="form-control" id="to" placeholder="Date Filter To">
             <label for="to">Date Filter To</label>
           </div>
           <button typ="button" class="btn" style=" color:white; background-color: #CF8029;width:24vh"
@@ -31,8 +32,8 @@
 
     <div class="col-md-12 col-md-12 col-lg-12">
       <div class="card shadow p-2 mb-1 bg-white rounded" style="height:100%">
-        <div class="card-body  table-responsive">
-          <table id="invoiceReports" style="font-size: 14px;" class="table table-hover">
+        <div class="card-body">
+          <table id="invoiceReports" style="font-size: 14px;" width="100%" class="table table-hover table-responsive">
             <thead>
             </thead>
             <tbody>
@@ -160,7 +161,7 @@ $(document).ready(function() {
             page: 'current',
             search: 'applied'
           },
-          columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+          columns: [1, 2, 3, 5, 6, 7, 8, 9, 10, 11]
         },
         footer: true,
       },
@@ -176,7 +177,7 @@ $(document).ready(function() {
             page: 'current',
             search: 'applied'
           },
-          columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+          columns: [1, 2, 3, 5, 6, 7, 8, 9, 10, 11]
         },
         footer: true,
         customize: function(xlsx) {
@@ -214,7 +215,7 @@ $(document).ready(function() {
             page: 'current',
             search: 'applied'
           },
-          columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+          columns: [1, 2, 3, 5, 6, 7, 8, 9, 10, 11]
         }, // export only current page
         customize: function(doc) {
           //   var col1 = '';
@@ -243,7 +244,7 @@ $(document).ready(function() {
             page: 'current',
             search: 'applied'
           },
-          columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+          columns: [1, 2, 3, 5, 6, 7, 8, 9, 10, 11]
         }, // export only current page
         autoPrint: false, // disable print dialog
         customize: function(doc) {
@@ -303,7 +304,7 @@ $(document).ready(function() {
       [1, 'desc']
     ],
     "columnDefs": [{
-        targets: 0,
+        targets: [0, 4],
         visible: false,
         searchable: false,
       },
@@ -329,9 +330,47 @@ $(document).ready(function() {
     setTimeout(function() {
       $('div.spanner').removeClass('show');
       show_data_load()
+      from();
+      to();
     }, 2000);
 
   })
+
+  function from() {
+    // START OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
+    // Get the input field
+    var dateInput = $("#from");
+    // Set the datepicker options
+    dateInput.datepicker({
+      dateFormat: "yy/mm/dd",
+      onSelect: function(dateText, inst) {
+        // Update the input value with the selected date
+        dateInput.val(dateText);
+      }
+    });
+    // Set the input value to the current system date in the specified format
+    // var currentDate = $.datepicker.formatDate("yy/mm/dd", new Date());
+    // dateInput.val(currentDate);
+    // END OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
+  }
+
+  function to() {
+    // START OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
+    // Get the input field
+    var dateInput = $("#to");
+    // Set the datepicker options
+    dateInput.datepicker({
+      dateFormat: "yy/mm/dd",
+      onSelect: function(dateText, inst) {
+        // Update the input value with the selected date
+        dateInput.val(dateText);
+      }
+    });
+    // Set the input value to the current system date in the specified format
+    // var currentDate = $.datepicker.formatDate("yy/mm/dd", new Date());
+    // dateInput.val(currentDate);
+    // END OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
+  }
 
   let toast1 = $('.toast1');
   toast1.toast({
@@ -416,13 +455,16 @@ $(document).ready(function() {
             // add class to invoice status cell based on its value
             let invoiceStatusCell = $(newRow).find("td:eq(2)");
             if (item.invoice_status == "Paid") {
-              invoiceStatusCell.css("background-color", "green");
+              invoiceStatusCell.css("background-color", "#198754");
+              invoiceStatusCell.css("border-color", "#198754");
               invoiceStatusCell.css("color", "white");
             } else if (item.invoice_status == "Pending") {
-              invoiceStatusCell.css("background-color", "yellow");
+              invoiceStatusCell.css("background-color", "#ffc107");
+              invoiceStatusCell.css("border-color", "#ffc107");
               invoiceStatusCell.css("color", "black");
             } else {
-              invoiceStatusCell.css("background-color", "red");
+              invoiceStatusCell.css("background-color", "#dc3545");
+              invoiceStatusCell.css("border-color", "#dc3545");
               invoiceStatusCell.css("color", "white");
             }
 

@@ -8,43 +8,61 @@
     <div class="col-sm-12 col-md-12 col-lg-5 px-2">
       <div class="card shadow p-2 mb-5 bg-white rounded" style="width: 100%; height:100%;">
         <div class="card-header">Create Email</div>
-        <div class="row px-4 pb-4" id="header">
-          <form id="emailconfigs_store" class="row g-3 needs-validation" novalidate>
+        <div class="row px-4 pt-3" id="header">
+          <form id="emailconfigs_store">
             @csrf
-            <div class="form-floating mb-3">
-              <input id="fullname" name="fullname" type="text" class="form-control" placeholder="Fullname">
-              <label for="fullname" style=" color: #A4A6B3;">Complete Name</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input id="email_address" name="email_address" type="email" class="form-control"
-                placeholder="Email Address">
-              <label for="email_address" style=" color: #A4A6B3;">Email Address</label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <input id="title" name="email_address" type="email" class="form-control" placeholder="Title">
-              <label for="title" style=" color: #A4A6B3;">Title</label>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-floating mb-3">
+                  <input id="fullname" name="fullname" type="text" class="form-control" placeholder="Fullname">
+                  <label for="fullname" style=" color: #A4A6B3;">Complete Name</label>
+                </div>
+              </div>
             </div>
 
-            <div class="form-floating mb-3">
-              <select class="form-select" id="status">
-                <option selected disabled value="">Please Select Status</option>
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
-              </select>
-              <label for="status" style=" color: #A4A6B3;">Status</label>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-floating mb-3">
+                  <input id="email_address" name="email_address" type="email" class="form-control"
+                    placeholder="Email Address">
+                  <label for="email_address" style=" color: #A4A6B3;">Email Address</label>
+                </div>
+              </div>
             </div>
 
-
-            <div class="col mb-3">
-              <button type="button" style="width:100%; height:50px;color:white; background-color: #A4A6B3;"
-                class="btn">Close</button>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-floating mb-3">
+                  <input id="title" name="email_address" type="email" class="form-control" placeholder="Title">
+                  <label for="title" style=" color: #A4A6B3;">Title</label>
+                </div>
+              </div>
             </div>
 
-            <div class="col mb-3">
-              <button type="submit" style="width:100%; height:50px;color:white; background-color: #CF8029;"
-                class="btn">Save</button>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-floating mb-3">
+                  <select class="form-select" id="status">
+                    <option selected disabled value="">Please Select Status</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                  </select>
+                  <label for="status" style=" color: #A4A6B3;">Status</label>
+                </div>
+              </div>
             </div>
+
+            <div class="row">
+              <div class="col-6 mb-3">
+                <button type="button" style="width:100%; height:50px;color:white; background-color: #A4A6B3;"
+                  class="btn">Close</button>
+              </div>
+              <div class="col-6 mb-3">
+                <button type="submit" style="width:100%; height:50px;color:white; background-color: #CF8029;"
+                  class="btn">Save</button>
+              </div>
+            </div>
+
           </form>
         </div>
       </div>
@@ -70,7 +88,7 @@
               <th>Email Address</th>
               <th>Title</th>
               <th>Status</th>
-              <th style="text-align:center;">Action</th>
+              <th colspan="2" style="text-align:center;">Action</th>
             </thead>
             <tbody>
 
@@ -244,9 +262,10 @@ $(document).ready(function() {
                 '</td>';
               tr +=
                 '<td class="text-center"> <button value=' + item.id +
-                ' class="editButton btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" ><i class="fa-sharp fa-solid fa-eye"></i></button><button value=' +
+                ' class="editButton btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" ><i class="fa-sharp fa-solid fa-eye"></i></button></td>';
+              tr += '<td class="text-center"> <button value=' +
                 item.id +
-                ' class="deleteButton btn btn-outline-danger ms-3" data-bs-toggle="modal" data-bs-target="#deleteModal" ><i class="fa-solid fa-trash view-hover-delete"></i></button> </td>';
+                ' class="deleteButton btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" ><i class="fa-solid fa-trash view-hover-delete"></i></button> </td>';
               tr += '</tr>';
               $("#table_emailconfigs tbody").append(tr);
 

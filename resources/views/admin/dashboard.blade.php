@@ -57,7 +57,6 @@
           </div>
         </div>
         <div class="d-flex align-items-center justify-content-between">
-
         </div>
       </div>
     </div>
@@ -86,7 +85,8 @@
                 </div>
                 <div class="col-xl-6">
                   <div class="form-floating mb-3">
-                    <input id="due_date" name="due_date" data-date-format="MM DD YYYY" type="date" class="form-control">
+                    <input type="text" placeholder="Due Date" onblur="(this.type='text')" id="due_date" name="due_date"
+                      class="form-control">
                     <label for="due_date" style="color: #A4A6B3;">Due Date</label>
                   </div>
                 </div>
@@ -101,8 +101,9 @@
                 </div>
                 <div class="col-xl-6">
                   <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="sub_total" placeholder="SubTotal">
-                    <label for="sub_total" style="color: #A4A6B3; ">SubTotal($)</label>
+                    <input type="text" pattern="^\d{1,3}(,\d{3})*(\.\d{1,2})?$" class="form-control" id="sub_total"
+                      placeholder="SubTotal">
+                    <label for="sub_total" style="color: #A4A6B3; ">Subtotal ($)</label>
                   </div>
                 </div>
               </div>
@@ -225,6 +226,8 @@
     });
     $(document).ready(function() {
 
+
+
       $("div.spanner").addClass("show");
       $(window).on('load', function() {
         setTimeout(function() {
@@ -237,10 +240,28 @@
           active_count_pending();
           active_count_overdue();
           active_count_cancelled();
+          due_date();
         }, 1500);
 
       });
 
+      function due_date() {
+        // START OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
+        // Get the input field
+        var dateInput = $("#due_date");
+        // Set the datepicker options
+        dateInput.datepicker({
+          dateFormat: "yy/mm/dd",
+          onSelect: function(dateText, inst) {
+            // Update the input value with the selected date
+            dateInput.val(dateText);
+          }
+        });
+        // Set the input value to the current system date in the specified format
+        // var currentDate = $.datepicker.formatDate("yy/mm/dd", new Date());
+        // dateInput.val(currentDate);
+        // END OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
+      }
 
       let toast1 = $('.toast1');
       toast1.toast({
@@ -362,9 +383,12 @@
             if (data.data.length > 0) {
               data.data.map((item) => {
                 var due_dateStatus = item.due_date;
-                var date_now = (new Date()).toISOString().split('T')[0];
+                var today = new Date();
+                formatDue_date = moment(due_dateStatus).format('L');
+                formatDate_now = moment(today).format('L');
+
                 if (item.invoice_status === "Pending") {
-                  if (due_dateStatus < date_now) {
+                  if (formatDue_date < formatDate_now) {
                     let invoice_id = item.id;
                     let data = {
                       id: invoice_id,
@@ -378,13 +402,11 @@
                       let data = response.data
                       if (data.success) {
                         console.log("SUCCESS Overdue", data);
+                        window.location.reload();
                       }
                     }).catch(function(error) {
                       console.log("ERROR", error);
                     })
-                    setTimeout(function() {
-                      window.location.reload
-                    }, 3500)
                   }
                 }
               })
@@ -625,10 +647,13 @@
               console.log("SUCCESS", data);
               data.data.map((item) => {
                 let profile_deduction_type_id = item.id ? item.id : '';
+                let profile_deduction_type_name = item.deduction_type_name ? item.deduction_type_name :
+                  '';
                 let deduction_amount = item.amount ? item.amount : '';
                 let sum = item.sum ? item.sum : '';
                 Deductions.push({
                   profile_deduction_type_id,
+                  profile_deduction_type_name,
                   deduction_amount,
                   sum,
                 })
@@ -653,7 +678,7 @@
         if ($('#sub_total').val() == "") {
           $('#discount_amount').val('0.00');
         } else {
-          let sub_total = $('#sub_total').val();
+          let sub_total = $('#sub_total').val().replaceAll(',', '');
           $('#sub_total').val(PHP(sub_total).format());
         }
       })
@@ -707,13 +732,7 @@
           invoiceItem,
           Deductions,
         };
-
         console.log("DATA", data);
-        var end = performance.now(); // Get the timestamp after processing
-        var processingTime = end - start; // Calculate the processing time in milliseconds
-        var loadingTime = Math.ceil((processingTime * 1000) / 2);
-        console.log('Processing time: ' + loadingTime + 'ms');
-
         axios.post(apiUrl + "/api/add_invoices", data, {
           headers: {
             Authorization: token,
@@ -740,7 +759,7 @@
               pendingInvoices();
               overdueInvoices();
               toast1.toast('show');
-            }, loadingTime)
+            }, 1500)
 
 
           }
@@ -767,7 +786,7 @@
             setTimeout(function() {
               $('div.spanner').removeClass('show');
               toast1.toast('show');
-            }, loadingTime);
+            }, 1500);
           }
         });
 

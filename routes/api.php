@@ -144,64 +144,59 @@ Route::middleware(['auth:sanctum'])->group(function () {
   Route::post('reports/deductionDetails/{id}', [InvoiceController::class, 'deductionDetails']);
 });
 
+Route::get('send_email', function () {
+  $details['email'] = 'kent.yugtan95@gmail.com';
+  dispatch(new App\Jobs\SendEmailJob($details));
+  return response()->json(['message' => 'Mail Send Successfully!!']);
+});
 
-// // TESTING EMAIL 
+
+// TESTING EMAIL 
 // Route::get('testEmail', function () {
 //   $data = Invoice::with(['profile.user', 'deductions.profile_deduction_types.deduction_type', 'invoice_items'])
 //     ->orderBy('id', 'Desc')->first();
 //   $data1 = InvoiceConfig::orderBy('id', 'Desc')->first();
-//   // $data2 = EmailConfig::where('status', 'Active')->get();
+//   $data2 = EmailConfig::where('status', 'Active')->get();
 //   // echo "<pre>";
 //   // echo $data;
 //   if ($data && $data1) {
-//     // foreach ($data2 as $email_admin) {
-//     $data_setup_email_template = [
-//       // 'invoice_logo'           => 'https://shamcey.5ppsite.com/logo.png',
-//       'invoice_logo'           => $data1->invoice_logo,
-//       'full_name'              => $data->profile->user->first_name . " " . $data->profile->user->last_name,
-//       'user_email'             => $data->profile->user->email,
-//       'invoice_no'             => $data->invoice_no,
-//       'invoice_status'         => $data->status,
-//       'address'                => $data->profile->address,
-//       'city'                   => $data->profile->city,
-//       'province'               => $data->profile->province,
-//       'zip_code'               => $data->profile->zip_code,
-//       'date_created'           => CarbonCarbon::parse($data->created_at)->isoFormat('MMMM DD YYYY'),
-//       'invoice_title'          => $data1->invoice_title,
-//       'due_date'               => CarbonCarbon::parse($data->due_date)->isoFormat('MMMM DD YYYY'),
-//       'bill_to_address'        => $data1->bill_to_address,
-//       'payment_status'         => $data->invoice_status,
-//       'date_received'          => CarbonCarbon::parse($data->date_received)->isoFormat('MMMM DD YYYY'),
-//       'ship_to_address'        => $data1->ship_to_address,
-//       'balance_due'            => number_format($data->sub_total, 2),
-//       'invoice_items'          => $data->invoice_items,
-//       'invoice_description'    => $data->description,
-//       'sub_total'              => number_format(($data->sub_total + $data->discount_total), 2),
-//       'discount_type'          => $data->discount_type,
-//       'discount_amount'        => number_format($data->discount_amount, 2),
-//       'discount_total'         => number_format($data->discount_total, 2),
-//       'peso_rate'              => number_format($data->peso_rate, 2),
-//       'converted_amount'       => number_format($data->converted_amount, 2),
-//       'deductions'             => $data->deductions,
-//       'deductions_total'       => number_format($data->deductions->pluck('amount')->sum(), 2),
-//       'notes'                  => $data->notes,
-//       'grand_total_amount'     => number_format($data->grand_total_amount, 2),
-//       // 'admin_email'            => $email_admin->email_address,
-//     ];
-
-//     // }
-//     // if (setup_email_template($data_setup_email_template)) {
-//     //   setup_email_template($data_setup_email_template);
-
-//     //   echo setup_email_template($data_setup_email_template);
-//     //   echo "SENT";
-//     //   // echo $data_setup_email_template['admin_email'];
-//     // } else {
-//     //   echo "error";
-//     // }
-//     echo setup_email_template($data_setup_email_template);
-
-//     // return view('admin.email.emailTemplate');
+//     foreach ($data2 as $send_admin) {
+//       $data_setup_email_template = [
+//         // 'invoice_logo'           => 'https://shamcey.5ppsite.com/logo.png',
+//         'invoice_logo'           => $data1->invoice_logo,
+//         'full_name'              => $data->profile->user->first_name . " " . $data->profile->user->last_name,
+//         'user_email'             => $data->profile->user->email,
+//         'invoice_no'             => $data->invoice_no,
+//         'invoice_status'         => $data->status,
+//         'address'                => $data->profile->address,
+//         'city'                   => $data->profile->city,
+//         'province'               => $data->profile->province,
+//         'zip_code'               => $data->profile->zip_code,
+//         'date_created'           => CarbonCarbon::parse($data->created_at)->isoFormat('MMMM DD YYYY'),
+//         'invoice_title'          => $data1->invoice_title,
+//         'due_date'               => CarbonCarbon::parse($data->due_date)->isoFormat('MMMM DD YYYY'),
+//         'bill_to_address'        => $data1->bill_to_address,
+//         'payment_status'         => $data->invoice_status,
+//         'date_received'          => CarbonCarbon::parse($data->date_received)->isoFormat('MMMM DD YYYY'),
+//         'ship_to_address'        => $data1->ship_to_address,
+//         'balance_due'            => number_format($data->sub_total, 2),
+//         'invoice_items'          => $data->invoice_items,
+//         'invoice_description'    => $data->description,
+//         'sub_total'              => number_format(($data->sub_total + $data->discount_total), 2),
+//         'discount_type'          => $data->discount_type,
+//         'discount_amount'        => number_format($data->discount_amount, 2),
+//         'discount_total'         => number_format($data->discount_total, 2),
+//         'peso_rate'              => number_format($data->peso_rate, 2),
+//         'converted_amount'       => number_format($data->converted_amount, 2),
+//         'deductions'             => $data->deductions,
+//         'deductions_total'       => number_format($data->deductions->pluck('amount')->sum(), 2),
+//         'notes'                  => $data->notes,
+//         'grand_total_amount'     => number_format($data->grand_total_amount, 2),
+//         'admin_email'            => $send_admin->email_address,
+//         'quick_invoice'          => $data->quick_invoice,
+//       ];
+//     }
+//     setup_email_template($data_setup_email_template);
 //   }
 // });
 // function setup_email_template($data)
@@ -236,6 +231,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 //   $deductions_total = !empty($data['deductions_total']) ? $data['deductions_total'] : "";
 //   $notes = !empty($data['notes']) ? $data['notes'] : "";
 //   $grand_total_amount = !empty($data['grand_total_amount']) ? $data['grand_total_amount'] : "";
+//   $quick_invoice = !empty($data['quick_invoice']) ? $data['quick_invoice'] : "";
 
 //   $to_name = !empty($data['full_name']) ? $data['full_name'] : "";
 //   $to_email = !empty($data['admin_email']) ? $data['admin_email'] : "";
@@ -287,10 +283,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
 //         'deductions_total'    => $deductions_total,
 //         'notes'               => $notes,
 //         'grand_total_amount'  => $grand_total_amount,
+//         'quick_invoice'       => $quick_invoice,
 
 //       ],
 //     ]
 //   ];
 //   // event(new \App\Events\SendMailEvent($data_email));
-//   return view($template, ['content' => $data_email['body_data']['content']]);
+//   dispatch(new \App\Jobs\SendEmailJob($data_email));
+//   // return view($template, ['content' => $data_email['body_data']['content']]);
 // }

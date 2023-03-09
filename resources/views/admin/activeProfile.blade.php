@@ -1,29 +1,29 @@
 @extends('layouts.master')
 @section('content-dashboard')
+
+
 <div class="container-fluid px-4" id="loader_load">
   <h1 class=" mt-0">Active Profile</h1>
   <ol class="breadcrumb mb-3"></ol>
   <div class="row">
-    <div class="col-md-12 col-lg-12 col-xl-5 px-2">
+    <div class="col-md-12 col-lg-5 px-2">
       <div class="card shadow p-2 mb-5 bg-white rounded">
         <div class="card-header">Active Information</div>
-        <div class="row px-4 pb-4">
-          <form id="ProfileUpdate" method="POST" action="javascript:void(0)" class="row g-3 needs-validation"
-            novalidate>
+        <form id="ProfileUpdate" method="POST" action="javascript:void(0)" class="row g-3 needs-validation" novalidate>
+          <div class="row px-4 pt-3">
             @csrf
-            <span hidden>user id</span>
-            <input type="text" id="user_id" value="{{$findid->id}}" hidden>
-            <input type="text" id="profile_id_show" hidden>
-
-            <div class="col mb-3">
-              <div class="profile-pic-div" style="position: relative; height:200px">
+            <div class="col mb-3 pt-3">
+              <span hidden>user id</span>
+              <input type="text" id="user_id" value="{{$findid->id}}" hidden>
+              <input type="text" id="profile_id_show" hidden>
+              <div class="profile-pic-div" style="position: relative; height:100%">
                 <img src="/images/default.png" id="photo">
                 <input name="file" type="file" id="file" disabled="true">
                 <label for="file" id="uploadBtn">Choose Photo</label>
               </div>
             </div>
 
-            <div class="col pt-3">
+            <div class="col pt-5">
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="profile_status" name="profile_status" checked
                   disabled="true">
@@ -46,159 +46,158 @@
                 <label for="last_name" style="color: #A4A6B3;">Last Name</label>
               </div>
             </div>
+          </div>
 
-            <div class="form-floating mb-3">
-              <input id="email" name="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                placeholder="Email" disabled="true">
-              <label for="email" style="color: #A4A6B3;">Email</label>
+          <div class="row px-4">
+            <div class="col pt-3">
+              <div class="form-floating mb-3">
+                <input id="email" name="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                  placeholder="Email" disabled="true">
+                <label for="email" style="color: #A4A6B3;">Email</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input id="username" name="username" type="text"
+                  class="form-control @error('username') is-invalid @enderror" placeholder="Username" disabled="true">
+                <label for="username" style="color: #A4A6B3;">Username</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <select class="form-select @error('position') is-invalid @enderror" id="position" name="position"
+                  aria-label="Default select example" defaultValue="select" disabled="true">
+                  <option selected disabled value="">Please Select Position</option>
+                  <option value="Lead Developer">Lead Developer</option>
+                  <option value="Senior Developer">Senior Developer</option>
+                  <option value="Junior Developer">Junior Developer</option>
+                  <option value="Web Designer">Web Designer</option>
+                  <option value="Tester">Tester</option>
+                </select>
+                <label for="position" style="color: #A4A6B3;">Position</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input id="phone_number" name="phone_number" type="text"
+                  class="form-control @error('phone_number') is-invalid @enderror" placeholder="Phone Number"
+                  disabled="true">
+                <label for="phone_number" style="color: #A4A6B3;">Phone Number</label>
+
+              </div>
+
+              <div class="form-floating mb-3">
+                <input id="address" name="address" type="text"
+                  class="form-control @error('address') is-invalid @enderror" placeholder="Address" disabled="true">
+                <label for="address" style="color: #A4A6B3;">Address</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input id="province" name="province" type="text"
+                  class="form-control @error('province') is-invalid @enderror" placeholder="Province" disabled="true">
+                <label for="province" style="color: #A4A6B3;">Province</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input id="city" name="city" type="text" class="form-control @error('city') is-invalid @enderror"
+                  placeholder="City" disabled="true">
+                <label for="city" style="color: #A4A6B3;">City</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input id="zip_code" name="zip_code" type="text"
+                  class="form-control @error('zip_code') is-invalid @enderror" placeholder="Zip Code" disabled="true">
+                <label for="zip_code" style="color: #A4A6B3;">Zip Code</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input id="acct_no" name="acct_no" type="text"
+                  class="form-control @error('acct_no') is-invalid @enderror" placeholder="Account Number"
+                  disabled="true">
+                <label for="acct_no" style="color: #A4A6B3;">Account Number</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input id="acct_name" name="acct_name" type="text"
+                  class="form-control @error('acct_name') is-invalid @enderror" placeholder="Account Name"
+                  disabled="true">
+                <label for="acct_name" style="color: #A4A6B3;">Account Name</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <select class="form-select @error('bank_name') is-invalid @enderror" id="bank_name" name="bank_name"
+                  aria-label="Default select example" disabled="true">
+                  <option selected disabled value="">Please Select Bank Name</option>
+                  <option value="BDO Unibank Inc.">BDO Unibank Inc. (BDO)</option>
+                  <option value="Land Bank of the Philippines">Land Bank of the Philippines (LANDBANK)
+                  </option>
+                  <option value="Metropolitan Bank & Trust Company">Metropolitan Bank & Trust Company
+                    (Metrobank)</option>
+                  <option value="Bank of the Philippine Islands">Bank of the Philippine Islands (BPI)
+                  </option>
+                  <option value="Philippine National Bank">Philippine National Bank (PNB)</option>
+                  <option value="Development Bank of the Philippines">Development Bank of the Philippines
+                    (DBP)</option>
+                  <option value="China Banking Corporation">China Banking Corporation (CBC)</option>
+                  <option value="Rizal Commercial Banking Corporation">Rizal Commercial Banking
+                    Corporation (RCBC)</option>
+                  <option value="Union Bank of the Philippines, Inc.">Union Bank of the Philippines, Inc.
+                  </option>
+                  <option value="Security Bank Corporation">Security Bank Corporation</option>
+                  <option value="EastWest Bank">EastWest Bank</option>
+                  <option value="Citibank, N.A.">Citibank, N.A. (Philippine Branch)</option>
+                  <option value="United Coconut Planters Bank">United Coconut Planters Bank (UCPB)
+                  </option>
+                  <option value="Asia United Bank Corporation">Asia United Bank Corporation (AUB)</option>
+                  <option value="Bank of Commerce">Bank of Commerce (BankCom)</option>
+                  <option value="Hongkong and Shanghai Banking Corporation">Hongkong and Shanghai Banking
+                    Corporation (HSBC)</option>
+                  <option value="Robinsons Bank Corporation">Robinsons Bank Corporation</option>
+                  <option value="Philtrust Bank">Philtrust Bank</option>
+                  <option value="Philippine Bank of Communications">Philippine Bank of Communications
+                    (PBCOM)</option>
+                  <option value="Maybank Philippines Inc.">Maybank Philippines Inc.</option>
+                </select>
+                <label for="bank_name" style="color: #A4A6B3;">Bank Name</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input id="bank_location" name="bank_location" type="text"
+                  class="form-control @error('bank_location') is-invalid @enderror" placeholder="Bank Address"
+                  disabled="true">
+                <label for="bank_location" style="color: #A4A6B3;">Bank Location</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input id="gcash_no" name="gcash_no" type="text"
+                  class="form-control @error('gcash_no') is-invalid @enderror" placeholder="Gcash Number"
+                  disabled="true">
+                <label for="gcash_no" style="color: #A4A6B3;">Gcash Number</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input id="date_hired" name="date_hired" type="text" onblur="(this.type='text')"
+                  class="form-control @error('date_hired') is-invalid @enderror" placeholder="Date Hired"
+                  disabled="true">
+                <label for="date_hired" style="color: #A4A6B3;">Date Hired</label>
+              </div>
             </div>
-            <div class="form-floating mb-3">
-              <input id="username" name="username" type="text"
-                class="form-control @error('username') is-invalid @enderror" placeholder="Username" disabled="true">
-              <label for="username" style="color: #A4A6B3;">Username</label>
-            </div>
-            <!--                         
-                        <div class="form-floating mb-3">
-                            <label mb-2 style="color: #A4A6B3;">Password</label>
-                            <input id="password" name="password" type="text"
-                                class="form-control @error('password') is-invalid @enderror" placeholder="Password"
-                            >
-                        </div> -->
+          </div>
 
-            <div class="form-floating mb-3">
-              <select class="form-select @error('position') is-invalid @enderror" id="position" name="position"
-                aria-label="Default select example" defaultValue="select" disabled="true">
-                <option selected disabled value="">Please Select Position</option>
-                <option value="Lead Developer">Lead Developer</option>
-                <option value="Senior Developer">Senior Developer</option>
-                <option value="Junior Developer">Junior Developer</option>
-                <option value="Web Designer">Web Designer</option>
-                <option value="Tester">Tester</option>
-              </select>
-              <label for="position" style="color: #A4A6B3;">Position</label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <input id="phone_number" name="phone_number" type="text"
-                class="form-control @error('phone_number') is-invalid @enderror" id="formGroupExampleInput2"
-                placeholder="Phone Number" disabled="true">
-              <label for="phone_number" style="color: #A4A6B3;">Phone Number</label>
-
-            </div>
-
-            <div class="form-floating mb-3">
-              <input id="address" name="address" type="text" class="form-control @error('address') is-invalid @enderror"
-                id="formGroupExampleInput2" placeholder="Address" disabled="true">
-              <label for="address" style="color: #A4A6B3;">Address</label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <input id="province" name="province" type="text"
-                class="form-control @error('province') is-invalid @enderror" id="formGroupExampleInput2"
-                placeholder="Province" disabled="true">
-              <label for="province" style="color: #A4A6B3;">Province</label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <input id="city" name="city" type="text" class="form-control @error('city') is-invalid @enderror"
-                id="formGroupExampleInput2" placeholder="City" disabled="true">
-              <label for="city" style="color: #A4A6B3;">City</label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <input id="zip_code" name="zip_code" type="text"
-                class="form-control @error('zip_code') is-invalid @enderror" id="formGroupExampleInput2"
-                placeholder="Zip Code" disabled="true">
-              <label for="zip_code" style="color: #A4A6B3;">Zip Code</label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <input id="acct_no" name="acct_no" type="text" class="form-control @error('acct_no') is-invalid @enderror"
-                id="formGroupExampleInput2" placeholder="Account Number" disabled="true">
-              <label for="acct_no" style="color: #A4A6B3;">Account Number</label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <input id="acct_name" name="acct_name" type="text"
-                class="form-control @error('acct_name') is-invalid @enderror" id="formGroupExampleInput2"
-                placeholder="Account Name" disabled="true">
-              <label for="acct_name" style="color: #A4A6B3;">Account Name</label>
-            </div>
-
-            <div class="form-floating mb-3">
-
-              <select class="form-select @error('bank_name') is-invalid @enderror" id="bank_name" name="bank_name"
-                aria-label="Default select example" disabled="true">
-                <option selected disabled value="">Please Select Bank Name</option>
-                <option value="BDO Unibank Inc.">BDO Unibank Inc. (BDO)</option>
-                <option value="Land Bank of the Philippines">Land Bank of the Philippines (LANDBANK)
-                </option>
-                <option value="Metropolitan Bank & Trust Company">Metropolitan Bank & Trust Company
-                  (Metrobank)</option>
-                <option value="Bank of the Philippine Islands">Bank of the Philippine Islands (BPI)
-                </option>
-                <option value="Philippine National Bank">Philippine National Bank (PNB)</option>
-                <option value="Development Bank of the Philippines">Development Bank of the Philippines
-                  (DBP)</option>
-                <option value="China Banking Corporation">China Banking Corporation (CBC)</option>
-                <option value="Rizal Commercial Banking Corporation">Rizal Commercial Banking
-                  Corporation (RCBC)</option>
-                <option value="Union Bank of the Philippines, Inc.">Union Bank of the Philippines, Inc.
-                </option>
-                <option value="Security Bank Corporation">Security Bank Corporation</option>
-                <option value="EastWest Bank">EastWest Bank</option>
-                <option value="Citibank, N.A.">Citibank, N.A. (Philippine Branch)</option>
-                <option value="United Coconut Planters Bank">United Coconut Planters Bank (UCPB)
-                </option>
-                <option value="Asia United Bank Corporation">Asia United Bank Corporation (AUB)</option>
-                <option value="Bank of Commerce">Bank of Commerce (BankCom)</option>
-                <option value="Hongkong and Shanghai Banking Corporation">Hongkong and Shanghai Banking
-                  Corporation (HSBC)</option>
-                <option value="Robinsons Bank Corporation">Robinsons Bank Corporation</option>
-                <option value="Philtrust Bank">Philtrust Bank</option>
-                <option value="Philippine Bank of Communications">Philippine Bank of Communications
-                  (PBCOM)</option>
-                <option value="Maybank Philippines Inc.">Maybank Philippines Inc.</option>
-              </select>
-              <label for="bank_name" style="color: #A4A6B3;">Bank Name</label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <input id="bank_location" name="bank_location" type="text"
-                class="form-control @error('bank_location') is-invalid @enderror" id="formGroupExampleInput2"
-                placeholder="Bank Address" disabled="true">
-              <label for="bank_location" style="color: #A4A6B3;">Bank Location</label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <input id="gcash_no" name="gcash_no" type="text"
-                class="form-control @error('gcash_no') is-invalid @enderror" id="formGroupExampleInput2"
-                placeholder="Gcash Number" disabled="true">
-              <label for="gcash_no" style="color: #A4A6B3;">Gcash Number</label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <input id="date_hired" name="date_hired" type="date"
-                class="form-control @error('date_hired') is-invalid @enderror" id="formGroupExampleInput2"
-                placeholder="Date Hired" disabled="true">
-              <label for="date_hired" style="color: #A4A6B3;">Date Hired</label>
-            </div>
-
-            <div class="col mb-3">
+          <div class="row px-4 pb-4">
+            <div class="col-6 mb-3">
               <button type="button" id="edit_profile"
                 style="width:100%; height:50px;color:white; background-color: #A4A6B3;" class="btn">Edit
                 Profile</button>
+              <button type="button" id="cancel_edit_profile"
+                style="width:100%; height:50px;color:white; background-color: #A4A6B3;" class="btn">Cancel</button>
             </div>
-            <div class="col mb-3">
+            <div class="col-6 mb-3">
               <button type="submit" style="width:100%; height:50px;color:white; background-color: #CF8029;"
                 class="btn ">Update Profile</button>
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
 
-    <div class="col-md-12 col-lg-12 col-xl-7 px-2">
+    <div class="col-md-12 col-lg-7 px-2">
       <div class="card shadow p-2 mb-5 bg-white rounded">
         <!-- <div class="card-header">Profile Information</div> -->
         <ul class="nav nav-pills mb-3 " id="pills-tab" role="tablist">
@@ -218,7 +217,7 @@
           <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-invoice" role="tabpanel"
               aria-labelledby="pills-invoice-tab">
-              <div class="row">
+              <div class="row mx-2">
                 <div class="col-4">
                   <button style="color:white; background-color: #CF8029;" data-bs-toggle="modal"
                     data-bs-target="#exampleModal" type="submit" id="button-addon2" name="button-addon2"
@@ -226,7 +225,6 @@
                     Invoice</button>
                 </div>
                 <div class="col-4">
-
                   <select class="form-check-inline form-select" id="filter_all_invoices">
                     <!-- <option selected value="" disabled>Filter</option> -->
                     <option value="All">All</option>
@@ -243,45 +241,49 @@
                     <input type="text" class="form-control" id="search_invoice" placeholder="Search">
                   </div>
                 </div>
+              </div>
 
-                <div class="card-body table-responsive">
-                  <table style="color: #A4A6B3;font-size: 14px;" class="table table-hover" id="dataTable_invoice">
-                    <thead>
-                      <tr>
-                        <th>Invoice #</th>
-                        <th>Payment Status</th>
-                        <th>Date Created</th>
-                        <th>Due Date</th>
-                        <th class="text-center">Total Amount</th>
-                        <th class="text-center">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="row mx-3">
-                  <div class="col-xl-6">
-                    <div class="page_showing" id="tbl_showing_invoice"></div>
-                  </div>
-                  <div class="col-xl-6">
-                    <ul style="float:right" class="pagination pagination-sm flex-sm-wrap" id="tbl_pagination_invoice">
-                    </ul>
+              <div class="row">
+                <div class="col-12">
+                  <div class="card-body table-responsive">
+                    <table style="color: #A4A6B3;font-size: 14px;" class="table table-hover" id="dataTable_invoice">
+                      <thead>
+                        <tr>
+                          <th>Invoice #</th>
+                          <th class="text-center">Payment Status</th>
+                          <th class="text-end">Total Amount</th>
+                          <th class="text-end">Date Created</th>
+                          <th class="text-end">Due Date</th>
+                          <th class="text-center">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
+
+              <div class="row mx-2">
+                <div class="col-xl-6">
+                  <div class="page_showing" id="tbl_showing_invoice"></div>
+                </div>
+                <div class="col-xl-6">
+                  <ul style="float:right" class="pagination pagination-sm flex-sm-wrap" id="tbl_pagination_invoice">
+                  </ul>
+                </div>
+              </div>
             </div>
+
             <div class="tab-pane fade" id="pills-deduction" role="tabpanel" aria-labelledby="pills-deduction-tab">
-              <div class="row">
-                <div class="col-6">
-                  <!-- <div class="input-group"> -->
+              <div class="row mx-2">
+                <div class="col-6 ">
                   <button type="button " id="submit-create-deduction" class="btn form-check-inline pe-3"
                     data-bs-toggle="modal" data-bs-target="#modal-create-deduction"
                     style="color:white; background-color: #CF8029;width:100%">
                     <i class="fa fa-plus pe-1"></i>
                     Add Deduction
                   </button>
-
                 </div>
                 <div class="col-6">
                   <div class="form-group has-search">
@@ -289,10 +291,9 @@
                     <input type="text" class="form-control" id="search_deduction" placeholder="Search">
                   </div>
                 </div>
-                <!-- </div> -->
               </div>
               <div class="row">
-                <div class="col-12 pt-3">
+                <div class="col-12 pt-3 px-4">
                   <div id="deductionButton" style="word-wrap: break-word;">
                   </div>
                 </div>
@@ -305,9 +306,9 @@
                       <thead>
                         <tr>
                           <th>Invoice #</th>
-                          <th>Payment Status</th>
+                          <th class="text-center">Payment Status</th>
                           <th>Deduction Name</th>
-                          <th class="text-center">Amount</th>
+                          <th class="text-end">Amount</th>
                           <th class="text-end">Date Created</th>
                         </tr>
                       </thead>
@@ -315,31 +316,29 @@
                       </tbody>
                     </table>
                   </div>
-                  <div class="row mx-3">
-                    <div class="col-xl-6">
-                      <div class="page_showing" id="tbl_showing_deduction"></div>
-                    </div>
-                    <div class="col-xl-6">
-                      <ul style="float:right" class="pagination pagination-sm flex-sm-wrap"
-                        id="tbl_pagination_deduction"></ul>
-                    </div>
-                  </div>
                 </div>
               </div>
-
+              <div class="row mx-2">
+                <div class="col-xl-6">
+                  <div class="page_showing" id="tbl_showing_deduction"></div>
+                </div>
+                <div class="col-xl-6">
+                  <ul style="float:right" class="pagination pagination-sm flex-sm-wrap" id="tbl_pagination_deduction">
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
   <!-- START CREATE INVOICE MODAL -->
   <div class="modal fade" id="exampleModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog modal-lg" style="width:100%;">
-      <div class=" modal-content">
-        <div class="modal-header">
+    <div class="modal-dialog modal-lg">
+      <div class=" modal-content" style="width: 115%;">
+        <div class=" modal-header">
           <h1 class="modal-title fs-5">Add Invoice</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -359,7 +358,9 @@
                         <div class="row">
                           <div class="col">
                             <div class="form-floating form-group">
-                              <input id="due_date" name="due_date" type="date" class="form-control">
+                              <input type="text" placeholder="Due Date" id="due_date" onblur="(this.type='text')"
+                                name="due_date" class="form-control">
+                              <!-- <input id="due_date" name="due_date" type="date" class="form-control"> -->
                               <label for="due_date">Due Date</label>
                             </div>
                           </div>
@@ -398,10 +399,9 @@
 
                       <div class="col-12 mb-3">
                         <div class="row">
-                          <div class="col" style="display: flex;flex-direction: column-reverse;align-items: center;">
+                          <div class="col" style="display: flex;align-items: start;">
                             <div class="form-group">
-                              <label class="formGroupExampleInput2">Discount
-                                Type</label>
+                              <label class="formGroupExampleInput2">Discount Type</label>
                               <br>
                               <input class="form-check-input" type="radio" name="discount_type" id="discount_type"
                                 value="Fixed">
@@ -489,7 +489,7 @@
                       <div class="col-12 mb-3">
                         <div class="row">
                           <div class="col">
-                            <h3> DEDUCTIONS </h3>
+                            <h4> Deductions </h4>
                           </div>
                         </div>
                       </div>
@@ -534,7 +534,6 @@
                             style="color:White; background-color:#CF8029;">Save</button>
                         </div>
                       </div>
-
                     </div>
                   </div>
                 </div>
@@ -635,6 +634,11 @@
                         style=" color:#CF8029; background-color:white; " data-bs-dismiss="modal">Close</button>
                     </div>
                     <div class="col">
+                      <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                        id="deleteProfileDeduction" class="btn btn-danger w-100"
+                        style="color:White; background-color:#dc3545;">Delete</button>
+                    </div>
+                    <div class="col">
                       <button type="submit" class="btn btn-secondary w-100"
                         style="color:White; background-color:#CF8029; " data-bs-dismiss="modal">Update</button>
                     </div>
@@ -693,8 +697,8 @@
   <!-- START MODAL UPDATE INVOICE STATUS -->
 
   <!-- Modal FOR DELETE -->
-  <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal fade" style="z-index: 999999" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -718,7 +722,7 @@
           </div>
           <div class="row pt-3 px-3">
             <div class="col">
-              <span id="profilededuction_id hidden"></span>
+              <span id="profilededuction_id" hidden></span>
               <span class="text-muted"> Do you really want to delete these record? This process cannot be
                 undone.</span>
             </div>
@@ -755,10 +759,13 @@ const PHP = value => currency(value, {
   separator: ','
 });
 
+
+
 // INVOICE SEARCH AND DISPLAY
 $(document).ready(function() {
+  $('#cancel_edit_profile').addClass('d-none');
   // REFRESH WHEN THIS PAGE IS LOAD
-  check_ActivependingInvoices();
+  show_data();
   $(window).on('load', function() {
     $("div.spanner").addClass("show");
     $('html, body').animate({
@@ -766,9 +773,11 @@ $(document).ready(function() {
     }, 'slow');
     setTimeout(function() {
       $("div.spanner").removeClass("show");
+      date_hired();
+      due_date();
+      check_ActivependingInvoices();
       show_profileDeductionType_Button();
       show_Profilededuction_Table_Active();
-      show_data();
       show_edit()
     }, 1500)
 
@@ -788,22 +797,65 @@ $(document).ready(function() {
   $("#error_msg").hide();
   $("#success_msg").hide();
 
-  // if (window.performance && window.performance.navigation.type == window.performance.navigation
-  //     .TYPE_BACK_FORWARD) {
-  //     window.location.reload();
-  // };
+  function due_date() {
+    // START OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
+    // Get the input field
+    var due_date = $("#due_date");
+    // Set the datepicker options
+    due_date.datepicker({
+      dateFormat: "yy/mm/dd",
+      onSelect: function(dateText, inst) {
+        // Update the input value with the selected date
+        due_date.val(dateText);
+      }
+    });
+    // Set the input value to the current system date in the specified format
+    var currentDate = $.datepicker.formatDate("yy/mm/dd", new Date());
+    due_date.val(currentDate);
+    // END OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
+
+  }
+
+  function date_hired() {
+    // START OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
+    // Get the input field
+    var date_hired = $("#date_hired");
+    // Set the datepicker options
+    date_hired.datepicker({
+      dateFormat: "yy/mm/dd",
+      onSelect: function(dateText, inst) {
+        // Update the input value with the selected date
+        date_hired.val(dateText);
+      }
+    });
+    // Set the input value to the current system date in the specified format
+    var currentDate = $.datepicker.formatDate("yy/mm/dd", new Date());
+    date_hired.val(currentDate);
+    // END OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
+  }
+
+
+
+  $('#cancel_edit_profile').on('click', function(e) {
+    e.preventDefault();
+    $('#cancel_edit_profile').addClass('d-none');
+    $('#edit_profile').removeClass('d-none');
+    location.reload(true); // refresh the page
+    $(window).scrollTop(0); // scroll to the top
+  })
 
 
   $('#edit_profile').on('click', function(e) {
-
+    e.preventDefault();
+    $('#edit_profile').addClass('d-none');
+    $('#cancel_edit_profile').removeClass('d-none');
+    $('div.spanner').addClass("show");
     $('html, body').animate({
       scrollTop: $('#loader_load').offset().top
     }, 'slow');
 
-    $('div.spanner').addClass("show");
     setTimeout(function() {
       $('div.spanner').removeClass("show");
-
       $('#file').prop('disabled', false);
       $('#profile_status').prop('disabled', false);
       $('#first_name').prop('disabled', false);
@@ -892,7 +944,7 @@ $(document).ready(function() {
           $('#dataTable_deduction tbody').html(
             show_Profilededuction_Table_Active());
           toast1.toast('show');
-        }, loadingTime);
+        }, 1500);
 
       }
     }).catch(function(error) {
@@ -917,13 +969,10 @@ $(document).ready(function() {
         setTimeout(function() {
           $('div.spanner').removeClass('show');
           toast1.toast('show');
-        }, loadingTime);
+        }, 1500);
       }
     })
-    var end = performance.now(); // Get the timestamp after processing
-    var processingTime = end - start; // Calculate the processing time in milliseconds
-    var loadingTime = Math.ceil((processingTime * 1000) / 2);
-    console.log('Processing time: ' + loadingTime + 'ms');
+
   })
 
   function show_edit() {
@@ -1043,14 +1092,15 @@ $(document).ready(function() {
     }).then(function(response) {
       let data = response.data;
       if (data.success) {
-
         if (data.data.length > 0) {
           data.data.map((item) => {
-            var date_now = (new Date()).toISOString().split('T')[0];
+            var today = new Date();
+            var due_dateStatus = item.due_date;
+            formatDue_date = moment(due_dateStatus).format('L');
+            formatDate_now = moment(today).format('L');
 
             if (item.invoice_status === "Pending") {
-              if (item.due_date < date_now) {
-
+              if (formatDue_date < formatDate_now) {
                 let invoice_id = item.id;
                 let data = {
                   id: invoice_id,
@@ -1064,13 +1114,11 @@ $(document).ready(function() {
                   let data = response.data
                   if (data.success) {
                     console.log("SUCCESS Overdue", data);
+                    window.location.reload();
                   }
                 }).catch(function(error) {
                   console.log("ERROR", error);
                 })
-                setTimeout(function() {
-                  window.location.reload
-                }, 3500);
               }
             }
 
@@ -1095,9 +1143,6 @@ $(document).ready(function() {
                 }).catch(function(error) {
                   console.log("ERROR", error);
                 })
-                setTimeout(function() {
-                  window.location.reload
-                }, 3500);
               }
             }
 
@@ -1178,10 +1223,6 @@ $(document).ready(function() {
                   item.invoice_status + '</button></td>';
               }
 
-              tr += '<td>' + moment.utc(item.created_at).tz('America/New_York')
-                .format('MM/DD/YYYY') +
-                '</td>';
-              tr += '<td>' + moment(item.due_date).format('L') + '</td>';
               tr += '<td class=" text-end">' + Number(
                   parseFloat(item
                     .grand_total_amount).toFixed(2))
@@ -1190,6 +1231,10 @@ $(document).ready(function() {
                     minimumFractionDigits: 2
                   }) +
                 '</td>';
+              tr += '<td class="text-end">' + moment.utc(item.created_at).tz('America/New_York')
+                .format('MM/DD/YYYY') +
+                '</td>';
+              tr += '<td class="text-end">' + moment(item.due_date).format('L') + '</td>';
               tr +=
                 '<td class="text-center"> <a href="' +
                 apiUrl +
@@ -1351,8 +1396,9 @@ $(document).ready(function() {
 
             setTimeout(function() {
               $("div.spanner").removeClass("show");
-              location.href = apiUrl + "/admin/current"
-            }, 2000)
+              // location.href = apiUrl + "/admin/current"
+              window.location.reload();
+            }, 1500)
 
             toast1.toast('show');
           }
@@ -1382,13 +1428,11 @@ $(document).ready(function() {
 
   })
 
-  $(document).on('click', '#deductionButton .deleteProfileDeduction', function(
+  $('#deleteProfileDeduction').on('click', function(
     e) {
-    e.preventDefault();
-    let row = $(this).closest("td");
-    let profileDeductionType_id = row.find(".editProfileDeduction").val();
+    let profileDeductionType_id = $('#profileDeductionType_id').val();
     $("#profilededuction_id").html(profileDeductionType_id);
-    // console.log("delete", profileDeductionType_id);
+    console.log("delete", profileDeductionType_id);
 
   })
 
@@ -1429,8 +1473,7 @@ $(document).ready(function() {
 
   $("#discount_amount").addClass('d-none');
   $("#discount_total").addClass('d-none');
-  $(
-    ".label_discount_amount").addClass('d-none');
+  $(".label_discount_amount").addClass('d-none');
   $(".label_discount_total").addClass('d-none');
 
   $('input[type=radio][id=discount_type]').change(function() {
@@ -1475,25 +1518,28 @@ $(document).ready(function() {
   function subtotal() {
     let discount_type = $("input[id='discount_type']:checked").val();
     let discount_amount = $('#discount_amount').val();
+    let newDiscount_amount = discount_amount.replace(/[^\d.]/g, ''); // Remove non-numeric characters
     let discount_total = $('#discount_total').val();
     let subtotal = $('#subtotal').val();
     var sum = 0;
 
     $('#show_items .amount').each(function() {
-      sum += Number($(this).val().replaceAll(',', ''));
+      sum += Number($(this).val().replace(/[^\d.]/g, ''));
     });
 
     if (discount_type == 'Fixed') {
-      $('#discount_total').val(PHP(parseFloat(discount_amount ? discount_amount : 0) * 1).format());
-      let sub_total = (sum - $('#discount_total').val().replaceAll(',', ''));
-      $('#subtotal').val(PHP(sub_total).format());
+      $('#discount_total').val(PHP(parseFloat(newDiscount_amount * 1) ? parseFloat(newDiscount_amount * 1) : 0)
+        .format());
 
+      let sub_total = (sum - $('#discount_total').val().replace(/[^\d.]/g, ''));
+      $('#subtotal').val(PHP(sub_total).format());
       let dollar_amount = $('#subtotal').val();
       $('#dollar_amount').val(PHP(dollar_amount).format());
       DeductionItems_total()
+
     } else if (discount_type == 'Percentage') {
 
-      let percentage = parseFloat(((discount_amount ? discount_amount : 0) / 100) * sum);
+      let percentage = parseFloat(((newDiscount_amount ? newDiscount_amount : 0) / 100) * sum);
       $('#discount_total').val(PHP(percentage).format());
       let sub_total = (parseFloat(sum) - parseFloat(percentage));
       $('#subtotal').val(PHP(sub_total).format());
@@ -1501,12 +1547,10 @@ $(document).ready(function() {
       DeductionItems_total()
     }
     getResults_Converted();
-
   }
 
   $('#profilededuction_delete').on('click', function(e) {
     e.preventDefault();
-
     let id = $('#profilededuction_id').html();
     axios.post(apiUrl + '/api/deleteProfileDeductionTypes/' +
       id, {
@@ -1563,6 +1607,7 @@ $(document).ready(function() {
       }
     })
   });
+
   // FUNCTION FOR DISPLAY RESULTS AND CONVERTED AMOUNT
   function getResults_Converted() {
     fetch(`${api}`)
@@ -1583,8 +1628,6 @@ $(document).ready(function() {
     $('#peso_rate').val(PHP(parseFloat(peso_rate)).format());
     $('#converted_amount').val(PHP(parseFloat(converted_amount)).format());
 
-    // $('#grand_total').val((converted_amount - total_deduction_amount).toFixed(
-    //     2));
   }
 
   $('#show_deduction_items').focusout('.multi2', function() {
@@ -1599,17 +1642,7 @@ $(document).ready(function() {
 
   // FUNCTION FOR KEYUP CLASS DEDUCTIONS FOR DEDUCTIONS
   $('#show_deduction_items').on("keyup", ".multi2", function() {
-    let grand_total = 0;
-    let parent = $(this).closest('.row');
-    let deduction_amount = parent.find('.deduction_amount').val() ? parent
-      .find(
-        '.deduction_amount')
-      .val() : 0;
-    // grand_total = parseFloat($('#converted_amount').val().replaceAll(',', '')) - parseFloat(
-    // deduction_amount.replaceAll(',', ''));
-    // $('#grand_total').val(PHP(grand_total).format());
     DeductionItems_total();
-
   });
 
   $('#discount_amount').focusout(function() {
@@ -1619,7 +1652,8 @@ $(document).ready(function() {
       let discount_type = $("input[id='discount_type']:checked").val();
       if (discount_type == 'Percentage') {
         let discount_amount = $('#discount_amount').val();
-        $('#discount_amount').val(parseInt(discount_amount));
+        let newDiscount_amount = discount_amount.replace(/[^\d.]/g, ''); // Remove non-numeric characters
+        $('#discount_amount').val(newDiscount_amount);
       } else {
         let discount_amount = $('#discount_amount').val();
         $('#discount_amount').val(PHP(discount_amount).format());
@@ -1645,18 +1679,17 @@ $(document).ready(function() {
   $('#show_items').on("keyup", ".multi", function() {
     let sub_total = 0;
     let parent = $(this).closest('.row');
-    let quantity = parent.find('.quantity').val().replaceAll(',', '') ? parent.find(
-        '.quantity')
-      .val().replaceAll(',', '') : 0;
-    let rate = parent.find('.rate').val().replaceAll(',', '') ? parent.find('.rate')
-      .val()
-      .replaceAll(',', '') : 0;
-    sub_total = parseFloat(quantity * rate);
+    let quantity = parent.find('.quantity').val().replaceAll(',', '');
+    let rate = parent.find('.rate').val().replaceAll(',', '');
+    let newQuantity = quantity.replace(/[^\d.]/g, '');
+    let newRate = rate.replace(/[^\d.]/g, '');
 
+    sub_total = parseFloat(newQuantity * newRate);
     parent.find('.amount').val(PHP(sub_total).format());
-    getResults_Converted();
+    // getResults_Converted();
     Additems_total();
     subtotal();
+
   });
 
   // FUNCTION FOR DISPLAYING SUBTOTAL AMOUNT AND DOLLAR AMOUNT
@@ -1664,10 +1697,9 @@ $(document).ready(function() {
     var sum = 0;
     let converted_amount = 0;
     $('#show_items .amount').each(function() {
-      sum += Number($(this).val().replaceAll(',', ''));
+      sum += Number($(this).val().replace(/[^\d.]/g, ''));
     });
-    // $('#subtotal').val(parseFloat(sum).toFixed(2));
-    // $('#dollar_amount').val(parseFloat(sum).toFixed(2));
+
 
     $('#subtotal').val(PHP(parseFloat(sum)).format());
     $('#dollar_amount').val(PHP(parseFloat(sum)).format());
@@ -1684,11 +1716,11 @@ $(document).ready(function() {
     let grand_total = 0;
 
     $('#show_deduction_items .deduction_amount').each(function() {
-      deduction_sum += Number($(this).val().replaceAll(',', ''));
+      deduction_sum += Number($(this).val().replace(/[^\d.]/g, ''));
     })
 
     $('#show_items .amount').each(function() {
-      converted_amount += Number($(this).val().replaceAll(',', ''));
+      converted_amount += Number($(this).val().replace(/[^\d.]/g, ''));
     });
 
     peso_rate = $('#peso_rate').val().replaceAll(',', '') ? $('#peso_rate').val()
@@ -1699,7 +1731,8 @@ $(document).ready(function() {
       .val()
       .replaceAll(',', '') : 0;
     converted_amount_input = parseFloat(dollar_amount * peso_rate);
-    grand_total = parseFloat(converted_amount_input - deduction_sum);
+    grand_total =
+      parseFloat(converted_amount_input - deduction_sum);
     $('#grand_total').val(PHP(grand_total).format());
     // console.log("grand_total", grand_total);
   }
@@ -1867,6 +1900,7 @@ $(document).ready(function() {
   });
 
   $("#button-addon2").click(function(e) {
+    due_date();
     let toast1 = $('.toast1');
     let id = $('#user_id').val();
     axios
@@ -1895,13 +1929,15 @@ $(document).ready(function() {
               add_rows += '<div class="row mb-3">';
               add_rows += '<div class="col-7">';
               add_rows += '<div class="form-floating form-group w-100">';
+              add_rows += '<input type="text" class="profile_deduction_type_id" value=' + item.id +
+                ' hidden>';
               add_rows +=
-                '<select class="form-control profile_deduction_type" id="profile_deduction_type" name="profile_deduction_type">';
-              add_rows += '<option value=' + item.id +
+                '<select class="form-control deduction_type_name" id="deduction_type_name" name="deduction_type_name">';
+              add_rows += '<option value=' + item.deduction_type_name +
                 '>' + item.deduction_type_name + '</option> ';
               add_rows += '</select>';
               add_rows +=
-                '<label for="profile_deduction_type">Deduction Type</label>';
+                '<label for="deduction_type_name">Deduction Type</label>';
               add_rows += '</div>';
               add_rows += '</div>';
 
@@ -2013,20 +2049,13 @@ $(document).ready(function() {
     // DEDUCTIONS TABLE
     let Deductions = [];
     $('#show_deduction_items .row').each(function() {
-      let profile_deduction_type_id = $(this).find(
-          '.profile_deduction_type')
-        .val() ?
-        $(this)
-        .find(
-          '.profile_deduction_type').val() : 0;
-      let deduction_amount = $(this).find('.deduction_amount').val()
-        .replaceAll(
-          ',',
-          '') ? $(this).find(
-          '.deduction_amount').val().replaceAll(',', '') : 0;
+      let profile_deduction_type_id = $(this).find('.profile_deduction_type_id').val();
+      let deduction_type_name = $(this).find('.deduction_type_name').val();
+      let deduction_amount = $(this).find('.deduction_amount').val().replaceAll(',', '');
 
       Deductions.push({
         profile_deduction_type_id,
+        deduction_type_name,
         deduction_amount,
       })
     });
@@ -2069,8 +2098,10 @@ $(document).ready(function() {
           $('#dataTable_deduction tbody').empty();
           $('#dataTable_deduction tbody').html(
             show_Profilededuction_Table_Active());
+          $(".label_discount_amount").addClass('d-none');
+          $(".label_discount_total").addClass('d-none');
           toast1.toast('show');
-        }, loadingTime)
+        }, 1500)
 
       }
     }).catch(function(error) {
@@ -2094,14 +2125,11 @@ $(document).ready(function() {
           setTimeout(function() {
             $('div.spanner').removeClass('show');
             toast1.toast('show');
-          }, loadingTime);
+          }, 1500);
         })
       }
     });
-    var end = performance.now(); // Get the timestamp after processing
-    var processingTime = end - start; // Calculate the processing time in milliseconds
-    var loadingTime = Math.ceil((processingTime * 1000) / 2);
-    console.log('Processing time: ' + loadingTime + 'ms');
+
   });
 
   function capitalize(s) {
@@ -2300,15 +2328,14 @@ $(document).ready(function() {
                     '<td><button style="width:100%; height:20px; font-size:10px; padding: 0px;" type="button" class="btn btn-danger">Overdue</button></td>';
                 }
 
-                tr += '<td>' + item
-                  .profile_deduction_types.deduction_type_name +
+                tr += '<td>' + item.deduction_type_name +
                   '</td>';
                 tr += '<td class="text-end">' + PHP(item
                     .amount)
                   .format() + '</td>';
                 tr += '<td class="text-end">' + moment.utc(item.created_at).tz(
                   'America/New_York').format(
-                  'MM/DD/YYYY'), +'</td>';
+                  'MM/DD/YYYY') + '</td>';
 
                 tr += '</tr>';
 
@@ -2335,8 +2362,7 @@ $(document).ready(function() {
                       .exec(
                         url
                       );
-                    return results !== null ? results[1] || 0 :
-                      false;
+                    return results !== null ? results[1] || 0 : 0;
                   };
                   $('div.spanner').addClass("show");
 
@@ -2437,7 +2463,7 @@ $(document).ready(function() {
                 let label = '<label>';
 
                 label +=
-                  "<button type='button' data-bs-toggle='modal' style='width:200px;' data-bs-target='#ProfileDeductioneditModal' id='editProfileDeduction' class='editProfileDeduction btn btn-primary my-2 mx-2' value=" +
+                  "<button type='button' data-bs-toggle='modal' style='width:150px;' data-bs-target='#ProfileDeductioneditModal' id='editProfileDeduction' class='editProfileDeduction btn btn-primary my-2 mx-2' value=" +
                   item.id + ">" + item.deduction_type_name +
                   "</button>";
                 // <button type='button' data-bs-toggle='modal' data-bs-target='#deleteModal' class='deleteProfileDeduction profile-close' aria-hidden='true'><span style='color:black;' value=" +

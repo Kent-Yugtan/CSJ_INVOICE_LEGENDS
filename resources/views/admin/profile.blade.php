@@ -5,13 +5,13 @@
   <ol class="breadcrumb mb-3"></ol>
   <div class="row">
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6 px-2">
-      <div class="card shadow p-2 mb-5 bg-white rounded h-100">
+      <div class="card shadow p-2 mb-3 bg-white rounded h-100">
         <div class="card-header">Profile Information</div>
-        <div class="row px-4 pb-4" id="header">
-          <form name="ProfileStore" id="ProfileStore" method="post" action="javascript:void(0)"
-            class="row g-3 needs-validation" novalidate>
+        <form name="ProfileStore" id="ProfileStore" method="post" action="javascript:void(0)"
+          class="row g-2 needs-validation" novalidate>
+          <div class="row px-4 pt-3" id="header">
             @csrf
-            <div class="col mb-3">
+            <div class="col-xl-6 mb-3">
               <div class="profile-pic-div" style="position: relative; height:200px">
                 <img src="/images/default.png" id="photo">
                 <input name="file" type="file" id="file">
@@ -19,13 +19,12 @@
               </div>
             </div>
 
-            <div class="col pt-3 mb-3">
+            <div class="col-xl-6 pt-3 mb-3">
               <div class="form-check mb-3">
                 <input class="form-check-input" type="checkbox" id="profile_status" name="profile_status" checked>
                 <label class="form-check-label" for="status">
                   Active
                 </label>
-
               </div>
               <div class="form-floating mb-3">
                 <input id="first_name" name="first_name" type="text"
@@ -39,164 +38,163 @@
                   class="form-control @error('last_name') is-invalid @enderror " placeholder="Last Name"
                   value="{{ old('last_name') }}" required>
                 <label for="last_name" style="color: #A4A6B3;">Last Name</label>
-
               </div>
             </div>
-            <div class="form-floating mb-3">
-              <input id="email" name="email" type="email" class="form-control" placeholder="Email" required>
-              <label for="email" style="color: #A4A6B3;">Email</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input id="username" name="username" type="text" class="form-control" placeholder="Username" required>
-              <label for="username" style="color: #A4A6B3;">Username</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input id="password" name="password" type="password" class="form-control" placeholder="Password" required>
-              <label id="password" style="color: #A4A6B3;">Password</label>
-            </div>
+          </div>
+          <div class="row px-4 pb-4">
+            <div class=" col pt-3 mb-3">
+              <div class="form-floating mb-3">
+                <input id="email" name="email" type="email" class="form-control" placeholder="Email" required>
+                <label for="email" style="color: #A4A6B3;">Email</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input id="username" name="username" type="text" class="form-control" placeholder="Username" required>
+                <label for="username" style="color: #A4A6B3;">Username</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input id="password" name="password" type="password" class="form-control" placeholder="Password"
+                  required>
+                <label id="password" style="color: #A4A6B3;">Password</label>
+              </div>
 
-            <div class="form-floating mb-3">
-              <select class="form-select @error('position') is-invalid @enderror" id="position" name="position"
-                aria-label="Default select example" defaultValue="select">
-                <option selected disabled value="">Please Select Position</option>
-                <option value="Lead Developer">Lead Developer</option>
-                <option value="Senior Developer">Senior Developer</option>
-                <option value="Junior Developer">Junior Developer</option>
-                <option value="Web Designer">Web Designer</option>
-                <option value="Tester">Tester</option>
-              </select>
-              <label for="position">Position</label>
+              <div class="form-floating mb-3">
+                <select class="form-select @error('position') is-invalid @enderror" id="position" name="position"
+                  aria-label="Default select example" defaultValue="select">
+                  <option selected disabled value="">Please Select Position</option>
+                  <option value="Lead Developer">Lead Developer</option>
+                  <option value="Senior Developer">Senior Developer</option>
+                  <option value="Junior Developer">Junior Developer</option>
+                  <option value="Web Designer">Web Designer</option>
+                  <option value="Tester">Tester</option>
+                </select>
+                <label for="position">Position</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input name="phone_number" id="phone_number" type="text" class="form-control"
+                  placeholder="Phone Number">
+                <span id="error_address" class="text-danger"></span>
+                <label for="phone_number" style="color: #A4A6B3;">Phone Number</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input name="address" id="address" type="text"
+                  class="form-control @error('address') is-invalid @enderror" placeholder="Address">
+                <span id="error_address" class="text-danger"></span>
+                <label for="address" style="color: #A4A6B3;">Address</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input name="province" id="province" type="text"
+                  class="form-control @error('province') is-invalid @enderror" placeholder="Province">
+                <span id="error_province" class="text-danger"></span>
+                <label for="province" style="color: #A4A6B3;">Province</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input id="city" name="city" type="text" class="form-control @error('city') is-invalid @enderror"
+                  placeholder="City">
+                <span id="error_city" class="text-danger"></span>
+                <label for="city" style="color: #A4A6B3;">City</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input id="zip_code" name="zip_code" type="text"
+                  class="form-control @error('zip_code') is-invalid @enderror" placeholder="Zip Code">
+                <span id="error_zip_code" class="text-danger"></span>
+                <label for="city" style="color: #A4A6B3;">Zip Code</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input name="acct_no" id="acct_no" type="text"
+                  class="form-control @error('acct_no') is-invalid @enderror" placeholder="Account Number">
+                <span id="error_acct_no" class="text-danger"></span>
+                <label for="acct_no" style="color: #A4A6B3;">Account Number</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input name="acct_name" id="acct_name" type="text"
+                  class="form-control @error('acct_name') is-invalid @enderror" placeholder="Account Name">
+                <span id="error_acct_name" class="text-danger"></span>
+                <label for="acct_name" style="color: #A4A6B3;">Account Name</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <select class="form-select @error('bank_name') is-invalid @enderror" id="bank_name" name="bank_name"
+                  aria-label="Default select example">
+                  <option selected disabled value="">Please Select Bank Name</option>
+                  <option value="BDO Unibank Inc.">BDO Unibank Inc. (BDO)</option>
+                  <option value="Land Bank of the Philippines">Land Bank of the Philippines (LANDBANK)
+                  </option>
+                  <option value="Metropolitan Bank & Trust Company">Metropolitan Bank & Trust Company
+                    (Metrobank)</option>
+                  <option value="Bank of the Philippine Islands">Bank of the Philippine Islands (BPI)
+                  </option>
+                  <option value="Philippine National Bank">Philippine National Bank (PNB)</option>
+                  <option value="Development Bank of the Philippines">Development Bank of the Philippines
+                    (DBP)</option>
+                  <option value="China Banking Corporation">China Banking Corporation (CBC)</option>
+                  <option value="Rizal Commercial Banking Corporation">Rizal Commercial Banking
+                    Corporation (RCBC)</option>
+                  <option value="Union Bank of the Philippines, Inc.">Union Bank of the Philippines, Inc.
+                  </option>
+                  <option value="Security Bank Corporation">Security Bank Corporation</option>
+                  <option value="EastWest Bank">EastWest Bank</option>
+                  <option value="Citibank, N.A.">Citibank, N.A. (Philippine Branch)</option>
+                  <option value="United Coconut Planters Bank">United Coconut Planters Bank (UCPB)
+                  </option>
+                  <option value="Asia United Bank Corporation">Asia United Bank Corporation (AUB)</option>
+                  <option value="Bank of Commerce">Bank of Commerce (BankCom)</option>
+                  <option value="Hongkong and Shanghai Banking Corporation">Hongkong and Shanghai Banking
+                    Corporation (HSBC)</option>
+                  <option value="Robinsons Bank Corporation">Robinsons Bank Corporation</option>
+                  <option value="Philtrust Bank">Philtrust Bank</option>
+                  <option value="Philippine Bank of Communications">Philippine Bank of Communications
+                    (PBCOM)</option>
+                  <option value="Maybank Philippines Inc.">Maybank Philippines Inc.</option>
+                </select>
+                <label for="bank_name" style="color: #A4A6B3;">Bank Name</label>
+
+              </div>
+
+              <div class="form-floating mb-3">
+                <input id="bank_location" name="bank_location" type="text"
+                  class="form-control @error('bank_location') is-invalid @enderror" placeholder="Bank Address">
+                <span id="error_bank_location" class="text-danger"></span>
+                <label for="city" style="color: #A4A6B3;">Bank Location</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input name="gcash_no" type="text" class="form-control @error('gcash_no') is-invalid @enderror"
+                  id="gcash_no" placeholder="Gcash Number">
+                <span id="error_gcash_no" class="text-danger"></span>
+                <label for="city" style="color: #A4A6B3;">Gcash Number</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input name="date_hired" type="text" onblur="(this.type='text')"
+                  class="form-control @error('date_hired') is-invalid @enderror" id="date_hired"
+                  placeholder="Date Hired">
+                <label for="city" style="color: #A4A6B3;">Date Hired</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <select class="form-select" multiple="multiple[]" id="select2Multiple">
+                  <label for="select2Multiple" style="color: #A4A6B3;">Deductions</label>
+                </select>
+              </div>
+
+              <div class="col mb-3">
+                <button type="submit" style="width:100%; height:50px;color:white; background-color: #CF8029;"
+                  class="btn ">Add
+                  Profile</button>
+              </div>
             </div>
-
-            <div class="form-floating mb-3">
-              <input name="phone_number" id="phone_number" type="text" class="form-control" placeholder="Phone Number">
-              <span id="error_address" class="text-danger"></span>
-              <label for="phone_number" style="color: #A4A6B3;">Phone Number</label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <input name="address" id="address" type="text" class="form-control @error('address') is-invalid @enderror"
-                placeholder="Address">
-              <span id="error_address" class="text-danger"></span>
-              <label for="address" style="color: #A4A6B3;">Address</label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <input name="province" id="province" type="text"
-                class="form-control @error('province') is-invalid @enderror" placeholder="Province">
-              <span id="error_province" class="text-danger"></span>
-              <label for="province" style="color: #A4A6B3;">Province</label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <input id="city" name="city" type="text" class="form-control @error('city') is-invalid @enderror"
-                placeholder="City">
-              <span id="error_city" class="text-danger"></span>
-              <label for="city" style="color: #A4A6B3;">City</label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <input id="zip_code" name="zip_code" type="text"
-                class="form-control @error('zip_code') is-invalid @enderror" placeholder="Zip Code">
-              <span id="error_zip_code" class="text-danger"></span>
-              <label for="city" style="color: #A4A6B3;">Zip Code</label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <input name="acct_no" id="acct_no" type="text" class="form-control @error('acct_no') is-invalid @enderror"
-                placeholder="Account Number">
-              <span id="error_acct_no" class="text-danger"></span>
-              <label for="acct_no" style="color: #A4A6B3;">Account Number</label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <input name="acct_name" id="acct_name" type="text"
-                class="form-control @error('acct_name') is-invalid @enderror" placeholder="Account Name">
-              <span id="error_acct_name" class="text-danger"></span>
-              <label for="acct_name" style="color: #A4A6B3;">Account Name</label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <select class="form-select @error('bank_name') is-invalid @enderror" id="bank_name" name="bank_name"
-                aria-label="Default select example">
-                <option selected disabled value="">Please Select Bank Name</option>
-                <option value="BDO Unibank Inc.">BDO Unibank Inc. (BDO)</option>
-                <option value="Land Bank of the Philippines">Land Bank of the Philippines (LANDBANK)
-                </option>
-                <option value="Metropolitan Bank & Trust Company">Metropolitan Bank & Trust Company
-                  (Metrobank)</option>
-                <option value="Bank of the Philippine Islands">Bank of the Philippine Islands (BPI)
-                </option>
-                <option value="Philippine National Bank">Philippine National Bank (PNB)</option>
-                <option value="Development Bank of the Philippines">Development Bank of the Philippines
-                  (DBP)</option>
-                <option value="China Banking Corporation">China Banking Corporation (CBC)</option>
-                <option value="Rizal Commercial Banking Corporation">Rizal Commercial Banking
-                  Corporation (RCBC)</option>
-                <option value="Union Bank of the Philippines, Inc.">Union Bank of the Philippines, Inc.
-                </option>
-                <option value="Security Bank Corporation">Security Bank Corporation</option>
-                <option value="EastWest Bank">EastWest Bank</option>
-                <option value="Citibank, N.A.">Citibank, N.A. (Philippine Branch)</option>
-                <option value="United Coconut Planters Bank">United Coconut Planters Bank (UCPB)
-                </option>
-                <option value="Asia United Bank Corporation">Asia United Bank Corporation (AUB)</option>
-                <option value="Bank of Commerce">Bank of Commerce (BankCom)</option>
-                <option value="Hongkong and Shanghai Banking Corporation">Hongkong and Shanghai Banking
-                  Corporation (HSBC)</option>
-                <option value="Robinsons Bank Corporation">Robinsons Bank Corporation</option>
-                <option value="Philtrust Bank">Philtrust Bank</option>
-                <option value="Philippine Bank of Communications">Philippine Bank of Communications
-                  (PBCOM)</option>
-                <option value="Maybank Philippines Inc.">Maybank Philippines Inc.</option>
-              </select>
-              <label for="bank_name" style="color: #A4A6B3;">Bank Name</label>
-
-            </div>
-
-            <div class="form-floating mb-3">
-              <input id="bank_location" name="bank_location" type="text"
-                class="form-control @error('bank_location') is-invalid @enderror" placeholder="Bank Address">
-              <span id="error_bank_location" class="text-danger"></span>
-              <label for="city" style="color: #A4A6B3;">Bank Location</label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <input name="gcash_no" type="text" class="form-control @error('gcash_no') is-invalid @enderror"
-                id="gcash_no" placeholder="Gcash Number">
-              <span id="error_gcash_no" class="text-danger"></span>
-              <label for="city" style="color: #A4A6B3;">Gcash Number</label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <input name="date_hired" type="date" class="form-control @error('date_hired') is-invalid @enderror"
-                id="date_hired" placeholder="Date Hired">
-              <span id="error_date_hired" class="text-danger"></span>
-              <label for="city" style="color: #A4A6B3;">Date Hired</label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <select class="form-select" multiple="multiple" id="select2Multiple">
-                <label for="select2Multiple" style="color: #A4A6B3;">Deductions</label>
-              </select>
-            </div>
-
-            <div class="col mb-3">
-              <button type="submit" style="width:100%; height:50px;color:white; background-color: #CF8029;"
-                class="btn ">Add
-                Profile</button>
-            </div>
-
-            <!-- <div class="col mb-3">
-                            <button type="submit"
-                                style="width:100%; height:50px;color:white; background-color: #A4A6B3;"
-                                class="btn">Change Password</button>
-                        </div> -->
-          </form>
-        </div>
+        </form>
       </div>
     </div>
   </div>
+</div>
 </div>
 
 <div style="position: fixed; top: 60px; right: 20px;">
@@ -232,6 +230,24 @@ $(document).ready(function() {
     decimal: '.',
     separator: ','
   });
+
+  // START OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
+  // Get the input field
+  var dateInput = $("#date_hired");
+  // Set the datepicker options
+  dateInput.datepicker({
+    dateFormat: "yy/mm/dd",
+    onSelect: function(dateText, inst) {
+      // Update the input value with the selected date
+      dateInput.val(dateText);
+    }
+  });
+  // Set the input value to the current system date in the specified format
+  var currentDate = $.datepicker.formatDate("yy/mm/dd", new Date());
+  dateInput.val(currentDate);
+  // END OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
+
+
   $(window).on('load', function() {
     $('html,body').animate({
       scrollTop: $('#loader_load').offset().top

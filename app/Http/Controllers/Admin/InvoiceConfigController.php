@@ -60,17 +60,12 @@ class InvoiceConfigController extends Controller
             'bill_to_address' => 'required',
           ]);
         }
-        if ($data->ship_to_address != $request->ship_to_address) {
-          $request->validate([
-            'ship_to_address' => 'required',
-          ]);
-        }
+  
 
         $incoming_data = [
           'invoice_title' => $request->invoice_title,
           'invoice_email' => $request->invoice_email,
           'bill_to_address' => $request->bill_to_address,
-          'ship_to_address' => $request->ship_to_address,
         ];
 
         if ($request->hasFile('edit_invoice_logo')) {
@@ -110,7 +105,6 @@ class InvoiceConfigController extends Controller
           'invoice_title' => 'required',
           'invoice_email' => 'required|email|unique:invoice_configs',
           'bill_to_address' => 'required',
-          'ship_to_address' => 'required',
         ]);
 
         if ($request->hasFile('invoice_logo')) {
