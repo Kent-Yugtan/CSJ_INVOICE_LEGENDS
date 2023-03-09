@@ -140,6 +140,7 @@ class Controller extends BaseController
       ]
     ];
     event(new \App\Events\SendMailEvent($data_email));
+    // dispatch(new \App\Jobs\SendEmailJob($data_email));
   }
 
   public function setup_email_template_status_profile($data)
@@ -232,6 +233,7 @@ class Controller extends BaseController
       ]
     ];
     event(new \App\Events\SendMailEvent($data_email));
+    // dispatch(new \App\Jobs\SendEmailJob($data_email));
   }
 
   public function setup_email_template_admin($data)
@@ -324,6 +326,7 @@ class Controller extends BaseController
       ]
     ];
     event(new \App\Events\SendMailEvent($data_email));
+    // dispatch(new \App\Jobs\SendEmailJob($data_email));
   }
 
   public function setup_email_template_profile($data)
@@ -416,5 +419,6 @@ class Controller extends BaseController
       ]
     ];
     event(new \App\Events\SendMailEvent($data_email));
+    // dispatch(new \App\Jobs\SendEmailJob($data_email));
   }
 }

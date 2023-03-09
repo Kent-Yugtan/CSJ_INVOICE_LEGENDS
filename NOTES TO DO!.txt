@@ -51,4 +51,5 @@ Email Configuration
 © 5Pints Productions 2023 -> done!
 
 APPLY THIS TO THE SEND EMAIL 
-laravel event listener should queue worker
+laravel event listener should queue worker -> done!
+

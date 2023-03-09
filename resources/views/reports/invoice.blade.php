@@ -15,14 +15,13 @@
       <div class="card shadow p-2 mb-1 bg-white rounded" style="height:100%">
         <div class="input-group">
           <div class="form-floating me-3" style="width:23vh">
-            <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="form-control" id="from"
+            <input type="text" onblur="(this.type='text')" class="form-control" id="from"
               placeholder="Date Filter From">
             <label for="from">Date Filter From</label>
           </div>
 
           <div class="form-floating me-3" style="width:23vh">
-            <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="form-control" id="to"
-              placeholder="Date Filter To">
+            <input type="text" onblur="(this.type='text')" class="form-control" id="to" placeholder="Date Filter To">
             <label for="to">Date Filter To</label>
           </div>
           <button typ="button" class="btn" style=" color:white; background-color: #CF8029;width:24vh"

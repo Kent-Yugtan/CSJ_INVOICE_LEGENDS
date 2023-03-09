@@ -7,37 +7,53 @@
     <div class="col-lg-5 px-2">
       <div class="card shadow p-2 mb-5 bg-white rounded h-100">
         <div class="card-header">Create Invoice Configuration</div>
-        <div class="row px-4 pb-4" id="header">
-          <form name="invoiceconfigs_store" id="invoiceconfigs_store" method="post" action="javascript:void(0)" class="row g-3 needs-validation" novalidate>
+        <div class="row px-4 pt-3" id="header">
+          <form name="invoiceconfigs_store" id="invoiceconfigs_store" method="post" action="javascript:void(0)">
             @csrf
-
-            <div class=" mb-3">
-              <label style="color: #A4A6B3;" for="invoice_logo" class="form-label">Invoice Logo</label>
-              <input class="form-control" id="invoice_logo" name="invoice_logo" type="file">
+            <div class="row">
+              <div class="col-12">
+                <div class=" mb-3">
+                  <label style="color: #A4A6B3;" for="invoice_logo" class="form-label">Invoice Logo</label>
+                  <input class="form-control" id="invoice_logo" name="invoice_logo" type="file">
+                </div>
+              </div>
             </div>
 
-            <div class="form-floating mb-3">
-              <input id="invoice_title" name="email" type="text" class="form-control" placeholder=" Title">
-              <label for="invoice_title" style="color: #A4A6B3;">Invoice Title</label>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-floating mb-3">
+                  <input id="invoice_title" name="email" type="text" class="form-control" placeholder=" Title">
+                  <label for="invoice_title" style="color: #A4A6B3;">Invoice Title</label>
+                </div>
+              </div>
             </div>
 
-            <div class="form-floating mb-3">
-              <input id="invoice_email" name="username" type="text" class="form-control" placeholder="Email">
-              <label for="invoice_email" style="color: #A4A6B3;">Invoice Email</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input id="bill_to_address" name="Email Address" type="text" class="form-control" placeholder="From">
-              <label for="bill_to_address" style="color: #A4A6B3;">Bill to Address</label>
-            </div>
-
-            <div class="col mb-3">
-              <button type="button" style="width:100%; height:50px;color:white; background-color: #A4A6B3;" class="btn">Close</button>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-floating mb-3">
+                  <input id="invoice_email" name="username" type="text" class="form-control" placeholder="Email">
+                  <label for="invoice_email" style="color: #A4A6B3;">Invoice Email</label>
+                </div>
+              </div>
             </div>
 
-            <div class="col mb-3">
-              <button type="submit" style="width:100%; height:50px;color:white; background-color: #CF8029;" class="btn ">Save </button>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-floating mb-3">
+                  <input id="bill_to_address" name="Email Address" type="text" class="form-control" placeholder="From">
+                  <label for="bill_to_address" style="color: #A4A6B3;">Bill to Address</label>
+                </div>
+              </div>
             </div>
 
+            <div class="row">
+              <div class="col-6 mb-3">
+                <button type="button" style="width:100%; height:50px;color:white; background-color: #A4A6B3;" class="btn">Close</button>
+              </div>
+              <div class="col-6 mb-3">
+                <button type="submit" style="width:100%; height:50px;color:white; background-color: #CF8029;" class="btn ">Save </button>
+              </div>
+            </div>
           </form>
         </div>
       </div>
@@ -47,7 +63,6 @@
     <div class="col-lg-7 px-2">
       <div class="card shadow bg-white rounded h-100">
         <div class="card-body table-responsive">
-
           <!-- <div class="form-group row mt-3">
             <div class="col-lg-9">
               <input id="search" type="text" class="form-control" placeholder="Search">

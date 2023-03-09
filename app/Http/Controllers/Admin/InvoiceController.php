@@ -350,6 +350,8 @@ class InvoiceController extends Controller
     $invoice_id = $request->invoice_id;
     $invoiceItems_id = $request->invoiceItems_id;
     $profileDeduction_id = $request->profileDeduction_id;
+    $invoiceItem = $request->invoiceItem;
+    $deductions = $request->Deductions;
     if ($error === false) {
       // STORE
       if ($profile_id) {
@@ -413,17 +415,25 @@ class InvoiceController extends Controller
           'data' => $store_data,
         ], 200);
       }
+
+      // DELETE INVOICE ITEMS DELETE WHEN CLICK SUBMIT
+      $invoiceItem_ids = [];
+      if ($invoice_id && $invoiceItem) {
+        foreach ($invoiceItem as $items) {
+          if (!empty($items['item_invoice_id'])) {
+            $invoiceItem_ids[] = $items['item_invoice_id'];
+          }
+        }
+      }
+      if (count($invoiceItem_ids) > 0) {
+        InvoiceItems::where('invoice_id', $invoice_id)->whereNotIn('id', $invoiceItem_ids)->delete();
+      } else {
+        InvoiceItems::where('invoice_id', $invoice_id)->delete();
+      }
+
       // UPDATE REMOVED INVOICE ITEMS
       if ($invoiceItems_id && $invoice_id) {
         $invoice_data = Invoice::find($invoice_id);
-        if ($invoiceItems_id) {
-          $delete = InvoiceItems::where('id', $invoiceItems_id)->delete();
-          return response()->json([
-            'success' => true,
-            'message' => "Invoice Items has been successfully removed.",
-            'data' =>  $delete,
-          ], 200);
-        }
         if ($invoice_data) {
           $incoming_data = $request->validate(
             [
@@ -483,7 +493,6 @@ class InvoiceController extends Controller
             }
           }
 
-
           return response()->json([
             'success' => true,
             'message' => "Invoice has been successfully updated to the database.",
@@ -491,17 +500,23 @@ class InvoiceController extends Controller
           ], 200);
         }
       }
+
+      // DELETE DEDUCTIONS DELETE WHEN CLICK SUBMIT
+      $deductions_ids = [];
+      if ($invoice_id && $deductions) {
+        foreach ($deductions as $deduction) {
+          $deductions_ids[] = $deduction['deduction_id'];
+        }
+      }
+      if (count($deductions_ids) > 0) {
+        Deduction::where('invoice_id', $invoice_id)->whereNotIn('id', $deductions_ids)->delete();
+      } else {
+        Deduction::where('invoice_id', $invoice_id)->delete();
+      }
+
       // UPDATE REMOVED PROFILE DEDUCTIONS ITEMS
       if ($profileDeduction_id && $invoice_id) {
         $invoice_data = Invoice::find($invoice_id);
-        if ($profileDeduction_id) {
-          $delete = Deduction::where('id', $profileDeduction_id)->delete();
-          return response()->json([
-            'success' => true,
-            'message' => "Deduction has been successfully removed.",
-            'data' =>  $delete,
-          ], 200);
-        }
         if ($invoice_data) {
           $incoming_data = $request->validate(
             [

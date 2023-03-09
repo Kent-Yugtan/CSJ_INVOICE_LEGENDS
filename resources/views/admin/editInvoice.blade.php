@@ -473,49 +473,6 @@
   </div>
 </div>
 
-<!-- Modal FOR DELETE INVOICE ITEMS -->
-<div class="modal fade" id="invoiceItemsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content" style="top:30px;">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Confirmation</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body text-center">
-        <div class="row">
-          <div class="col">
-            <span>
-              <img class="img-team" src="{{ URL('images/Delete.png')}}" style="width: 50%; padding:10px" />
-            </span>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <span>
-              <h3> Are you sure?</h3>
-            </span>
-          </div>
-        </div>
-        <div class="row pt-3 px-3">
-          <div class="col">
-            <span id="invoiceItemsId"></span>
-            <span class="text-muted"> Do you really want to delete these record? This process cannot be
-              undone.</span>
-          </div>
-        </div>
-
-        <div class="row pt-3 pb-3 px-3">
-          <div class="col-6">
-            <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Cancel</button>
-          </div>
-          <div class="col-6">
-            <button type="button" id="remove_items" class="btn btn-danger w-100">Yes</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- MODAL FOR EDIT INVOICE -->
 <div class="modal fade" id="updateModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -541,7 +498,7 @@
                       <div class="row">
                         <div class="col">
                           <div class="form-floating form-group">
-                            <input type="text" placeholder="Due Date" id="due_date" onfocus="(this.type='date')" onblur="(this.type='text')" name="due_date" class="form-control">
+                            <input type="text" placeholder="Due Date" id="due_date" onblur="(this.type='text')" name="due_date" class="form-control">
                             <label for="due_date">Due Date</label>
                           </div>
                         </div>
@@ -568,7 +525,7 @@
                       <div class="row">
                         <div class="col-4 md-2 w-100">
                           <div class="form-group">
-                            </br>
+                            <!-- </br> -->
                             <button class="btn btn-secondary" style="width:100%;color:white; background-color: #CF8029;" id="add_item">Add
                               Item</button>
                           </div>
@@ -982,266 +939,233 @@
 
 
     // FUNCTION CLICK FOR REMOVING INVOICE ITEMS ROWS
+    // $(document).on('click', '.remove_items', function(e) {
+    //   e.preventDefault();
+    //   let parent = $(this).closest('.row');
+    //   let invoiceItems_id = parent.find('.item_id').val();
+    //   let sub_total = parent.find('.subtotal').val();
+    //   let row_item = $(this).parent().parent().parent();
+    //   $(row_item).remove();
+
+    //   displayResults();
+    //   Additems_total();
+    //   subtotal();
+    //   DeductionItems_total();
+    //   x--;
+
+    //   let due_date = $('#due_date').val();
+    //   let invoice_id = $('#update_invoice_id').val();
+    //   let invoice_description = $('#invoice_description').val();
+    //   let invoice_subtotal = $('#subtotal').val().replaceAll(',', '');
+    //   let peso_rate = $('#edit_peso_rate').val().replaceAll(',', '')
+    //   let invoice_converted_amount = $('#converted_amount').val().replaceAll(',', '');
+    //   let invoice_discount_type = $('#discount_type:checked').val();
+    //   let invoice_discount_amount = $('#discount_amount').val().replaceAll(',', '');
+    //   let invoice_discount_total = $('#discount_total').val().replaceAll(',', '');
+    //   let invoice_total_amount = $('#grand_total').val().replaceAll(',', '');
+    //   let invoice_notes = $('textarea#notes').val();
+
+    //   let invoiceItem = [];
+    //   $('#show_items .row').each(function() {
+    //     let item_invoice_id = $(this).find('.item_id').val();
+    //     let item_description = $(this).find('.item_description').val() ? $(this).find(
+    //       '.item_description').val() : "";
+    //     let item_rate = $(this).find('.rate').val().replaceAll(',', '') ? $(this).find(
+    //       '.rate').val().replaceAll(',', '') : 0;
+    //     let item_qty = $(this).find('.quantity').val() ? $(this)
+    //       .find('.quantity').val() : 0;
+    //     let item_total_amount = $(this).find('.amount').val().replaceAll(',', '') ? $(
+    //         this).find('.amount')
+    //       .val().replaceAll(',', '') : 0;
+
+    //     invoiceItem.push({
+    //       item_invoice_id,
+    //       item_description,
+    //       item_rate,
+    //       item_qty,
+    //       item_total_amount,
+    //     })
+    //   });
+
+    //   // DEDUCTIONS TABLE
+    //   let Deductions = [];
+    //   $('#show_deduction_items .row').each(function() {
+    //     let deduction_id = $(this).find('.deduction_id').val();
+    //     let profile_deduction_type_id = $(this).find('.profile_deduction_type').val() ?
+    //       $(this)
+    //       .find(
+    //         '.profile_deduction_type').val() : 0;
+    //     let deduction_amount = $(this).find('.deduction_amount').val().replaceAll(',',
+    //       '') ? $(this).find(
+    //       '.deduction_amount').val().replaceAll(',', '') : 0;
+
+    //     Deductions.push({
+    //       deduction_id,
+    //       profile_deduction_type_id,
+    //       deduction_amount,
+    //     })
+    //   });
+    //   let data = {
+    //     due_date: due_date,
+    //     invoice_id: invoice_id,
+    //     description: invoice_description,
+    //     sub_total: invoice_subtotal ? invoice_subtotal : 0,
+    //     peso_rate: peso_rate,
+    //     converted_amount: invoice_converted_amount,
+    //     discount_type: invoice_discount_type,
+    //     discount_amount: invoice_discount_amount,
+    //     discount_total: invoice_discount_total,
+    //     grand_total_amount: invoice_total_amount,
+    //     notes: invoice_notes,
+    //     invoiceItems_id: invoiceItems_id,
+    //     invoiceItem,
+    //     Deductions,
+    //   }
+
+    //   console.log("data removed", data);
+    //   axios.post(apiUrl + '/api/createinvoice/', data, {
+    //     headers: {
+    //       Authorization: token,
+    //     },
+    //   }).then(function(response) {
+    //     let data = response.data
+    //     if (data.success) {
+
+    //       $('.toast1 .toast-title').html('Delete Invoice Items');
+    //       $('.toast1 .toast-body').html(response.data.message);
+    //       toast1.toast('show');
+
+    //       if ($('#show_items > .row').length === 1) {
+    //         $('#show_items > .row').find('.col-remove-item').removeClass('d-none')
+    //           .addClass(
+    //             'd-none');
+    //       }
+
+    //       // $('#updateModal').modal('hide');
+    //       // getResults_Converted();
+    //       // $("#update").attr("data-bs-dismiss", "modal");
+    //     }
+    //   }).catch(function(error) {
+    //     if (error.response.data.errors) {
+    //       let errors = error.response.data.errors;
+    //       let fieldnames = Object.keys(errors);
+    //       Object.values(errors).map((item, index) => {
+    //         fieldname = fieldnames[0].split('_');
+    //         fieldname.map((item2, index2) => {
+    //           fieldname['key'] = capitalize(
+    //             item2);
+    //           return ""
+    //         });
+    //         fieldname = fieldname.join(" ");
+    //         $('.toast1 .toast-title').html(fieldname);
+    //         $('.toast1 .toast-body').html(Object.values(
+    //             errors)[0]
+    //           .join(
+    //             "\n\r"));
+    //       })
+    //       toast1.toast('show');
+    //     }
+    //   })
+    // });
+
     $(document).on('click', '.remove_items', function(e) {
       e.preventDefault();
       let parent = $(this).closest('.row');
       let invoiceItems_id = parent.find('.item_id').val();
       let sub_total = parent.find('.subtotal').val();
       let row_item = $(this).parent().parent().parent();
-      $(row_item).remove();
 
-      displayResults();
-      Additems_total();
-      subtotal();
-      DeductionItems_total();
-      x--;
-
-      let due_date = $('#due_date').val();
-      let invoice_id = $('#update_invoice_id').val();
-      let invoice_description = $('#invoice_description').val();
-      let invoice_subtotal = $('#subtotal').val().replaceAll(',', '');
-      let peso_rate = $('#edit_peso_rate').val().replaceAll(',', '')
-      let invoice_converted_amount = $('#converted_amount').val().replaceAll(',', '');
-      let invoice_discount_type = $('#discount_type:checked').val();
-      let invoice_discount_amount = $('#discount_amount').val().replaceAll(',', '');
-      let invoice_discount_total = $('#discount_total').val().replaceAll(',', '');
-      let invoice_total_amount = $('#grand_total').val().replaceAll(',', '');
-      let invoice_notes = $('textarea#notes').val();
-
-      let invoiceItem = [];
-      $('#show_items .row').each(function() {
-        let item_invoice_id = $(this).find('.item_id').val();
-        let item_description = $(this).find('.item_description').val() ? $(this).find(
-          '.item_description').val() : "";
-        let item_rate = $(this).find('.rate').val().replaceAll(',', '') ? $(this).find(
-          '.rate').val().replaceAll(',', '') : 0;
-        let item_qty = $(this).find('.quantity').val() ? $(this)
-          .find('.quantity').val() : 0;
-        let item_total_amount = $(this).find('.amount').val().replaceAll(',', '') ? $(
-            this).find('.amount')
-          .val().replaceAll(',', '') : 0;
-
-        invoiceItem.push({
-          item_invoice_id,
-          item_description,
-          item_rate,
-          item_qty,
-          item_total_amount,
-        })
-      });
-
-      // DEDUCTIONS TABLE
-      let Deductions = [];
-      $('#show_deduction_items .row').each(function() {
-        let deduction_id = $(this).find('.deduction_id').val();
-        let profile_deduction_type_id = $(this).find('.profile_deduction_type').val() ?
-          $(this)
-          .find(
-            '.profile_deduction_type').val() : 0;
-        let deduction_amount = $(this).find('.deduction_amount').val().replaceAll(',',
-          '') ? $(this).find(
-          '.deduction_amount').val().replaceAll(',', '') : 0;
-
-        Deductions.push({
-          deduction_id,
-          profile_deduction_type_id,
-          deduction_amount,
-        })
-      });
-      let data = {
-        due_date: due_date,
-        invoice_id: invoice_id,
-        description: invoice_description,
-        sub_total: invoice_subtotal ? invoice_subtotal : 0,
-        peso_rate: peso_rate,
-        converted_amount: invoice_converted_amount,
-        discount_type: invoice_discount_type,
-        discount_amount: invoice_discount_amount,
-        discount_total: invoice_discount_total,
-        grand_total_amount: invoice_total_amount,
-        notes: invoice_notes,
-        invoiceItems_id: invoiceItems_id,
-        invoiceItem,
-        Deductions,
-      }
-
-      console.log("data removed", data);
-      axios.post(apiUrl + '/api/createinvoice/', data, {
-        headers: {
-          Authorization: token,
+      $.confirm({
+        title: 'Are you sure?',
+        content: 'Do you really want to delete these record? This process cannot be undone.',
+        autoClose: 'cancelAction|5000',
+        buttons: {
+          removeDeductions: {
+            text: 'Confirm',
+            action: function() {
+              console.log("REMOVE ITEMS", invoiceItems_id);
+              displayResults();
+              Additems_total();
+              subtotal();
+              DeductionItems_total();
+              $(row_item).remove();
+              x--;
+            }
+          },
+          cancelAction: function() {}
         },
-      }).then(function(response) {
-        let data = response.data
-        if (data.success) {
+        onClose: function() {
+          // before the modal is hidden.
+        },
+      });
 
-          $('.toast1 .toast-title').html('Delete Invoice Items');
-          $('.toast1 .toast-body').html(response.data.message);
-          toast1.toast('show');
 
-          if ($('#show_items > .row').length === 1) {
-            $('#show_items > .row').find('.col-remove-item').removeClass('d-none')
-              .addClass(
-                'd-none');
-          }
-
-          // $('#updateModal').modal('hide');
-          // getResults_Converted();
-          // $("#update").attr("data-bs-dismiss", "modal");
-        }
-      }).catch(function(error) {
-        if (error.response.data.errors) {
-          let errors = error.response.data.errors;
-          let fieldnames = Object.keys(errors);
-          Object.values(errors).map((item, index) => {
-            fieldname = fieldnames[0].split('_');
-            fieldname.map((item2, index2) => {
-              fieldname['key'] = capitalize(
-                item2);
-              return ""
-            });
-            fieldname = fieldname.join(" ");
-            $('.toast1 .toast-title').html(fieldname);
-            $('.toast1 .toast-body').html(Object.values(
-                errors)[0]
-              .join(
-                "\n\r"));
-          })
-          toast1.toast('show');
-        }
-      })
     });
 
-    // FUNCTION CLICK FOR REMOVING INVOICE DEDUCTIONS ROWS
+    // JQUERY CONFIRM FOR REMOVING INVOICE ITEMS ON INVOICE
+    $(document).on('click', '.remove_items_button', function(e) {
+      e.preventDefault();
+      let parent = $(this).closest('.row');
+      let invoiceItems_id = parent.find('.item_id').val();
+      let sub_total = parent.find('.subtotal').val();
+      let row_item = $(this).parent().parent().parent();
+      console.log("invoiceItems_id", invoiceItems_id);
+      if (invoiceItems_id) {
+        $.confirm({
+          title: 'Are you sure?',
+          content: 'Do you really want to delete these record? This process cannot be undone.',
+          autoClose: 'cancelAction|5000',
+          buttons: {
+            removeDeductions: {
+              text: 'Confirm',
+              action: function() {
+                $(row_item).remove();
+                displayResults();
+                Additems_total();
+                subtotal();
+                DeductionItems_total();
+              }
+            },
+            cancelAction: function() {}
+          },
+          onClose: function() {
+            // before the modal is hidden.
+          },
+        });
+      }
+
+    });
+
+    // JQUERY CONFIRM FOR REMOVING DEDUCTIONS ON INVOICE
     $(document).on('click', '.remove_deductions', function(e) {
       e.preventDefault();
       let parent = $(this).closest('.row');
       let profileDeduction_id = parent.find('.deduction_id').val();
       let row_item = $(this).parent().parent().parent();
-      $(row_item).remove();
-
-
       console.log("profileDeduction_id", profileDeduction_id);
-      // getResults_Converted();
-      Additems_total();
-      subtotal();
-      DeductionItems_total();
-      x--;
 
-      let due_date = $('#due_date').val();
-      let invoice_id = $('#update_invoice_id').val();
-      let invoice_description = $('#invoice_description').val();
-      let invoice_subtotal = $('#subtotal').val().replaceAll(',', '');
-      let peso_rate = $('#edit_peso_rate').val().replaceAll(',', '')
-      let invoice_converted_amount = $('#converted_amount').val().replaceAll(',', '');
-      let invoice_discount_type = $('#discount_type:checked').val();
-      let invoice_discount_amount = $('#discount_amount').val().replaceAll(',', '');
-      let invoice_discount_total = $('#discount_total').val().replaceAll(',', '');
-      let invoice_total_amount = $('#grand_total').val().replaceAll(',', '');
-      let invoice_notes = $('textarea#notes').val();
-
-      let invoiceItem = [];
-      $('#show_items .row').each(function() {
-        let item_invoice_id = $(this).find('.item_id').val();
-        let item_description = $(this).find('.item_description').val() ? $(this).find(
-          '.item_description').val() : "";
-        let item_rate = $(this).find('.rate').val().replaceAll(',', '') ? $(this).find(
-          '.rate').val().replaceAll(',', '') : 0;
-        let item_qty = $(this).find('.quantity').val() ? $(this)
-          .find('.quantity').val() : 0;
-        let item_total_amount = $(this).find('.amount').val().replaceAll(',', '') ? $(
-            this).find('.amount')
-          .val().replaceAll(',', '') : 0;
-
-        invoiceItem.push({
-          item_invoice_id,
-          item_description,
-          item_rate,
-          item_qty,
-          item_total_amount,
-        })
-      });
-
-      // DEDUCTIONS TABLE
-      let Deductions = [];
-      $('#show_deduction_items .row').each(function() {
-        let deduction_id = $(this).find('.deduction_id').val();
-        let profile_deduction_type_id = $(this).find('.profile_deduction_type').val() ?
-          $(this)
-          .find(
-            '.profile_deduction_type').val() : 0;
-        let deduction_amount = $(this).find('.deduction_amount').val().replaceAll(',',
-          '') ? $(this).find(
-          '.deduction_amount').val().replaceAll(',', '') : 0;
-
-        Deductions.push({
-          deduction_id,
-          profile_deduction_type_id,
-          deduction_amount,
-        })
-      });
-      let data = {
-        due_date: due_date,
-        invoice_id: invoice_id,
-        description: invoice_description,
-        sub_total: invoice_subtotal ? invoice_subtotal : 0,
-        peso_rate: peso_rate,
-        converted_amount: invoice_converted_amount,
-        discount_type: invoice_discount_type,
-        discount_amount: invoice_discount_amount,
-        discount_total: invoice_discount_total,
-        grand_total_amount: invoice_total_amount,
-        notes: invoice_notes,
-        profileDeduction_id: profileDeduction_id,
-        invoiceItem,
-        Deductions,
+      if (profileDeduction_id) {
+        $.confirm({
+          title: 'Are you sure?',
+          content: 'Do you really want to delete these record? This process cannot be undone.',
+          autoClose: 'cancelAction|5000',
+          buttons: {
+            remove: {
+              text: 'Confirm',
+              action: function() {
+                $(row_item).remove();
+                Additems_total();
+                subtotal();
+                DeductionItems_total();
+              }
+            },
+            cancelAction: function() {
+              // $.alert('action is canceled');
+            }
+          },
+        });
       }
 
-      console.log("deduction removed", data);
-      axios.post(apiUrl + '/api/createinvoice/', data, {
-        headers: {
-          Authorization: token,
-        },
-      }).then(function(response) {
-        let data = response.data
-        if (data.success) {
-
-          $('.toast1 .toast-title').html('Delete Invoice Items');
-          $('.toast1 .toast-body').html(response.data.message);
-          toast1.toast('show');
-
-          if ($('#show_items > .row').length === 1) {
-            $('#show_items > .row').find('.col-remove-item').removeClass('d-none')
-              .addClass(
-                'd-none');
-          }
-
-          setTimeout(function() {
-            // $('#updateModal').modal('hide');
-          }, 2000);
-          // getResults_Converted();
-          // $("#update").attr("data-bs-dismiss", "modal");
-        }
-      }).catch(function(error) {
-        if (error.response.data.errors) {
-          let errors = error.response.data.errors;
-          let fieldnames = Object.keys(errors);
-          Object.values(errors).map((item, index) => {
-            fieldname = fieldnames[0].split('_');
-            fieldname.map((item2, index2) => {
-              fieldname['key'] = capitalize(
-                item2);
-              return ""
-            });
-            fieldname = fieldname.join(" ");
-            $('.toast1 .toast-title').html(fieldname);
-            $('.toast1 .toast-body').html(Object.values(
-                errors)[0]
-              .join(
-                "\n\r"));
-          })
-          toast1.toast('show');
-        }
-      })
     });
 
     // BUTTON for ADD ITEMS ROWS
@@ -1294,7 +1218,7 @@
       add_rows += '<div class="form-group">';
       add_rows += '</br>';
       add_rows +=
-        '<button class="btn remove_items" style="display: flex;justify-content: center;"><i class="fa fa-trash pe-1" style="color:red"></i></button>';
+        '<button type="button" class="btn remove_items" style="display: flex;justify-content: center;"><i class="fa fa-trash pe-1" style="color:red"></i></button>';
       add_rows += '</div>';
       add_rows += '</div>';
 
@@ -1374,7 +1298,8 @@
 
                 add_rows +=
                   '<input type="text" value="' + item.id +
-                  '" name="item_id" id="item_id" class="form-control item_id" hidden/>';
+                  '" name="item_id" id="item_id" class="form-control item_id" hidden />';
+
                 if (item.item_description) {
                   add_rows += '<input type="text" value="' + item.item_description +
                     '" name="item_description" id="item_description" class="form-control item_description" />';
@@ -1429,20 +1354,21 @@
                 add_rows += '<div class="form-group">';
                 add_rows += '</br>';
                 add_rows +=
-                  '<button class="btn remove_items_button"  data-bs-target="#invoiceItemsModal" data-bs-toggle="modal" style="display: flex;justify-content: center;"><i class="fa fa-trash pe-1" style="color:red"></i></button>';
+                  '<button class="btn remove_items_button"  style="display: flex;justify-content: center;"><i class="fa fa-trash pe-1" style="color:red"></i></button>';
                 add_rows += '</div>';
                 add_rows += '</div>';
 
                 add_rows += '</div>'
 
                 $(wrapper).append(add_rows);
-                if ($('#show_items > .row').length > 1) {
-                  $('#show_items > .row').each(function() {
+
+                if ($('#show_items > .row1').length > 1) {
+                  $('#show_items > .row1').each(function() {
                     $(this).find('.col-remove-item')
                       .removeClass('d-none');
                   })
                 } else {
-                  $('#show_items > .row').find('.col-remove-item')
+                  $('#show_items > .row1').find('.col-remove-item')
                     .removeClass('d-none').addClass(
                       'd-none');
                 }
@@ -1524,7 +1450,7 @@
           }).then(function(response) {
             let data = response.data;
             if (data.success) {
-              console.log("DATA", data);
+              console.log("DATA123", data);
               const month = ["January", "February", "March", "April", "May", "June",
                 "July",
                 "August", "September", "October", "November", "December"
@@ -1838,7 +1764,6 @@
 
     $('#submit_update_invoice').submit(function(e) {
       e.preventDefault();
-
       // let profile_id = $('#update_profile_id').val();
       let due_date = $('#due_date').val();
       let invoice_id = $('#update_invoice_id').val();
@@ -1855,15 +1780,10 @@
       let invoiceItem = [];
       $('#show_items .row').each(function() {
         let item_invoice_id = $(this).find('.item_id').val();
-        let item_description = $(this).find('.item_description').val() ? $(this).find(
-          '.item_description').val() : "";
-        let item_rate = $(this).find('.rate').val().replaceAll(',', '') ? $(this).find(
-          '.rate').val().replaceAll(',', '') : 0;
-        let item_qty = $(this).find('.quantity').val() ? $(this)
-          .find('.quantity').val() : 0;
-        let item_total_amount = $(this).find('.amount').val().replaceAll(',', '') ? $(
-            this).find('.amount')
-          .val().replaceAll(',', '') : 0;
+        let item_description = $(this).find('.item_description').val();
+        let item_rate = $(this).find('.rate').val().replaceAll(',', '');
+        let item_qty = $(this).find('.quantity').val();
+        let item_total_amount = $(this).find('.amount').val().replaceAll(',', '');
 
         invoiceItem.push({
           item_invoice_id,
@@ -1909,7 +1829,7 @@
         invoiceItem,
         Deductions,
       }
-
+      console.log("DATA", data);
       axios.post(apiUrl + '/api/createinvoice', data, {
         headers: {
           Authorization: token,
@@ -1923,7 +1843,7 @@
 
           toast1.toast('show');
           setTimeout(function() {
-            $('#updateModal').modal('hide');
+            // $('#updateModal').modal('hide');
           }, 2000);
           // $("#update").attr("data-bs-dismiss", "modal");
         }
@@ -2116,7 +2036,7 @@
               $('.row .deductions').empty();
               $('#table_invoiceItems tbody').html(show_invoice());
               toast1.toast('show');
-            }, loadingTime);
+            }, 1500);
 
           }
         }).catch(function(error) {
@@ -2139,14 +2059,11 @@
             })
             setTimeout(function() {
               toast1.toast('show');
-            }, loadingTime)
+            }, 1500)
           }
         })
 
-        var end = performance.now(); // Get the timestamp after processing
-        var processingTime = end - start; // Calculate the processing time in milliseconds
-        var loadingTime = Math.ceil((processingTime * 1000) / 2);
-        console.log('Processing time: ' + loadingTime + 'ms');
+
 
       }
     });
@@ -2213,8 +2130,6 @@
         })
       }
     });
-
-    // REFRESH VIEW PROILE WHEN BACK
 
     //DELETE INVOICE
     $('#invoice_delete').on('click', function(e) {
@@ -2311,7 +2226,6 @@
         pdf.save('Invoice ' + $('#invoice_no').html() + '.pdf');
       });
     }
-
 
     $('#pdfDownload').on('click', function(e) {
       e.preventDefault();

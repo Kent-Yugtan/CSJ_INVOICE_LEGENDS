@@ -29,8 +29,8 @@
               <div class="row">
                 <div class="col">
                   <div class="form-floating form-group">
-                    <input type="text" placeholder="Due Date" id="due_date" onfocus="(this.type='date')"
-                      onblur="(this.type='text')" name="due_date" class="form-control">
+                    <input type="text" placeholder="Due Date" id="due_date" onblur="(this.type='text')" name="due_date"
+                      class="form-control">
                     <label for="due_date">Due Date</label>
                   </div>
                 </div>
@@ -724,11 +724,6 @@ $(document).ready(function() {
     }
 
     console.log("DATA", data);
-    var end = performance.now(); // Get the timestamp after processing
-    var processingTime = end - start; // Calculate the processing time in milliseconds
-    var loadingTime = Math.ceil((processingTime * 1000) / 2);
-    console.log('Processing time: ' + loadingTime + 'ms');
-
     axios.post(apiUrl + "/api/createinvoice", data, {
       headers: {
         Authorization: token
@@ -751,7 +746,7 @@ $(document).ready(function() {
           $('#show_items').empty();
           display_item_rows();
           toast1.toast('show');
-        }, loadingTime)
+        }, 1500)
 
       }
     }).catch(function(error) {
@@ -776,7 +771,7 @@ $(document).ready(function() {
         setTimeout(function() {
           $('div.spanner').removeClass('show');
           toast1.toast('show');
-        }, loadingTime);
+        }, 1500);
       }
     });
 

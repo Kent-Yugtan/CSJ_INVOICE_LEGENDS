@@ -1,37 +1,51 @@
 <?php
 
-namespace App\Listeners;
+namespace App\Jobs;
 
-use App\Events\SendMailEvent;
+use App\Mail\SendEmail;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
-class SendMailListener implements ShouldQueue
+class SendEmailJob implements ShouldQueue
 {
+  use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+  // public $details;
+  public $data_setup_email_template;
   /**
-   * Create the event listener.
+   * Create a new job instance.
    *
    * @return void
    */
-  public function __construct()
+  public function __construct($data_setup_email_template)
   {
     //
+    // $details
+    // $this->details = $details;
+
+    $this->data_setup_email_template = $data_setup_email_template;
   }
 
   /**
-   * Handle the event.
+   * Execute the job.
    *
-   * @param  \App\Events\SendMailEvent  $event
    * @return void
    */
-  public function handle(SendMailEvent $event)
+  public function handle(SendEmail $event)
   {
+    //
+    // $mail_data = new SendEmail();
+    // Mail::to($this->details['email'])->send($mail_data);
+
+
     $mail_data = $event->mail_data;
-
     Log::info($mail_data);
-
     $sendmail = Mail::send($mail_data['template'], $mail_data['body_data'], function ($message) use ($mail_data) {
       $message->to($mail_data['to_email'], $mail_data['to_name'])->subject($mail_data['subject']);;
 

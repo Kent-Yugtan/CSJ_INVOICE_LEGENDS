@@ -716,7 +716,7 @@ $(document).ready(function() {
           $('.toast1 .toast-title').html('Update Status');
           $('.toast1 .toast-body').html(response.data.message);
           toast1.toast('show');
-        }, loadingTime);
+        }, 1500);
 
 
       }
@@ -742,14 +742,9 @@ $(document).ready(function() {
         setTimeout(function() {
           $('div.spanner').removeClass('show');
           toast1.toast('show');
-        }, loadingTime);
+        }, 1500);
       }
     });
-    var end = performance.now(); // Get the timestamp after processing
-    var processingTime = end - start; // Calculate the processing time in milliseconds
-    var loadingTime = Math.ceil((processingTime * 1000) / 2);
-    console.log('Processing time: ' + loadingTime + 'ms');
-
   });
 
   $('#button-submit').on('click', function(e) {

@@ -57,7 +57,6 @@
           </div>
         </div>
         <div class="d-flex align-items-center justify-content-between">
-
         </div>
       </div>
     </div>
@@ -86,8 +85,8 @@
                 </div>
                 <div class="col-xl-6">
                   <div class="form-floating mb-3">
-                    <input type="text" placeholder="Due Date" id="due_date" onfocus="(this.type='date')"
-                      onblur="(this.type='text')" name="due_date" class="form-control">
+                    <input type="text" placeholder="Due Date" onblur="(this.type='text')" id="due_date" name="due_date"
+                      class="form-control">
                     <label for="due_date" style="color: #A4A6B3;">Due Date</label>
                   </div>
                 </div>
@@ -259,8 +258,8 @@
           }
         });
         // Set the input value to the current system date in the specified format
-        var currentDate = $.datepicker.formatDate("yy/mm/dd", new Date());
-        dateInput.val(currentDate);
+        // var currentDate = $.datepicker.formatDate("yy/mm/dd", new Date());
+        // dateInput.val(currentDate);
         // END OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
       }
 
@@ -733,13 +732,7 @@
           invoiceItem,
           Deductions,
         };
-
         console.log("DATA", data);
-        var end = performance.now(); // Get the timestamp after processing
-        var processingTime = end - start; // Calculate the processing time in milliseconds
-        var loadingTime = Math.ceil((processingTime * 1000) / 2);
-        console.log('Processing time: ' + loadingTime + 'ms');
-
         axios.post(apiUrl + "/api/add_invoices", data, {
           headers: {
             Authorization: token,
@@ -766,7 +759,7 @@
               pendingInvoices();
               overdueInvoices();
               toast1.toast('show');
-            }, loadingTime)
+            }, 1500)
 
 
           }
@@ -793,7 +786,7 @@
             setTimeout(function() {
               $('div.spanner').removeClass('show');
               toast1.toast('show');
-            }, loadingTime);
+            }, 1500);
           }
         });
 
