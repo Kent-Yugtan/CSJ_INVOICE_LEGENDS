@@ -109,12 +109,11 @@
 </div>
 
 <script type="text/javascript">
+  $("#error_msg").hide();
   $(document).ready(function() {
-    $("#error_msg").hide();
 
     $('#form_login').submit(function(e) {
       e.preventDefault();
-
       $("#error_msg").hide();
 
       let email = $("#email").val();
@@ -131,7 +130,6 @@
         }).then(function(response) {
           let data = response.data;
           // console.log('then', data);
-
           if (!data.succcess) {
             $("#error_msg").html(data.message).show();
           } else {
@@ -143,7 +141,6 @@
               localStorage.token = data.token;
               window.location.replace(apiUrl + '/user/dashboard');
             }
-
           }
         })
         .catch(function(error) {
