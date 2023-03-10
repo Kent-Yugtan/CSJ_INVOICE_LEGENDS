@@ -31,7 +31,8 @@
               </label>
 
               <div class="col-md-12" style="padding-top:10px">
-                <input id="email" placeholder="Email Address" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}">
+                <input id="email" placeholder="Email Address" type="text"
+                  class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}">
 
                 @error('email')
                 <span class="invalid-feedback" role="alert">
@@ -55,7 +56,8 @@
                             </div> -->
 
               <div class="col-md-12" style="padding-top:10px">
-                <input id="password" placeholder="Password" type="password" class="form-control @error('password') is-invalid @enderror" name="password">
+                <input id="password" placeholder="Password" type="password"
+                  class="form-control @error('password') is-invalid @enderror" name="password">
 
                 @error('password')
                 <span class="invalid-feedback" role="alert">
@@ -80,7 +82,8 @@
 
             <div class="row mb-3">
               <div class="col-md-12">
-                <button type="submit" style="width:100%; height:50px;color:white; background-color: #CF8029;" class="btn">
+                <button type="submit" style="width:100%; height:50px;color:white; background-color: #CF8029;"
+                  class="btn">
                   {{ __('Login') }}
                 </button>
 
@@ -109,44 +112,44 @@
 </div>
 
 <script type="text/javascript">
-  $(document).ready(function() {
+$(document).ready(function() {
+  $("#error_msg").hide();
+
+  $('#form_login').submit(function(e) {
+    e.preventDefault();
+
     $("#error_msg").hide();
 
-    $('#form_login').submit(function(e) {
-      e.preventDefault();
+    let email = $("#email").val();
+    let password = $("#password").val();
+    let data = {
+      email,
+      password
+    };
 
-      $("#error_msg").hide();
+    axios.post(apiUrl + '/api/login', data)
+      .then(function(response) {
+        let data = response.data;
+        // console.log('then', data);
 
-      let email = $("#email").val();
-      let password = $("#password").val();
-      let data = {
-        email,
-        password
-      };
-
-      axios.post(apiUrl + '/api/login', data)
-        .then(function(response) {
-          let data = response.data;
-          // console.log('then', data);
-
-          if (!data.succcess) {
-            $("#error_msg").html(data.message).show();
+        if (!data.succcess) {
+          $("#error_msg").html(data.message).show();
+        } else {
+          if (data.user.role === "Admin") {
+            localStorage.token = data.token;
+            // localStorage.userdata = JSON.parse(data.user);
+            // window.location.replace(apiUrl + '/admin/dashboard');
           } else {
-            if (data.user.role === "Admin") {
-              localStorage.token = data.token;
-              // localStorage.userdata = JSON.parse(data.user);
-              window.location.replace(apiUrl + '/admin/dashboard');
-            } else {
-              localStorage.token = data.token;
-              window.location.replace(apiUrl + '/user/dashboard');
-            }
-
+            localStorage.token = data.token;
+            window.location.replace(apiUrl + '/user/dashboard');
           }
-        })
-        .catch(function(error) {
-          console.log('catch', error);
-        });
-    })
-  });
+
+        }
+      })
+      .catch(function(error) {
+        console.log('catch', error);
+      });
+  })
+});
 </script>
 @endsection
