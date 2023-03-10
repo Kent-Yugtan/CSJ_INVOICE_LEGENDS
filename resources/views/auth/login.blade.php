@@ -25,7 +25,7 @@
         <div class="card-body">
           <form id="form_login">
             <div id="error_msg" class="alert alert-danger text-center"></div>
-            @csrf
+            @CSRF
             <div class="row mb-3">
               <label class="input-color" for="email">{{ __('EMAIL ADDRESS') }}
               </label>
