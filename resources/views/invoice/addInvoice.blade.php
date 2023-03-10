@@ -182,17 +182,16 @@
               <label for="floatingTextarea">Notes</label>
               <textarea class="form-control" placeholder="Leave a notes here" id="notes" name="notes"></textarea>
             </div>
-
-
           </div>
+
           <div class="row px-4">
-            <div class="col-6">
-              <button type="submit" class="btn btn-secondary w-100"
-                style="color:White; background-color:#CF8029;">Save</button>
-            </div>
             <div class="col-6 ">
               <button type="button" id="close_back" class="btn btn-secondary w-100"
                 style=" color:#CF8029; background-color:white; ">Close</button>
+            </div>
+            <div class="col-6">
+              <button type="submit" class="btn btn-secondary w-100"
+                style="color:White; background-color:#CF8029;">Save</button>
             </div>
           </div>
         </div>

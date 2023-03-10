@@ -11,7 +11,7 @@
 
         <a class="nav-link" href="{{url('admin/dashboard')}}">
           <div class="sb-nav-link-icon">
-            <i class="fas fa-tachometer-alt"></i>
+            <i class="fas fa-chart-line"></i>
           </div>
           Dashboard
         </a>
@@ -82,7 +82,7 @@
 
         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts4" aria-expanded="false" aria-controls="collapseLayouts4">
           <div class="sb-nav-link-icon">
-            <i class="fas fa-users"></i>
+            <i class="fas fa-cogs"></i>
           </div>
           Settings
           <div class="sb-sidenav-collapse-arrow">
