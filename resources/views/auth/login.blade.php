@@ -31,7 +31,7 @@
               </label>
 
               <div class="col-md-12" style="padding-top:10px">
-                <input id="email" placeholder="Email Address" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}">
+                <input id="email" placeholder="Email Address" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}">
 
                 @error('email')
                 <span class="invalid-feedback" role="alert">

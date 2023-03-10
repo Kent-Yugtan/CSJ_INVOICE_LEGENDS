@@ -67,10 +67,32 @@ class AuthController extends Controller
       ];
       return response()->json($response, 200);
     } else {
-      return response()->json([
-        'success' => false,
-        'message' => 'Unrecognized Credentials.',
-      ], 200);
+      $request->validate([
+        'email' => 'required',
+        'password' => 'required',
+      ]);
+
+      $data1 = [
+        'username' => $request->email,
+        'password' => $request->password,
+      ];
+
+      if (auth()->attempt($data1)) {
+        $user = auth()->user();
+        $token = $user->createToken('csjInvoiceTokenLogin')->plainTextToken;
+
+        $response = [
+          'succcess' => true,
+          'user' => $user,
+          'token' => $token,
+        ];
+        return response()->json($response, 200);
+      } else {
+        return response()->json([
+          'success' => false,
+          'message' => 'Unrecognized Credentials.',
+        ], 200);
+      }
     }
   }
 }
