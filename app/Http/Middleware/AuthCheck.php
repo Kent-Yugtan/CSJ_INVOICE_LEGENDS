@@ -17,11 +17,11 @@ class AuthCheck
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!Auth::check() && ($request->path() != 'auth/login' && $request->path() != 'auth/register')) {
+        if (!Auth::guard('web')->check() && ($request->path() != 'auth/login' && $request->path() != 'auth/register')) {
             return redirect('auth/login')->with('fail', 'You must be logged in');
         }
 
-        if (Auth::check() && ($request->path() == 'auth/login' || $request->path() == 'auth/register')) {
+        if (Auth::guard('web')->check() && ($request->path() == 'auth/login' || $request->path() == 'auth/register')) {
             // return back();
             return redirect('admin/dashboard');
         }
