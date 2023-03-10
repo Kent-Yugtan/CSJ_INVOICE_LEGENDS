@@ -137,8 +137,8 @@ $(document).ready(function() {
         } else {
           if (data.user.role === "Admin") {
             localStorage.token = data.token;
-            // localStorage.userdata = JSON.parse(data.user);
-            // window.location.replace(apiUrl + '/admin/dashboard');
+            localStorage.userdata = JSON.parse(data.user);
+            window.location.replace(apiUrl + '/admin/dashboard');
           } else {
             localStorage.token = data.token;
             window.location.replace(apiUrl + '/user/dashboard');
