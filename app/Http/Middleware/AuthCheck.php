@@ -20,7 +20,7 @@ class AuthCheck
     if (!Auth::check() && ($request->path() != 'auth/login' && $request->path() != 'auth/register')) {
       return redirect('auth/login')->with('fail', 'You must be logged in');
     }
-    echo "AUTH" . Auth::check();
+    // echo "AUTH" . Auth::check();
     if (Auth::check() && ($request->path() == 'auth/login' || $request->path() == 'auth/register')) {
       // return back();
       return redirect('admin/dashboard');

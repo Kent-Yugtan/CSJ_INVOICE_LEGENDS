@@ -33,7 +33,7 @@
           <hr class="dropdown-divider" />
         </li>
         <li><a class="dropdown-item" id="logout">
-            {{ __('Logout') }}
+            <span style="cursor: pointer;">{{ __('Logout') }}</span>
           </a>
         </li>
 

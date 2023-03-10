@@ -1284,8 +1284,8 @@ class InvoiceController extends Controller
     if ($data && $data1 && $data2) {
       foreach ($data2 as $send_admin) {
         $data_setup_email_template = [
-          // 'invoice_logo'           => $data1->invoice_logo_name, // VARIABLE FOR UPLOADING INTO WEB
-          'invoice_logo'           => 'https://shamcey.5ppsite.com/logo.png', // DEFAULT FOR LOCAL
+          'invoice_logo'           => $data1->invoice_logo_name, // VARIABLE FOR UPLOADING INTO WEB
+          // 'invoice_logo'           => 'https://shamcey.5ppsite.com/logo.png', // DEFAULT FOR LOCAL
           'full_name'              => $data->profile->user->first_name . " " . $data->profile->user->last_name,
           'user_email'             => $data->profile->user->email,
           'invoice_no'             => $data->invoice_no,
@@ -1336,8 +1336,8 @@ class InvoiceController extends Controller
     if ($data && $data1) {
 
       $data_setup_email_template = [
-        // 'invoice_logo'           => $data1->invoice_logo_name, // VARIABLE FOR UPLOADING INTO WEB
-        'invoice_logo'           => 'https://shamcey.5ppsite.com/logo.png', // DEFAULT FOR LOCAL
+        'invoice_logo'           => $data1->invoice_logo_name, // VARIABLE FOR UPLOADING INTO WEB
+        // 'invoice_logo'           => 'https://shamcey.5ppsite.com/logo.png', // DEFAULT FOR LOCAL
         'full_name'              => $data->profile->user->first_name . " " . $data->profile->user->last_name,
         'user_email'             => $data->profile->user->email,
         'invoice_no'             => $data->invoice_no,
@@ -1389,8 +1389,8 @@ class InvoiceController extends Controller
     if ($data && $data1 && $data2) {
       foreach ($data2 as $send_admin) {
         $data_setup_email_template = [
-          // 'invoice_logo'           => $data1->invoice_logo_name, // VARIABLE FOR UPLOADING INTO WEB
-          'invoice_logo'           => 'https://shamcey.5ppsite.com/logo.png', // DEFAULT FOR LOCAL
+          'invoice_logo'           => $data1->invoice_logo_name, // VARIABLE FOR UPLOADING INTO WEB
+          // 'invoice_logo'           => 'https://shamcey.5ppsite.com/logo.png', // DEFAULT FOR LOCAL
           'full_name'              => $data->profile->user->first_name . " " . $data->profile->user->last_name,
           'user_email'             => $data->profile->user->email,
           'invoice_no'             => $data->invoice_no,
@@ -1445,8 +1445,8 @@ class InvoiceController extends Controller
     if ($data && $data1) {
 
       $data_setup_email_template = [
-        // 'invoice_logo'           => $data1->invoice_logo_name, // VARIABLE FOR UPLOADING INTO WEB
-        'invoice_logo'           => 'https://shamcey.5ppsite.com/logo.png', // DEFAULT FOR LOCAL
+        'invoice_logo'           => $data1->invoice_logo_name, // VARIABLE FOR UPLOADING INTO WEB
+        // 'invoice_logo'           => 'https://shamcey.5ppsite.com/logo.png', // DEFAULT FOR LOCAL
         'full_name'              => $data->profile->user->first_name . " " . $data->profile->user->last_name,
         'user_email'             => $data->profile->user->email,
         'invoice_no'             => $data->invoice_no,

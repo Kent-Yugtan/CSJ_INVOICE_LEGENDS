@@ -81,5 +81,4 @@ Route::middleware(['AuthCheck'])->group(function () {
   Route::get('/reports/deduction', [InvoiceController::class, 'reports_deduction']);
 });
 
-Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
