@@ -115,6 +115,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
   Route::get('emailconfigs/show_data', [EmailConfigController::class, 'show_data']);
   Route::get('emailconfigs/show_edit/{id}', [EmailConfigController::class, 'show_edit']);
   Route::post('emailconfigs_store', [EmailConfigController::class, 'emailconfig_store']);
+  Route::post('email_configDelete/{id}', [EmailConfigController::class, 'destroy']);
 
   // POST PROFILE DEDUCTION TYPES TABLE
   Route::post('saveProfileDeductionTypes', [ProfileDeductionTypesController::class, 'store']);
