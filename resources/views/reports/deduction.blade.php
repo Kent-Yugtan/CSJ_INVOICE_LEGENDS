@@ -4,7 +4,7 @@
 <div class="container-fluid px-4" id="loader_load">
   <ol class="breadcrumb mb-3"></ol>
 
-  <div class="card shadow p-2 mb-1 bg-white rounded" style="height:100%">
+  <div class="card shadow p-2 mb-1 bg-white rounded">
     <div class="card-header">
       <h1 class="mt-0"><i class="fas fa-file-invoice"></i> Deduction Reports</h1>
     </div>
@@ -30,8 +30,8 @@
 
     <div class="col-md-12 col-md-12 col-lg-12">
       <div class="card shadow p-2 mb-1 bg-white rounded">
-        <div class="card-body ">
-          <table id="deductionReports" width="100%" style="font-size: 14px;" class="table table-hover table-responsive">
+        <div class="card-body table-responsive">
+          <table id="deductionReports" width="100%" style="font-size: 14px;" class="table table-hover">
             <thead>
             </thead>
             <tbody>
@@ -104,10 +104,8 @@
 
     })
     var dataTable = $('#deductionReports').DataTable({
-
       "footerCallback": function(row, data, start, end, display) {
         var api = this.api();
-
         // converting to interger to find total
         var intVal = function(i) {
           return typeof i === 'string' ?
@@ -153,6 +151,7 @@
         $(api.column(7).footer()).html(PHP(netAmount).format());
 
       },
+      responsive: true,
       dom: 'lBfrtip',
       pagingType: 'full_numbers',
       buttons: [{
@@ -514,20 +513,22 @@
                 PHP(item.converted_amount).format(),
                 total_deductions ? total_deductions : "0.00",
                 PHP(item.grand_total_amount).format(),
-                moment.utc(item.created_at).tz('America/New_York').format('MM/DD/YYYY'),
-                // moment(item.created_at).format("L"),
-                moment(item.due_date).format("L"),
+                moment.utc(item.created_at).tz('America/New_York').format('YYYY/MM/DD'),
+                moment.utc(item.due_date).tz('America/New_York').format('YYYY/MM/DD'),
               ]).draw().node();
               // add class to invoice status cell based on its value
               let invoiceStatusCell = $(newRow).find("td:eq(3)");
               if (item.invoice_status == "Paid") {
                 invoiceStatusCell.css("background-color", "#198754");
+                invoiceStatusCell.css("border-color", "#198754");
                 invoiceStatusCell.css("color", "white");
               } else if (item.invoice_status == "Pending") {
                 invoiceStatusCell.css("background-color", "#ffc107");
+                invoiceStatusCell.css("border-color", "#ffc107");
                 invoiceStatusCell.css("color", "black");
               } else {
-                invoiceStatusCell.css("background-color", "#198754");
+                invoiceStatusCell.css("background-color", "#dc3545");
+                invoiceStatusCell.css("border-color", "#dc3545");
                 invoiceStatusCell.css("color", "white");
               }
 
@@ -597,19 +598,22 @@
                 PHP(item.converted_amount).format(),
                 total_deductions ? total_deductions : "0.00",
                 PHP(item.grand_total_amount).format(),
-                moment.utc(item.created_at).tz('America/New_York').format('MM/DD/YYYY'),
-                moment(item.due_date).format("L"),
+                moment.utc(item.created_at).tz('America/New_York').format('YYYY/MM/DD'),
+                moment.utc(item.due_date).tz('America/New_York').format('YYYY/MM/DD'),
               ]).draw().node();
               // add class to invoice status cell based on its value
               let invoiceStatusCell = $(newRow).find("td:eq(3)");
               if (item.invoice_status == "Paid") {
-                invoiceStatusCell.css("background-color", "green");
+                invoiceStatusCell.css("background-color", "#198754");
+                invoiceStatusCell.css("border-color", "#198754");
                 invoiceStatusCell.css("color", "white");
               } else if (item.invoice_status == "Pending") {
-                invoiceStatusCell.css("background-color", "yellow");
+                invoiceStatusCell.css("background-color", "#ffc107");
+                invoiceStatusCell.css("border-color", "#ffc107");
                 invoiceStatusCell.css("color", "black");
               } else {
-                invoiceStatusCell.css("background-color", "red");
+                invoiceStatusCell.css("background-color", "#dc3545");
+                invoiceStatusCell.css("border-color", "#dc3545");
                 invoiceStatusCell.css("color", "white");
               }
             })

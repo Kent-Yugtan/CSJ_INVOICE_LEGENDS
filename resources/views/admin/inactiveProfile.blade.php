@@ -10,18 +10,18 @@
         <form id="ProfileUpdate" method="POST" action="javascript:void(0)" class="row g-3 needs-validation" novalidate>
           <div class="row px-4 pt-3">
             @csrf
-            <div class="col mb-3 pt-3">
-              <span hidden>user id</span>
-              <input type="text" id="user_id" value="{{$findid->id}}" hidden>
-              <input type="text" id="profile_id_show" hidden>
-              <div class="profile-pic-div" style="position: relative; height:200px">
+            <span hidden>user id</span>
+            <input type="text" id="user_id" value="{{$findid->id}}" hidden>
+            <input type="text" id="profile_id_show" hidden>
+            <div class="col-md-5 mb-3 pt-3">
+              <div class="profile-pic-div_InactiveProfile" style="position: relative; height:200px">
                 <img src="/images/default.png" id="photo">
                 <input name="file" type="file" id="file" disabled="true">
                 <label for="file" id="uploadBtn">Choose Photo</label>
               </div>
             </div>
 
-            <div class="col pt-5">
+            <div class="col-md-7 pt-5">
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="profile_status" name="profile_status" checked disabled="true">
                 <label class="form-check-label" for="status">
@@ -40,7 +40,7 @@
             </div>
           </div>
 
-          <div class="row px-4">
+          <div class="row px-4 row_email_InactiveProfile">
             <div class="col pt-3">
               <div class="form-floating mb-3">
                 <input id="email" name="email" type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" disabled="true">
@@ -694,7 +694,7 @@
   <div class="loader"></div>
 </div>
 
-<script src="{{ asset('/assets/js/fileupload.js') }}"></script>
+<script src="{{ asset('/assets/js/InactiveProfile.js') }}"></script>
 
 <script type="text/javascript">
   let total_deduction_amount = 0

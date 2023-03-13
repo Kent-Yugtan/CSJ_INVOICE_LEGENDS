@@ -10,15 +10,15 @@
         <form name="ProfileStore" id="ProfileStore" method="post" action="javascript:void(0)" class="row g-2 needs-validation" novalidate>
           <div class="row px-4 pt-3" id="header">
             @csrf
-            <div class="col-xl-6 mb-3">
-              <div class="profile-pic-div" style="position: relative; height:200px">
+            <div class="col-md-5 mb-3">
+              <div class="profile-pic-div_adminProfile" style="position: relative; height:200px">
                 <img src="/images/default.png" id="photo">
                 <input name="file" type="file" id="file">
                 <label for="file" id="uploadBtn">Choose Photo</label>
               </div>
             </div>
 
-            <div class="col-xl-6 pt-3 mb-3">
+            <div class="col-md-7 pt-3 mb-3">
               <div class="form-check mb-3">
                 <input class="form-check-input" type="checkbox" id="profile_status" name="profile_status" checked>
                 <label class="form-check-label" for="status">
@@ -36,7 +36,7 @@
               </div>
             </div>
           </div>
-          <div class="row px-4 pb-4">
+          <div class="row px-4 pb-4 row_email_adminProfile">
             <div class=" col pt-3 mb-3">
               <div class="form-floating mb-3">
                 <input id="email" name="email" type="email" class="form-control" placeholder="Email" required>
@@ -201,7 +201,7 @@
 </div>
 
 <!-- <button type="button" class="btn btn-primary" id="showtoast">Show Toast</button> -->
-<script src="{{ asset('/assets/js/fileupload.js') }}"></script>
+<script src="{{ asset('/assets/js/adminProfile.js') }}"></script>
 
 <script type="text/javascript">
   $(document).ready(function() {

@@ -1,5 +1,6 @@
 //declearing html elements
-const imgDiv = document.querySelector(".profile-pic-div");
+// ADMIN/AdminProfile
+const imgDiv = document.querySelector(".profile-pic-div_adminProfile");
 const img = document.querySelector("#photo")
     ? document.querySelector("#photo")
     : "";

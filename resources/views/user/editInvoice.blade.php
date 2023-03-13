@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.user')
 @section('content-dashboard')
 <div class="container-fluid px-4" id="loader_load">
   <h1 class="mt-0"></h1>
@@ -702,7 +702,6 @@
       // END OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
 
     }
-
 
     let toast1 = $('.toast1');
     toast1.toast({
@@ -1602,7 +1601,7 @@
                 }));
 
 
-                if (data.data.discount_total !== 0) {
+                if (data.data.discount_total > 0) {
                   if (data.data.discount_type === "Fixed") {
                     let div = "";
                     div += "<div class='row'>"
@@ -1632,11 +1631,10 @@
                     //   discount_amount + "%)");
                     // $('#discountAmount').html("$" + PHP(data.data.discount_total).format());
                   }
-                  // else {
-                  //   $('#discountType').html(" ");
-                  //   $('#discountAmount').html("$" + PHP(0).format());
-                  // }
+                } else {
+                  $('#displayDiscountType').addClass('d-none');
                 }
+
 
                 $('#total').html(balance_due.toLocaleString('en-US', {
                   style: 'currency',

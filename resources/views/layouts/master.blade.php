@@ -10,6 +10,8 @@
 
   <title>{{ config('app.name', 'Laravel') }}</title>
 
+
+
   <!-- Fonts -->
   <link rel="dns-prefetch" href="//fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -33,12 +35,10 @@
 
   <!-- CDN FOR JQUERY CONFIRM -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-  <!-- PDF CDN -->
+
   <!-- Script -->
   <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-
-
 
   <!-- Sparkline Script -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js"></script>
@@ -56,11 +56,9 @@
   <!-- AJAX SCRIPT -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+  <!-- JQUERY UI -->
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/smoothness/jquery-ui.css">
-
-
-
 </head>
 
 <body class="sb-nav-fixed">
@@ -74,16 +72,12 @@
       @include('layouts.inc.admin-footer')
     </div>
   </div>
-
-
   <script src="{{ asset('/assets/js/bootstrap.bundle.min.js') }}"></script>
   <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
   <!-- Scripts -->
-
 
   <!-- DATATABLE -->
   <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.js"></script>
@@ -98,6 +92,9 @@
 
   <!-- CDN FOR JQUERY CONFIRM -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+  <!-- JQUERY UI -->
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
 </body>
 

@@ -89,9 +89,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
   Route::get('invoiceConfig', [InvoiceController::class, 'invoiceConfig']); // INVOICE CONFIGS DATA
   Route::get('getInvoiceStatus/{id}', [InvoiceController::class, 'getInvoiceStatus']);
   Route::get('admin/show_Profilededuction_Table_Active', [InvoiceController::class, 'show_Profilededuction_Table_Active']);
-  Route::get('active_overdue_invoice_count', [InvoiceController::class, 'active_overdue_invoice_count']);
   Route::get('active_paid_invoice_count', [InvoiceController::class, 'active_paid_invoice_count']);
   Route::get('active_pending_invoice_count', [InvoiceController::class, 'active_pending_invoice_count']);
+  Route::get('active_overdue_invoice_count', [InvoiceController::class, 'active_overdue_invoice_count']);
   Route::get('active_cancelled_invoice_count', [InvoiceController::class, 'active_cancelled_invoice_count']);
   Route::get('inactive_paid_invoice_count', [InvoiceController::class, 'inactive_paid_invoice_count']);
   Route::get('inactive_pending_invoice_count', [InvoiceController::class, 'inactive_pending_invoice_count']);
@@ -135,19 +135,49 @@ Route::middleware(['auth:sanctum'])->group(function () {
   Route::get('get_invoice_config', [InvoiceController::class, 'get_invoice_config']);
   Route::post('invoiceConfig_delete/{id}', [InvoiceConfigController::class, 'destroy']);
 
-  // FOR REPORT
+  // FOR ADMIN REPORT
   Route::get('reports/invoiceReport_load', [InvoiceController::class, 'invoiceReport_load']);
   Route::get('reports/invoiceReport_click', [InvoiceController::class, 'invoiceReport_click']);
-
   Route::get('reports/deductionReport_load', [InvoiceController::class, 'deductionReport_load']);
   Route::get('reports/deductionReport_click', [InvoiceController::class, 'deductionReport_click']);
   Route::post('reports/deductionDetails/{id}', [InvoiceController::class, 'deductionDetails']);
-});
 
-Route::get('send_email', function () {
-  $details['email'] = 'kent.yugtan95@gmail.com';
-  dispatch(new App\Jobs\SendEmailJob($details));
-  return response()->json(['message' => 'Mail Send Successfully!!']);
+
+  // THIS LINE IS FOR USER
+  // FOR DASHBOARD PAGE
+  Route::get('show_userProfile', [ProfileController::class, 'show_userProfile']);
+  Route::get('get_quickInvoiceUser_PDT/{id}', [InvoiceController::class, 'get_quickInvoiceUser_PDT']);
+  Route::get('user/check_userActivependingInvoices', [InvoiceController::class, 'check_userActivependingInvoices']); // FOR ACTIVE USER PROFILE STATUS
+  Route::get('user/show_userpendingInvoices', [InvoiceController::class, 'show_userpendingInvoices']);
+  Route::get('user/show_useroverdueInvoices', [InvoiceController::class, 'show_useroverdueInvoices']);
+  Route::get('active_user_paid_invoice_count', [InvoiceController::class, 'active_user_paid_invoice_count']);
+  Route::get('active_user_pending_invoice_count', [InvoiceController::class, 'active_user_pending_invoice_count']);
+  Route::get('active_user_overdue_invoice_count', [InvoiceController::class, 'active_user_overdue_invoice_count']);
+  Route::get('active_user_cancelled_invoice_count', [InvoiceController::class, 'active_user_cancelled_invoice_count']);
+
+  //   FOR PROFILE
+  Route::get('getUserInvoiceStatus/{id}', [InvoiceController::class, 'getUserInvoiceStatus']);
+  Route::get('user/show_userInvoice', [InvoiceController::class, 'show_userInvoice']); // SHOW ACTIVE USER INVOICES
+  Route::get('user/show_userEdit', [ProfileController::class, 'show_userEdit']);
+  Route::post('user/updateProfile', [ProfileController::class, 'updateProfile']);
+  Route::get('invoice/check_userProfile', [InvoiceController::class, 'check_userProfile']);
+
+  // EDIT INVOICE
+  Route::get('user/userEditInvoice/{id}', [InvoiceController::class, 'userEditInvoice']); // EDIT INVOICE VIEW
+
+  // FOR INVOICE
+  Route::get('user/search_userstatusActive_invoice', [InvoiceController::class, 'search_userstatusActive_invoice']);
+  Route::get('user/search_userstatusInactive_invoice', [InvoiceController::class, 'search_userstatusInactive_invoice']);
+  Route::get('user/show_userstatusInactiveinvoice', [InvoiceController::class, 'show_userstatusInactiveinvoice']); // SHOW INACTIVE INVOICES
+  Route::get('user/check_userInactiveStatusInvoice', [InvoiceController::class, 'check_userInactiveStatusInvoice']); // FOR INVOICE STATUS INACTIVE CHECK AND UPDATE
+  Route::get('user/search_statusInactive_invoice', [InvoiceController::class, 'search_statusInactive_invoice']);
+
+  // FOR USER REPORT
+  Route::get('userReports/userInvoiceReport_load', [InvoiceController::class, 'userInvoiceReport_load']);
+  Route::get('userReports/userInvoiceReport_click', [InvoiceController::class, 'userInvoiceReport_click']);
+  Route::get('userReports/userDeductionReport_load', [InvoiceController::class, 'userDeductionReport_load']);
+  Route::get('userReports/userDeductionReport_click', [InvoiceController::class, 'userDeductionReport_click']);
+  // Route::post('reports/deductionDetails/{id}', [InvoiceController::class, 'deductionDetails']);
 });
 
 

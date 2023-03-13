@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.user')
 @section('content-dashboard')
 
 <div class="container-fluid px-4" id="loader_load">
@@ -33,7 +33,7 @@
     <div class="col-md-12 col-md-12 col-lg-12">
       <div class="card shadow p-2 mb-1 bg-white rounded" style="height:100%">
         <div class="card-body table-responsive">
-          <table id="invoiceReports" style="font-size: 14px;" width="100%" class="table table-hover">
+          <table id="invoiceReports" style="font-size: 14px;" width="100%" class="table table-hover ">
             <thead>
             </thead>
             <tbody>
@@ -407,7 +407,9 @@ $(document).ready(function() {
       toDate: to,
       ...filters
     }
-    axios.get(`${apiUrl}/api/reports/invoiceReport_click?${new URLSearchParams(filter)}`, {
+    console.log("success click",
+      filter);
+    axios.get(`${apiUrl}/api/userReports/userInvoiceReport_click?${new URLSearchParams(filter)}`, {
       headers: {
         Authorization: token,
       },
@@ -417,7 +419,7 @@ $(document).ready(function() {
         let table = $('#invoiceReports').DataTable();
         table.clear().draw();
         if (data.data.length > 0) {
-          console.log("success", data);
+          console.log("success click", data);
           data.data.map((item) => {
 
 
@@ -495,7 +497,8 @@ $(document).ready(function() {
   }
 
   function show_data_load() {
-    axios.get(apiUrl + '/api/reports/invoiceReport_load', {
+
+    axios.get(apiUrl + '/api/userReports/userInvoiceReport_load', {
       headers: {
         Authorization: token,
       },
@@ -505,7 +508,7 @@ $(document).ready(function() {
         let table = $('#invoiceReports').DataTable();
         table.clear().draw();
         if (data.data.length > 0) {
-          console.log("success", data);
+          console.log("success invoice", data);
           data.data.map((item) => {
             let total_deductions = 0;
             let discountType = item.discount_type ? item.discount_type : "N/A";
@@ -538,7 +541,6 @@ $(document).ready(function() {
               PHP(item.grand_total_amount).format(),
               moment.utc(item.created_at).tz('America/New_York').format('YYYY/MM/DD'),
               moment.utc(item.due_date).tz('America/New_York').format('YYYY/MM/DD'),
-              // moment(item.due_date).format("L"),
             ]).draw().node();
             // add class to invoice status cell based on its value
             let invoiceStatusCell = $(newRow).find("td:eq(2)");

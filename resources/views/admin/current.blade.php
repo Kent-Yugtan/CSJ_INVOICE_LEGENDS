@@ -185,8 +185,8 @@ $(document).ready(function() {
       })
       .then(function(res) {
         res = res.data;
-        console.log('res123', res);
         if (res.success) {
+          console.log('res123', res);
           $('#tbl_user tbody').empty();
           if (res.data.data.length > 0) {
             res.data.data.map((item) => {
@@ -201,7 +201,6 @@ $(document).ready(function() {
                   '<td>  <img style="width:40px;" class="rounded-pill" src ="/images/default.png"> ' +
                   item.full_name + ' </td>';
               }
-
               tr += '<td>' + item.profile_status + '</td>';
               tr += '<td>' + item.phone_number + '</td>';
               tr += '<td>' + item.position + '</td>';
@@ -226,7 +225,6 @@ $(document).ready(function() {
                 // console.log("DIFF", Math.round(diff));
                 tr += '<td>' + Math.round(diff ? diff : 0) +
                   ' Days ago</td>';
-
                 tr +=
                   '<td  class="text-center"> <a href="' + apiUrl +
                   '/admin/activeProfile/' +
@@ -249,7 +247,6 @@ $(document).ready(function() {
                     '<td>  <img style="width:40px;" class="rounded-pill" src ="/images/default.png"> ' +
                     item.full_name + ' </td>';
                 }
-
                 tr += '<td>' + item.profile_status + '</td>';
                 tr += '<td>' + item
                   .phone_number + '</td>';
@@ -261,7 +258,6 @@ $(document).ready(function() {
                   '/admin/activeProfile/' +
                   item.id + "/" + item.profile.id +
                   '" class="btn btn-outline-primary"><i class="fa-sharp fa-solid fa-eye"></i></a> </td>';
-
                 tr += '</tr>';
                 $("#tbl_user tbody").append(tr);
                 return ''
@@ -285,7 +281,6 @@ $(document).ready(function() {
                   );
                 return results !== null ? results[1] || 0 : 0;
               };
-
               let search = $('#search').val();
               show_data({
                 search: search,
@@ -302,7 +297,7 @@ $(document).ready(function() {
         }
       })
       .catch(function(error) {
-        // console.log("catch error");
+        console.log("catch error");
       });
   }
 

@@ -2,7 +2,7 @@
 @section('content-dashboard')
 <div class="container-fluid px-4" id="loader_load">
   <h1 class="mt-0">Add Invoice</h1>
-  <ol class="breadcrumb mb-3"></ol>
+  <ol class="breadcrumb"></ol>
   <form id="invoice_items" method="post" action="javascript:void(0)" class="needs-validation" novalidate>
     @csrf
     <div class="row pt-2" id="header">
@@ -57,7 +57,6 @@
               <div class="row">
                 <div class="col-4 md-2 w-100">
                   <div class="form-group">
-                    </br>
                     <button class="btn btn-secondary" style="width:100%;color:white; background-color: #CF8029;"
                       id="add_item">Add
                       Item</button>
@@ -196,23 +195,6 @@
           </div>
         </div>
       </div>
-
-      <!-- <div class="col-lg-3">
-        <div class="card shadow bg-white rounded">
-          <div class="row py-3 mx-3">
-            <div class="col">
-              <button type="submit" class="btn btn-secondary w-100"
-                style="color:White; background-color:#CF8029;">Save</button>
-            </div>
-          </div>
-          <div class="row py-3 mx-3">
-            <div class="col">
-              <button type="button" id="close_back" class="btn btn-secondary w-100"
-                style=" color:#CF8029; background-color:white; ">Close</button>
-            </div>
-          </div>
-        </div>
-      </div> -->
     </div>
   </form>
 </div>
@@ -447,8 +429,6 @@ $(document).ready(function() {
     //     2));
   }
 
-
-
   // FUNCTION FOR KEYUP CLASS MULTI INPUTS FOR ADD ITEMS
   $('#show_items').on("keyup", ".multi", function() {
     let sub_total = 0;
@@ -475,8 +455,6 @@ $(document).ready(function() {
 
     $('#subtotal').val(PHP(parseFloat(sum)).format());
     $('#dollar_amount').val(PHP(parseFloat(sum)).format());
-
-
   }
 
   // FUNCTION FOR CALCUTAION DEDUCTIONS
@@ -677,10 +655,6 @@ $(document).ready(function() {
       scrollTop: $('#loader_load').offset().top
     }, 'smooth');
 
-    var start = performance.now(); // Get the current timestamp
-    // Do your processing here
-
-
     // CONDITION IF THERE IS BLANK ROW
     $('#show_items .row1').each(function() {
       let parent = $(this).closest('.row1');
@@ -835,11 +809,8 @@ $(document).ready(function() {
     $('html,body').animate({
       scrollTop: $('#loader_load').offset().top
     }, 'slow');
-
     $('div.spanner').addClass('show');
-
     setTimeout(function() {
-
       $('div.spanner').removeClass('show');
       $('#invoice_items').trigger('reset'); // reset the form
       $("#discount_amount").addClass('d-none');

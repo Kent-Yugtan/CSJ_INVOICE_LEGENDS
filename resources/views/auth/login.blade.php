@@ -2,19 +2,18 @@
 @section('content')
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-md-5">
-      <div class="card" style="min-height: 580px; width:450px">
+    <div class="col-md-12" style="display:flex;justify-content:center">
+      <div class="card shadow" style="min-height: 500px; width:450px">
         <!-- <div class="card-header">
                     {{ __('Login') }}
                 </div> -->
         <div style="text-align: center;height: 100px; padding-top: 20px;padding: 38px 0;font-size:40px">
           <img class="img-team" src="{{ URL('images/Invoices-logo.png')}}" style="width: 65px" />
-
         </div>
         <div class="input-color" style="text-align: center; font-size:30px;">
           {{ __('5PP Invoicing App') }}
         </div>
-        <div style="text-align: center; padding-top:25px;font-size:25px">
+        <div style="text-align: center;font-size:25px">
           <strong> {{ __('Login') }} </strong>
         </div>
 
@@ -26,69 +25,29 @@
           <form id="form_login">
             <div id="error_msg" class="alert alert-danger text-center"></div>
             @CSRF
-            <div class="row mb-3">
-              <label class="input-color" for="email">{{ __('EMAIL ADDRESS') }}
-              </label>
-
+            <div class="row">
               <div class="col-md-12" style="padding-top:10px">
-                <input id="email" placeholder="Email Address" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}">
-
-                @error('email')
-                <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-                </span>
-                @enderror
+                <div class="form-outline mb-3">
+                  <input id="email" placeholder="Enter a valid email address" type="text" class="form-control" name="email" value="{{ old('email') }}">
+                  <label class="form-label" for="email">Email Address</label>
+                </div>
               </div>
             </div>
 
             <div class="row mb-3">
-              <div class="col-md-6">
-                <label class="input-color" for="password">{{ __('PASSWORD') }}</label>
-              </div>
-              <!-- <div class="col-md-6 text-end">
-                                @if (Route::has('password.request'))
-                                <a style="text-decoration: none; " class="input-color"
-                                    href="{{ route('password.request') }}">
-                                    {{ __('Forgot Password?') }}
-                                </a>
-                                @endif
-                            </div> -->
-
               <div class="col-md-12" style="padding-top:10px">
-                <input id="password" placeholder="Password" type="password" class="form-control @error('password') is-invalid @enderror" name="password">
-
-                @error('password')
-                <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-                </span>
-                @enderror
+                <div class="form-outline">
+                  <input id="password" placeholder="Enter password" type="password" class="form-control" name="password">
+                  <label class="form-label" for="password">Password</label>
+                </div>
               </div>
             </div>
-
-            <!-- <div class="row mb-3">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember"
-                                        {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div> -->
 
             <div class="row mb-3">
               <div class="col-md-12">
                 <button type="submit" style="width:100%; height:50px;color:white; background-color: #CF8029;" class="btn">
                   {{ __('Login') }}
                 </button>
-
-                <!-- @if (Route::has('password.request'))
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
-                                </a>
-                                @endif -->
               </div>
             </div>
 
@@ -129,7 +88,7 @@
           },
         }).then(function(response) {
           let data = response.data;
-          // console.log('then', data);
+          console.log('then', data);
           if (!data.succcess) {
             $("#error_msg").html(data.message).show();
           } else {
@@ -137,6 +96,8 @@
               localStorage.token = data.token;
               // localStorage.userdata = JSON.parse(data.user);
               window.location.replace(apiUrl + '/admin/dashboard');
+            } else if (data.user.role !== "Admin" && data.profile_status.profile_status === "Inactive") {
+              $("#error_msg").html("This profile is inactive. Please contact the system administrator.").show();
             } else {
               localStorage.token = data.token;
               window.location.replace(apiUrl + '/user/dashboard');
