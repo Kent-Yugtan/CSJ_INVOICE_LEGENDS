@@ -261,8 +261,8 @@ $(document).ready(function() {
       }
     });
     // Set the input value to the current system date in the specified format
-    var currentDate = $.datepicker.formatDate("yy/mm/dd", new Date());
-    due_date.val(currentDate);
+    // var currentDate = $.datepicker.formatDate("yy/mm/dd", new Date());
+    // due_date.val(currentDate);
     // END OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
 
   }

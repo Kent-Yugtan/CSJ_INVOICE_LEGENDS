@@ -160,7 +160,7 @@
 </div>
 <script type="text/javascript">
   $(document).ready(function() {
-    check_InactiveStatusInvoice();
+    show_statusInactiveinvoice();
     $(window).on('load', function() {
       $('html,body').animate({
         scrollTop: $('#loader_load').offset().top
@@ -170,7 +170,7 @@
         $('div.spanner').removeClass('show');
         active_inactiveCount_paid();
         active_inactiveCount_pending();
-        show_statusInactiveinvoice();
+        // check_InactiveStatusInvoice();
       }, 1500)
     })
 
@@ -219,77 +219,77 @@
       })
     }
 
-    function check_InactiveStatusInvoice(filters) {
-      axios.get(`${apiUrl}/api/admin/check_InactiveStatusInvoice?${new URLSearchParams(filters)}`, {
-        headers: {
-          Authorization: token,
-        },
-      }).then(function(response) {
-        let data = response.data;
-        if (data.success) {
-          if (data.data.length > 0) {
-            data.data.map((item) => {
-              var date_now = (new Date()).toISOString().split('T')[0];
+    // function check_InactiveStatusInvoice(filters) {
+    //   axios.get(`${apiUrl}/api/admin/check_InactiveStatusInvoice?${new URLSearchParams(filters)}`, {
+    //     headers: {
+    //       Authorization: token,
+    //     },
+    //   }).then(function(response) {
+    //     let data = response.data;
+    //     if (data.success) {
+    //       if (data.data.length > 0) {
+    //         data.data.map((item) => {
+    //           var date_now = (new Date()).toISOString().split('T')[0];
 
-              if (item.invoice_status === "Pending") {
-                if (item.due_date < date_now) {
-                  console.log("due_dateStatus", item.due_date);
-                  console.log("date_now", date_now);
-                  let invoice_id = item.id;
-                  let data = {
-                    id: invoice_id,
-                    invoice_status: "Overdue",
-                  }
-                  axios.post(apiUrl + '/api/update_status', data, {
-                    headers: {
-                      Authorization: token
-                    },
-                  }).then(function(response) {
-                    let data = response.data
-                    if (data.success) {
-                      console.log("SUCCESS Overdue", data);
-                    }
-                  }).catch(function(error) {
-                    console.log("ERROR", error);
-                  })
-                  setTimeout(function() {
-                    window.location.reload
-                  }, 3500);
-                }
-              }
+    //           if (item.invoice_status === "Pending") {
+    //             if (item.due_date < date_now) {
+    //               console.log("due_dateStatus", item.due_date);
+    //               console.log("date_now", date_now);
+    //               let invoice_id = item.id;
+    //               let data = {
+    //                 id: invoice_id,
+    //                 invoice_status: "Overdue",
+    //               }
+    //               axios.post(apiUrl + '/api/update_status', data, {
+    //                 headers: {
+    //                   Authorization: token
+    //                 },
+    //               }).then(function(response) {
+    //                 let data = response.data
+    //                 if (data.success) {
+    //                   console.log("SUCCESS Overdue", data);
+    //                 }
+    //               }).catch(function(error) {
+    //                 console.log("ERROR", error);
+    //               })
+    //               setTimeout(function() {
+    //                 window.location.reload
+    //               }, 3500);
+    //             }
+    //           }
 
-              if (item.invoice_status === "Cancelled") {
-                if (item.due_date < date_now) {
-                  console.log("due_dateStatus", item.due_date);
-                  console.log("date_now", date_now);
-                  let invoice_id = item.id;
-                  let data = {
-                    id: invoice_id,
-                    invoice_status: "Cancelled",
-                  }
-                  axios.post(apiUrl + '/api/update_status', data, {
-                    headers: {
-                      Authorization: token
-                    },
-                  }).then(function(response) {
-                    let data = response.data
-                    if (data.success) {
-                      console.log("SUCCESS Cancelled", data);
-                    }
-                  }).catch(function(error) {
-                    console.log("ERROR", error);
-                  })
-                }
-              }
+    //           if (item.invoice_status === "Cancelled") {
+    //             if (item.due_date < date_now) {
+    //               console.log("due_dateStatus", item.due_date);
+    //               console.log("date_now", date_now);
+    //               let invoice_id = item.id;
+    //               let data = {
+    //                 id: invoice_id,
+    //                 invoice_status: "Cancelled",
+    //               }
+    //               axios.post(apiUrl + '/api/update_status', data, {
+    //                 headers: {
+    //                   Authorization: token
+    //                 },
+    //               }).then(function(response) {
+    //                 let data = response.data
+    //                 if (data.success) {
+    //                   console.log("SUCCESS Cancelled", data);
+    //                 }
+    //               }).catch(function(error) {
+    //                 console.log("ERROR", error);
+    //               })
+    //             }
+    //           }
 
-            })
+    //         })
 
-          }
-        }
-      }).catch(function(error) {
-        console.log("ERROR", error);
-      })
-    }
+    //       }
+    //     }
+    //   }).catch(function(error) {
+    //     console.log("ERROR", error);
+    //   })
+    // }
 
     function search_statusInactive_invoice(filters) {
       let page = $("#tbl_pagination_invoice .page-item.active .page-link").html();
@@ -298,6 +298,7 @@
         page: page ? page : 1,
         search: $('#search').val() ? $('#search').val() : '',
         filter_all_invoices: $('#filter_invoices').val(),
+        ...filters
       }
       // console.log("page", page);
       $('#dataTable_invoice tbody').empty();
@@ -348,6 +349,7 @@
                     let data = response.data
                     if (data.success) {
                       // show_statusInactiveinvoice();
+                      window.location.reload;
                     }
                   }).catch(function(error) {
                     console.log("ERROR", error);
@@ -370,6 +372,7 @@
                     let data = response.data
                     if (data.success) {
                       // show_statusInactiveinvoice();
+                      window.location.reload;
                     }
                   }).catch(function(error) {
                     console.log("ERROR", error);
@@ -408,10 +411,10 @@
                   }) +
                 '</td>';
               tr += '<td class="text-end">' + moment.utc(item.created_at).tz(
-                'America/New_York').format(
+                'Asia/Manila').format(
                 'MM/DD/YYYY') + '</td>';
               tr += '<td class="text-end">' + moment.utc(item.due_date).tz(
-                'America/New_York').format(
+                'Asia/Manila').format(
                 'MM/DD/YYYY') + '</td>';
 
               tr +=
@@ -445,18 +448,13 @@
                   .exec(
                     url
                   );
-                return results !== null ? results[1] || 0 :
-                  false;
+                return results !== null ? results[1] || 0 : 0;
               };
-              $('html,body').animate({
-                scrollTop: $('#loader_load').offset().top
-              }, 'slow');
-              setTimeout(function() {
-                seach_current_invoice({
-                  search: $('#search').val() ? $('#search').val() : '',
-                  page: $.urlParam('page')
-                });
-              }, 1500);
+
+              search_statusInactive_invoice({
+                search: $('#search').val() ? $('#search').val() : '',
+                page: $.urlParam('page')
+              });
             })
             let tbl_showing_invoice =
               `Showing ${data.data.from} to ${data.data.to} of ${data.data.total} entries`;
@@ -472,14 +470,14 @@
       });
     }
 
-
-
     function show_statusInactiveinvoice(filters) {
       let page = $("#tbl_pagination_invoice .page-item.active .page-link").html();
       let filter = {
         page_size: 10,
         page: page ? page : 1,
-        filter_all_invoices: $('#filter_invoices').val()
+        filter_all_invoices: $('#filter_invoices').val(),
+        search: $("#search").val(),
+        ...filters
 
       }
       // console.log("page", page);
@@ -530,7 +528,7 @@
                   }).then(function(response) {
                     let data = response.data
                     if (data.success) {
-                      // show_statusInactiveinvoice();
+                      window.location.reload;
                     }
                   }).catch(function(error) {
                     console.log("ERROR", error);
@@ -552,7 +550,7 @@
                   }).then(function(response) {
                     let data = response.data
                     if (data.success) {
-                      // show_statusInactiveinvoice();
+                      window.location.reload;
                     }
                   }).catch(function(error) {
                     console.log("ERROR", error);
@@ -591,10 +589,10 @@
                   }) +
                 '</td>';
               tr += '<td class="text-end">' + moment.utc(item.created_at).tz(
-                'America/New_York').format(
+                'Asia/Manila').format(
                 'MM/DD/YYYY') + '</td>';
               tr += '<td class="text-end">' + moment.utc(item.due_date).tz(
-                'America/New_York').format(
+                'Asia/Manila').format(
                 'MM/DD/YYYY') + '</td>';
 
               tr +=
@@ -628,24 +626,17 @@
                   .exec(
                     url
                   );
-                return results !== null ? results[1] || 0 :
-                  false;
+                return results !== null ? results[1] || 0 : 0;
               };
-              $('html,body').animate({
-                scrollTop: $('#loader_load').offset().top
-              }, 'slow');
-              setTimeout(function() {
-                show_statusInactiveinvoice({
-                  page: $.urlParam('page')
-                });
-              }, 1500);
+              let search = $('#search').val();
+              show_statusInactiveinvoice({
+                search: search,
+                page: $.urlParam('page')
+              });
             })
             let tbl_showing_invoice =
               `Showing ${data.data.from} to ${data.data.to} of ${data.data.total} entries`;
             $('#tbl_showing_invoice').html(tbl_showing_invoice);
-            // setTimeout(function() {
-            //   show_statusInactiveinvoice();
-            // }, 3500);
           } else {
             $("#dataTable_invoice tbody").append(
               '<tr><td colspan="8" class="text-center">No data</td></tr>'
@@ -778,13 +769,11 @@
       }, 'slow');
       $("div.spanner").addClass("show");
       setTimeout(function() {
-        let search = $('#search').val();
         $('#dataTable_invoice tbody').empty();
         $('#tbl_pagination_invoice').empty();
         search_statusInactive_invoice();
         $("div.spanner").removeClass("show");
       }, 1500)
-
     })
   })
 </script>

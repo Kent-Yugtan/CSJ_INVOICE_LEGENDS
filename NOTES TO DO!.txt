@@ -53,3 +53,97 @@ Email Configuration
 APPLY THIS TO THE SEND EMAIL 
 laravel event listener should queue worker -> done!
 
+
+
+// * REVIEW ADMIN PAGE //
+
+-> SETTINGS PAGE 
+  -> done
+
+->  DEDUCTIONS PAGE
+  -> done
+
+-> DASHBOARD PAGE
+  -> done
+
+-> ADD PROFILE PAGE 
+  -> done
+
+-> PROFILES CURRENT PAGE
+  -> done
+
+-> PROFILE ADMIN ACTIVE PROFILE PAGE
+  -> Invoices Tab
+    -> done (Add Invoice, Search Payment Status, Search, Update Payment Status)
+
+  -> Profile Deductionns Tab
+    -> done (Add Invoice, Search, Update Payment Status)
+
+-> ADMIN EDIT PROFILE
+  -> INVOICE STATUS
+    -> done
+
+-> INVOICES PAGE
+  -> Add Invoice
+    -> done
+
+  -> Current Invoice
+    -> done
+
+  -> Inactive Invoice
+    -> done
+
+  -> REPORTS
+    -> Invoice
+      ->done
+
+    -> Deductions
+      ->done (view ddeduction)
+
+// * REVIEW USER PAGE //
+
+-> SETTINGS PAGE 
+  -> NO SETTINGS
+
+->  DEDUCTIONS PAGE
+  -> done
+
+-> DASHBOARD PAGE
+  -> done
+
+-> ADD PROFILE PAGE 
+  -> done
+
+-> PROFILES CURRENT PAGE
+  -> done
+
+-> PROFILE ADMIN ACTIVE PROFILE PAGE
+  -> Invoices Tab
+    -> done (Add Invoice, Search Payment Status, Search, Update Payment Status)
+
+  -> Profile Deductionns Tab
+    -> done (Add Invoice, Search, Update Payment Status)
+
+-> ADMIN EDIT PROFILE
+  -> INVOICE STATUS
+    -> 
+
+-> INVOICES PAGE
+  -> Add Invoice
+    -> done
+
+  -> Current Invoice
+    -> done
+
+  -> Inactive Invoice
+    -> done
+
+-> REPORTS
+    -> Invoice
+      ->done
+
+    -> Deductions
+      ->done (view ddeduction)
+
+
+

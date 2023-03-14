@@ -73,14 +73,12 @@
           <div class="row mt-3">
             <div class="col-6">
               <div class="w-100">
-                <div class="form-floating">
-                  <input id="search" type="text" class="form-control" placeholder="Search">
-                  <label for="search" style=" color: #A4A6B3;">Search</label>
-                </div>
+                <input id="search" type="text" class="form-control" placeholder="Search">
+                <!-- <label for="search" style=" color: #A4A6B3;">Search</label> -->
               </div>
             </div>
             <div class="col-6">
-              <button type="submit" class="btn w-100" style="color:white; background-color: #CF8029;height:100%"
+              <button type="submit" class="btn w-100" style="color:white; background-color: #CF8029"
                 id="button_search">Search</button>
             </div>
           </div>
@@ -257,6 +255,7 @@ $(document).ready(function() {
       $('#emailconfigs_store').trigger("reset");
     }, 1500)
   })
+
   $('#editModal').on('hide.bs.modal', function() {
     $('div.spanner').addClass("show");
     setTimeout(function() {
@@ -267,10 +266,18 @@ $(document).ready(function() {
 
 
   $('#button_search').on('click', function() {
-    let search = $('#search').val();
-    show_data({
-      search
-    });
+    $("div.spanner").addClass('show');
+
+    setTimeout(function() {
+      $("div.spanner").removeClass('show');
+      $('html,body').animate({
+        scrollTop: $('#loader_load').offset().top
+      }, 'slow');
+      let search = $('#search').val();
+      show_data({
+        search
+      });
+    }, 1500)
   })
   toast1.toast({
     delay: 5000,
@@ -309,8 +316,8 @@ $(document).ready(function() {
         if (data.success) {
           if (data.data.data.length > 0) {
             data.data.data.map((item) => {
-              let tr = '<tr>';
-              tr += '<td>' + item.id + '</td>';
+              let tr = '<tr style="vertical-align: middle;">';
+              tr += '<td hidden>' + item.id + '</td>';
               tr += '<td>' + item.fullname + '</td>';
               tr += '<td>' + item
                 .email_address +
@@ -326,7 +333,7 @@ $(document).ready(function() {
                 ' class="editButton btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" ><i class="fa-sharp fa-solid fa-eye"></i></button></td>';
               tr += '<td class="text-center"> <button value=' +
                 item.id +
-                ' class="deleteButton btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" ><i class="fa-solid fa-trash view-hover-delete"></i></button> </td>';
+                ' class="deleteButton btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" ><i class="fa-solid fa-trash"></i></button> </td>';
               tr += '</tr>';
               $("#table_emailconfigs tbody").append(tr);
 
@@ -363,7 +370,7 @@ $(document).ready(function() {
             $('#tbl_showing').html(table_emailconfigs);
           } else {
             $("#table_emailconfigs tbody").append(
-              '<tr><td colspan="6" class="text-center">No data</td></tr>');
+              '<tr style="vertical-align: middle;"><td colspan="6" class="text-center">No data</td></tr>');
           }
         }
       })

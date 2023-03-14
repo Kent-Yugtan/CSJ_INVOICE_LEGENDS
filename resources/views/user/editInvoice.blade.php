@@ -2052,7 +2052,6 @@
               $('#paidModal').modal('hide');
               $('.toast1 .toast-title').html('Successfully Updated');
               $('.toast1 .toast-body').html(response.data.message);
-
               $('#table_invoiceItems tbody').empty();
               $('.row .title_deductions').empty();
               $('.row .total_deductions').empty();
@@ -2220,16 +2219,17 @@
       if (typeof s !== 'string') return "";
       return s.charAt(0).toUpperCase() + s.slice(1);
     }
+
     // CONVERT HTML TO PDF THROUGH SCREENSHOT
     function pdfContent() {
       window.jsPDF = window.jspdf.jsPDF;
-      var scaleFactor = 3;
+      var scaleFactor = 2;
       // Capture the div element as a screenshot using html2canvas
       html2canvas($('#content')[0], {
         scale: scaleFactor
       }).then(function(canvas) {
         // Create a new jsPDF instance
-        var pdf = new jsPDF('p', 'mm', 'a4');
+        var pdf = new jsPDF('p', 'mm', 'a4', false, true, 300);
 
         // Calculate the center of the page
         var centerX = pdf.internal.pageSize.getWidth() / 2;
@@ -2243,7 +2243,6 @@
 
         // Add the screenshot to the PDF using the addImage method
         pdf.addImage(canvas.toDataURL('image/png'), 'PNG', startX, 5, imageWidth, imageHeight);
-
 
         // Save the PDF file
         pdf.save('Invoice ' + $('#invoice_no').html() + '.pdf');

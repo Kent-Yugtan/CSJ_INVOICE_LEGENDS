@@ -203,19 +203,19 @@
       })
     }
 
-    $("#tbl_pagination_invoice").on('click', '.page-item', function() {
-      $('html,body').animate({
-        scrollTop: $('#loader_load').offset().top
-      }, 'slow');
+    // $("#tbl_pagination_invoice").on('click', '.page-item', function() {
+    //   $('html,body').animate({
+    //     scrollTop: $('#loader_load').offset().top
+    //   }, 'slow');
 
-      $("div.spanner").addClass("show");
-      setTimeout(function() {
-        $("div.spanner").removeClass("show");
-        $('html,body').animate({
-          scrollTop: $('#loader_load').offset().top
-        }, 'slow');
-      }, 1500);
-    })
+    //   $("div.spanner").addClass("show");
+    //   setTimeout(function() {
+    //     $("div.spanner").removeClass("show");
+    //     $('html,body').animate({
+    //       scrollTop: $('#loader_load').offset().top
+    //     }, 'slow');
+    //   }, 1500);
+    // })
 
     function active_count_pending() {
       axios.get(apiUrl + '/api/active_pending_invoice_count', {
@@ -291,6 +291,7 @@
                     let data = response.data
                     if (data.success) {
                       // show_data();
+                      window.location.reload;
                     }
                   }).catch(function(error) {
                     console.log("ERROR", error);
@@ -313,6 +314,7 @@
                     let data = response.data
                     if (data.success) {
                       // show_data();
+                      window.location.reload;
                     }
                   }).catch(function(error) {
                     console.log("ERROR", error);
@@ -352,10 +354,10 @@
                   }) +
                 '</td>';
               tr += '<td class="text-end">' + moment.utc(item.created_at).tz(
-                'America/New_York').format(
+                'Asia/Manila').format(
                 'MM/DD/YYYY') + '</td>';
               tr += '<td class="text-end">' + moment.utc(item.due_date).tz(
-                'America/New_York').format(
+                'Asia/Manila').format(
                 'MM/DD/YYYY') + '</td>';
 
               tr +=
@@ -389,19 +391,13 @@
                   .exec(
                     url
                   );
-                return results !== null ? results[1] || 0 :
-                  0;
+                return results !== null ? results[1] || 0 : 0;
               };
-              $('html,body').animate({
-                scrollTop: $('#loader_load').offset().top
-              }, 'slow');
-              setTimeout(function() {
-                let search = $('#search').val();
-                search_statusActive_invoice({
-                  search: search,
-                  page: $.urlParam('page')
-                });
-              }, 1500);
+              let search = $('#search').val();
+              search_statusActive_invoice({
+                search: search,
+                page: $.urlParam('page')
+              });
             })
             let tbl_showing_invoice =
               `Showing ${data.data.from} to ${data.data.to} of ${data.data.total} entries`;
@@ -563,10 +559,10 @@
                   }) +
                 '</td>';
               tr += '<td class="text-end">' + moment.utc(item.created_at).tz(
-                'America/New_York').format(
+                'Asia/Manila').format(
                 'MM/DD/YYYY') + '</td>';
               tr += '<td class="text-end">' + moment.utc(item.due_date).tz(
-                'America/New_York').format(
+                'Asia/Manila').format(
                 'MM/DD/YYYY') + '</td>';
 
               tr +=
@@ -603,16 +599,12 @@
                 return results !== null ? results[1] || 0 :
                   0;
               };
-              $('html,body').animate({
-                scrollTop: $('#loader_load').offset().top
-              }, 'slow');
-              setTimeout(function() {
-                let search = $('#search').val();
-                show_data({
-                  search: search,
-                  page: $.urlParam('page')
-                });
-              }, 1500);
+
+              let search = $('#search').val();
+              show_data({
+                search: search,
+                page: $.urlParam('page')
+              });
             })
             let tbl_showing_invoice =
               `Showing ${data.data.from} to ${data.data.to} of ${data.data.total} entries`;

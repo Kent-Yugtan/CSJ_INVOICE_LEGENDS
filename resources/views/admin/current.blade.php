@@ -97,19 +97,19 @@ $(document).ready(function() {
     }, 1500)
   })
 
-  $("#tbl_user_pagination").on('click', '.page-item', function() {
-    $('html,body').animate({
-      scrollTop: $('#loader_load').offset().top
-    }, 'slow');
+  // $("#tbl_user_pagination").on('click', '.page-item', function() {
+  //   $('html,body').animate({
+  //     scrollTop: $('#loader_load').offset().top
+  //   }, 'slow');
 
-    $("div.spanner").addClass("show");
-    setTimeout(function() {
-      $("div.spanner").removeClass("show");
-      $('html,body').animate({
-        scrollTop: $('#tbl_user_pagination').offset().top
-      }, 'slow');
-    }, 1500);
-  })
+  //   $("div.spanner").addClass("show");
+  //   setTimeout(function() {
+  //     $("div.spanner").removeClass("show");
+  //     $('html,body').animate({
+  //       scrollTop: $('#tbl_user_pagination').offset().top
+  //     }, 'slow');
+  //   }, 1500);
+  // })
 
 
   function active_count_paid() {
@@ -174,7 +174,7 @@ $(document).ready(function() {
     let filter = {
       page_size: 5,
       page: page ? page : 1,
-      search: $('#search').val(),
+      search: $('#search').val() ? $('#search').val() : '',
       ...filters,
     }
     axios
@@ -190,7 +190,7 @@ $(document).ready(function() {
           $('#tbl_user tbody').empty();
           if (res.data.data.length > 0) {
             res.data.data.map((item) => {
-              let tr = '<tr style="vertical-align:sub;">';
+              let tr = '<tr style="vertical-align:middle;">';
               if (item.file_path) {
                 tr +=
                   '<td>  <img style="width:40px;" class="rounded-pill" src ="' +
@@ -281,7 +281,8 @@ $(document).ready(function() {
                   );
                 return results !== null ? results[1] || 0 : 0;
               };
-              let search = $('#search').val();
+
+              let search = $('#search').val() ? $('#search').val() : '';
               show_data({
                 search: search,
                 page: $.urlParam('page')

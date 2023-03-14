@@ -515,22 +515,28 @@
             <form id="deductiontype_store" method="POST" action="javascript:void(0)" class="g-3 needs-validation" novalidate>
               @csrf
               <input type="text" id="createDeduction_profile_id" hidden>
-              <div class="form-floating form-group mt-3" id="select_deduction_name">
+
+              <div class="row mb-3">
+                <div class="col-12">
+                  <div class="form-floating form-group mt-3" id="select_deduction_name"></div>
+                </div>
               </div>
 
-              <div class="form-group">
-                <div class="form-floating">
-                  <input id="createDeduction_deduction_amount" name="createDeduction_deduction_amount" type="text" class="createDeduction_deduction_amount form-control" placeholder="Amount">
-                  <label for="createDeduction_deduction_amount">Amount</label>
+              <div class="row mb-3">
+                <div class="col-12">
+                  <div class="form-floating">
+                    <input id="createDeduction_deduction_amount" name="createDeduction_deduction_amount" type="text" class="createDeduction_deduction_amount form-control" placeholder="Amount">
+                    <label for="createDeduction_deduction_amount">Amount</label>
+                  </div>
                 </div>
+              </div>
 
-                <div class="row mt-3">
-                  <div class="col">
-                    <button type="button" class="btn btn-secondary w-100" style=" color:#CF8029; background-color:white; " data-bs-dismiss="modal">Close</button>
-                  </div>
-                  <div class="col">
-                    <button type="submit" id="createDeduction_button" class="btn btn-secondary w-100" style="color:White; background-color:#CF8029;">Add</button>
-                  </div>
+              <div class="row mb-3">
+                <div class="col">
+                  <button type="button" class="btn btn-secondary w-100" style=" color:#CF8029; background-color:white; " data-bs-dismiss="modal">Close</button>
+                </div>
+                <div class="col">
+                  <button type="submit" id="createDeduction_button" class="btn btn-secondary w-100" style="color:White; background-color:#CF8029;">Add</button>
                 </div>
               </div>
             </form>
@@ -761,8 +767,10 @@
       e.preventDefault();
       $('#cancel_edit_profile').addClass('d-none');
       $('#edit_profile').removeClass('d-none');
-      location.reload(true); // refresh the page
       $(window).scrollTop(0); // scroll to the top
+      setTimeout(function() {
+        location.reload(true); // refresh the page
+      }, 1000);
     })
 
     $('#edit_profile').on('click', function(e) {
@@ -870,7 +878,7 @@
                   }) +
                 '</td>';
               tr += '<td class="text-end">' + moment.utc(item.created_at).tz(
-                  'America/New_York')
+                  'Asia/Manila')
                 .format('MM/DD/YYYY') +
                 '</td>';
               tr += '<td class="text-end">' + moment(item.due_date).format('L') +
@@ -2248,7 +2256,7 @@
                       .amount)
                     .format() + '</td>';
                   tr += '<td class="text-end">' + moment.utc(item.created_at).tz(
-                    'America/New_York').format(
+                    'Asia/Manila').format(
                     'MM/DD/YYYY') + '</td>';
 
                   tr += '</tr>';

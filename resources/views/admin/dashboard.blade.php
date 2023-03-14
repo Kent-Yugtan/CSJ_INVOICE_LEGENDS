@@ -236,7 +236,6 @@ $(document).ready(function() {
   let sumObj = 0;
   //  For creating invoice codes
   const api = "https://api.exchangerate-api.com/v4/latest/USD";
-
   $("div.spanner").addClass("show");
   $(window).on('load', function() {
     setTimeout(function() {
@@ -413,7 +412,7 @@ $(document).ready(function() {
                   let data = response.data
                   if (data.success) {
                     console.log("SUCCESS Overdue", data);
-                    window.location.reload();
+                    location.reload(true); // refresh the page
                   }
                 }).catch(function(error) {
                   console.log("ERROR", error);
@@ -468,7 +467,7 @@ $(document).ready(function() {
               apiUrl +
               '/admin/editInvoice/' +
               item.id +
-              '" class="btn btn-outline-primary"><i class="fa-solid fa-magnifying-glass view-hover"></i> </a></td>';
+              '" class="btn btn-outline-primary"><i class="fa-solid fa-magnifying-glass "></i> </a></td>';
             tr += '</tr>';
 
             $('#pendingInvoices tbody').append(tr);
@@ -549,14 +548,14 @@ $(document).ready(function() {
               apiUrl +
               '/admin/editInvoice/' +
               item.id +
-              '" class="btn btn-outline-primary"><i class="fa-solid fa-magnifying-glass view-hover"></i> </a></td>';
+              '" class="btn btn-outline-primary"><i class="fa-solid fa-magnifying-glass "></i> </a></td>';
             tr += '</tr>';
             $('#overdueInvoices tbody').append(tr);
           })
           $('#tbl_pagination_overdueInvoice').empty();
           data.data.links.map(item => {
             let li =
-              `<li class="page-item cursor-pointer ${item.active ? 'active' : ''}"><a class="page-link view-hover" data-url="${item.url}">${item.label}</a></li>`
+              `<li class="page-item cursor-pointer ${item.active ? 'active' : ''}"><a class="page-link " data-url="${item.url}">${item.label}</a></li>`
             $('#tbl_pagination_overdueInvoice').append(li)
             return ""
           })
@@ -633,12 +632,13 @@ $(document).ready(function() {
 
   $('#selectProfile').on('change', function() {
     let profile_id = $('#selectProfile').val();
-    console.log("PROFILE ID", profile_id);
+    console.log("PROFILE", profile_id);
     axios.get(apiUrl + '/api/get_quickInvoice_PDT/' + profile_id, {
       headers: {
         Authorization: token,
       },
     }).then(function(response) {
+      Deductions = []; // set back to 0 on Deductions.push
       let data = response.data;
       if (data.success) {
         if (data.data.length > 0) {
@@ -664,7 +664,8 @@ $(document).ready(function() {
           });
           sumObj = $(sum02)['prop']('sum'); // get the value of {sum:6000}
           console.log("sumObj", sumObj);
-          Deductions.length = 0; // set back to 0 on Deductions.push
+          console.log("Deductions", Deductions);
+
         }
       }
     }).catch(function(error) {
@@ -684,11 +685,6 @@ $(document).ready(function() {
 
   $('#quick_invoice').submit(function(e) {
     e.preventDefault();
-
-    $('div.spanner').addClass('show');
-    $('html,body').animate({
-      scrollTop: $('#loader_load').offset().top
-    }, 'smooth');
 
     let profile_id = $('#selectProfile').val();
     let description = $('#description').val();
@@ -744,8 +740,7 @@ $(document).ready(function() {
 
         setTimeout(function() {
           $("div.spanner").removeClass("show");
-          $('#selectProfile').val('');
-          $('#quick_invoice input').val('');
+          $('#quick_invoice').trigger('reset');
           $('.toast1 .toast-title').html('Create Invoices');
           $('.toast1 .toast-body').html(response.data.message);
           active_count_paid();
@@ -755,10 +750,10 @@ $(document).ready(function() {
           pendingInvoices();
           overdueInvoices();
           getResults_Converted();
+          // location.reload(true); // refresh the page
+          due_date();
           toast1.toast('show');
         }, 1500)
-
-
       }
     }).catch(function(error) {
       console.log("ERROR", error);

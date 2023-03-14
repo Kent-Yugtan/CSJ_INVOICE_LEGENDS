@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon as CarbonCarbon;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+use Exception;
 
 class InvoiceController extends Controller
 {
@@ -904,11 +905,13 @@ class InvoiceController extends Controller
   {
 
     $invoices = Invoice::with('profile.user')->where('status', 'Inactive');
+
     if (isset($request->search)) {
       $invoices = $invoices->where(
         function ($q) use ($request) {
           $q->orWhere('invoice_no', 'LIKE', '%' . $request->search . '%');
           $q->orWhere('invoice_status', 'LIKE', '%' . $request->search . '%');
+          $q->orWhere('status', 'LIKE', '%' . $request->search . '%');
         }
       );
     }
@@ -1507,13 +1510,11 @@ class InvoiceController extends Controller
   public function invoiceReport_load(Request $request)
   {
     // your other code here
-    $from = date('Y-m-d', strtotime($request->from));
-    $to = date('Y-m-d', strtotime($request->to));
     $data = Invoice::with(['profile.user', 'deductions' => function ($q) {
       $q->select(DB::raw('SUM(amount) as total_deductions'), 'invoice_id')
         ->groupBy('invoice_id');
     }])
-      ->orderBy('id', 'Desc')
+      ->orderBy('invoices.id', 'Desc')
       ->get();
 
     if ($data) {
@@ -1526,27 +1527,30 @@ class InvoiceController extends Controller
 
   public function invoiceReport_click(Request $request)
   {
-
     $rules = $request->validate([
       'fromDate' => 'required',
       'toDate' => 'required',
     ]);
 
-    if (isset($rules['fromDate']) && isset($rules['toDate'])) {
-      $startDate = Carbon::createFromFormat('Y/m/d', $rules['fromDate'])->startOfDay();
-      $endDate = Carbon::createFromFormat('Y/m/d', $rules['toDate'])->endOfDay();
+    if (isset($request->fromDate) && isset($request->toDate)) {
+      try {
+        $startDate = Carbon::createFromFormat('Y/m/d', $request->fromDate)->startOfDay();
+        $endDate = Carbon::createFromFormat('Y/m/d', $request->toDate)->endOfDay();
 
-      $invoices = Invoice::with(['profile.user', 'deductions' => function ($q) {
-        $q->select(DB::raw('SUM(amount) as total_deductions'), 'invoice_id')
-          ->groupBy('invoice_id');
-      }])
-        ->whereBetween('created_at', [$startDate, $endDate]) // filter by date range
-        ->orderBy('id', 'desc')
-        ->get();
-      return response()->json([
-        'success' => true,
-        'data' => $invoices,
-      ], 200);
+        $invoices = Invoice::with(['profile.user', 'deductions' => function ($q) {
+          $q->select(DB::raw('SUM(amount) as total_deductions'), 'invoice_id')
+            ->groupBy('invoice_id');
+        }])
+          ->whereBetween('created_at', [$startDate, $endDate]) // filter by date range
+          ->orderBy('id', 'desc')
+          ->get();
+        return response()->json([
+          'success' => true,
+          'data' => $invoices,
+        ], 200);
+      } catch (Exception $e) {
+        echo 'Error: ' . $e->getMessage();
+      }
     }
   }
   public function deductionReport_load(Request $request)
@@ -1572,27 +1576,30 @@ class InvoiceController extends Controller
 
   public function deductionReport_click(Request $request)
   {
-
     $rules = $request->validate([
       'fromDate' => 'required',
       'toDate' => 'required',
     ]);
 
-    if (isset($rules['fromDate']) && isset($rules['toDate'])) {
-      $startDate = Carbon::createFromFormat('Y/m/d', $rules['fromDate'])->startOfDay();
-      $endDate = Carbon::createFromFormat('Y/m/d', $rules['toDate'])->endOfDay();
+    if (isset($request->fromDate) && isset($request->toDate)) {
+      try {
+        $startDate = Carbon::createFromFormat('Y/m/d', $request->fromDate)->startOfDay();
+        $endDate = Carbon::createFromFormat('Y/m/d', $request->toDate)->endOfDay();
 
-      $invoices = Invoice::with(['profile.user', 'deductions' => function ($q) {
-        $q->select(DB::raw('SUM(amount) as total_deductions'), 'invoice_id')
-          ->groupBy('invoice_id');
-      }])
-        ->whereBetween('created_at', [$startDate, $endDate]) // filter by date range
-        ->orderBy('id', 'desc')
-        ->get();
-      return response()->json([
-        'success' => true,
-        'data' => $invoices,
-      ], 200);
+        $invoices = Invoice::with(['profile.user', 'deductions' => function ($q) {
+          $q->select(DB::raw('SUM(amount) as total_deductions'), 'invoice_id')
+            ->groupBy('invoice_id');
+        }])
+          ->whereBetween('created_at', [$startDate, $endDate]) // filter by date range
+          ->orderBy('id', 'desc')
+          ->get();
+        return response()->json([
+          'success' => true,
+          'data' => $invoices,
+        ], 200);
+      } catch (Exception $e) {
+        echo 'Error: ' . $e->getMessage();
+      }
     }
   }
 
@@ -1879,6 +1886,7 @@ class InvoiceController extends Controller
       ->whereHas('profile', function ($query) {
         $query->Where('profile_status', 'Active');
       });
+
     if (isset($request->search)) {
       $invoices = $invoices->where(
         function ($q) use ($request) {
@@ -1890,7 +1898,9 @@ class InvoiceController extends Controller
       )->where('status', 'Active')->orwhereHas(
         'profile.user',
         function ($q) use ($request) {
+          $userId = auth()->user()->id;
           $q->where(DB::raw("CONCAT(first_name, ' ', last_name)"), 'LIKE', '%' . $request->search . '%');
+          $q->where('id', $userId);
         }
       )->whereHas('profile', function ($q) {
         $q->where('profile_status', 'Active');
@@ -1932,19 +1942,22 @@ class InvoiceController extends Controller
     if (isset($request->search)) {
       $invoices = $invoices->where(
         function ($q) use ($request) {
+          $userId = auth()->user()->id;
           $q->orWhere('invoice_no', 'LIKE', '%' . $request->search . '%');
           $q->orWhere('invoice_status', 'LIKE', '%' . $request->search . '%');
-          $q->orWhere('status', 'LIKE', '%' . $request->search . '%');
           $q->orWhere('grand_total_amount', 'LIKE', '%' . $request->search . '%');
+          $q->where(DB::raw('(select user_id from profiles where profiles.id=profile_id)'), $userId);
         }
-      )->where('status', 'Active')->orwhereHas(
+      )->where('status', 'Inactive')->orwhereHas(
         'profile.user',
         function ($q) use ($request) {
+          $userId = auth()->user()->id;
           $q->where(DB::raw("CONCAT(first_name, ' ', last_name)"), 'LIKE', '%' . $request->search . '%');
+          $q->where('id', $userId);
         }
       )->whereHas('profile', function ($q) {
         $q->where('profile_status', 'Active');
-      })->where('status', 'Active');
+      })->where('status', 'Inactive');
     }
 
     if (isset($request->filter_all_invoices)) {
@@ -2033,28 +2046,34 @@ class InvoiceController extends Controller
   public function userInvoiceReport_click(Request $request)
   {
 
+
     $rules = $request->validate([
       'fromDate' => 'required',
       'toDate' => 'required',
     ]);
-    $userId = auth()->user()->id;
-    if (isset($rules['fromDate']) && isset($rules['toDate'])) {
-      $startDate = Carbon::createFromFormat('Y/m/d', $rules['fromDate'])->startOfDay();
-      $endDate = Carbon::createFromFormat('Y/m/d', $rules['toDate'])->endOfDay();
-      $invoices = Invoice::with(['profile.user', 'deductions' => function ($q) {
-        $q->select(DB::raw('SUM(amount) as total_deductions'), 'invoice_id')
-          ->groupBy('invoice_id');
-      }, 'profile'])
-        ->whereHas('profile', function ($query) use ($userId) {
-          $query->where('user_id', $userId);
-        })
-        ->whereBetween('created_at', [$startDate, $endDate]) // filter by date range
-        ->orderBy('id', 'desc')
-        ->get();
-      return response()->json([
-        'success' => true,
-        'data' => $invoices,
-      ], 200);
+
+    if (isset($request->fromDate) && isset($request->toDate)) {
+      try {
+        $startDate = Carbon::createFromFormat('Y/m/d', $request->fromDate)->startOfDay();
+        $endDate = Carbon::createFromFormat('Y/m/d', $request->toDate)->endOfDay();
+        $invoices = Invoice::with(['profile.user', 'deductions' => function ($q) {
+          $q->select(DB::raw('SUM(amount) as total_deductions'), 'invoice_id')
+            ->groupBy('invoice_id');
+        }, 'profile'])
+          ->whereHas('profile', function ($q) {
+            $userId = auth()->user()->id;
+            $q->where('user_id', $userId);
+          })
+          ->whereBetween('created_at', [$startDate, $endDate]) // filter by date range
+          ->orderBy('id', 'desc')
+          ->get();
+        return response()->json([
+          'success' => true,
+          'data' => $invoices,
+        ], 200);
+      } catch (Exception $e) {
+        echo 'Error: ' . $e->getMessage();
+      }
     }
   }
   public function userDeductionReport_load(Request $request)
@@ -2082,30 +2101,50 @@ class InvoiceController extends Controller
 
   public function userDeductionReport_click(Request $request)
   {
+
     $rules = $request->validate([
       'fromDate' => 'required',
       'toDate' => 'required',
     ]);
 
-    if (isset($rules['fromDate']) && isset($rules['toDate'])) {
-      $startDate = Carbon::createFromFormat('Y/m/d', $rules['fromDate'])->startOfDay();
-      $endDate = Carbon::createFromFormat('Y/m/d', $rules['toDate'])->endOfDay();
+    if (isset($request->fromDate) && isset($request->toDate)) {
+      try {
+        $startDate = Carbon::createFromFormat('Y/m/d', $request->fromDate)->startOfDay();
+        $endDate = Carbon::createFromFormat('Y/m/d', $request->toDate)->endOfDay();
+        $invoices = Invoice::with(['profile.user', 'deductions' => function ($q) {
+          $q->select(DB::raw('SUM(amount) as total_deductions'), 'invoice_id')
+            ->groupBy('invoice_id');
+        }, 'profile'])
+          ->whereHas('profile', function ($q) {
+            $userId = auth()->user()->id;
+            $q->where('user_id', $userId);
+          })
+          ->whereBetween('created_at', [$startDate, $endDate]) // filter by date range
+          ->orderBy('id', 'desc')
+          ->get();
+        return response()->json([
+          'success' => true,
+          'data' => $invoices,
+        ], 200);
+      } catch (Exception $e) {
+        echo 'Error: ' . $e->getMessage();
+      }
+    }
+  }
 
-      $invoices = Invoice::with(['profile.user', 'deductions' => function ($q) {
-        $q->select(DB::raw('SUM(amount) as total_deductions'), 'invoice_id')
-          ->groupBy('invoice_id');
-      }, 'profile'])
-        ->whereHas('profile', function ($q) {
-          $userId = auth()->user()->id;
-          $q->where('user_id', $userId);
-        })
-        ->whereBetween('created_at', [$startDate, $endDate]) // filter by date range
-        ->orderBy('id', 'desc')
-        ->get();
+  public function userDeductionDetails(Request $request)
+  {
+    $invoice_id = $request->id;
+    $data = Invoice::find($invoice_id)
+      ->deductions()
+      ->select('deductions.deduction_type_name', 'deductions.amount')
+      ->get();
+    // ->join('profile_deduction_types', 'profile_deduction_types.id', '=', 'deductions.profile_deduction_type_id')
+    if ($data) {
       return response()->json([
         'success' => true,
-        'data' => $invoices,
-      ], 200);
+        'data' => $data,
+      ]);
     }
   }
 }

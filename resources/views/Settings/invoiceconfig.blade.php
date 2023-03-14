@@ -48,7 +48,7 @@
 
             <div class="row">
               <div class="col-6 mb-3">
-                <button type="button" style="width:100%; height:50px;color:white; background-color: #A4A6B3;" class="btn">Close</button>
+                <button type="button" id="close" style="width:100%; height:50px;color:white; background-color: #A4A6B3;" class="btn">Close</button>
               </div>
               <div class="col-6 mb-3">
                 <button type="submit" style="width:100%; height:50px;color:white; background-color: #CF8029;" class="btn ">Save </button>
@@ -63,14 +63,6 @@
     <div class="col-lg-7 px-2">
       <div class="card shadow bg-white rounded h-100">
         <div class="card-body table-responsive">
-          <!-- <div class="form-group row mt-3">
-            <div class="col-lg-9">
-              <input id="search" type="text" class="form-control" placeholder="Search">
-            </div>
-            <div class="col-lg-3">
-              <button type="submit" class="btn btn-secondary w-100" style="color:white; background-color: #CF8029;width:30%" id="button_search">Search</button>
-            </div>
-          </div> -->
           <div class="card-body table-responsive" id="tbl_invoiceConfig_wrapper">
             <table class="table table-hover table-responsive" id="table_invoiceconfig">
               <thead>
@@ -256,6 +248,17 @@
       }, 1500)
 
     })
+
+    $('#close').on('click', function(e) {
+      e.preventDefault();
+      $("div.spanner").addClass("show");
+
+      setTimeout(function() {
+        $("div.spanner").removeClass("show");
+        $('#invoiceconfigs_store').trigger("reset");
+      }, 1500)
+    })
+
     toast1.toast({
       delay: 5000,
       animation: true
@@ -446,17 +449,17 @@
           console.log("SUCCESS", data);
           if (data.data.data.length > 0) {
             data.data.data.map((item) => {
-              let tr = '<tr style="vertical-align:sub;">';
+              let tr = '<tr style="vertical-align:middle;">';
 
               tr += '<td>' + item.invoice_title + '</td>';
               tr += '<td>' + item.invoice_email + '</td>';
               tr += '<td>' + item.bill_to_address + '</td>';
               tr +=
                 '<td class="text-center"><button value=' + item.id +
-                ' class="editButton btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" > <i class="fa-solid fa-pen-to-square view-hover"></i></button></td>';
+                ' class="editButton btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" > <i class="fa-solid fa-pen-to-square"></i></button></td>';
               tr +=
                 '<td class="text-center"><button value=' + item.id +
-                ' class="deleteButton btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" ><i class="fa-solid fa-trash view-hover-delete"></i></button></td>';
+                ' class="deleteButton btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" ><i class="fa-solid fa-trash"></i></button></td>';
 
               tr += '</tr>';
 
@@ -494,7 +497,7 @@
 
           } else {
             $("#table_invoiceconfig tbody").append(
-              '<tr><td colspan="5" class="text-center">No data</td></tr>');
+              '<tr style="vertical-align: middle;"><td colspan="5" class="text-center">No data</td></tr>');
           }
 
 

@@ -451,8 +451,8 @@ $(document).ready(function() {
               total_deductions ? total_deductions : "0.00",
               PHP(item.converted_amount).format(),
               PHP(item.grand_total_amount).format(),
-              moment.utc(item.created_at).tz('America/New_York').format('YYYY/MM/DD'),
-              moment.utc(item.due_date).tz('America/New_York').format('YYYY/MM/DD'),
+              moment.utc(item.created_at).tz('Asia/Manila').format('YYYY/MM/DD'),
+              moment.utc(item.due_date).tz('Asia/Manila').format('YYYY/MM/DD'),
             ]).draw().node();
             // add class to invoice status cell based on its value
             let invoiceStatusCell = $(newRow).find("td:eq(2)");
@@ -539,8 +539,8 @@ $(document).ready(function() {
               total_deductions ? total_deductions : "0.00",
               PHP(item.converted_amount).format(),
               PHP(item.grand_total_amount).format(),
-              moment.utc(item.created_at).tz('America/New_York').format('YYYY/MM/DD'),
-              moment.utc(item.due_date).tz('America/New_York').format('YYYY/MM/DD'),
+              moment.utc(item.created_at).tz('Asia/Manila').format('YYYY/MM/DD'),
+              moment.utc(item.due_date).tz('Asia/Manila').format('YYYY/MM/DD'),
             ]).draw().node();
             // add class to invoice status cell based on its value
             let invoiceStatusCell = $(newRow).find("td:eq(2)");

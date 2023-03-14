@@ -512,22 +512,28 @@
             <form id="deductiontype_store" method="POST" action="javascript:void(0)" class="g-3 needs-validation" novalidate>
               @csrf
               <input type="text" id="createDeduction_profile_id" hidden>
-              <div class="form-floating form-group mt-3" id="select_deduction_name">
+
+              <div class="row mb-3">
+                <div class="col-12">
+                  <div class="form-floating form-group mt-3" id="select_deduction_name"></div>
+                </div>
               </div>
 
-              <div class="form-group">
-                <div class="form-floating">
-                  <input id="createDeduction_deduction_amount" name="createDeduction_deduction_amount" type="text" class="createDeduction_deduction_amount form-control" placeholder="Amount">
-                  <label for="createDeduction_deduction_amount">Amount</label>
+              <div class="row mb-3">
+                <div class="col-12">
+                  <div class="form-floating">
+                    <input id="createDeduction_deduction_amount" name="createDeduction_deduction_amount" type="text" class="createDeduction_deduction_amount form-control" placeholder="Amount">
+                    <label for="createDeduction_deduction_amount">Amount</label>
+                  </div>
                 </div>
+              </div>
 
-                <div class="row mt-3">
-                  <div class="col">
-                    <button type="button" class="btn btn-secondary w-100" style=" color:#CF8029; background-color:white; " data-bs-dismiss="modal">Close</button>
-                  </div>
-                  <div class="col">
-                    <button type="submit" id="createDeduction_button" class="btn btn-secondary w-100" style="color:White; background-color:#CF8029;">Add</button>
-                  </div>
+              <div class="row mb-3">
+                <div class="col">
+                  <button type="button" class="btn btn-secondary w-100" style=" color:#CF8029; background-color:white; " data-bs-dismiss="modal">Close</button>
+                </div>
+                <div class="col">
+                  <button type="submit" id="createDeduction_button" class="btn btn-secondary w-100" style="color:White; background-color:#CF8029;">Add</button>
                 </div>
               </div>
             </form>
@@ -764,8 +770,11 @@
       e.preventDefault();
       $('#cancel_edit_profile').addClass('d-none');
       $('#edit_profile').removeClass('d-none');
-      location.reload(true); // refresh the page
+
       $(window).scrollTop(0); // scroll to the top
+      setTimeout(function() {
+        location.reload(true); // refresh the page
+      }, 1000);
     })
 
 
@@ -777,7 +786,6 @@
       $('html, body').animate({
         scrollTop: $('#loader_load').offset().top
       }, 'slow');
-
       setTimeout(function() {
         $('div.spanner').removeClass("show");
         $('#file').prop('disabled', false);
@@ -973,27 +981,27 @@
       }, 1500);
     })
 
-    $("#tbl_pagination_invoice").on('click', '.page-item', function() {
-      $('html,body').animate({
-        scrollTop: $('#loader_load').offset().top
-      }, 'slow');
+    // $("#tbl_pagination_invoice").on('click', '.page-item', function() {
+    //   $('html,body').animate({
+    //     scrollTop: $('#loader_load').offset().top
+    //   }, 'slow');
 
-      $("div.spanner").addClass("show");
-      setTimeout(function() {
-        $("div.spanner").removeClass("show")
-      }, 1500);
-    })
+    //   $("div.spanner").addClass("show");
+    //   setTimeout(function() {
+    //     $("div.spanner").removeClass("show")
+    //   }, 1500);
+    // })
 
-    $("#tbl_pagination_deduction").on('click', '.page-item', function() {
-      $('html,body').animate({
-        scrollTop: $('#loader_load').offset().top
-      }, 'slow');
-      $("div.spanner").addClass("show");
-      setTimeout(function() {
-        $("div.spanner").removeClass("show");
+    // $("#tbl_pagination_deduction").on('click', '.page-item', function() {
+    //   $('html,body').animate({
+    //     scrollTop: $('#loader_load').offset().top
+    //   }, 'slow');
+    //   $("div.spanner").addClass("show");
+    //   setTimeout(function() {
+    //     $("div.spanner").removeClass("show");
 
-      }, 1500);
-    })
+    //   }, 1500);
+    // })
 
     $('#filter_all_invoices').on('change', function() {
       $('html,body').animate({
@@ -1155,7 +1163,7 @@
                       minimumFractionDigits: 2
                     }) +
                   '</td>';
-                tr += '<td class="text-end">' + moment.utc(item.created_at).tz('America/New_York')
+                tr += '<td class="text-end">' + moment.utc(item.created_at).tz('Asia/Manila')
                   .format('MM/DD/YYYY') +
                   '</td>';
                 tr += '<td class="text-end">' + moment(item.due_date).format('L') + '</td>';
@@ -1191,15 +1199,11 @@
                   return results !== null ? results[1] || 0 : 0;
                 };
 
-                $('div.spanner').addClass("show");
-                setTimeout(function() {
-                  $('div.spanner').removeClass("show");
-                  let search = $('#search_invoice').val();
-                  show_data({
-                    search: search,
-                    page: $.urlParam('page')
-                  });
-                }, 1500)
+                let search = $('#search_invoice').val();
+                show_data({
+                  search: search,
+                  page: $.urlParam('page')
+                });
 
               })
               let tbl_showing_invoice =
@@ -2303,7 +2307,7 @@
                       .amount)
                     .format() + '</td>';
                   tr += '<td class="text-end">' + moment.utc(item.created_at).tz(
-                    'America/New_York').format(
+                    'Asia/Manila').format(
                     'MM/DD/YYYY') + '</td>';
 
                   tr += '</tr>';
@@ -2333,16 +2337,11 @@
                         );
                       return results !== null ? results[1] || 0 : 0;
                     };
-                    $('div.spanner').addClass("show");
-
-                    setTimeout(function() {
-                      $('div.spanner').removeClass("show");
-                      let search = $('#search_deduction').val();
-                      show_Profilededuction_Table_Active({
-                        search: search,
-                        page: $.urlParam('page')
-                      })
-                    }, 1500)
+                    let search = $('#search_deduction').val();
+                    show_Profilededuction_Table_Active({
+                      search: search,
+                      page: $.urlParam('page')
+                    })
                   })
                 let tbl_showing_deduction =
                   `Showing ${data.data.from} to ${data.data.to} of ${data.data.total} entries`;

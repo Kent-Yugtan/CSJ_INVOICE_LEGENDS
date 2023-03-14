@@ -358,12 +358,13 @@ class ProfileController extends Controller
     // ->join('invoices', 'profiles.id', '=', 'invoices.profile_id')->orderBy('invoices.created_at', 'DESC');
 
     if ($request->search) {
-      $data = $data->where(
-        function ($q) use ($request) {
-          $q->orWhere(DB::raw("CONCAT(first_name, ' ', last_name)"), 'LIKE', '%' . $request->search . '%');
-          $q->orWhere('position', 'LIKE', '%' . $request->search . '%');
-        }
-      );
+      $data = $data
+        ->where(
+          function ($q) use ($request) {
+            $q->orWhere(DB::raw("CONCAT(first_name, ' ', last_name)"), 'LIKE', '%' . $request->search . '%');
+            $q->orWhere('position', 'LIKE', '%' . $request->search . '%');
+          }
+        );
     }
 
     if ($request->page_size) {
