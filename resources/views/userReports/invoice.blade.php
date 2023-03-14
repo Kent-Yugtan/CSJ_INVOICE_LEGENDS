@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.user')
 @section('content-dashboard')
 
 <div class="container-fluid px-4" id="loader_load">
@@ -6,7 +6,7 @@
 
   <div class="card shadow p-2 mb-1 bg-white rounded">
     <div class="card-header">
-      <h1 class="mt-0"><i class="fas fa-file-invoice"></i> Deduction Reports</h1>
+      <h1 class="mt-0"><i class="fas fa-file-invoice"></i> Invoice Reports</h1>
     </div>
   </div>
 
@@ -31,9 +31,9 @@
     </div>
 
     <div class="col-md-12 col-md-12 col-lg-12">
-      <div class="card shadow p-2 mb-1 bg-white rounded">
+      <div class="card shadow p-2 mb-1 bg-white rounded" style="height:100%">
         <div class="card-body table-responsive">
-          <table id="deductionReports" width="100%" style="font-size: 14px;" class="table table-hover">
+          <table id="invoiceReports" style="font-size: 14px;" width="100%" class="table table-hover ">
             <thead>
             </thead>
             <tbody>
@@ -41,6 +41,8 @@
             </tbody>
             <tfoot>
               <tr>
+                <th></th>
+                <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -90,24 +92,10 @@ const PHP = value => currency(value, {
 });
 
 $(document).ready(function() {
-  $(window).on('load', function() {
-    $('div.spanner').addClass('show');
-
-    $('html, body').animate({
-      scrollTop: $('#loader_load').offset.top
-    }, 'smooth');
-
-    setTimeout(function() {
-      $('div.spanner').removeClass('show');
-      show_data_load()
-      from();
-      to();
-    }, 1500);
-
-  })
-  var dataTable = $('#deductionReports').DataTable({
+  var dataTable = $('#invoiceReports').DataTable({
     "footerCallback": function(row, data, start, end, display) {
       var api = this.api();
+
       // converting to interger to find total
       var intVal = function(i) {
         return typeof i === 'string' ?
@@ -117,17 +105,7 @@ $(document).ready(function() {
       };
 
       // computing column Total of the current page only
-      var grossAmount = api
-        .column(5, {
-          page: 'current'
-        })
-        .data()
-        .reduce(function(a, b) {
-          return intVal(a) + intVal(b);
-        }, 0);
-
-
-      var deductionAmount = api
+      var discountAmount = api
         .column(6, {
           page: 'current'
         })
@@ -136,8 +114,7 @@ $(document).ready(function() {
           return intVal(a) + intVal(b);
         }, 0);
 
-
-      var netAmount = api
+      var deductionAmount = api
         .column(7, {
           page: 'current'
         })
@@ -146,11 +123,30 @@ $(document).ready(function() {
           return intVal(a) + intVal(b);
         }, 0);
 
+      var grossAmount = api
+        .column(8, {
+          page: 'current'
+        })
+        .data()
+        .reduce(function(a, b) {
+          return intVal(a) + intVal(b);
+        }, 0);
+
+      var netAmount = api
+        .column(9, {
+          page: 'current'
+        })
+        .data()
+        .reduce(function(a, b) {
+          return intVal(a) + intVal(b);
+        }, 0);
+
       // Update the footer with the calculated values
-      $(api.column(2).footer()).html('Total');
-      $(api.column(5).footer()).html(PHP(grossAmount).format());
-      $(api.column(6).footer()).html(PHP(deductionAmount).format());
-      $(api.column(7).footer()).html(PHP(netAmount).format());
+      $(api.column(1).footer()).html('Total');
+      $(api.column(6).footer()).html(PHP(discountAmount).format());
+      $(api.column(7).footer()).html(PHP(deductionAmount).format());
+      $(api.column(8).footer()).html(PHP(grossAmount).format());
+      $(api.column(9).footer()).html(PHP(netAmount).format());
 
     },
     responsive: true,
@@ -166,7 +162,7 @@ $(document).ready(function() {
             page: 'current',
             search: 'applied'
           },
-          columns: [2, 3, 4, 6, 8]
+          columns: [1, 2, 3, 5, 6, 7, 8, 9, 10, 11]
         },
         footer: true,
       },
@@ -182,7 +178,7 @@ $(document).ready(function() {
             page: 'current',
             search: 'applied'
           },
-          columns: [2, 3, 4, 6, 8]
+          columns: [1, 2, 3, 5, 6, 7, 8, 9, 10, 11]
         },
         footer: true,
         customize: function(xlsx) {
@@ -203,7 +199,10 @@ $(document).ready(function() {
               cell.attr('t', 'n');
             }
           });
+
         }
+
+
       }, {
         extend: 'pdfHtml5',
         text: "PDF",
@@ -217,26 +216,20 @@ $(document).ready(function() {
             page: 'current',
             search: 'applied'
           },
-          columns: [2, 3, 4, 6, 8],
-
+          columns: [1, 2, 3, 5, 6, 7, 8, 9, 10, 11]
         }, // export only current page
         customize: function(doc) {
           //   var col1 = '';
-          doc.content[1].table.widths = [100, 100, 100, 100, 100];
           doc.content[1].table.body.forEach(function(row, rowIndex) {
-            if (rowIndex >= 0) { // Exclude first row
+            if (rowIndex > 0) { // Exclude first row
               row.forEach(function(cell, cellIndex) {
-                if (cellIndex >= 0 && cellIndex <= 2) {
-                  cell.alignment = 'left';
-                }
-                if (cellIndex >= 3 && cellIndex <= 4) {
+                if (cellIndex >= 5 && cellIndex <= 8) { // Columns 5, 6, 7, 8
                   cell.alignment = 'right';
                 }
-
               });
             }
           });
-          doc.pageOrientation = 'PORTRAIT';
+          doc.pageOrientation = 'landscape';
           doc.pageSize = 'A4'; // set orientation to landscape
         },
 
@@ -252,7 +245,7 @@ $(document).ready(function() {
             page: 'current',
             search: 'applied'
           },
-          columns: [2, 3, 4, 6, 8]
+          columns: [1, 2, 3, 5, 6, 7, 8, 9, 10, 11]
         }, // export only current page
         autoPrint: false, // disable print dialog
         customize: function(doc) {
@@ -267,21 +260,11 @@ $(document).ready(function() {
         },
       }
     ],
-    order: [
-      [2, 'desc']
-    ],
     "createdRow": function(row, data, dataIndex) {
       $(row).css('height', '50px');
       $(row).find('td').css('vertical-align', 'middle');
     },
     "columns": [{
-        className: 'dt-control',
-        orderable: false,
-        defaultContent: '',
-        data: null,
-
-      },
-      {
         "title": "invoice_id"
       },
       {
@@ -294,10 +277,19 @@ $(document).ready(function() {
         "title": "Status"
       },
       {
-        "title": "Gross Amount"
+        "title": "Position"
+      },
+      {
+        "title": "Discount Type"
+      },
+      {
+        "title": "Discount Amount"
       },
       {
         "title": "Deductions Amount"
+      },
+      {
+        "title": "Gross Amount"
       },
       {
         "title": "Net Amount"
@@ -309,100 +301,41 @@ $(document).ready(function() {
         "title": "Due Date"
       }
     ],
+    order: [
+      [1, 'desc']
+    ],
     "columnDefs": [{
-        targets: [1, 5, 7, 9],
+        targets: [0, 4],
         visible: false,
         searchable: false,
-      }, {
-        targets: [5, 6, 7],
+      },
+      {
+        targets: [6, 7, 8, 9],
         className: 'text-end'
       },
       {
-        targets: [8, 9],
-        className: 'text-end'
-      }
+        targets: [10, 11],
+        className: 'text-center'
+      },
     ],
 
   });
 
-  function format(d) {
-    // `d` is the original data object for the row
-    return (
-      '<table id="deductionTable" cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
-      '<tbody>' +
-      '<tr>' +
-      '<td class="fw-bold">Deduction Name</td>' +
-      '<td class="fw-bold">Deduction Amount</td>' +
-      '<td>' +
-      '</td>' +
-      '</tr>' +
-      (d && d.length > 0 ?
-        d.map(function(item) {
-          return '<tr>' +
-            '<td>' + item.deduction_type_name + '</td>' +
-            '<td class="text-end">' + PHP(item.amount).format() + '</td>' +
-            '</tr>';
-        }).join('') :
-        '') +
-      '</tbody>' +
-      '</table>'
-    );
-  }
+  $(window).on('load', function() {
+    $('div.spanner').addClass('show');
 
-  $('#deductionReports tbody').on('click', 'td.dt-control', function() {
-    var tr = $(this).closest('tr');
-    var row = dataTable.row(tr);
+    $('html, body').animate({
+      scrollTop: $('#loader_load').offset.top
+    }, 'smooth');
 
-    var invoice_id = $('#deductionReports').DataTable().row(this).data()[1];
-    console.log("INVOICE", invoice_id);
+    setTimeout(function() {
+      $('div.spanner').removeClass('show');
+      show_data_load()
+      from();
+      to();
+    }, 1500);
 
-    axios.post(apiUrl + '/api/reports/deductionDetails/' + invoice_id, {
-      headers: {
-        Authorization: token,
-      }
-    }).then(function(response) {
-      let data = response.data;
-      if (data.success) {
-        console.log("SUCCESS", data);
-        if (data.data.length > 0) {
-          // data.data.map((item) => {
-          if (row.child.isShown()) {
-            // This row is already open - close it
-            row.child.hide();
-            tr.removeClass('shown');
-          } else {
-            // Open this row
-            row.child(format(data.data)).show();
-            tr.addClass('shown');
-            console.log("row.data()", data.data);
-          }
-          // })
-        } else {
-          let myArray = [];
-          let no_data = {
-            deduction_type_name: 'No Data',
-            amount: '',
-          }
-          myArray.push(no_data);
-          console.log("NO DATA", no_data);
-          if (row.child.isShown()) {
-            // This row is already open - close it
-            row.child.hide();
-            tr.removeClass('shown');
-          } else {
-            // Open this row
-            row.child(format(myArray)).show();
-            tr.addClass('shown');
-            console.log("row.data()", myArray);
-          }
-        }
-      }
-    }).catch(function(error) {
-      console.log("ERROR", error);
-    })
-
-  });
-
+  })
 
   function from() {
     // START OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
@@ -440,7 +373,6 @@ $(document).ready(function() {
     // END OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd
   }
 
-
   let toast1 = $('.toast1');
   toast1.toast({
     delay: 3000,
@@ -475,17 +407,19 @@ $(document).ready(function() {
       toDate: to,
       ...filters
     }
-    axios.get(`${apiUrl}/api/reports/deductionReport_click?${new URLSearchParams(filter)}`, {
+    console.log("success click",
+      filter);
+    axios.get(`${apiUrl}/api/userReports/userInvoiceReport_click?${new URLSearchParams(filter)}`, {
       headers: {
         Authorization: token,
       },
     }).then(function(response) {
       let data = response.data;
       if (data.success) {
-        let table = $('#deductionReports').DataTable();
+        let table = $('#invoiceReports').DataTable();
         table.clear().draw();
         if (data.data.length > 0) {
-          console.log("success", data);
+          console.log("success click", data);
           data.data.map((item) => {
 
 
@@ -507,19 +441,21 @@ $(document).ready(function() {
             }
 
             let newRow = table.row.add([
-              null,
               item.id,
               item.invoice_no,
               item.profile.user.first_name + " " + item.profile.user.last_name,
               item.invoice_status,
-              PHP(item.converted_amount).format(),
+              item.profile.position,
+              discountType,
+              PHP(dollarAmountofDisountTotal).format(),
               total_deductions ? total_deductions : "0.00",
+              PHP(item.converted_amount).format(),
               PHP(item.grand_total_amount).format(),
               moment.utc(item.created_at).tz('Asia/Manila').format('YYYY/MM/DD'),
               moment.utc(item.due_date).tz('Asia/Manila').format('YYYY/MM/DD'),
             ]).draw().node();
             // add class to invoice status cell based on its value
-            let invoiceStatusCell = $(newRow).find("td:eq(3)");
+            let invoiceStatusCell = $(newRow).find("td:eq(2)");
             if (item.invoice_status == "Paid") {
               invoiceStatusCell.css("background-color", "#198754");
               invoiceStatusCell.css("border-color", "#198754");
@@ -561,17 +497,18 @@ $(document).ready(function() {
   }
 
   function show_data_load() {
-    axios.get(apiUrl + '/api/reports/deductionReport_load', {
+
+    axios.get(apiUrl + '/api/userReports/userInvoiceReport_load', {
       headers: {
         Authorization: token,
       },
     }).then(function(response) {
       let data = response.data;
       if (data.success) {
-        let table = $('#deductionReports').DataTable();
+        let table = $('#invoiceReports').DataTable();
         table.clear().draw();
-        console.log("success", data);
         if (data.data.length > 0) {
+          console.log("success invoice", data);
           data.data.map((item) => {
             let total_deductions = 0;
             let discountType = item.discount_type ? item.discount_type : "N/A";
@@ -592,19 +529,21 @@ $(document).ready(function() {
 
 
             let newRow = table.row.add([
-              null,
               item.id,
               item.invoice_no,
               item.profile.user.first_name + " " + item.profile.user.last_name,
               item.invoice_status,
-              PHP(item.converted_amount).format(),
+              item.profile.position,
+              discountType,
+              PHP(dollarAmountofDisountTotal).format(),
               total_deductions ? total_deductions : "0.00",
+              PHP(item.converted_amount).format(),
               PHP(item.grand_total_amount).format(),
               moment.utc(item.created_at).tz('Asia/Manila').format('YYYY/MM/DD'),
               moment.utc(item.due_date).tz('Asia/Manila').format('YYYY/MM/DD'),
             ]).draw().node();
             // add class to invoice status cell based on its value
-            let invoiceStatusCell = $(newRow).find("td:eq(3)");
+            let invoiceStatusCell = $(newRow).find("td:eq(2)");
             if (item.invoice_status == "Paid") {
               invoiceStatusCell.css("background-color", "#198754");
               invoiceStatusCell.css("border-color", "#198754");

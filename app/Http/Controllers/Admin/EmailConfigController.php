@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\EmailConfig;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class EmailConfigController extends Controller
 {
@@ -80,9 +81,18 @@ class EmailConfigController extends Controller
    * @param  \App\Models\EmailConfig  $emailConfig
    * @return \Illuminate\Http\Response
    */
-  public function destroy(EmailConfig $emailConfig)
+  public function destroy(Request $request)
   {
     //
+    $id = $request->id;
+    $email_config = EmailConfig::where('id', $id)->delete();
+
+    if ($email_config) {
+      return response()->json([
+        'success' => true,
+        'message' => 'Data is successfully deleted.'
+      ], 200);
+    }
   }
 
   public function show_config()

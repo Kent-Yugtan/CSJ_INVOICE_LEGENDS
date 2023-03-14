@@ -97,19 +97,19 @@ $(document).ready(function() {
     }, 1500)
   })
 
-  $("#tbl_user_pagination").on('click', '.page-item', function() {
-    $('html,body').animate({
-      scrollTop: $('#loader_load').offset().top
-    }, 'slow');
+  // $("#tbl_user_pagination").on('click', '.page-item', function() {
+  //   $('html,body').animate({
+  //     scrollTop: $('#loader_load').offset().top
+  //   }, 'slow');
 
-    $("div.spanner").addClass("show");
-    setTimeout(function() {
-      $("div.spanner").removeClass("show");
-      $('html,body').animate({
-        scrollTop: $('#tbl_user_pagination').offset().top
-      }, 'slow');
-    }, 1500);
-  })
+  //   $("div.spanner").addClass("show");
+  //   setTimeout(function() {
+  //     $("div.spanner").removeClass("show");
+  //     $('html,body').animate({
+  //       scrollTop: $('#tbl_user_pagination').offset().top
+  //     }, 'slow');
+  //   }, 1500);
+  // })
 
 
   function active_count_paid() {
@@ -174,7 +174,7 @@ $(document).ready(function() {
     let filter = {
       page_size: 5,
       page: page ? page : 1,
-      search: $('#search').val(),
+      search: $('#search').val() ? $('#search').val() : '',
       ...filters,
     }
     axios
@@ -185,12 +185,12 @@ $(document).ready(function() {
       })
       .then(function(res) {
         res = res.data;
-        console.log('res123', res);
         if (res.success) {
+          console.log('res123', res);
           $('#tbl_user tbody').empty();
           if (res.data.data.length > 0) {
             res.data.data.map((item) => {
-              let tr = '<tr style="vertical-align:sub;">';
+              let tr = '<tr style="vertical-align:middle;">';
               if (item.file_path) {
                 tr +=
                   '<td>  <img style="width:40px;" class="rounded-pill" src ="' +
@@ -201,7 +201,6 @@ $(document).ready(function() {
                   '<td>  <img style="width:40px;" class="rounded-pill" src ="/images/default.png"> ' +
                   item.full_name + ' </td>';
               }
-
               tr += '<td>' + item.profile_status + '</td>';
               tr += '<td>' + item.phone_number + '</td>';
               tr += '<td>' + item.position + '</td>';
@@ -226,7 +225,6 @@ $(document).ready(function() {
                 // console.log("DIFF", Math.round(diff));
                 tr += '<td>' + Math.round(diff ? diff : 0) +
                   ' Days ago</td>';
-
                 tr +=
                   '<td  class="text-center"> <a href="' + apiUrl +
                   '/admin/activeProfile/' +
@@ -249,7 +247,6 @@ $(document).ready(function() {
                     '<td>  <img style="width:40px;" class="rounded-pill" src ="/images/default.png"> ' +
                     item.full_name + ' </td>';
                 }
-
                 tr += '<td>' + item.profile_status + '</td>';
                 tr += '<td>' + item
                   .phone_number + '</td>';
@@ -261,7 +258,6 @@ $(document).ready(function() {
                   '/admin/activeProfile/' +
                   item.id + "/" + item.profile.id +
                   '" class="btn btn-outline-primary"><i class="fa-sharp fa-solid fa-eye"></i></a> </td>';
-
                 tr += '</tr>';
                 $("#tbl_user tbody").append(tr);
                 return ''
@@ -286,7 +282,7 @@ $(document).ready(function() {
                 return results !== null ? results[1] || 0 : 0;
               };
 
-              let search = $('#search').val();
+              let search = $('#search').val() ? $('#search').val() : '';
               show_data({
                 search: search,
                 page: $.urlParam('page')
@@ -302,7 +298,7 @@ $(document).ready(function() {
         }
       })
       .catch(function(error) {
-        // console.log("catch error");
+        console.log("catch error");
       });
   }
 

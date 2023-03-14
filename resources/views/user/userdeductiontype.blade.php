@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.user')
 @section('content-dashboard')
 <div class="container-fluid px-4 pb-4" id="loader_load">
   <h1 class="mt-0">Deductions</h1>
@@ -81,7 +81,7 @@
               <div class="row mt-3">
                 <div class="col">
                   <button type="button" id="close" class="btn btn-secondary w-100"
-                    style=" color:#CF8029; background-color:white; ">Close</button>
+                    style=" color:#CF8029; background-color:white; " data-bs-dismiss="modal">Close</button>
                 </div>
                 <div class="col">
                   <button type="submit" class="btn btn-secondary w-100"
@@ -212,6 +212,7 @@ const PHP = value => currency(value, {
 });
 $(document).ready(function() {
 
+
   $(window).on('load', function() {
     $('div.spanner').addClass('show');
     setTimeout(function() {
@@ -243,6 +244,12 @@ $(document).ready(function() {
     animation: true
   });
 
+  $('#close').on('click', function(e) {
+    e.preventDefault();
+    $('#deductiontype_store').trigger('reset');
+    $('#addModal').modal('hide');
+  })
+
   $('.close').on('click', function(e) {
     e.preventDefault();
     toast1.toast('hide');
@@ -271,16 +278,16 @@ $(document).ready(function() {
           if (res.data.data.length > 0) {
             res.data.data.map((item) => {
               let tr = '<tr style="vertical-align: middle;">';
-              tr += '<td >' + item.deduction_name +
+              tr += '<td class="td" >' + item.deduction_name +
                 '</td>';
-              tr += '<td class="text-end">' + PHP(
+              tr += '<td class="td text-end">' + PHP(
                 item
                 .deduction_amount).format()
               '</td>';
               tr +=
                 '<td  class="text-center"> <button value=' +
                 item.id +
-                ' class="editButton btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" ><i class="fa-solid fa-pen-to-square"></i></button><button value=' +
+                ' class="editButton btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" ><i class="fa-solid fa-pen-to-square view-hover"></i></button><button value=' +
                 item.id +
                 ' class="deleteButton btn btn-outline-danger ms-3" data-bs-toggle="modal" data-bs-target="#deleteModal" ><i class="fa-solid fa-trash"></i></button> </td>';
               tr += '</tr>';
@@ -326,13 +333,8 @@ $(document).ready(function() {
       .catch(function(error) {
         console.log("catch error", error);
       });
-  }
 
-  $('#close').on('click', function(e) {
-    e.preventDefault();
-    $('#deductiontype_store').trigger('reset');
-    $('#addModal').modal('hide');
-  })
+  }
 
   $("#addModal").on('hide.bs.modal', function() {
     // window.location.reload();
@@ -345,6 +347,8 @@ $(document).ready(function() {
   });
 
   $("#editModal").on('hide.bs.modal', function() {
+    // window.location.reload();
+    // // show_data();
     $("div.spanner").addClass("show");
     setTimeout(function() {
       $("div.spanner").removeClass("show");

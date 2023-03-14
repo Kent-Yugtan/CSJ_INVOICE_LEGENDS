@@ -42,23 +42,20 @@ Route::middleware(['AuthCheck'])->group(function () {
   Route::get('/admin/dashboard', [DashboardController::class, 'index']);
   Route::get('/settings/invoice', [InvoiceController::class, 'current_createinvoice']);
   Route::get('/admin/profile', [ProfileController::class, 'index']);
-  // Route::post('admin/SaveProfile', [ProfileController::class, 'store']);
 
   Route::get('/admin/current', [ProfileController::class, 'current_show']);
   Route::get('/admin/activeProfile/{id}/{profile_id}', [ProfileController::class, 'activeProfile']);
   Route::get('/admin/inactiveProfile/{id}/{profile_id}', [ProfileController::class, 'inactiveProfile']);
   Route::get('/admin/inactive', [ProfileController::class, 'inactive']);
 
-  // Route::get('/invoice/add', InvoiceController::class);
-  // Route::get('invoice/add_invoice', [InvoiceController::class, 'add_invoice']);
   Route::get('/invoice/current', [InvoiceController::class, 'current']);
   Route::get('/invoice/inactive', [InvoiceController::class, 'inactive']);
   Route::get('/invoice/addInvoice', [InvoiceController::class, 'add_invoice']);
   Route::get('/admin/editInvoice/{id}', [InvoiceController::class, 'edit_invoice']);
 
-
   // POST DEDUCTION TYPES TABLE
   Route::get('/settings/deductiontype', [DeductionTypeController::class, 'view_deductiontype']);
+  Route::get('/user/userdeductiontype', [DeductionTypeController::class, 'view_userdeductiontype']);
 
   // SETTINGS EMAIL CONFIG
   Route::get('/settings/emailconfig', [EmailConfigController::class, 'show_config']);
@@ -71,14 +68,20 @@ Route::middleware(['AuthCheck'])->group(function () {
   // USER ROUTES 
   Route::get('/user/dashboard', [DashboardController::class, 'userindex']);
   Route::get('/user/profile', [ProfileController::class, 'userindex']);
-  Route::get('/user/current', [ProfileController::class, 'usercurrent_show']);
   Route::get('/user/activeProfile/{id}/{profile_id}', [ProfileController::class, 'userviewProfile']);
   Route::get('/user/inactive', [ProfileController::class, 'userinactive']);
-  Route::get('/user/editInvoice/', [InvoiceController::class, 'useredit_invoice']);
+  Route::get('/user/editInvoice/{id}', [InvoiceController::class, 'edit_userInvoice']);
+  Route::get('/user/addInvoice', [InvoiceController::class, 'user_addInvoice']);
+  Route::get('/user/currentActiveInvoice', [InvoiceController::class, 'user_currentActiveInvoice']);
+  Route::get('/user/currentInactiveInvoice', [InvoiceController::class, 'user_currentInactiveInvoice']);
 
   // FOR REPORTS
   Route::get('/reports/invoice', [InvoiceController::class, 'reports_invoice']);
   Route::get('/reports/deduction', [InvoiceController::class, 'reports_deduction']);
+
+  // FOR USER REPORTS
+  Route::get('/userReports/invoice', [InvoiceController::class, 'userReports_invoice']);
+  Route::get('/userReports/deduction', [InvoiceController::class, 'userReports_deduction']);
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

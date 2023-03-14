@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon as CarbonCarbon;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+use Exception;
 
 class InvoiceController extends Controller
 {
@@ -143,6 +144,15 @@ class InvoiceController extends Controller
     return view('reports.deduction');
   }
 
+  public function userReports_invoice()
+  {
+    return view('userReports.invoice');
+  }
+  public function userReports_deduction()
+  {
+    return view('useRreports.deduction');
+  }
+
   public function current()
   {
     return view('invoice.current');
@@ -168,12 +178,26 @@ class InvoiceController extends Controller
   {
     return view('admin.editInvoice');
   }
-
-  // User
-  public function useredit_invoice()
+  public function edit_userInvoice()
   {
-    return view('user.usereditInvoice');
+    return view('user.editInvoice');
   }
+
+  public function user_addInvoice()
+  {
+    return view('user.UserAddInvoice');
+  }
+
+  public function user_currentActiveInvoice()
+  {
+    return view('user.currentActiveInvoice');
+  }
+
+  public function user_currentInactiveInvoice()
+  {
+    return view('user.currentInactiveInvoice');
+  }
+
 
   public function invoiceConfig()
   {
@@ -682,6 +706,7 @@ class InvoiceController extends Controller
       ]);
     }
   }
+
   public function show_profileDeductionType_Button(Request $request)
   {
 
@@ -816,6 +841,7 @@ class InvoiceController extends Controller
       'data' => $invoices,
     ], 200);
   }
+
   public function search_statusActive_invoice(Request $request)
   {
     $invoices = Invoice::with(['profile.user', 'profile'])->whereHas('profile', function ($query) {
@@ -879,11 +905,13 @@ class InvoiceController extends Controller
   {
 
     $invoices = Invoice::with('profile.user')->where('status', 'Inactive');
+
     if (isset($request->search)) {
       $invoices = $invoices->where(
         function ($q) use ($request) {
           $q->orWhere('invoice_no', 'LIKE', '%' . $request->search . '%');
           $q->orWhere('invoice_status', 'LIKE', '%' . $request->search . '%');
+          $q->orWhere('status', 'LIKE', '%' . $request->search . '%');
         }
       );
     }
@@ -1067,6 +1095,7 @@ class InvoiceController extends Controller
       'data' =>  $invoices,
     ], 200);
   }
+
   public function show_overdueInvoices(Request $request)
   {
     // $findProfile = Profile::firstWhere('user_id', $request->user_id);
@@ -1108,11 +1137,6 @@ class InvoiceController extends Controller
 
   public function active_paid_invoice_count()
   {
-    // $data = Invoice::join('profiles', 'profiles.id', 'invoices.profile_id')
-    //   ->where('profiles.profile_status', 'Active')
-    //   ->where('invoices.status', 'Active')
-    //   ->where('invoices.invoice_status', 'Paid')
-    //   ->get();
     $data = Invoice::with('profile')
       ->whereHas('profile', function ($query) {
         $query->where('profile_status', 'Active');
@@ -1129,11 +1153,6 @@ class InvoiceController extends Controller
 
   public function active_pending_invoice_count()
   {
-    // $data = Invoice::join('profiles', 'profiles.id', 'invoices.profile_id')
-    //   ->where('profiles.profile_status', 'Active')
-    //   ->where('invoices.status', 'Active')
-    //   ->where('invoices.invoice_status', 'Pending')
-    //   ->get();
     $data = Invoice::with('profile')
       ->whereHas('profile', function ($query) {
         $query->where('profile_status', 'Active');
@@ -1491,13 +1510,11 @@ class InvoiceController extends Controller
   public function invoiceReport_load(Request $request)
   {
     // your other code here
-    $from = date('Y-m-d', strtotime($request->from));
-    $to = date('Y-m-d', strtotime($request->to));
     $data = Invoice::with(['profile.user', 'deductions' => function ($q) {
       $q->select(DB::raw('SUM(amount) as total_deductions'), 'invoice_id')
         ->groupBy('invoice_id');
     }])
-      ->orderBy('id', 'Desc')
+      ->orderBy('invoices.id', 'Desc')
       ->get();
 
     if ($data) {
@@ -1510,27 +1527,30 @@ class InvoiceController extends Controller
 
   public function invoiceReport_click(Request $request)
   {
-
     $rules = $request->validate([
       'fromDate' => 'required',
       'toDate' => 'required',
     ]);
 
-    if (isset($rules['fromDate']) && isset($rules['toDate'])) {
-      $startDate = Carbon::createFromFormat('Y-m-d', $rules['fromDate'])->startOfDay();
-      $endDate = Carbon::createFromFormat('Y-m-d', $rules['toDate'])->endOfDay();
+    if (isset($request->fromDate) && isset($request->toDate)) {
+      try {
+        $startDate = Carbon::createFromFormat('Y/m/d', $request->fromDate)->startOfDay();
+        $endDate = Carbon::createFromFormat('Y/m/d', $request->toDate)->endOfDay();
 
-      $invoices = Invoice::with(['profile.user', 'deductions' => function ($q) {
-        $q->select(DB::raw('SUM(amount) as total_deductions'), 'invoice_id')
-          ->groupBy('invoice_id');
-      }])
-        ->whereBetween('created_at', [$startDate, $endDate]) // filter by date range
-        ->orderBy('id', 'desc')
-        ->get();
-      return response()->json([
-        'success' => true,
-        'data' => $invoices,
-      ], 200);
+        $invoices = Invoice::with(['profile.user', 'deductions' => function ($q) {
+          $q->select(DB::raw('SUM(amount) as total_deductions'), 'invoice_id')
+            ->groupBy('invoice_id');
+        }])
+          ->whereBetween('created_at', [$startDate, $endDate]) // filter by date range
+          ->orderBy('id', 'desc')
+          ->get();
+        return response()->json([
+          'success' => true,
+          'data' => $invoices,
+        ], 200);
+      } catch (Exception $e) {
+        echo 'Error: ' . $e->getMessage();
+      }
     }
   }
   public function deductionReport_load(Request $request)
@@ -1556,27 +1576,30 @@ class InvoiceController extends Controller
 
   public function deductionReport_click(Request $request)
   {
-
     $rules = $request->validate([
       'fromDate' => 'required',
       'toDate' => 'required',
     ]);
 
-    if (isset($rules['fromDate']) && isset($rules['toDate'])) {
-      $startDate = Carbon::createFromFormat('Y-m-d', $rules['fromDate'])->startOfDay();
-      $endDate = Carbon::createFromFormat('Y-m-d', $rules['toDate'])->endOfDay();
+    if (isset($request->fromDate) && isset($request->toDate)) {
+      try {
+        $startDate = Carbon::createFromFormat('Y/m/d', $request->fromDate)->startOfDay();
+        $endDate = Carbon::createFromFormat('Y/m/d', $request->toDate)->endOfDay();
 
-      $invoices = Invoice::with(['profile.user', 'deductions' => function ($q) {
-        $q->select(DB::raw('SUM(amount) as total_deductions'), 'invoice_id')
-          ->groupBy('invoice_id');
-      }])
-        ->whereBetween('created_at', [$startDate, $endDate]) // filter by date range
-        ->orderBy('id', 'desc')
-        ->get();
-      return response()->json([
-        'success' => true,
-        'data' => $invoices,
-      ], 200);
+        $invoices = Invoice::with(['profile.user', 'deductions' => function ($q) {
+          $q->select(DB::raw('SUM(amount) as total_deductions'), 'invoice_id')
+            ->groupBy('invoice_id');
+        }])
+          ->whereBetween('created_at', [$startDate, $endDate]) // filter by date range
+          ->orderBy('id', 'desc')
+          ->get();
+        return response()->json([
+          'success' => true,
+          'data' => $invoices,
+        ], 200);
+      } catch (Exception $e) {
+        echo 'Error: ' . $e->getMessage();
+      }
     }
   }
 
@@ -1595,26 +1618,533 @@ class InvoiceController extends Controller
       ]);
     }
   }
+
+  // USER'S FUNCTION
+  // DASHBOARD PAGE
+  public function get_quickInvoiceUser_PDT(Request $request)
+  {
+    $profile_id = $request->id;
+    $data = ProfileDeductionTypes::select('id', 'deduction_type_name', 'amount')->where('profile_id', $profile_id)->get();
+    $sum = $data->sum('amount');
+
+    $otherValues = [];
+    foreach ($data as $item) {
+      $otherValues[] = [
+        'id' => $item->id,
+        'deduction_type_name' => $item->deduction_type_name,
+        'amount' => $item->amount,
+        'sum' => $sum,
+      ];
+    }
+    return response()->json([
+      'success' => true,
+      'data' => $otherValues,
+    ], 200);
+  }
+
+  public function check_userActivependingInvoices(Request $request)
+  {
+    $userId = auth()->user()->id;
+    $invoices = Invoice::with('profile.user', 'profile')
+      ->whereHas('profile', function ($query) {
+        $query->where('profile_status', 'Active');
+      })
+      ->where(DB::raw('(select user_id from profiles where profiles.id=profile_id)'), $userId)
+      ->where('status', 'Active')
+      ->where('invoice_status', 'Pending')
+      ->orderby('created_at', 'desc')->get();
+    return response()->json([
+      'success' => true,
+      'data' =>  $invoices,
+    ], 200);
+  }
+
+  public function show_userpendingInvoices(Request $request)
+  {
+    $userId = auth()->user()->id;
+    $invoices = Invoice::with('profile', 'profile.user')
+      ->whereHas('profile', function ($query) {
+        $query->where('profiles.profile_status', 'Active');
+      })
+      ->where(DB::raw('(select user_id from profiles where profiles.id=profile_id)'), $userId)
+      ->where('status', 'Active')
+      ->where('invoice_status', 'Pending')
+      ->orderby('created_at', 'desc');
+    if ($request->page_size) {
+      $invoices = $invoices->limit($request->page_size)
+        ->paginate($request->page_size, ['*'], 'page', $request->page)
+        ->toArray();
+    } else {
+      $invoices = $invoices->get();
+    }
+
+    return response()->json([
+      'success' => true,
+      'data' =>  $invoices,
+    ], 200);
+  }
+
+  public function show_useroverdueInvoices(Request $request)
+  {
+    $userId = auth()->user()->id;
+    $invoices = Invoice::with('profile', 'profile.user')
+      ->whereHas('profile', function ($query) {
+        $query->where('profiles.profile_status', 'Active');
+      })
+      ->where(DB::raw('(select user_id from profiles where profiles.id=profile_id)'), $userId)
+      ->where('status', 'Active')
+      ->where('invoice_status', 'Overdue')
+      ->orderby('created_at', 'desc');
+
+    if ($request->page_size) {
+      $invoices = $invoices->limit($request->page_size)
+        ->paginate($request->page_size, ['*'], 'page', $request->page)
+        ->toArray();
+    } else {
+      $invoices = $invoices->get();
+    }
+
+    return response()->json([
+      'success' => true,
+      'data' =>  $invoices,
+    ], 200);
+  }
+
+  public function active_user_paid_invoice_count()
+  {
+    $data = Invoice::with('profile')
+      ->whereHas('profile', function ($query) {
+        $userId = auth()->user()->id;
+        $query->where('profile_status', 'Active');
+        $query->where('user_id', $userId);
+      })->where('status', 'Active')
+      ->where('invoice_status', 'Paid')
+      ->get();
+
+    if ($data) {
+      return response()->json([
+        'success' => true,
+        'data' => $data,
+      ], 200);
+    }
+  }
+
+  public function active_user_pending_invoice_count()
+  {
+    $data = Invoice::with('profile')
+      ->whereHas('profile', function ($query) {
+        $userId = auth()->user()->id;
+        $query->where('profile_status', 'Active');
+        $query->where('user_id', $userId);
+      })->where('status', 'Active')
+      ->where('invoice_status', 'Pending')
+      ->get();
+
+    if ($data) {
+      return response()->json([
+        'success' => true,
+        'data' => $data,
+      ], 200);
+    }
+  }
+
+  public function active_user_overdue_invoice_count()
+  {
+
+    $data = Invoice::with('profile')
+      ->whereHas('profile', function ($query) {
+        $userId = auth()->user()->id;
+        $query->where('profile_status', 'Active');
+        $query->where('user_id', $userId);
+      })->where('status', 'Active')
+      ->where('invoice_status', 'Overdue')
+      ->get();
+    if ($data) {
+      return response()->json([
+        'success' => true,
+        'data' => $data,
+      ], 200);
+    }
+  }
+
+  public function active_user_cancelled_invoice_count()
+  {
+
+    $data = Invoice::with('profile')
+      ->whereHas('profile', function ($query) {
+        $userId = auth()->user()->id;
+        $query->where('profile_status', 'Active');
+        $query->where('user_id', $userId);
+      })->where('status', 'Active')
+      ->where('invoice_status', 'Cancelled')
+      ->get();
+    if ($data) {
+      return response()->json([
+        'success' => true,
+        'data' => $data,
+      ], 200);
+    }
+  }
+
+  //   PROFILE PAGE
+  public function getUserInvoiceStatus(Request $request)
+  {
+    $invoice_no = $request->id;
+    if ($invoice_no) {
+      $data = Invoice::find($invoice_no);
+      return response()->json([
+        'success' => true,
+        'data' => $data->invoice_status,
+      ]);
+    }
+  }
+
+  public function show_userInvoice(Request $request)
+  {
+    $userId = auth()->user()->id;
+    if ($userId) {
+      $invoices = Invoice::with('profile.user', 'deductions.profile_deduction_types.deduction_type', 'invoice_items')
+        ->where('status', 'Active')
+        ->where(DB::raw('(select user_id from profiles where profiles.id = profile_id)'), $userId);
+
+      if (isset($request->search)) {
+        $invoices = $invoices->where(
+          function ($q) use ($request) {
+            $q->orWhere('invoice_no', 'LIKE', '%' . $request->search . '%');
+            $q->orWhere('invoice_status', 'LIKE', '%' . $request->search . '%');
+            $q->orWhere('grand_total_amount', 'LIKE', '%' . $request->search . '%');
+            $q->orWhere('due_date', 'LIKE', '%' . $request->search . '%');
+          }
+        );
+      }
+
+      if (isset($request->filter_all_invoices)) {
+        if ($request->filter_all_invoices == 'All') {
+          $invoices = $invoices->where('invoice_status', '<>', '');
+        } else {
+          $invoices = $invoices->where('invoice_status', $request->filter_all_invoices);
+        }
+      }
+
+      $invoices = $invoices->orderBy("invoice_no", "desc");
+
+      if ($request->page_size) {
+        $invoices = $invoices->limit($request->page_size)
+          ->paginate($request->page_size, ['*'], 'page', $request->page)
+          ->toArray();
+      } else {
+        $invoices = $invoices->get();
+      }
+
+      return response()->json([
+        'success' => true,
+        'data' => $invoices,
+      ], 200);
+    }
+  }
+
+  // CHECK PROFILE
+  public function check_userProfile(Request $request)
+  {
+    $userId = auth()->user()->id;
+    $check_profile = Profile::with(['profile_deduction_types', 'profile_deduction_types.deduction_type'])
+      ->where('user_id', $userId)->first();
+
+    if (!$check_profile) {
+      return response()->json([
+        'success' => false,
+        'message' => "Please create profile before making transactions.",
+      ], 200);
+    } else {
+      return response()->json([
+        'success' => true,
+        'message' => "Success",
+        'data' => $check_profile,
+      ], 200);
+    }
+  }
+
+  public function userEditInvoice(Request $request)
+  {
+    $invoice_id = $request->id;
+    // $invoice = Invoice::with('profile.deduction.profile_deduction_types.deduction_type', 'invoice_items', 'profile.user')->where('id', $invoice_id)->first();
+    $invoice = Invoice::with('deductions.profile_deduction_types.deduction_type', 'invoice_items', 'profile.user')->where('id', $invoice_id)->first();
+
+    return response()->json([
+      'success' => true,
+      'data' => $invoice,
+
+    ]);
+  }
+
+  public function search_userstatusActive_invoice(Request $request)
+  {
+    $userId = auth()->user()->id;
+    $invoices = Invoice::with(['profile.user', 'profile'])
+      ->where(DB::raw('(select user_id from profiles where profiles.id=profile_id)'), $userId)
+      ->where('status', 'Active')
+      ->whereHas('profile', function ($query) {
+        $query->Where('profile_status', 'Active');
+      });
+
+    if (isset($request->search)) {
+      $invoices = $invoices->where(
+        function ($q) use ($request) {
+          $q->orWhere('invoice_no', 'LIKE', '%' . $request->search . '%');
+          $q->orWhere('invoice_status', 'LIKE', '%' . $request->search . '%');
+          $q->orWhere('status', 'LIKE', '%' . $request->search . '%');
+          $q->orWhere('grand_total_amount', 'LIKE', '%' . $request->search . '%');
+        }
+      )->where('status', 'Active')->orwhereHas(
+        'profile.user',
+        function ($q) use ($request) {
+          $userId = auth()->user()->id;
+          $q->where(DB::raw("CONCAT(first_name, ' ', last_name)"), 'LIKE', '%' . $request->search . '%');
+          $q->where('id', $userId);
+        }
+      )->whereHas('profile', function ($q) {
+        $q->where('profile_status', 'Active');
+      })->where('status', 'Active');
+    }
+
+    if (isset($request->filter_all_invoices)) {
+      if ($request->filter_all_invoices == 'All') {
+        $invoices = $invoices->where('invoice_status', '<>', '');
+      } else {
+        $invoices = $invoices->where('invoice_status', $request->filter_all_invoices);
+      }
+    }
+
+    $invoices = $invoices->orderBy("invoice_no", "desc");
+
+    if ($request->page_size) {
+      $invoices = $invoices->limit($request->page_size)
+        ->paginate($request->page_size, ['*'], 'page', $request->page)
+        ->toArray();
+    } else {
+      $invoices = $invoices->get();
+    }
+
+    return response()->json([
+      'success' => true,
+      'data' => $invoices,
+    ], 200);
+  }
+  public function search_userstatusInactive_invoice(Request $request)
+  {
+    $userId = auth()->user()->id;
+    $invoices = Invoice::with(['profile.user', 'profile'])
+      ->where(DB::raw('(select user_id from profiles where profiles.id=profile_id)'), $userId)
+      ->where('status', 'Inactive')
+      ->whereHas('profile', function ($query) {
+        $query->Where('profile_status', 'Active');
+      });
+    if (isset($request->search)) {
+      $invoices = $invoices->where(
+        function ($q) use ($request) {
+          $userId = auth()->user()->id;
+          $q->orWhere('invoice_no', 'LIKE', '%' . $request->search . '%');
+          $q->orWhere('invoice_status', 'LIKE', '%' . $request->search . '%');
+          $q->orWhere('grand_total_amount', 'LIKE', '%' . $request->search . '%');
+          $q->where(DB::raw('(select user_id from profiles where profiles.id=profile_id)'), $userId);
+        }
+      )->where('status', 'Inactive')->orwhereHas(
+        'profile.user',
+        function ($q) use ($request) {
+          $userId = auth()->user()->id;
+          $q->where(DB::raw("CONCAT(first_name, ' ', last_name)"), 'LIKE', '%' . $request->search . '%');
+          $q->where('id', $userId);
+        }
+      )->whereHas('profile', function ($q) {
+        $q->where('profile_status', 'Active');
+      })->where('status', 'Inactive');
+    }
+
+    if (isset($request->filter_all_invoices)) {
+      if ($request->filter_all_invoices == 'All') {
+        $invoices = $invoices->where('invoice_status', '<>', '');
+      } else {
+        $invoices = $invoices->where('invoice_status', $request->filter_all_invoices);
+      }
+    }
+
+    $invoices = $invoices->orderBy("invoice_no", "desc");
+
+    if ($request->page_size) {
+      $invoices = $invoices->limit($request->page_size)
+        ->paginate($request->page_size, ['*'], 'page', $request->page)
+        ->toArray();
+    } else {
+      $invoices = $invoices->get();
+    }
+
+    return response()->json([
+      'success' => true,
+      'data' => $invoices,
+    ], 200);
+  }
+
+  public function show_userstatusInactiveinvoice(Request $request)
+  {
+    $userId = auth()->user()->id;
+    $invoices = Invoice::with(['profile.user', 'profile'])->where('status', 'Inactive')
+      ->where(DB::raw('(select user_id from profiles where profiles.id=profile_id)'), $userId);
+    if (isset($request->search)) {
+      $invoices = $invoices->where(
+        function ($q) use ($request) {
+          $q->orWhere('invoice_no', 'LIKE', '%' . $request->search . '%');
+          $q->orWhere('invoice_status', 'LIKE', '%' . $request->search . '%');
+        }
+      );
+    }
+
+    if (isset($request->filter_all_invoices)) {
+      if ($request->filter_all_invoices == 'All') {
+        $invoices = $invoices->where('invoice_status', '<>', '');
+      } else {
+        $invoices = $invoices->where('invoice_status', $request->filter_all_invoices);
+      }
+    }
+
+    $invoices = $invoices->orderBy("invoice_no", "desc");
+
+    if ($request->page_size) {
+      $invoices = $invoices->limit($request->page_size)
+        ->paginate($request->page_size, ['*'], 'page', $request->page)
+        ->toArray();
+    } else {
+      $invoices = $invoices->get();
+    }
+
+    return response()->json([
+      'success' => true,
+      'data' => $invoices,
+    ], 200);
+  }
+
+  public function userInvoiceReport_load(Request $request)
+  {
+    // your other code here
+    $userId = auth()->user()->id;
+    $data = Invoice::with(['profile.user', 'deductions' => function ($q) {
+      $q->select(DB::raw('SUM(amount) as total_deductions'), 'invoice_id')
+        ->groupBy('invoice_id');
+    }])->whereHas('profile', function ($query) use ($userId) {
+      $query->where('user_id', $userId);
+    })
+      ->orderBy('id', 'Desc')
+      ->get();
+
+    if ($data) {
+      return response()->json([
+        'success' => true,
+        'data' => $data,
+      ]);
+    }
+  }
+
+  public function userInvoiceReport_click(Request $request)
+  {
+
+
+    $rules = $request->validate([
+      'fromDate' => 'required',
+      'toDate' => 'required',
+    ]);
+
+    if (isset($request->fromDate) && isset($request->toDate)) {
+      try {
+        $startDate = Carbon::createFromFormat('Y/m/d', $request->fromDate)->startOfDay();
+        $endDate = Carbon::createFromFormat('Y/m/d', $request->toDate)->endOfDay();
+        $invoices = Invoice::with(['profile.user', 'deductions' => function ($q) {
+          $q->select(DB::raw('SUM(amount) as total_deductions'), 'invoice_id')
+            ->groupBy('invoice_id');
+        }, 'profile'])
+          ->whereHas('profile', function ($q) {
+            $userId = auth()->user()->id;
+            $q->where('user_id', $userId);
+          })
+          ->whereBetween('created_at', [$startDate, $endDate]) // filter by date range
+          ->orderBy('id', 'desc')
+          ->get();
+        return response()->json([
+          'success' => true,
+          'data' => $invoices,
+        ], 200);
+      } catch (Exception $e) {
+        echo 'Error: ' . $e->getMessage();
+      }
+    }
+  }
+  public function userDeductionReport_load(Request $request)
+  {
+    // your other code here
+    $userId = auth()->user()->id;
+    $data = Invoice::with(['profile.user', 'deductions' => function ($q) {
+      $q->select(DB::raw('SUM(amount) as total_deductions'), 'invoice_id')
+        ->groupBy('invoice_id');
+    }])
+      ->whereHas('profile', function ($q) use ($userId) {
+        $q->where('user_id', $userId);
+      })
+      ->orderBy('id', 'Desc')
+      ->get();
+
+
+    if ($data) {
+      return response()->json([
+        'success' => true,
+        'data' => $data,
+      ]);
+    }
+  }
+
+  public function userDeductionReport_click(Request $request)
+  {
+
+    $rules = $request->validate([
+      'fromDate' => 'required',
+      'toDate' => 'required',
+    ]);
+
+    if (isset($request->fromDate) && isset($request->toDate)) {
+      try {
+        $startDate = Carbon::createFromFormat('Y/m/d', $request->fromDate)->startOfDay();
+        $endDate = Carbon::createFromFormat('Y/m/d', $request->toDate)->endOfDay();
+        $invoices = Invoice::with(['profile.user', 'deductions' => function ($q) {
+          $q->select(DB::raw('SUM(amount) as total_deductions'), 'invoice_id')
+            ->groupBy('invoice_id');
+        }, 'profile'])
+          ->whereHas('profile', function ($q) {
+            $userId = auth()->user()->id;
+            $q->where('user_id', $userId);
+          })
+          ->whereBetween('created_at', [$startDate, $endDate]) // filter by date range
+          ->orderBy('id', 'desc')
+          ->get();
+        return response()->json([
+          'success' => true,
+          'data' => $invoices,
+        ], 200);
+      } catch (Exception $e) {
+        echo 'Error: ' . $e->getMessage();
+      }
+    }
+  }
+
+  public function userDeductionDetails(Request $request)
+  {
+    $invoice_id = $request->id;
+    $data = Invoice::find($invoice_id)
+      ->deductions()
+      ->select('deductions.deduction_type_name', 'deductions.amount')
+      ->get();
+    // ->join('profile_deduction_types', 'profile_deduction_types.id', '=', 'deductions.profile_deduction_type_id')
+    if ($data) {
+      return response()->json([
+        'success' => true,
+        'data' => $data,
+      ]);
+    }
+  }
 }
-
-
-// SEND EMAIL
-  // MAO NI ANG FUNCTION NGA TAWAGON SA BUTTON
-  // $this->sendEmail();
-
-  // FOR JSON FILE VIEWING
-  // public function sendEmail1()
-  // {
-  //   $data = Invoice::with(['profile.user', 'deductions.profile_deduction_types.deduction_type', 'invoice_items'])
-  //     ->orderBy('id', 'Desc')->first();
-  //   $data1 = InvoiceConfig::orderBy('id', 'Desc')->first();
-  //   return ['data' => $data, 'data1' => $data1];
-  // }
-
-  // public function SendInvoiceData()
-  // {
-  //   $data = Invoice::with(['profile.user', 'deductions.profile_deduction_types.deduction_type', 'invoice_items'])
-  //     ->orderBy('id', 'Desc')->first();
-  //   $data1 = InvoiceConfig::orderBy('id', 'Desc')->first();
-  //   return view('emailConfig.sendEmail', ['data' => $data, 'data1' => $data1]);
-  // }

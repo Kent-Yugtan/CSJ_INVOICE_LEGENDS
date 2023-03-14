@@ -12274,18 +12274,6 @@ body {
       color: #222;
   } */
 
-.profile-pic-div {
-    height: 200px;
-    width: 200px;
-    position: absolute;
-    top: 110px;
-    left: 110px;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    overflow: hidden;
-    border: 1px solid grey;
-}
-
 #photo {
     height: 100%;
     width: 100%;
@@ -12720,13 +12708,13 @@ button.toast-close-button {
 
 .spanner {
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 0;
     background: #2a2a2a55;
     width: 100%;
     display: block;
     text-align: center;
-    height: 100%;
+    height: 120%;
     color: #fff;
     transform: translateY(-50%);
     visibility: hidden;
@@ -12756,7 +12744,7 @@ button.toast-close-button {
     color: #a66620;
     font-size: 20px;
     left: 50%;
-    margin: 250px auto;
+    margin: 305px auto;
     position: fixed;
     text-indent: -9999em;
     -webkit-transform: translateZ(0);
@@ -12803,6 +12791,7 @@ button.toast-close-button {
 
 .show {
     visibility: visible;
+    /* background-color: white; */
 }
 
 .spanner,
@@ -12843,6 +12832,489 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     display: none;
 }
 
-.jconfirm .jconfirm-box.jconfirm-animation-news{
+.jconfirm .jconfirm-box.jconfirm-animation-news {
     transform: rotate(400deg) scale(0);
+}
+
+/* Media Query for Large screens */
+@media (min-width: 1281px) {
+    .profile-pic-div_InactiveProfile {
+        height: 150px;
+        width: 150px;
+        position: absolute;
+        top: 110px;
+        left: 75px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+
+    .profile-pic-div_adminProfile {
+        height: 150px;
+        width: 200px;
+        position: absolute;
+        top: 110px;
+        left: 100px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+
+    .profile-pic-div_adminActiveProfile {
+        height: 150px;
+        width: 150px;
+        position: absolute;
+        top: 70px;
+        left: 75px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+}
+
+/* Media Query for Laptops and Desktops */
+@media (min-width: 1025px) and (max-width: 1280px) {
+    .profile-pic-div_InactiveProfile {
+        height: 150px;
+        width: 150px;
+        position: absolute;
+        top: 110px;
+        left: 140px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+
+    .profile-pic-div_adminProfile {
+        height: 150px;
+        width: 200px;
+        position: absolute;
+        top: 115px;
+        left: 100px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+
+    .profile-pic-div_adminActiveProfile {
+        height: 150px;
+        width: 150px;
+        position: absolute;
+        top: 70px;
+        left: 75px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+}
+
+/* Media Query for Tablets Ipads portrait mode */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .profile-pic-div_InactiveProfile {
+        height: 150px;
+        width: 100%;
+        position: absolute;
+        top: 110px;
+        left: 140px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+
+    .profile-pic-div_adminProfile {
+        height: 150px;
+        width: 200px;
+        position: absolute;
+        top: 115px;
+        left: 100px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+
+    .profile-pic-div_adminActiveProfile {
+        height: 200px;
+        width: 200px;
+        position: absolute;
+        top: 80px;
+        left: 110px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+}
+
+/* Media Query for Tablets, Ipads and below  */
+@media (max-width: 768px) {
+    .profile-pic-div_InactiveProfile {
+        height: 150px;
+        width: 100%;
+        position: absolute;
+        top: 110px;
+        left: 130px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+
+    .profile-pic-div_adminProfile {
+        height: 120px;
+        width: 200px;
+        position: absolute;
+        top: 130px;
+        left: 100px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+        margin-bottom: 30px;
+    }
+
+    .profile-pic-div_adminActiveProfile {
+        height: 120px;
+        width: 150px;
+        position: absolute;
+        top: 100px;
+        left: 110px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+        margin-bottom: 30px;
+    }
+
+    /* .row_email_adminProfile {
+        padding-top: 50px;
+    } */
+
+    .row_email_adminActiveProfile {
+        padding-top: 50px;
+    }
+}
+
+/* Media Query for low resolution  Tablets, Ipads */
+@media (min-width: 576px) and (max-width: 767px) {
+    .profile-pic-div_InactiveProfile {
+        height: 150px;
+        width: 50%;
+        position: absolute;
+        top: 110px;
+        left: 325px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+
+    .profile-pic-div_adminProfile {
+        height: 200px;
+        width: 50%;
+        position: absolute;
+        top: 110px;
+        left: 310px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+
+    .profile-pic-div_adminActiveProfile {
+        height: 200px;
+        width: 300px;
+        position: absolute;
+        top: 310px;
+        left: 235px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+
+    .row_email_adminProfile {
+        padding-top: 0px;
+    }
+
+    .row_email_adminActiveProfile {
+        padding-top: 285px;
+    }
+}
+
+/* Media Query for Mobile Devices */
+@media (max-width: 576px) {
+    .profile-pic-div_InactiveProfile {
+        height: 150px;
+        width: 50%;
+        position: absolute;
+        top: 110px;
+        left: 225px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+
+    .profile-pic-div_adminProfile {
+        height: 150px;
+        width: 100%;
+        position: absolute;
+        top: 110px;
+        left: 225px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+    .row_email_adminProfile {
+        padding-top: 0px;
+    }
+    .profile-pic-div_adminActiveProfile {
+        height: 150px;
+        width: 150px;
+        position: absolute;
+        top: 205px;
+        left: 210px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+    .row_email_adminActiveProfile {
+        padding-top: 285px;
+    }
+}
+
+@media (min-width: 500px) and (max-width: 575px) {
+    .profile-pic-div_InactiveProfile {
+        height: 150px;
+        width: 50%;
+        position: absolute;
+        top: 110px;
+        left: 225px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+
+    .profile-pic-div_adminProfile {
+        height: 150px;
+        width: 100%;
+        position: absolute;
+        top: 110px;
+        left: 225px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+    .row_email_adminProfile {
+        padding-top: 0px;
+    }
+
+    .profile-pic-div_adminActiveProfile {
+        height: 150px;
+        width: 185px;
+        position: absolute;
+        top: 230px;
+        left: 195px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+    .row_email_adminActiveProfile {
+        padding-top: 285px;
+    }
+}
+
+@media (max-width: 500px) {
+    .profile-pic-div_InactiveProfile {
+        height: 150px;
+        width: 50%;
+        position: absolute;
+        top: 110px;
+        left: 195px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+
+    .profile-pic-div_adminProfile {
+        height: 150px;
+        width: 100%;
+        position: absolute;
+        top: 120px;
+        left: 190px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+    .row_email_adminProfile {
+        padding-top: 0px;
+    }
+
+    .profile-pic-div_adminActiveProfile {
+        height: 150px;
+        width: 185px;
+        position: absolute;
+        top: 230px;
+        left: 190px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+    .row_email_adminActiveProfile {
+        padding-top: 285px;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-pic-div_InactiveProfile {
+        height: 150px;
+        width: 50%;
+        position: absolute;
+        top: 110px;
+        left: 195px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+
+    .profile-pic-div_adminProfile {
+        height: 150px;
+        width: 100%;
+        position: absolute;
+        top: 110px;
+        left: 150px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+    .row_email_adminProfile {
+        padding-top: 0px;
+    }
+
+    .profile-pic-div_adminActiveProfile {
+        height: 150px;
+        width: 150px;
+        position: absolute;
+        top: 205px;
+        left: 175px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+    .row_email_adminActiveProfile {
+        padding-top: 285px;
+    }
+}
+
+@media (max-width: 425px) {
+    .profile-pic-div_InactiveProfile {
+        height: 150px;
+        width: 50%;
+        position: absolute;
+        top: 110px;
+        left: 130px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+
+    .profile-pic-div_adminProfile {
+        height: 150px;
+        width: 100%;
+        position: absolute;
+        top: 110px;
+        left: 150px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+    .row_email_adminProfile {
+        padding-top: 0px;
+    }
+
+    .profile-pic-div_adminActiveProfile {
+        height: 150px;
+        width: 150px;
+        position: absolute;
+        top: 205px;
+        left: 150px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+    .row_email_adminActiveProfile {
+        padding-top: 285px;
+    }
+}
+
+@media (max-width: 375px) {
+}
+
+@media (max-width: 360px) {
+}
+
+@media (max-width: 320px) {
+    .profile-pic-div_InactiveProfile {
+        height: 150px;
+        width: 50%;
+        position: absolute;
+        top: 110px;
+        left: 110px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+
+    .profile-pic-div_adminProfile {
+        height: 150px;
+        width: 150px;
+        position: absolute;
+        top: 110px;
+        left: 100px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+    .row_email_adminProfile {
+        padding-top: 0px;
+    }
+
+    .profile-pic-div_adminActiveProfile {
+        height: 150px;
+        width: 150px;
+        position: absolute;
+        top: 205px;
+        left: 110px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+    .row_email_adminActiveProfile {
+        padding-top: 285px;
+    }
 }

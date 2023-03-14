@@ -5,8 +5,10 @@ namespace App\Http\Controllers\API;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Profile;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -58,11 +60,13 @@ class AuthController extends Controller
 
     if (auth()->attempt($data)) {
       $user = auth()->user();
+      $profile_status = Profile::select('profile_status')->where('user_id', $user->id)->first();
       $token = $user->createToken('csjInvoiceTokenLogin')->plainTextToken;
 
       $response = [
         'succcess' => true,
         'user' => $user,
+        'profile_status' => $profile_status,
         'token' => $token,
       ];
       return response()->json($response, 200);
@@ -79,11 +83,13 @@ class AuthController extends Controller
 
       if (auth()->attempt($data1)) {
         $user = auth()->user();
+        $profile_status = Profile::select('profile_status')->where('user_id', $user->id)->first();
         $token = $user->createToken('csjInvoiceTokenLogin')->plainTextToken;
 
         $response = [
           'succcess' => true,
           'user' => $user,
+          'profile_status' => $profile_status,
           'token' => $token,
         ];
         return response()->json($response, 200);

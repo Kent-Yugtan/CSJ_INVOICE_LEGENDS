@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.user')
 @section('content-dashboard')
 
 <div class="container-fluid px-4" id="loader_load">
@@ -167,9 +167,9 @@
       $('div.spanner').addClass('show');
       setTimeout(function() {
         $('div.spanner').removeClass('show');
-        active_count_paid();
-        active_count_pending();
-        check_pendingInvoicesStatus();
+        active_user_count_paid();
+        active_user_count_pending();
+        // search_userstatusActive_invoice();
       }, 1500)
     })
 
@@ -187,15 +187,16 @@
     $("#error_msg").hide();
     $("#success_msg").hide();
 
-    function active_count_paid() {
-      axios.get(apiUrl + '/api/active_paid_invoice_count', {
+    // COUNT PAID INVOICES
+    function active_user_count_paid() {
+      axios.get(apiUrl + '/api/active_user_paid_invoice_count', {
         headers: {
           Authorization: token,
         },
       }).then(function(response) {
         let data = response.data
         if (data.success) {
-          // console.log("SUCCESS", data.data.length ? data.data.length : 0);
+          console.log("PAID", data);
           $('#paid_invoices').html(data.data.length ? data.data.length : 0);
         }
       }).catch(function(error) {
@@ -203,28 +204,16 @@
       })
     }
 
-    // $("#tbl_pagination_invoice").on('click', '.page-item', function() {
-    //   $('html,body').animate({
-    //     scrollTop: $('#loader_load').offset().top
-    //   }, 'slow');
-
-    //   $("div.spanner").addClass("show");
-    //   setTimeout(function() {
-    //     $("div.spanner").removeClass("show");
-    //     $('html,body').animate({
-    //       scrollTop: $('#loader_load').offset().top
-    //     }, 'slow');
-    //   }, 1500);
-    // })
-
-    function active_count_pending() {
-      axios.get(apiUrl + '/api/active_pending_invoice_count', {
+    // COUNT PENDING INVOICES
+    function active_user_count_pending() {
+      axios.get(apiUrl + '/api/active_user_pending_invoice_count', {
         headers: {
           Authorization: token,
         },
       }).then(function(response) {
         let data = response.data
         if (data.success) {
+          console.log("PENDING", data);
           $('#pending_invoices').html(data.data.length ? data.data.length : 0);
         }
       }).catch(function(error) {
@@ -232,7 +221,7 @@
       })
     }
 
-    function search_statusActive_invoice(filters) {
+    function search_userstatusActive_invoice(filters) {
       let page = $("#tbl_pagination_invoice .page-item.active .page-link").html();
       let filter = {
         page_size: 5,
@@ -244,7 +233,7 @@
       }
       // console.log("page", page);
       $('#dataTable_invoice tbody').empty();
-      axios.get(`${apiUrl}/api/admin/search_statusActive_invoice?${new URLSearchParams(filter)}`, {
+      axios.get(`${apiUrl}/api/user/search_userstatusActive_invoice?${new URLSearchParams(filter)}`, {
         headers: {
           Authorization: token,
         },
@@ -290,8 +279,7 @@
                   }).then(function(response) {
                     let data = response.data
                     if (data.success) {
-                      // show_data();
-                      window.location.reload;
+                      window.location.reload();
                     }
                   }).catch(function(error) {
                     console.log("ERROR", error);
@@ -313,8 +301,7 @@
                   }).then(function(response) {
                     let data = response.data
                     if (data.success) {
-                      // show_data();
-                      window.location.reload;
+                      window.location.reload();
                     }
                   }).catch(function(error) {
                     console.log("ERROR", error);
@@ -363,7 +350,7 @@
               tr +=
                 '<td class="text-center"> <a href="' +
                 apiUrl +
-                '/admin/editInvoice/' +
+                '/user/editInvoice/' +
                 item.id +
                 '" class="btn btn-outline-primary"><i class="fa-sharp fa-solid fa-eye"></i></a> </td>';
               tr += '</tr>';
@@ -391,10 +378,11 @@
                   .exec(
                     url
                   );
-                return results !== null ? results[1] || 0 : 0;
+                return results !== null ? results[1] || 0 :
+                  0;
               };
               let search = $('#search').val();
-              search_statusActive_invoice({
+              search_userstatusActive_invoice({
                 search: search,
                 page: $.urlParam('page')
               });
@@ -413,91 +401,19 @@
       });
     }
 
-    // CHECK PENDING INVOICES
-    function check_pendingInvoicesStatus(filters) {
-      axios.get(`${apiUrl}/api/admin/check_ActivependingInvoices?${new URLSearchParams(filters)}`, {
-        headers: {
-          Authorization: token,
-        },
-      }).then(function(response) {
-        let data = response.data;
-        if (data.success) {
-
-          if (data.data.length > 0) {
-            data.data.map((item) => {
-              var due_dateStatus = item.due_date;
-              var today = new Date();
-              formatDue_date = moment(due_dateStatus).format('L');
-              formatDate_now = moment(today).format('L');
-
-              if (item.invoice_status === "Pending") {
-                if (formatDue_date < formatDate_now) {
-                  // console.log("due_dateStatus", item.due_date);
-                  // console.log("date_now", date_now);
-                  let invoice_id = item.id;
-                  let data = {
-                    id: invoice_id,
-                    invoice_status: "Overdue",
-                  }
-                  axios.post(apiUrl + '/api/update_status', data, {
-                    headers: {
-                      Authorization: token
-                    },
-                  }).then(function(response) {
-                    let data = response.data
-                    if (data.success) {
-                      console.log("SUCCESS Overdue", data);
-                      window.location.reload
-                    }
-                  }).catch(function(error) {
-                    console.log("ERROR", error);
-                  })
-                }
-              }
-
-              if (item.invoice_status === "Cancelled") {
-                if (item.due_date < date_now) {
-                  console.log("due_dateStatus", item.due_date);
-                  console.log("date_now", date_now);
-                  let invoice_id = item.id;
-                  let data = {
-                    id: invoice_id,
-                    invoice_status: "Cancelled",
-                  }
-                  axios.post(apiUrl + '/api/update_status', data, {
-                    headers: {
-                      Authorization: token
-                    },
-                  }).then(function(response) {
-                    let data = response.data
-                    if (data.success) {
-                      console.log("SUCCESS Cancelled", data);
-                    }
-                  }).catch(function(error) {
-                    console.log("ERROR", error);
-                  })
-                }
-              }
-            })
-          }
-        }
-      }).catch(function(error) {
-        console.log("ERROR", error);
-      })
-    }
-
     function show_data(filters) {
       let page = $("#tbl_pagination_invoice .page-item.active .page-link").html();
       let filter = {
         page_size: 5,
         page: page ? page : 1,
         filter_all_invoices: $('#filter_invoices').val(),
+        search: $('#search').val(),
         ...filters
 
       }
       // console.log("page", page);
       $('#dataTable_invoice tbody').empty();
-      axios.get(`${apiUrl}/api/admin/show_invoice?${new URLSearchParams(filter)}`, {
+      axios.get(`${apiUrl}/api/user/show_userInvoice?${new URLSearchParams(filter)}`, {
         headers: {
           Authorization: token,
         },
@@ -568,7 +484,7 @@
               tr +=
                 '<td class="text-center"> <a href="' +
                 apiUrl +
-                '/admin/editInvoice/' +
+                '/user/editInvoice/' +
                 item.id +
                 '" class="btn btn-outline-primary"><i class="fa-sharp fa-solid fa-eye"></i></a> </td>';
               tr += '</tr>';
@@ -744,9 +660,8 @@
       setTimeout(function() {
         $("div.spanner").removeClass("show");
         $('#tbl_pagination_invoice').empty();
-        search_statusActive_invoice();
+        search_userstatusActive_invoice();
       }, 1500)
-
     })
   })
 </script>

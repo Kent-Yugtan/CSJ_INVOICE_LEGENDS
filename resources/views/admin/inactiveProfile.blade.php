@@ -10,18 +10,18 @@
         <form id="ProfileUpdate" method="POST" action="javascript:void(0)" class="row g-3 needs-validation" novalidate>
           <div class="row px-4 pt-3">
             @csrf
-            <div class="col mb-3 pt-3">
-              <span hidden>user id</span>
-              <input type="text" id="user_id" value="{{$findid->id}}" hidden>
-              <input type="text" id="profile_id_show" hidden>
-              <div class="profile-pic-div" style="position: relative; height:200px">
+            <span hidden>user id</span>
+            <input type="text" id="user_id" value="{{$findid->id}}" hidden>
+            <input type="text" id="profile_id_show" hidden>
+            <div class="col-md-5 mb-3 pt-3">
+              <div class="profile-pic-div_InactiveProfile" style="position: relative; height:200px">
                 <img src="/images/default.png" id="photo">
                 <input name="file" type="file" id="file" disabled="true">
                 <label for="file" id="uploadBtn">Choose Photo</label>
               </div>
             </div>
 
-            <div class="col pt-5">
+            <div class="col-md-7 pt-5">
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="profile_status" name="profile_status" checked disabled="true">
                 <label class="form-check-label" for="status">
@@ -40,7 +40,7 @@
             </div>
           </div>
 
-          <div class="row px-4">
+          <div class="row px-4 row_email_InactiveProfile">
             <div class="col pt-3">
               <div class="form-floating mb-3">
                 <input id="email" name="email" type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" disabled="true">
@@ -593,7 +593,7 @@
                     <button type="button" class="btn btn-secondary w-100" style=" color:#CF8029; background-color:white; " data-bs-dismiss="modal">Close</button>
                   </div>
                   <div class="col">
-                    <button type="submit" class="btn btn-secondary w-100" style="color:White; background-color:#CF8029; " data-bs-dismiss="modal">Update</button>
+                    <button type="submit" class="btn btn-secondary w-100" style="color:White; background-color:#CF8029; " data-bs-dismiss="modal" disabled>Update</button>
                   </div>
                 </div>
               </div>
@@ -694,7 +694,7 @@
   <div class="loader"></div>
 </div>
 
-<script src="{{ asset('/assets/js/fileupload.js') }}"></script>
+<script src="{{ asset('/assets/js/InactiveProfile.js') }}"></script>
 
 <script type="text/javascript">
   let total_deduction_amount = 0
@@ -990,31 +990,31 @@
       }, 1500);
     })
 
-    $("#tbl_pagination_invoice").on('click', '.page-item', function() {
-      $('html,body').animate({
-        scrollTop: $('#loader_load').offset().top
-      }, 'slow');
-      $("div.spanner").addClass("show");
-      setTimeout(function() {
-        $("div.spanner").removeClass("show");
-        $('html,body').animate({
-          scrollTop: $('#loader_load').offset().top
-        }, 'slow');
-      }, 1500);
-    })
+    // $("#tbl_pagination_invoice").on('click', '.page-item', function() {
+    //   $('html,body').animate({
+    //     scrollTop: $('#loader_load').offset().top
+    //   }, 'slow');
+    //   $("div.spanner").addClass("show");
+    //   setTimeout(function() {
+    //     $("div.spanner").removeClass("show");
+    //     $('html,body').animate({
+    //       scrollTop: $('#loader_load').offset().top
+    //     }, 'slow');
+    //   }, 1500);
+    // })
 
-    $("#tbl_pagination_deduction").on('click', '.page-item', function() {
-      $('html,body').animate({
-        scrollTop: $('#loader_load').offset().top
-      }, 'slow');
-      $("div.spanner").addClass("show");
-      setTimeout(function() {
-        $("div.spanner").removeClass("show");
-        $('html,body').animate({
-          scrollTop: $('#loader_load').offset().top
-        }, 'slow');
-      }, 1500);
-    })
+    // $("#tbl_pagination_deduction").on('click', '.page-item', function() {
+    //   $('html,body').animate({
+    //     scrollTop: $('#loader_load').offset().top
+    //   }, 'slow');
+    //   $("div.spanner").addClass("show");
+    //   setTimeout(function() {
+    //     $("div.spanner").removeClass("show");
+    //     $('html,body').animate({
+    //       scrollTop: $('#loader_load').offset().top
+    //     }, 'slow');
+    //   }, 1500);
+    // })
 
     $('#filter_all_invoices').on('change', function() {
       $('html,body').animate({
@@ -1104,7 +1104,7 @@
                       minimumFractionDigits: 2
                     }) +
                   '</td>';
-                tr += '<td  class="text-end">' + moment.utc(item.created_at).tz('America/New_York')
+                tr += '<td  class="text-end">' + moment.utc(item.created_at).tz('Asia/Manila')
                   .format('MM/DD/YYYY') + '</td>';
                 tr += '<td  class="text-end">' + moment(item.due_date).format('L') + '</td>';
                 tr +=
@@ -1142,18 +1142,11 @@
                   return results !== null ? results[1] || 0 :
                     0;
                 };
-
-                $('div.spanner').addClass("show");
-                setTimeout(function() {
-                  $('div.spanner').removeClass("show");
-                  let search = $('#search_invoice').val();
-                  show_data({
-                    search: search,
-                    page: $.urlParam('page')
-                  });
-                }, 1500)
-
-
+                let search = $('#search_invoice').val();
+                show_data({
+                  search: search,
+                  page: $.urlParam('page')
+                });
               })
               let tbl_showing_invoice =
                 `Showing ${data.data.from} to ${data.data.to} of ${data.data.total} entries`;
@@ -2274,7 +2267,7 @@
                       .amount)
                     .format() + '</td>';
                   tr += '<td style="text-align:end;">' + moment.utc(item.created_at).tz(
-                    'America/New_York').format(
+                    'Asia/Manila').format(
                     'MM/DD/YYYY') + '</td>';
 
                   $("#dataTable_deduction tbody").append(tr);
@@ -2303,15 +2296,10 @@
                       return results !== null ? results[1] || 0 : 0;
                     };
 
-                    $('div.spanner').addClass("show");
-                    setTimeout(function() {
-                      $('div.spanner').removeClass("show");
-                      show_Profilededuction_Table_Active({
-                        search: $('#search_deduction').val(),
-                        page: $.urlParam('page')
-                      })
-                    }, 1500);
-
+                    show_Profilededuction_Table_Active({
+                      search: $('#search_deduction').val(),
+                      page: $.urlParam('page')
+                    })
                   })
                 let tbl_showing_deduction =
                   `Showing ${data.data.from} to ${data.data.to} of ${data.data.total} entries`;

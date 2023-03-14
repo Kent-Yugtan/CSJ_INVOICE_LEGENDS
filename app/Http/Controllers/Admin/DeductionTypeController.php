@@ -137,6 +137,11 @@ class DeductionTypeController extends Controller
     return view('settings.deductiontype');
   }
 
+  public function view_userdeductiontype()
+  {
+    return view('user.userdeductiontype');
+  }
+
   public function show_edit(Request $request, $id)
   {
     $deductionType_id = $request->id;
