@@ -34,6 +34,8 @@ Route::get('/auth/register', [MainController::class, 'register'])->name('auth.re
 Route::post('/auth/save', [MainController::class, 'save_user'])->name('auth.save_user');
 
 Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], function () {
+  echo 'Auth: admin ' . Auth::user();
+
   Route::get('/admin/dashboard', [DashboardController::class, 'index']);
   Route::get('/settings/invoice', [InvoiceController::class, 'current_createinvoice']);
   Route::get('/admin/profile', [ProfileController::class, 'index']);
@@ -67,6 +69,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], functio
 
 Route::group(['prefix' => 'user', 'middleware' => ['isUser', 'auth']], function () {
   // USER ROUTES 
+  echo 'Auth: user ' . Auth::user();
   Route::get('/user/dashboard', [DashboardController::class, 'userindex']);
   Route::get('/user/profile', [ProfileController::class, 'userindex']);
   Route::get('/user/activeProfile/{id}/{profile_id}', [ProfileController::class, 'userviewProfile']);
