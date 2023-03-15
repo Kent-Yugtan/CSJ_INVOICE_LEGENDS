@@ -61,7 +61,8 @@
 
 
     <div class="col-lg-7 px-2">
-      <div class="card shadow bg-white rounded h-100">
+      <div class="card shadow p-2 bg-white rounded h-100">
+        <div class="card-header">View Invoice Configuration</div>
         <div class="card-body table-responsive">
           <div class="card-body table-responsive" id="tbl_invoiceConfig_wrapper">
             <table class="table table-hover table-responsive" id="table_invoiceconfig">

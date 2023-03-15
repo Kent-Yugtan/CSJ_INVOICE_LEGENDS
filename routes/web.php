@@ -27,7 +27,7 @@ use App\Models\Invoice;
 |
 */
 
-Auth::routes();
+
 
 Route::get('/', function () {
   // return view('welcome');
@@ -37,8 +37,8 @@ Route::get('/', function () {
 Route::get('/auth/login', [MainController::class, 'login'])->name('auth.login');
 Route::get('/auth/register', [MainController::class, 'register'])->name('auth.register');
 Route::post('/auth/save', [MainController::class, 'save_user'])->name('auth.save_user');
-Route::middleware(['AuthCheck'])->group(function () {
-  Route::post('invoice', [InvoiceController::class, 'store']);
+Route::middleware(['auth'])->group(function () {
+
   Route::get('/admin/dashboard', [DashboardController::class, 'index']);
   Route::get('/settings/invoice', [InvoiceController::class, 'current_createinvoice']);
   Route::get('/admin/profile', [ProfileController::class, 'index']);
@@ -83,5 +83,5 @@ Route::middleware(['AuthCheck'])->group(function () {
   Route::get('/userReports/invoice', [InvoiceController::class, 'userReports_invoice']);
   Route::get('/userReports/deduction', [InvoiceController::class, 'userReports_deduction']);
 });
-
+Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

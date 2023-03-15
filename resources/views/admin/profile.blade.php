@@ -4,7 +4,7 @@
   <h1 class="mt-0">Add Profile</h1>
   <ol class="breadcrumb mb-3"></ol>
   <div class="row">
-    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-6 px-2">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 px-2">
       <div class="card shadow p-2 mb-3 bg-white rounded h-100">
         <div class="card-header">Profile Information</div>
         <form name="ProfileStore" id="ProfileStore" method="post" action="javascript:void(0)" class="row g-2 needs-validation" novalidate>

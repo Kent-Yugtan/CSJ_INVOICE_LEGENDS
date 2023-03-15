@@ -23,7 +23,7 @@
             <input type="text" onblur="(this.type='text')" class="form-control" id="to" placeholder="Date Filter To">
             <label for="to">Date Filter To</label>
           </div>
-          <button typ="button" class="btn" style=" color:white; background-color: #CF8029;width:24vh" id="button-submit">Filter</button>
+          <button type="button" class="btn" style=" color:white; background-color: #CF8029;width:24vh" id="button-submit">Filter</button>
         </div>
       </div>
     </div>
@@ -159,7 +159,7 @@
           extend: 'csvHtml5',
           filename: 'CSV-' + new Date().toLocaleDateString(),
           text: "CSV",
-          className: 'btn btn-primary w-5 mx-2',
+          className: 'btn btn-primary ms-2',
           exportOptions: {
             modifier: {
               page: 'current',
@@ -173,7 +173,7 @@
           extend: 'excelHtml5',
           filename: 'Excel-' + new Date().toLocaleDateString(),
           text: "EXCEL",
-          className: 'btn btn-secondary w-5 mx-2',
+          className: 'btn btn-secondary ',
           messageTop: 'Invoice Report',
           title: '',
           exportOptions: {
@@ -207,7 +207,7 @@
           extend: 'pdfHtml5',
           text: "PDF",
           filename: 'PDF-' + new Date().toLocaleDateString(),
-          className: 'btn btn-success w-5 mx-2',
+          className: 'btn btn-success ',
           title: 'Invoice Reports',
           footer: true,
           exportOptions: {
@@ -243,7 +243,7 @@
           extend: 'print',
           text: "PRINT",
           filename: 'Print-' + new Date().toLocaleDateString(),
-          className: 'btn btn-info w-5 mx-2',
+          className: 'btn btn-info ',
           footer: true,
           exportOptions: {
             modifier: {

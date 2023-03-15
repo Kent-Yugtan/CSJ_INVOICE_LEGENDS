@@ -7474,6 +7474,12 @@ fieldset:disabled .btn {
 }
 
 .w-5 {
+    width: 5% !important;
+}
+.w-5 {
+    width: 5% !important;
+}
+.w-10 {
     width: 10% !important;
 }
 
@@ -12842,7 +12848,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         height: 150px;
         width: 150px;
         position: absolute;
-        top: 110px;
+        top: 85px;
         left: 75px;
         transform: translate(-50%, -50%);
         border-radius: 50%;
@@ -12866,7 +12872,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         height: 150px;
         width: 150px;
         position: absolute;
-        top: 70px;
+        top: 85px;
+        left: 75px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+
+    .profile-pic-div_userMyProfile {
+        height: 150px;
+        width: 150px;
+        position: absolute;
+        top: 85px;
         left: 75px;
         transform: translate(-50%, -50%);
         border-radius: 50%;
@@ -12881,7 +12899,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         height: 150px;
         width: 150px;
         position: absolute;
-        top: 110px;
+        top: 85px;
         left: 140px;
         transform: translate(-50%, -50%);
         border-radius: 50%;
@@ -12905,7 +12923,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         height: 150px;
         width: 150px;
         position: absolute;
-        top: 70px;
+        top: 85px;
+        left: 140px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+
+    .profile-pic-div_userMyProfile {
+        height: 150px;
+        width: 150px;
+        position: absolute;
+        top: 85px;
         left: 75px;
         transform: translate(-50%, -50%);
         border-radius: 50%;
@@ -12920,8 +12950,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         height: 150px;
         width: 100%;
         position: absolute;
-        top: 110px;
-        left: 140px;
+        top: 85px;
+        left: 130px;
         transform: translate(-50%, -50%);
         border-radius: 50%;
         overflow: hidden;
@@ -12941,11 +12971,23 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .profile-pic-div_adminActiveProfile {
-        height: 200px;
-        width: 200px;
+        height: 150px;
+        width: 100%;
         position: absolute;
-        top: 80px;
-        left: 110px;
+        top: 85px;
+        left: 130px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+
+    .profile-pic-div_userMyProfile {
+        height: 150px;
+        width: 100%;
+        position: absolute;
+        top: 85px;
+        left: 130px;
         transform: translate(-50%, -50%);
         border-radius: 50%;
         overflow: hidden;
@@ -12959,7 +13001,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         height: 150px;
         width: 100%;
         position: absolute;
-        top: 110px;
+        top: 85px;
         left: 130px;
         transform: translate(-50%, -50%);
         border-radius: 50%;
@@ -12981,25 +13023,36 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .profile-pic-div_adminActiveProfile {
-        height: 120px;
-        width: 150px;
+        height: 150px;
+        width: 100%;
         position: absolute;
-        top: 100px;
-        left: 110px;
+        top: 85px;
+        left: 130px;
         transform: translate(-50%, -50%);
         border-radius: 50%;
         overflow: hidden;
         border: 1px solid grey;
-        margin-bottom: 30px;
+    }
+
+    .profile-pic-div_userMyProfile {
+        height: 150px;
+        width: 100%;
+        position: absolute;
+        top: 85px;
+        left: 130px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
     }
 
     /* .row_email_adminProfile {
         padding-top: 50px;
     } */
 
-    .row_email_adminActiveProfile {
+    /* .row_email_adminActiveProfile {
         padding-top: 50px;
-    }
+    } */
 }
 
 /* Media Query for low resolution  Tablets, Ipads */
@@ -13009,7 +13062,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         width: 50%;
         position: absolute;
         top: 110px;
-        left: 325px;
+        left: 230px;
         transform: translate(-50%, -50%);
         border-radius: 50%;
         overflow: hidden;
@@ -13029,11 +13082,23 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .profile-pic-div_adminActiveProfile {
-        height: 200px;
-        width: 300px;
+        height: 150px;
+        width: 50%;
         position: absolute;
-        top: 310px;
-        left: 235px;
+        top: 110px;
+        left: 230px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+
+    .profile-pic-div_userMyProfile {
+        height: 150px;
+        width: 50%;
+        position: absolute;
+        top: 110px;
+        left: 230px;
         transform: translate(-50%, -50%);
         border-radius: 50%;
         overflow: hidden;
@@ -13045,7 +13110,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
 
     .row_email_adminActiveProfile {
-        padding-top: 285px;
+        padding-top: 0px;
     }
 }
 
@@ -13079,17 +13144,29 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
     .profile-pic-div_adminActiveProfile {
         height: 150px;
-        width: 150px;
+        width: 50%;
         position: absolute;
-        top: 205px;
-        left: 210px;
+        top: 110px;
+        left: 225px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+
+    .profile-pic-div_userMyProfile {
+        height: 150px;
+        width: 50%;
+        position: absolute;
+        top: 110px;
+        left: 225px;
         transform: translate(-50%, -50%);
         border-radius: 50%;
         overflow: hidden;
         border: 1px solid grey;
     }
     .row_email_adminActiveProfile {
-        padding-top: 285px;
+        padding-top: 0px;
     }
 }
 
@@ -13123,17 +13200,29 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
     .profile-pic-div_adminActiveProfile {
         height: 150px;
-        width: 185px;
+        width: 50%;
         position: absolute;
-        top: 230px;
-        left: 195px;
+        top: 110px;
+        left: 225px;
         transform: translate(-50%, -50%);
         border-radius: 50%;
         overflow: hidden;
         border: 1px solid grey;
     }
     .row_email_adminActiveProfile {
-        padding-top: 285px;
+        padding-top: 0px;
+    }
+
+    .profile-pic-div_userMyProfile {
+        height: 150px;
+        width: 50%;
+        position: absolute;
+        top: 110px;
+        left: 225px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
     }
 }
 
@@ -13167,22 +13256,20 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
     .profile-pic-div_adminActiveProfile {
         height: 150px;
-        width: 185px;
+        width: 50%;
         position: absolute;
-        top: 230px;
-        left: 190px;
+        top: 110px;
+        left: 195px;
         transform: translate(-50%, -50%);
         border-radius: 50%;
         overflow: hidden;
         border: 1px solid grey;
     }
     .row_email_adminActiveProfile {
-        padding-top: 285px;
+        padding-top: 0px;
     }
-}
 
-@media (max-width: 480px) {
-    .profile-pic-div_InactiveProfile {
+    .profile-pic-div_userMyProfile {
         height: 150px;
         width: 50%;
         position: absolute;
@@ -13193,6 +13280,20 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         overflow: hidden;
         border: 1px solid grey;
     }
+}
+
+@media (max-width: 480px) {
+    .profile-pic-div_InactiveProfile {
+        height: 150px;
+        width: 50%;
+        position: absolute;
+        top: 110px;
+        left: 155px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
 
     .profile-pic-div_adminProfile {
         height: 150px;
@@ -13211,27 +13312,39 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
     .profile-pic-div_adminActiveProfile {
         height: 150px;
-        width: 150px;
+        width: 50%;
         position: absolute;
-        top: 205px;
-        left: 175px;
+        top: 110px;
+        left: 155px;
         transform: translate(-50%, -50%);
         border-radius: 50%;
         overflow: hidden;
         border: 1px solid grey;
     }
     .row_email_adminActiveProfile {
-        padding-top: 285px;
+        padding-top: 0px;
+    }
+
+    .profile-pic-div_userMyProfile {
+        height: 150px;
+        width: 50%;
+        position: absolute;
+        top: 110px;
+        left: 155px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
     }
 }
 
 @media (max-width: 425px) {
     .profile-pic-div_InactiveProfile {
         height: 150px;
-        width: 50%;
+        width: 150px;
         position: absolute;
-        top: 110px;
-        left: 130px;
+        top: 100px;
+        left: 155px;
         transform: translate(-50%, -50%);
         border-radius: 50%;
         overflow: hidden;
@@ -13257,15 +13370,27 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         height: 150px;
         width: 150px;
         position: absolute;
-        top: 205px;
-        left: 150px;
+        top: 100px;
+        left: 155px;
         transform: translate(-50%, -50%);
         border-radius: 50%;
         overflow: hidden;
         border: 1px solid grey;
     }
     .row_email_adminActiveProfile {
-        padding-top: 285px;
+        padding-top: 0px;
+    }
+
+    .profile-pic-div_userMyProfile {
+        height: 150px;
+        width: 150px;
+        position: absolute;
+        top: 100px;
+        left: 155px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
     }
 }
 
@@ -13278,9 +13403,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 @media (max-width: 320px) {
     .profile-pic-div_InactiveProfile {
         height: 150px;
-        width: 50%;
+        width: 150px;
         position: absolute;
-        top: 110px;
+        top: 100px;
         left: 110px;
         transform: translate(-50%, -50%);
         border-radius: 50%;
@@ -13307,7 +13432,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         height: 150px;
         width: 150px;
         position: absolute;
-        top: 205px;
+        top: 100px;
         left: 110px;
         transform: translate(-50%, -50%);
         border-radius: 50%;
@@ -13315,6 +13440,18 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         border: 1px solid grey;
     }
     .row_email_adminActiveProfile {
-        padding-top: 285px;
+        padding-top: 0px;
+    }
+
+    .profile-pic-div_userMyProfile {
+        height: 150px;
+        width: 150px;
+        position: absolute;
+        top: 100px;
+        left: 110px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid grey;
     }
 }
