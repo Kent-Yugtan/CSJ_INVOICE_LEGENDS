@@ -15,7 +15,7 @@
             <input type="text" id="profile_id_show" hidden>
 
             <div class="col-md-5 col-lg-5 pt-5">
-              <div class="profile-pic-div_adminActiveProfile" style="position: relative; height:100%">
+              <div class="profile-pic-div_adminActiveProfile" style="position: relative; height:200px">
                 <img src="/images/default.png" id="photo">
                 <input name="file" type="file" id="file" disabled="true">
                 <label for="file" id="uploadBtn">Choose Photo</label>

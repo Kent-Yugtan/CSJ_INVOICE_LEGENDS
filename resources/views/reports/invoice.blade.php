@@ -24,7 +24,7 @@
             <input type="text" onblur="(this.type='text')" class="form-control" id="to" placeholder="Date Filter To">
             <label for="to">Date Filter To</label>
           </div>
-          <button typ="button" class="btn" style=" color:white; background-color: #CF8029;width:24vh"
+          <button type="button" class="btn" style=" color:white; background-color: #CF8029;width:24vh"
             id="button-submit">Filter</button>
         </div>
       </div>
@@ -33,11 +33,10 @@
     <div class="col-md-12 col-md-12 col-lg-12">
       <div class="card shadow p-2 mb-1 bg-white rounded" style="height:100%">
         <div class="card-body table-responsive">
-          <table id="invoiceReports" style="font-size: 14px;" width="100%" class="table table-hover">
+          <table id="invoiceReports" style="font-size: 14px;" width="100%" class="display table table-hover">
             <thead>
             </thead>
             <tbody>
-
             </tbody>
             <tfoot>
               <tr>
@@ -95,7 +94,6 @@ $(document).ready(function() {
   var dataTable = $('#invoiceReports').DataTable({
     "footerCallback": function(row, data, start, end, display) {
       var api = this.api();
-
       // converting to interger to find total
       var intVal = function(i) {
         return typeof i === 'string' ?
@@ -150,13 +148,14 @@ $(document).ready(function() {
 
     },
     responsive: true,
+    // dom: 'Bfrtip',
     dom: 'lBfrtip',
     pagingType: 'full_numbers',
     buttons: [{
         extend: 'csvHtml5',
         filename: 'CSV-' + new Date().toLocaleDateString(),
         text: "CSV",
-        className: 'btn btn-primary w-5 mx-2',
+        className: 'btn btn-primary ms-2',
         exportOptions: {
           modifier: {
             page: 'current',
@@ -170,7 +169,7 @@ $(document).ready(function() {
         extend: 'excelHtml5',
         filename: 'Excel-' + new Date().toLocaleDateString(),
         text: "EXCEL",
-        className: 'btn btn-secondary w-5 mx-2',
+        className: 'btn btn-secondary  ',
         messageTop: 'Invoice Report',
         title: '',
         exportOptions: {
@@ -207,7 +206,7 @@ $(document).ready(function() {
         extend: 'pdfHtml5',
         text: "PDF",
         filename: 'PDF-' + new Date().toLocaleDateString(),
-        className: 'btn btn-success w-5 mx-2',
+        className: 'btn btn-success ',
         title: 'Invoice Reports',
         footer: true,
         exportOptions: {
@@ -237,7 +236,7 @@ $(document).ready(function() {
         extend: 'print',
         text: "PRINT",
         filename: 'Print-' + new Date().toLocaleDateString(),
-        className: 'btn btn-info w-5 mx-2',
+        className: 'btn btn-info  ',
         footer: true,
         exportOptions: {
           modifier: {
@@ -334,8 +333,13 @@ $(document).ready(function() {
       from();
       to();
     }, 1500);
-
   })
+
+
+  dataTable.buttons().container()
+    .appendTo($('.col-sm-12:eq(0)', dataTable.table().container()));
+
+
 
   function from() {
     // START OF THIS CODE FORMAT DATE FROM dd/mm/yyyy to yyyy/mm/dd

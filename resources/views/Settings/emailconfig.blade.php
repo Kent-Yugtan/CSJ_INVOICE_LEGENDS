@@ -7,7 +7,7 @@
 
     <div class="col-sm-12 col-md-12 col-lg-5 px-2">
       <div class="card shadow p-2 mb-5 bg-white rounded" style="width: 100%; height:100%;">
-        <div class="card-header">Create Email</div>
+        <div class="card-header">Create Email Configuration</div>
         <div class="row px-4 pt-3" id="header">
           <form id="emailconfigs_store">
             @csrf
@@ -68,9 +68,10 @@
     </div>
 
     <div class="col-sm-12 col-md-12 col-lg-7 px-2">
-      <div class="card shadow bg-white rounded " style="height: 100%;width:100% ">
+      <div class="card shadow p-2 bg-white rounded " style="height: 100%;width:100% ">
+        <div class="card-header">View Email Configuration</div>
         <div class="card-body ">
-          <div class="row mt-3">
+          <div class="row">
             <div class="col-6">
               <div class="w-100">
                 <input id="search" type="text" class="form-control" placeholder="Search">

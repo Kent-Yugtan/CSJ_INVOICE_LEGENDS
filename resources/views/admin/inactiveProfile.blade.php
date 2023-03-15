@@ -13,7 +13,8 @@
             <span hidden>user id</span>
             <input type="text" id="user_id" value="{{$findid->id}}" hidden>
             <input type="text" id="profile_id_show" hidden>
-            <div class="col-md-5 mb-3 pt-3">
+
+            <div class="col-md-5 col-lg-5 pt-5">
               <div class="profile-pic-div_InactiveProfile" style="position: relative; height:200px">
                 <img src="/images/default.png" id="photo">
                 <input name="file" type="file" id="file" disabled="true">
@@ -21,7 +22,7 @@
               </div>
             </div>
 
-            <div class="col-md-7 pt-5">
+            <div class="col-md-7 col-lg-7 pt-5">
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="profile_status" name="profile_status" checked disabled="true">
                 <label class="form-check-label" for="status">

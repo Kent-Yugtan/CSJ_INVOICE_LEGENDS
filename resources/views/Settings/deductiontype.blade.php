@@ -34,7 +34,7 @@
                 <thead>
                   <th>Deduction Name</th>
                   <th class="text-end">Amount</th>
-                  <th class="text-center">Action</th>
+                  <th colspan="2" class="text-center w-5">Action</th>
 
                 </thead>
                 <tbody></tbody>
@@ -278,11 +278,12 @@ $(document).ready(function() {
                 .deduction_amount).format()
               '</td>';
               tr +=
-                '<td  class="text-center"> <button value=' +
+                '<td class="text-center"> <button value=' +
                 item.id +
-                ' class="editButton btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" ><i class="fa-solid fa-pen-to-square"></i></button><button value=' +
+                ' class="editButton btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal" ><i class="fa-solid fa-pen-to-square"></i></button></td>';
+              tr += '<td class="text-center"><button value=' +
                 item.id +
-                ' class="deleteButton btn btn-outline-danger ms-3" data-bs-toggle="modal" data-bs-target="#deleteModal" ><i class="fa-solid fa-trash"></i></button> </td>';
+                ' class="deleteButton btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" ><i class="fa-solid fa-trash"></i></button></td>';
               tr += '</tr>';
               $("#table_deduction tbody").append(tr);
 

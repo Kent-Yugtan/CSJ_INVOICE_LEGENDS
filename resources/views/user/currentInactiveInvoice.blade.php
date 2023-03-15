@@ -12,7 +12,7 @@
             <Label class="fs-1" id="paid_invoices">
             </Label>
           </div>
-          <div class="card-body text-center py-1" style="border-bottom: none; color: #A4A6B3;">Paid Invoices
+          <div class="card-body text-center py-1" style="border-bottom: none; color: #A4A6B3;">Paid
           </div>
         </div>
         <div class="d-flex align-items-center justify-content-between"></div>
@@ -25,7 +25,7 @@
             <Label class="fs-1" id="pending_invoices">
             </Label>
           </div>
-          <div class="card-body text-center py-1" style="border-bottom: none;color: #A4A6B3; ">Pending Invoices</div>
+          <div class="card-body text-center py-1" style="border-bottom: none;color: #A4A6B3; ">Pending</div>
         </div>
         <div class="d-flex align-items-center justify-content-between"></div>
       </div>

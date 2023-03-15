@@ -134,7 +134,7 @@
                   <th>Invoice #</th>
                   <th>Profile Name</th>
                   <th>Due Date</th>
-                  <th class="text-center">View</th>
+                  <th class="text-center w-5">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -174,7 +174,7 @@
                   <th>Invoice #</th>
                   <th>Profile Name</th>
                   <th>Due Date</th>
-                  <th class="text-center">View</th>
+                  <th class="text-center w-5">Action</th>
                 </tr>
               </thead>
               <tbody>
