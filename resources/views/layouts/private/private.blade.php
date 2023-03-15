@@ -15,8 +15,11 @@
 </head>
 
 <body class="sb-nav-fixed">
-
+    @if (session()->role == 'Admin')
     @include('layouts.private.header')
+    @else
+    @include('layouts.private.header-user')
+    @endif
 
     <div id="layoutSidenav">
         @include('layouts.private.sidemenu')
