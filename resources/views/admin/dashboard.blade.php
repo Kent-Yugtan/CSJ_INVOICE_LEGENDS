@@ -1,5 +1,5 @@
-@extends('layouts.master')
-@section('content-dashboard')
+@extends('layouts.private.private')
+@section('content')
 <div class="container-fluid px-4" id="loader_load">
   <h1 class=" mt-4">Dashboard</h1>
   <ol class="breadcrumb mb-4"></ol>
@@ -455,7 +455,8 @@
                 '</td>';
               tr +=
                 '<td>' +
-                item.profile.user.first_name + " " + item.profile.user.last_name + '</td>';
+                item.profile.user.first_name + " " + item.profile.user.last_name +
+                '</td>';
               tr += '<td>' + moment(item.due_date).format('L') + '</td>';
               tr +=
                 '<td style="text-align:center"><a href = "' +
@@ -536,7 +537,8 @@
                 '</td>';
               tr +=
                 '<td>' +
-                item.profile.user.first_name + " " + item.profile.user.last_name + '</td>';
+                item.profile.user.first_name + " " + item.profile.user.last_name +
+                '</td>';
               tr += '<td>' + moment(item.due_date).format('L') + '</td>';
               tr +=
                 '<td style="text-align:center"><a href = "' +
@@ -597,7 +599,8 @@
             // console.log("SUCCESS", data.data);
             data.data.map((item) => {
               let option = '';
-              option += '<option value=' + item.profile.id + ' >' + item.full_name + '</option>';
+              option += '<option value=' + item.profile.id + ' >' + item.full_name +
+                '</option>';
               $('#selectProfile').append(option);
             })
           }
@@ -639,7 +642,8 @@
           if (data.data.length > 0) {
             data.data.map((item) => {
               let profile_deduction_type_id = item.id ? item.id : '';
-              let profile_deduction_type_name = item.deduction_type_name ? item.deduction_type_name :
+              let profile_deduction_type_name = item.deduction_type_name ?
+                item.deduction_type_name :
                 '';
               let deduction_amount = item.amount ? item.amount : '';
               let sum01 = item.sum ? item.sum : '';
