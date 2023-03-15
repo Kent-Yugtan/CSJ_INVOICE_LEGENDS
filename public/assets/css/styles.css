@@ -13454,4 +13454,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         overflow: hidden;
         border: 1px solid grey;
     }
-}
+  }
+  /* Small screen */
+  @media (max-width: 576px) {
+      #select2Multiple {
+          width: 100%;
+      }
+  }
+
+  /* Medium and large screens */
+  @media (min-width: 576px) {
+      #select2Multiple {
+        width: 100%;
+      }
+  }
