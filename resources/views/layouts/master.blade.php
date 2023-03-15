@@ -66,7 +66,7 @@
     @include('layouts.inc.admin-sidebar')
     <div id="layoutSidenav_content">
       <main>
-        @yield('content-dashboard')
+        @yield('content')
       </main>
       @include('layouts.inc.admin-footer')
     </div>
