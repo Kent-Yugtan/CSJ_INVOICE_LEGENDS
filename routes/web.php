@@ -1,20 +1,15 @@
 <?php
 
-
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DeductionTypeController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\EmailConfigController;
 use App\Http\Controllers\Admin\InvoiceConfigController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Models\Invoice;
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -27,18 +22,18 @@ use App\Models\Invoice;
 |
 */
 
-
-
 Route::get('/', function () {
   // return view('welcome');
   return view('auth/login');
   // echo auth()->user();
 });
-Route::get('/auth/login', [MainController::class, 'login'])->name('auth.login');
+Auth::routes();
+// Route::get('/auth/login', [LoginController::class, 'login']);
+// Route::get('/auth/login', [MainController::class, 'login'])->name('auth.login');
 Route::get('/auth/register', [MainController::class, 'register'])->name('auth.register');
 Route::post('/auth/save', [MainController::class, 'save_user'])->name('auth.save_user');
-Route::middleware(['auth'])->group(function () {
 
+Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], function () {
   Route::get('/admin/dashboard', [DashboardController::class, 'index']);
   Route::get('/settings/invoice', [InvoiceController::class, 'current_createinvoice']);
   Route::get('/admin/profile', [ProfileController::class, 'index']);
@@ -65,6 +60,12 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/settings/editinvoice', [InvoiceConfigController::class, 'show_editinvoice']);
   Route::get('/settings/invoice_configs', [InvoiceConfigController::class, 'index']);
 
+  // FOR ADMIN REPORTS
+  Route::get('/reports/invoice', [InvoiceController::class, 'reports_invoice']);
+  Route::get('/reports/deduction', [InvoiceController::class, 'reports_deduction']);
+});
+
+Route::group(['prefix' => 'user', 'middleware' => ['isUser', 'auth']], function () {
   // USER ROUTES 
   Route::get('/user/dashboard', [DashboardController::class, 'userindex']);
   Route::get('/user/profile', [ProfileController::class, 'userindex']);
@@ -75,13 +76,13 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/user/currentActiveInvoice', [InvoiceController::class, 'user_currentActiveInvoice']);
   Route::get('/user/currentInactiveInvoice', [InvoiceController::class, 'user_currentInactiveInvoice']);
 
-  // FOR REPORTS
-  Route::get('/reports/invoice', [InvoiceController::class, 'reports_invoice']);
-  Route::get('/reports/deduction', [InvoiceController::class, 'reports_deduction']);
-
   // FOR USER REPORTS
   Route::get('/userReports/invoice', [InvoiceController::class, 'userReports_invoice']);
   Route::get('/userReports/deduction', [InvoiceController::class, 'userReports_deduction']);
 });
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Auth::routes();
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
